@@ -8,10 +8,10 @@ class User < ApplicationRecord
 
   has_many :documents
 
-  validates :username, uniqueness: true
-  validates :email, uniqueness: true
+  validates :username, uniqueness: true, presence: true
+  validates :email, uniqueness: true, presence: true
   
-  enum role: [:user, :admin]
+  enum role: { 'admin': 0, 'user': 1, 'supplicant': 2}
   after_initialize :set_default_role, :if => :new_record?
 
   def set_default_role

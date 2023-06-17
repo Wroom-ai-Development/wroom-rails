@@ -7,8 +7,10 @@
 
 <p style="color: green"><%= notice %></p>
 
-<h1>Users</h1>
+<%= render @user %>
 
-<div id="user">
-    <%= @user.username %>
-</div>
+<% @documents.each do |document| %>
+  <%= link_to document.title, document %>
+<% end %>
+
+<%= link_to 'edit', edit_user_path(@user) %>
