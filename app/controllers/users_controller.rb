@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   before_action :user, only: %i[show edit update destroy]
   load_and_authorize_resource
@@ -39,6 +41,15 @@ class UsersController < ApplicationController
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def destroy
+    @user.destroy
+
+    respond_to do |format|
+      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+      format.json { head :no_content }
     end
   end
 

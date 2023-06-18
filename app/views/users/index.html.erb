@@ -6,7 +6,9 @@
 <div id="users">
   <ul>
     <% @users.each do |user| %>
-      <%= link_to user.email, user %>
+      <h2><%= link_to user.email, user %></h2>
+      <%= button_to "Delete user", user, method: :delete %>
+
     <% end %>
   </ul>
   </div>

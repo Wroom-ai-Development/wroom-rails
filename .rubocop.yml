@@ -1,0 +1,6 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-factory_bot
+Style/Documentation:
+  Enabled: false
