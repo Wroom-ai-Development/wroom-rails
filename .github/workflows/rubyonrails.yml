@@ -37,7 +37,7 @@ jobs:
       - name: Set up database schema
         run: bin/rails db:schema:load
       - name: Run tests
-        run: bin/rspec -fd
+        run: bundle exec rspec -fd
 
   lint:
     runs-on: ubuntu-latest
@@ -50,7 +50,7 @@ jobs:
           bundler-cache: true
           ruby-version: '3.1.2'
       - name: Lint Ruby files
-        run: bin/rubocop --parallel
+        run: bundle exec rubocop --parallel
 
 
   security:
@@ -64,6 +64,6 @@ jobs:
           bundler-cache: true
           ruby-version: '3.1.2'
       - name: Security audit dependencies
-        run: bin/bundler-audit --update
+        run: bundle exec bundler-audit --update
       - name: Security audit application code
-        run: bin/brakeman -q -w2
+        run: bundle exec brakeman -q -w2
