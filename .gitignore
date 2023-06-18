@@ -1,3 +1,5 @@
+coverage/*
+
 *.rbc
 capybara-*.html
 .rspec

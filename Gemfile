@@ -71,8 +71,18 @@ group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'webdrivers'
+  gem 'simplecov', require: false
 end
 
 gem 'devise', '~> 4.9'
 
 gem "cancancan", "~> 3.5"
+
+gem "rubocop", "~> 1.52"
+
+gem "bundle-audit", "~> 0.1.0"
+
+gem "brakeman", "~> 6.0"
+
+gem "rspec-rails", "~> 6.0"
+
