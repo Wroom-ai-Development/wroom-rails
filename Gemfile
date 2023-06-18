@@ -71,21 +71,26 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'capybara'
   gem 'selenium-webdriver'
-  gem 'webdrivers'
   gem 'simplecov', require: false
+  gem 'webdrivers'
 end
 
 gem 'devise', '~> 4.9'
 
-gem "cancancan", "~> 3.5"
+gem 'cancancan', '~> 3.5'
 
-gem "rubocop", "~> 1.52"
+gem 'rubocop', '~> 1.52'
 
-gem "bundle-audit", "~> 0.1.0"
+gem 'bundle-audit', '~> 0.1.0'
 
-gem "brakeman", "~> 6.0"
+gem 'brakeman', '~> 6.0'
 
-gem "rspec-rails", "~> 6.0"
+gem 'rspec-rails', '~> 6.0'
 
+gem 'ffaker', '~> 2.21'
 
-gem "ffaker", "~> 2.21"
+gem 'rubocop-factory_bot', '~> 2.23'
+
+gem 'rubocop-rails', '~> 2.20'
+
+gem 'rubocop-rspec', '~> 2.22'
