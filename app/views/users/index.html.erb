@@ -1,0 +1,12 @@
+
+<p style="color: green"><%= notice %></p>
+
+<h1>Users</h1>
+
+<div id="users">
+  <ul>
+    <% @users.each do |user| %>
+      <%= link_to user.email, user %>
+    <% end %>
+  </ul>
+  </div>

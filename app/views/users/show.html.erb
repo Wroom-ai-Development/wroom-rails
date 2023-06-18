@@ -1,0 +1,11 @@
+
+
+<p style="color: green"><%= notice %></p>
+
+<%= render @user %>
+
+<% @documents.each do |document| %>
+  <%= link_to document.title, document %>
+<% end %>
+
+<%= link_to 'edit', edit_user_path(@user) %>

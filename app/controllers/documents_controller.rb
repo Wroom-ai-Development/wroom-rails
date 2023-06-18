@@ -2,6 +2,7 @@
 
 class DocumentsController < ApplicationController
   before_action :set_document, only: %i[show edit update destroy]
+  load_and_authorize_resource
 
   # GET /documents or /documents.json
   def index
