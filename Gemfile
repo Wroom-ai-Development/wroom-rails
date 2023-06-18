@@ -94,3 +94,5 @@ gem 'rubocop-factory_bot', '~> 2.23'
 gem 'rubocop-rails', '~> 2.20'
 
 gem 'rubocop-rspec', '~> 2.22'
+
+gem 'pry', '~> 0.14.2'
