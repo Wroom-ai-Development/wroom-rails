@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :documents
   get 'home/index'
   devise_for :users
-  resources :users, except: :new
+  resources :users, except: %i[new create]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
