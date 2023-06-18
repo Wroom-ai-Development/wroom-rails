@@ -1,8 +1,4 @@
 
-<%= link_to "home", home_index_path %>
-
-<%= link_to "documents", documents_path %>
-
 <p style="color: green"><%= notice %></p>
 
 <h1>Users</h1>
@@ -10,12 +6,7 @@
 <div id="users">
   <ul>
     <% @users.each do |user| %>
-      <%= link_to user.username, user %>
+      <%= link_to user.email, user %>
     <% end %>
   </ul>
-<%
-=begin%>
- 
-<%= link_to "New document", new_document_path %> 
-<%
-=end%>
+  </div>

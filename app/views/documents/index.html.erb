@@ -4,12 +4,13 @@
 
 <div id="documents">
   <% @documents.each do |document| %>
-    <%= render document %>
-    <p>
-      <%= link_to "Show this document", document %>
-    </p>
+    <% if can? :read, document %>
+      <%= render document %>
+      <p>
+        <%= link_to "Show this document", document %>
+      </p>
+    <% end %>
   <% end %>
 </div>
 
 <%= link_to "New document", new_document_path %>
-<%= link_to "home", home_index_path %>

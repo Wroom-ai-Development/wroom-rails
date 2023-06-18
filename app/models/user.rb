@@ -8,7 +8,6 @@ class User < ApplicationRecord
 
   has_many :documents
 
-  validates :username, uniqueness: true, presence: true
   validates :email, uniqueness: true, presence: true
   
   enum role: { 'admin': 0, 'user': 1, 'supplicant': 2}
