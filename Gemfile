@@ -57,7 +57,7 @@ group :development, :test do
   gem 'factory_bot_rails'
 end
 
-group :production, :development do 
+group :production, :development do
   gem 'carrierwave', '~> 2.2'
 end
 
@@ -101,4 +101,3 @@ gem 'rubocop-rails', '~> 2.20'
 gem 'rubocop-rspec', '~> 2.22'
 
 gem 'pry', '~> 0.14.2'
-
