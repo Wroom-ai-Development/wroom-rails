@@ -28,6 +28,7 @@ gem 'stimulus-rails'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jbuilder'
+gem "fog", "~> 2.3"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -100,4 +101,3 @@ gem 'pry', '~> 0.14.2'
 
 gem 'carrierwave', '~> 2.2'
 
-gem "fog", "~> 2.3"
