@@ -57,6 +57,10 @@ group :development, :test do
   gem 'factory_bot_rails'
 end
 
+group :production, :development do 
+  gem 'carrierwave', '~> 2.2'
+end
+
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
@@ -98,6 +102,3 @@ gem 'rubocop-rspec', '~> 2.22'
 
 gem 'pry', '~> 0.14.2'
 
-gem 'carrierwave', '~> 2.2'
-
-gem "fog", "~> 2.3"
