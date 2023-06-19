@@ -592,9 +592,9 @@ DEPENDENCIES
   factory_bot_rails
   ffaker (~> 2.21)
   fog (~> 2.3)
-  fog-aliyun (~> 0.4.0)
   importmap-rails
   jbuilder
+  ovirt-engine-sdk (~> 4.4)
   pg (~> 1.1)
   pry (~> 0.14.2)
   puma (~> 5.0)

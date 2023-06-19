@@ -102,4 +102,4 @@ gem 'pry', '~> 0.14.2'
 gem 'carrierwave', '~> 2.2'
 
 
-gem "fog-aliyun", "~> 0.4.0"
+gem "ovirt-engine-sdk", "~> 4.4"
