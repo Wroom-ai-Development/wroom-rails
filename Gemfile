@@ -101,3 +101,5 @@ gem 'rubocop-rails', '~> 2.20'
 gem 'rubocop-rspec', '~> 2.22'
 
 gem 'pry', '~> 0.14.2'
+
+gem 'gcloud', '~> 0.24.1'
