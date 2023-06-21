@@ -5,5 +5,4 @@ class Document < ApplicationRecord
   validates :title, presence: true, uniqueness: true
   validates :file, presence: true
   has_one_attached :file
-  
 end
