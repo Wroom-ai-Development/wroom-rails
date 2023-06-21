@@ -30,15 +30,14 @@
     <%= form.label :year_published, style: "display: block" %>
     <%= form.number_field :year_published %>
   </div>
-
+  <div>
+    <%= form.label :file %>
+    <%= form.file_field :file %>
+  </div>
   
   <div>
     <%= form.label :user_id, style: "display: block" %>
-    <% if can? :manage, User %>
-      <%= form.text_field :user_id %>
-    <% else %>
-      <%= form.text_field :user_id, value: current_user.id, readonly: true %>
-    <% end %>
+    <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
   </div>
 
   <div>
