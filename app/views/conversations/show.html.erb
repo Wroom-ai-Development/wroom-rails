@@ -1,6 +1,12 @@
 <p style="color: green"><%= notice %></p>
 
 <%= render @conversation %>
+<h2>Documents</h2>
+<% @conversation.documents.each do |document| %>
+  <p>
+    <%= link_to document.title, document %>
+  </p>
+<% end %>
 
 <h2>Messages</h2>
 <% @conversation.messages.each do |message| %>

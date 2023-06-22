@@ -2,16 +2,15 @@
 
 class ConversationsController < ApplicationController
   before_action :set_conversation, only: %i[show edit update destroy new_user_message]
+  load_and_authorize_resource
 
   # GET /conversations or /conversations.json
   def index
-    @conversations = Conversation.all
+    @conversations = Conversation.accessible_by(current_ability)
   end
 
   # GET /conversations/1 or /conversations/1.json
-  def show
-    @new_message = Message.new(role: 'user', conversation_id: @conversation.id)
-  end
+  def show; end
 
   # GET /conversations/new
   def new
@@ -74,6 +73,6 @@ class ConversationsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def conversation_params
-    params.require(:conversation).permit(:title, :user_id)
+    params.require(:conversation).permit(:title, :user_id, document_ids: [])
   end
 end

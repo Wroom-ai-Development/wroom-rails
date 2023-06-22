@@ -20,6 +20,9 @@
     <%= form.label :user_id, style: "display: block" %>
     <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
   </div>
+  <div>
+    <%= form.collection_check_boxes :document_ids, Document.accessible_by(current_ability), :id, :title, { hide_label: true } %>
+  </div>
 
   <div>
     <%= form.submit %>
