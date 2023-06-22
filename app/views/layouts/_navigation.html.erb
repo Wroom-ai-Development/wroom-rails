@@ -5,6 +5,9 @@
 <% if can? :manage, Document %>
   <%= link_to "Documents", documents_path %>
 <% end %>
+<% if can? :manage, Conversation %>
+  <%= link_to "Conversations", conversations_path %>
+<% end %>
 <% if current_user %>
   <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
 <% end %>

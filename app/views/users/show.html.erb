@@ -4,8 +4,19 @@
 
 <%= render @user %>
 
+<h2> Documents</h2>
+
 <% @documents.each do |document| %>
-  <%= link_to document.title, document %>
+  <p>
+    <%= link_to document.title, document %>
+  </p>
+<% end %>
+
+<h2> Conversations</h2>
+<% @conversations.each do |conversation| %>
+  <p>
+    <%= link_to conversation.title.present? ? conversation.title : "Conversation with id #{conversation.id}", conversation %>
+  </p>
 <% end %>
 
 <%= link_to 'edit', edit_user_path(@user) %>
