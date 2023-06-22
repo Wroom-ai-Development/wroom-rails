@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :conversations
+  resources :conversations do
+    member do
+      post 'new_user_message'
+    end
+  end
   resources :documents
   get 'home/index'
   devise_for :users

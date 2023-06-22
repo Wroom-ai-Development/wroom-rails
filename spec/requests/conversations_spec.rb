@@ -35,6 +35,17 @@ RSpec.describe '/conversations', type: :request do
     sign_in(user)
   end
 
+  describe 'POST /new_user_message' do
+    it 'adds user message and assistant aswers to conversation' do
+      conversation = create(:conversation, user:)
+      post new_user_message_conversation_url(conversation), params: { content: 'message content' }
+      user_message = Message.where(role: 'user').last
+      expect(response).to have_http_status(:found)
+      expect(user_message.content).to eq('message content')
+      expect(Message.last.role).to eq('assistant')
+    end
+  end
+
   describe 'GET /index' do
     it 'renders a successful response' do
       Conversation.create! valid_attributes

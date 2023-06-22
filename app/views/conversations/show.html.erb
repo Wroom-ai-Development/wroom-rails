@@ -1,6 +1,23 @@
 <p style="color: green"><%= notice %></p>
 
 <%= render @conversation %>
+<h2>Documents</h2>
+<% @conversation.documents.each do |document| %>
+  <p>
+    <%= link_to document.title, document %>
+  </p>
+<% end %>
+
+<h2>Messages</h2>
+<% @conversation.messages.each do |message| %>
+  <p>
+    <b><%= message.role %>:</b> <%= message.content %>
+  </p>
+<% end %>
+<%= form_with url: new_user_message_conversation_path do |f| %>
+  <%= f.text_field (:content) %>
+  <%= f.submit %>
+<% end %>
 
 <div>
   <%= link_to "Edit this conversation", edit_conversation_path(@conversation) %> |

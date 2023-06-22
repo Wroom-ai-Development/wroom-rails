@@ -9,7 +9,8 @@ class Ability
     can :manage, :all if user.admin?
     return unless user.user?
 
-    can :manage, Document, user:
+    can(:manage, Document, user:)
+    can :manage, Conversation, user:
 
     # Define abilities for the user here. For example:
     #

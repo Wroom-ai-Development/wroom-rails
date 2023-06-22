@@ -8,3 +8,9 @@ Rails/UniqueValidationWithoutIndex:
   Enabled: false
 AllCops:
   SuggestExtensions: false
+
+RSpec/ExampleLength: 
+  Enabled: false
+RSpec/MultipleExpectations:
+  Enabled: false
+  
