@@ -17,9 +17,17 @@ class ConversationsController < ApplicationController
     @conversation = Conversation.new
   end
 
-  def new_user_message
+  def new_user_message # rubocop:disable Metrics/MethodLength
     @conversation.messages.create!(content: params[:content], role: 'user')
-    @conversation.messages.create!(content: FFaker::LoremJA.paragraph, role: 'assistant')
+    client = OpenAI::Client.new(access_token: ENV['OPENAI_ACCESS_KEY'])
+    response = client.chat(
+      parameters: {
+        model: 'gpt-3.5-turbo-16k', # Required.
+        messages: @conversation.messages.map { |message| { role: message.role, content: message.content } }
+      }
+    )
+    response = response.dig('choices', 0, 'message', 'content')
+    @conversation.messages.create!(content: response, role: 'assistant')
     redirect_to @conversation
   end
 

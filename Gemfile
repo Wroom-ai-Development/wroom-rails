@@ -98,3 +98,7 @@ gem 'rubocop-rspec', '~> 2.22'
 gem 'pry', '~> 0.14.2'
 
 gem 'google-cloud-storage', '~> 1.44'
+
+gem 'ruby-openai', '~> 4.2'
+
+gem 'dotenv-rails', '~> 2.8'
