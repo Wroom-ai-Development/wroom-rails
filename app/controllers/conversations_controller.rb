@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ConversationsController < ApplicationController
-  before_action :set_conversation, only: %i[show edit update destroy]
+  before_action :set_conversation, only: %i[show edit update destroy add_user_message]
 
   # GET /conversations or /conversations.json
   def index
@@ -9,11 +9,19 @@ class ConversationsController < ApplicationController
   end
 
   # GET /conversations/1 or /conversations/1.json
-  def show; end
+  def show
+    @new_message = Message.new(role: 'user', conversation_id: @conversation.id)
+  end
 
   # GET /conversations/new
   def new
     @conversation = Conversation.new
+  end
+
+  def add_user_message
+    @conversation.messages.create!(content: params[:content], role: 'user')
+
+    redirect_to @conversation
   end
 
   # GET /conversations/1/edit
