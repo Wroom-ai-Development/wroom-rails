@@ -20,6 +20,15 @@
   </p>
 
   <p>
+    <strong>File:</strong>
+    <% if document.file.attached? %>
+      <%= link_to document.file.filename, rails_blob_path(document.file, disposition: 'attachment') %>
+    <% else %>
+      None attached
+    <% end %>
+  </p>
+
+  <p>
     <strong>User:</strong>
     <%= document.user_id %>
   </p>

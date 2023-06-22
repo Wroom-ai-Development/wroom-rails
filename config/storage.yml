@@ -1,3 +1,15 @@
+# config/storage.yml
+google:
+  service: GCS
+  project: WROOM-poc
+  credentials: <%= ENV['GOOGLE_APPLICATION_CREDENTIALS'].as_json %>
+  bucket: wroom-rails
+google_dev:
+  service: GCS
+  project: WROOM-poc
+  credentials: <%= Rails.root.join("config/secrets/wroom-rails-macos.json") %>
+  bucket: wroom-rails
+
 test:
   service: Disk
   root: <%= Rails.root.join("tmp/storage") %>

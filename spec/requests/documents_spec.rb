@@ -21,7 +21,12 @@ RSpec.describe '/documents', type: :request do
   let(:user) { create(:user) }
   let(:valid_attributes) do
     { title: 'Document Title',
-      user_id: user.id }
+      user_id: user.id,
+      file: ActiveStorage::Blob.create_and_upload!(
+        io: File.open(Rails.root.join('spec/factories/files/file.pdf'), 'rb'),
+        filename: 'file.pdf',
+        content_type: 'application/pdf'
+      ).signed_id }
   end
 
   let(:invalid_attributes) do
