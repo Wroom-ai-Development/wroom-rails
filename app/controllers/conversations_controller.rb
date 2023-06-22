@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ConversationsController < ApplicationController
-  before_action :set_conversation, only: %i[show edit update destroy add_user_message]
+  before_action :set_conversation, only: %i[show edit update destroy new_user_message]
 
   # GET /conversations or /conversations.json
   def index
@@ -18,9 +18,9 @@ class ConversationsController < ApplicationController
     @conversation = Conversation.new
   end
 
-  def add_user_message
+  def new_user_message
     @conversation.messages.create!(content: params[:content], role: 'user')
-
+    @conversation.messages.create!(content: FFaker::LoremJA.paragraph, role: 'assistant')
     redirect_to @conversation
   end
 

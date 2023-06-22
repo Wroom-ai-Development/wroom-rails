@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   resources :conversations do
     member do
-      post 'add_user_message'
+      post 'new_user_message'
     end
   end
   resources :documents
