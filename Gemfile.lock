@@ -108,6 +108,10 @@ GEM
     digest-crc (0.6.4)
       rake (>= 12.0.0, < 14.0.0)
     docile (1.4.0)
+    dotenv (2.8.1)
+    dotenv-rails (2.8.1)
+      dotenv (= 2.8.1)
+      railties (>= 3.2)
     erubi (1.12.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
@@ -117,6 +121,8 @@ GEM
     faraday (2.7.7)
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
+    faraday-multipart (1.0.4)
+      multipart-post (~> 2)
     faraday-net_http (3.0.2)
     ffaker (2.21.0)
     globalid (1.1.0)
@@ -185,6 +191,7 @@ GEM
     minitest (5.18.0)
     msgpack (1.7.1)
     multi_json (1.15.0)
+    multipart-post (2.3.0)
     net-imap (0.3.6)
       date
       net-protocol
@@ -298,6 +305,9 @@ GEM
       rubocop (~> 1.33)
       rubocop-capybara (~> 2.17)
       rubocop-factory_bot (~> 2.22)
+    ruby-openai (4.2.0)
+      faraday (>= 1)
+      faraday-multipart (>= 1)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
@@ -368,6 +378,7 @@ DEPENDENCIES
   capybara
   debug
   devise (~> 4.9)
+  dotenv-rails (~> 2.8)
   factory_bot_rails
   ffaker (~> 2.21)
   google-cloud-storage (~> 1.44)
@@ -382,6 +393,7 @@ DEPENDENCIES
   rubocop-factory_bot (~> 2.23)
   rubocop-rails (~> 2.20)
   rubocop-rspec (~> 2.22)
+  ruby-openai (~> 4.2)
   selenium-webdriver
   simplecov
   sprockets-rails
