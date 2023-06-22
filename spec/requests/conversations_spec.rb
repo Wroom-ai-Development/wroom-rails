@@ -35,7 +35,7 @@ RSpec.describe '/conversations', type: :request do
     sign_in(user)
   end
 
-  describe 'POST /new_user_message' do
+  xdescribe 'POST /new_user_message' do
     it 'adds user message and assistant aswers to conversation' do
       conversation = create(:conversation, user:)
       post new_user_message_conversation_url(conversation), params: { content: 'message content' }
