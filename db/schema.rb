@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_22_114113) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_22_212518) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -59,6 +59,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_22_114113) do
     t.index ["user_id"], name: "index_conversations_on_user_id"
   end
 
+  create_table "document_chunks", force: :cascade do |t|
+    t.text "section_header"
+    t.text "content", null: false
+    t.integer "order", default: 0, null: false
+    t.bigint "document_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["document_id"], name: "index_document_chunks_on_document_id"
+  end
+
   create_table "documents", force: :cascade do |t|
     t.string "title", null: false
     t.text "notes"
@@ -68,6 +78,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_22_114113) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "document"
+    t.text "section_headers", default: [], array: true
+    t.text "text_category"
     t.index ["title"], name: "index_documents_on_title", unique: true
     t.index ["user_id"], name: "index_documents_on_user_id"
   end
@@ -99,6 +111,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_22_114113) do
   add_foreign_key "context_references", "conversations"
   add_foreign_key "context_references", "documents"
   add_foreign_key "conversations", "users"
+  add_foreign_key "document_chunks", "documents"
   add_foreign_key "documents", "users"
   add_foreign_key "messages", "conversations"
 end

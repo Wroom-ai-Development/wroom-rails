@@ -25,15 +25,25 @@
     <%= form.label :author, style: "display: block" %>
     <%= form.text_field :author %>
   </div>
+  <div>
+    <%= form.label :text_category, style: "display: block" %>
+    <%= form.text_field :text_category %>
+  </div>
+  <div>
+    <%= form.label :section_headers, style: "display: block" %>
+    <%= form.text_field :section_headers, value: document.section_headers.present? ? document.section_headers.join(', ') : '' %>
+  </div>
 
   <div>
     <%= form.label :year_published, style: "display: block" %>
     <%= form.number_field :year_published %>
   </div>
-  <div>
-    <%= form.label :file %>
-    <%= form.file_field :file %>
-  </div>
+  <% if document.id.blank? %>
+    <div>
+      <%= form.label :file %>
+      <%= form.file_field :file %>
+    </div>
+  <% end %>
   
   <div>
     <%= form.label :user_id, style: "display: block" %>
