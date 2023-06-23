@@ -1,10 +1,5 @@
 # frozen_string_literal: true
 
-def fputs(string)
-  File.open('debug', 'a') { |file| file.puts string }
-end
-# frozen_string_literal: true
-
 module Conversations
   class ConversationService # rubocop:disable Metrics/ClassLength
     class DocumentHasNoDocumentChunks < StandardError; end
@@ -27,10 +22,10 @@ module Conversations
     end
 
     def respond
-      if @documents.size == 1
-        get_answer_from_document(@documents[0])
-      elsif @documents.size > 1
-        get_answer_from_multiple_documents(@documents)
+      if @documents.any?
+        @documents.each do |document|
+          get_answer_from_document(document)
+        end
       else
         @conversation.messages.create!(role: 'assistant', content: get_answer_without_documents)
       end
@@ -45,7 +40,9 @@ module Conversations
     def get_answer_from_document(document)
       chunks = document.document_chunks
       if chunks.size == 1
-        @conversation.messages.create!(role: 'assistant', content: get_answer_from_chunk(chunks[0]))
+        document_identifier = @documents.size > 1 ? " (based on #{document.title})" : ''
+        @conversation.messages.create!(role: 'assistant',
+                                       content: get_answer_from_chunk(chunks[0]) + document_identifier)
       elsif chunks.size > 1
         get_answer_from_multiple_chunks(chunks)
       else
@@ -57,8 +54,6 @@ module Conversations
       answers = chunks.map { |chunk| get_answer_from_chunk(chunk) }
       answers = filter_out_non_answers(answers)
       summary_answer = get_summary_answer(answers)
-      fputs(answers)
-      fputs(summary_answer)
       @conversation.messages.create!(role: 'assistant', content: summary_answer, partial_answers: answers)
     end
 
@@ -100,7 +95,7 @@ module Conversations
     end
 
     def prepare_messages_for_chunk(chunk)
-      messages = @conversation_messages.unshift({ role: 'system', content: chunk.content })
+      messages = @conversation_messages.dup.unshift({ role: 'system', content: chunk.content })
       last_user_message = messages.pop
       messages << { role: 'system', content: META_PROMPT }
       messages << { role: 'system', content: chunk_context_prompt(chunk) }
