@@ -2,6 +2,15 @@
 
 <%= render @document %>
 
+<% @document.document_chunks.each do |chunk| %>
+  <div>
+    <h4><%= chunk.section_header %></h4>
+    <p>
+      <%= chunk.content %>
+    </p>
+  </div>
+<% end %>
+
 <div>
   <%= link_to "Edit this document", edit_document_path(@document) %> |
   <%= link_to "Back to documents", documents_path %>

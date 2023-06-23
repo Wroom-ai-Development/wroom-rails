@@ -102,3 +102,5 @@ gem 'google-cloud-storage', '~> 1.44'
 gem 'ruby-openai', '~> 4.2'
 
 gem 'dotenv-rails', '~> 2.8'
+
+gem 'pdf-reader', '~> 2.11'

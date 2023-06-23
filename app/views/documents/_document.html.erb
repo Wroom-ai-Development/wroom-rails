@@ -20,6 +20,11 @@
   </p>
 
   <p>
+    <strong>Section headers:</strong>
+    <%= document.section_headers.join(', ') %>
+  </p>
+
+  <p>
     <strong>File:</strong>
     <% if document.file.attached? %>
       <%= link_to document.file.filename, rails_blob_path(document.file, disposition: 'attachment') %>
