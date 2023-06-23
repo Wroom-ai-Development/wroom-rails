@@ -19,8 +19,11 @@ class ConversationsController < ApplicationController
 
   def new_user_message
     @conversation.messages.create!(content: params[:content], role: 'user')
-    response = Conversations::ConversationService.new(@conversation).get_response
-    @conversation.messages.create!(content: response, role: 'assistant')
+    begin
+      Conversations::ConversationService.new(@conversation).respond
+    rescue Conversations::ConversationService::OpenAIApiError => e
+      @conversation.messages.create!(content: e, role: 'error')
+    end
     redirect_to @conversation
   end
 
