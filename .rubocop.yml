@@ -13,4 +13,5 @@ RSpec/ExampleLength:
   Enabled: false
 RSpec/MultipleExpectations:
   Enabled: false
-  
+Naming/AccessorMethodName:
+  Enabled: false

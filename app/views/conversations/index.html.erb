@@ -2,13 +2,13 @@
 
 <h1>Conversations</h1>
 
+<%= link_to "New conversation", new_conversation_path %>
+
 <div id="conversations">
   <% @conversations.each do |conversation| %>
-    <%= render conversation %>
-    <p>
-      <%= link_to "Show this conversation", conversation %>
-    </p>
+  <p>
+    <%= link_to conversation.title, conversation %>
+    <%= button_to "Destroy", conversation, method: :delete %>
+  </p>
   <% end %>
 </div>
-
-<%= link_to "New conversation", new_conversation_path %>

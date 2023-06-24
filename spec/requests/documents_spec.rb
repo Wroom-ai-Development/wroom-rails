@@ -44,7 +44,6 @@ RSpec.describe '/documents', type: :request do
     it 'renders a successful response' do
       Document.create! valid_attributes
       get documents_url
-      # binding.pry
       expect(response).to be_successful
     end
   end

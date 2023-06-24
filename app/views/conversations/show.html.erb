@@ -12,6 +12,14 @@
 <% @conversation.messages.each do |message| %>
   <p>
     <b><%= message.role %>:</b> <%= message.content %>
+    <% if message.partial_answers.present? %>
+      <details>
+        <summary>Partial answers:</summary>
+        <% message.partial_answers.each do |answer| %>
+          <p><%= answer %></p>
+        <% end %>
+      </details>
+    <% end %>
   </p>
 <% end %>
 <%= form_with url: new_user_message_conversation_path do |f| %>

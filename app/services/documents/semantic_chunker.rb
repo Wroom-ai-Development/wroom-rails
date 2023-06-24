@@ -112,7 +112,7 @@ module Documents
     def save_current_chunk
       @current_chunk.save!
       @current_chunk_order += 1
-      @current_chunk = DocumentChunk.new(document_id: @document.id, section_header: @current_section_header,
+      @current_chunk = DocumentChunk.new(document_id: @document.id, section_header: @current_section_header.strip,
                                          order: @current_chunk_order)
     end
 
