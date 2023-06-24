@@ -1,35 +1,38 @@
-<p style="color: green"><%= notice %></p>
 
-<%= render @conversation %>
-<h2>Documents</h2>
-<% @conversation.documents.each do |document| %>
-  <p>
-    <%= link_to document.title, document %>
-  </p>
-<% end %>
-
-<h2>Messages</h2>
-<% @conversation.messages.each do |message| %>
-  <p>
-    <b><%= message.role %>:</b> <%= message.content %>
-    <% if message.partial_answers.present? %>
-      <details>
-        <summary>Partial answers:</summary>
-        <% message.partial_answers.each do |answer| %>
-          <p><%= answer %></p>
-        <% end %>
-      </details>
+<div id='view-header'>
+  <h1><%= @conversation.title %></h1>
+  <%= link_to "edit", edit_conversation_path %>
+</div>
+<div id='conversation'>
+  <div id='conversation-documents'>
+    <div id='conversation-documents-header'>
+      Reference material
+    </div>
+    <% @conversation.documents.each do |document| %>
+      <div class='conversation-document'>
+        <%= link_to document.title, document %>
+      </div>
     <% end %>
-  </p>
-<% end %>
-<%= form_with url: new_user_message_conversation_path do |f| %>
-  <%= f.text_field (:content) %>
-  <%= f.submit %>
-<% end %>
-
-<div>
-  <%= link_to "Edit this conversation", edit_conversation_path(@conversation) %> |
-  <%= link_to "Back to conversations", conversations_path %>
-
-  <%= button_to "Destroy this conversation", @conversation, method: :delete %>
+  </div>
+  <div id='messages'>
+    <% @conversation.messages.each do |message| %>
+      <div class='message <%= message.role %>'>
+        <div class='content'>
+          <%= message.content %>
+          <% if message.partial_answers.present? %>
+            <details>
+              <summary>Partial answers:</summary>
+              <% message.partial_answers.each do |answer| %>
+                <p><%= answer %></p>
+              <% end %>
+            </details>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <%= form_with url: new_user_message_conversation_path do |f| %>
+      <%= f.text_field (:content) %>
+      <%= f.submit %>
+    <% end %>
+  </div>
 </div>

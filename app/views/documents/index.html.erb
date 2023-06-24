@@ -1,16 +1,28 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Documents</h1>
-
-<%= link_to "New document", new_document_path %>
-
-<div id="documents">
-  <% @documents.each do |document| %>
-    <% if can? :read, document %>
-      <p>
-        <%= link_to document.title, document %>
-        <%= button_to "Destroy", document, method: :delete %>
-      </p>
-    <% end %>
-  <% end %>
+<div id='view-header'>
+  <h1>Documents</h1>
+  <%= link_to "new", new_document_path %>
 </div>
+<% if current_user.admin? %>
+  <div id="index-list">
+    <% @users.each do |user| %>
+      <div id='index-separator'><%= user.email %></div id='index-separator'>
+      <% user.documents.each do |document| %>
+        <div id='index-list-item'>
+          <%= link_to document.title, document %>
+          <%= button_to "delete", document, method: :delete %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% else %>
+  <div id="index-list">
+    <% current_user.documents.each do |document| %>
+      <% if can? :manage, document %>
+        <div id='index-list-item'>
+          <%= link_to document.title, document %>
+          <%= button_to "delete", document, method: :delete %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

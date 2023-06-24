@@ -6,7 +6,8 @@ class ConversationsController < ApplicationController
 
   # GET /conversations or /conversations.json
   def index
-    @conversations = Conversation.accessible_by(current_ability)
+    @conversations = Conversation.all
+    @users = User.all if current_user.admin?
   end
 
   # GET /conversations/1 or /conversations/1.json

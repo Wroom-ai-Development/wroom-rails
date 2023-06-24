@@ -104,3 +104,5 @@ gem 'ruby-openai', '~> 4.2'
 gem 'dotenv-rails', '~> 2.8'
 
 gem 'pdf-reader', '~> 2.11'
+
+gem 'sass-rails', '~> 6.0'
