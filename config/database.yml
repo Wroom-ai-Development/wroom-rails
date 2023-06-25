@@ -23,8 +23,8 @@ default: &default
 
 development:
   <<: *default
-  username: marcelwojdylo
-  password: postgres
+  username: rails
+  password: password
   database: wroom_rails_development
 
   # The specified database role being used to connect to postgres.

@@ -5,4 +5,5 @@ class Conversation < ApplicationRecord
   has_many :messages, dependent: :destroy
   has_many :context_references, dependent: :destroy
   has_many :documents, through: :context_references
+  validates :title, presence: true
 end

@@ -1,56 +1,61 @@
-<%= form_with(model: document) do |form| %>
-  <% if document.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(document.errors.count, "error") %> prohibited this document from being saved:</h2>
+<div class='record-form'>
+  <%= form_with(model: document) do |form| %>
+    <% if document.errors.any? %>
+      <div class='validation'>
+        <div class='message'>
+          <%= pluralize(document.errors.count, "error") %> prohibited this document from being saved:
+        </div>
+        <div class='errors'>
+          <% document.errors.each do |error| %>
+            <div class='error'><span class='bullet'>• </span><%= error.full_message %></div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
 
-      <ul>
-        <% document.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+    <div class='field'>
+      <%= form.label :title, style: "display: block" %>
+      <%= form.text_field :title %>
+    </div>
+
+    <div class='field'>
+      <%= form.label :author, style: "display: block" %>
+      <%= form.text_field :author %>
+    </div>
+    <div class='field'>
+      <%= form.label :text_category, style: "display: block" %>
+      <%= form.text_field :text_category %>
+    </div>
+    <div class='field'>
+      <%= form.label :section_headers, style: "display: block" %>
+      <%= form.text_field :section_headers, value: document.section_headers.present? ? document.section_headers.join(', ') : '' %>
+    </div>
+
+    <div class='field'>
+      <%= form.label :year_published, style: "display: block" %>
+      <%= form.number_field :year_published %>
+    </div>
+    <% if document.id.blank? %>
+      <div class='field'>
+        <%= form.label :file %>
+        <%= form.file_field :file %>
+      </div>
+    <% end %>
+    
+    <% if current_user.admin? %>
+      <div class='field'>
+        <%= form.label :user_id, style: "display: block" %>
+        <%= form.collection_select :user_id, User.all, :id, :email %>
+      </div>
+    <% else %>
+      <div class='field' style='display: none;'>
+        <%= form.label :user_id, style: "display: block" %>
+        <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
+      </div>
+    <% end %>
+
+    <div class='actions'>
+      <%= form.submit %>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
-  </div>
-
-  <div>
-    <%= form.label :notes, style: "display: block" %>
-    <%= form.text_area :notes %>
-  </div>
-
-  <div>
-    <%= form.label :author, style: "display: block" %>
-    <%= form.text_field :author %>
-  </div>
-  <div>
-    <%= form.label :text_category, style: "display: block" %>
-    <%= form.text_field :text_category %>
-  </div>
-  <div>
-    <%= form.label :section_headers, style: "display: block" %>
-    <%= form.text_field :section_headers, value: document.section_headers.present? ? document.section_headers.join(', ') : '' %>
-  </div>
-
-  <div>
-    <%= form.label :year_published, style: "display: block" %>
-    <%= form.number_field :year_published %>
-  </div>
-  <% if document.id.blank? %>
-    <div>
-      <%= form.label :file %>
-      <%= form.file_field :file %>
-    </div>
-  <% end %>
-  
-  <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

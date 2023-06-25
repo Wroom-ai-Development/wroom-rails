@@ -1,30 +1,44 @@
-<%= form_with(model: conversation) do |form| %>
-  <% if conversation.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(conversation.errors.count, "error") %> prohibited this conversation from being saved:</h2>
+<div class='record-form'>
+  <%= form_with(model: conversation) do |form| %>
+    <% if conversation.errors.any? %>
+      <div class='validation'>
+        <div class='message'>
+          <%= pluralize(conversation.errors.count, "error") %> prohibited this conversation from being saved:
+        </div>
+        <div class='errors'>
+          <% conversation.errors.each do |error| %>
+            <div class='error'><span class='bullet'>• </span><%= error.full_message %></div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
 
-      <ul>
-        <% conversation.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+    <div class='field'>
+      <%= form.label :title, style: "display: block" %>
+      <%= form.text_field :title %>
+    </div>
+    <% if current_user.admin? %>
+      <div class='field'>
+        <%= form.label :user_id, style: "display: block" %>
+        <%= form.collection_select :user_id, User.all, :id, :email %>
+      </div>
+    <% else %>
+      <div class='field' style='display: none;'>
+        <%= form.label :user_id, style: "display: block" %>
+        <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
+      </div>
+    <% end %>
+    <div class='checkbox-field'>
+      <%= form.collection_check_boxes :document_ids, Document.accessible_by(current_ability), :id, :title, { hide_label: true } do |item| %>
+        <div class='item'>
+        <%= item.check_box %>
+          <%= item.label %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class='actions'>
+      <%= form.submit %>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
-  </div>
-
-  <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
-  </div>
-  <div>
-    <%= form.collection_check_boxes :document_ids, Document.accessible_by(current_ability), :id, :title, { hide_label: true } %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

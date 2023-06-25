@@ -10,13 +10,20 @@
   </head>
 
   <body>
+    <% if current_user %>
     <%= render "layouts/navigation" %>
-    <div id = 'alerts'>
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
+    <% end %>
+
+    <div id='alerts'>
+      <% if flash.any? %>
+        <p class="notice"><%= notice %></p>
+        <p class="alert"><%= alert %></p>
+      <% end %>
     </div>
     <main>
       <%= yield %>
     </main>
   </body>
 </html>
+      # <p class="notice"><%= notice %></p>
+      # <p class="alert"><%= alert %></p>

@@ -1,41 +1,30 @@
-<div id="<%= dom_id document %>">
-  <p>
-    <strong>Title:</strong>
+<div class='record-info'>
+  <div class='field'>
+    <label>Title:</label>
     <%= document.title %>
-  </p>
-
-  <p>
-    <strong>Notes:</strong>
-    <%= document.notes %>
-  </p>
-
-  <p>
-    <strong>Author:</strong>
+  </div>
+  <div class='field'>
+    <label>Author:</label>
     <%= document.author %>
-  </p>
-
-  <p>
-    <strong>Year published:</strong>
+  </div>
+  <div class='field'>
+    <label>Year published:</label>
     <%= document.year_published %>
-  </p>
-
-  <p>
-    <strong>Section headers:</strong>
+  </div>
+  <div class='field'>
+    <label>Section headers:</label>
     <%= document.section_headers.join(', ') %>
-  </p>
-
-  <p>
-    <strong>File:</strong>
+  </div>
+  <div class='field'>
+    <label>File:</label>
     <% if document.file.attached? %>
       <%= link_to document.file.filename, rails_blob_path(document.file, disposition: 'attachment') %>
     <% else %>
       None attached
     <% end %>
-  </p>
-
-  <p>
-    <strong>User:</strong>
+  </div>
+  <div class='field'>
+    <label>User:</label>
     <%= document.user_id %>
-  </p>
-
+  </div>
 </div>

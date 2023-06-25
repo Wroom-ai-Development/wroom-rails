@@ -1,19 +1,32 @@
-<p style="color: green"><%= notice %></p>
-
-<%= render @document %>
-
-<% @document.document_chunks.each do |chunk| %>
-  <div>
-    <h4><%= chunk.section_header %></h4>
-    <p>
-      <%= chunk.content %>
-    </p>
-  </div>
-<% end %>
-
-<div>
-  <%= link_to "Edit this document", edit_document_path(@document) %> |
-  <%= link_to "Back to documents", documents_path %>
-
-  <%= button_to "Destroy this document", @document, method: :delete %>
+<div id='view-header'>
+  <h1><%= @document.title %></h1>
+  <%= link_to "edit", edit_document_path(@document) %>
 </div>
+<div id='view-content'>
+  <div class='show-document'>
+    <%= render @document %>
+    <% if @document.document_chunks.count > 1 %>
+      <h3>Chunks</h3>
+      <% @document.document_chunks.each do |chunk| %>
+        <div class='chunk'>
+          <details>
+            <summary>
+              <%= chunk.section_header.strip %>
+            </summary>
+            <p>
+              <%= chunk.content %>
+            </p>
+          </details>
+        </div>
+      <% end %>
+    <% else %>
+    <div class='chunk'>
+      <p>
+        <%= @document.document_chunks.first.content %>
+      </p>
+    </div>
+    <% end %>
+  </div>
+</div>
+
+
