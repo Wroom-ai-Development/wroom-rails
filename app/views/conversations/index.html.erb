@@ -1,14 +1,31 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Conversations</h1>
-
-<%= link_to "New conversation", new_conversation_path %>
-
-<div id="conversations">
-  <% @conversations.each do |conversation| %>
-  <p>
-    <%= link_to conversation.title, conversation %>
-    <%= button_to "Destroy", conversation, method: :delete %>
-  </p>
+<div id='view-header'>
+  <h1>Conversations</h1>
+  <%= link_to "new", new_conversation_path %>
+</div>
+<div id='view-content'>
+  <% if current_user.admin? %>
+    <div id="index-list">
+      <% @users.each do |user| %>
+        <div id='index-separator'><%= user.email %></div id='index-separator'>
+        <% user.conversations.each do |conversation| %>
+          <div id='index-list-item'>
+            <%= link_to conversation.title, conversation %>
+            <%= button_to "delete", conversation, method: :delete %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <div id="index-list">
+      <% current_user.conversations.each do |conversation| %>
+        <% if can? :manage, conversation %>
+          <div id='index-list-item'>
+            <%= link_to conversation.title, conversation %>
+            <%= button_to "delete", conversation, method: :delete %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
   <% end %>
+  </div>
 </div>

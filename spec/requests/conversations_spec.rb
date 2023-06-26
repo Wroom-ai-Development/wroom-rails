@@ -21,7 +21,8 @@ RSpec.describe '/conversations', type: :request do
   let!(:user) { create(:user) }
   let(:valid_attributes) do
     {
-      user_id: user.id
+      user_id: user.id,
+      title: 'title'
     }
   end
 
