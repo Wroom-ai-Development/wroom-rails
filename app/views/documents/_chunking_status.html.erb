@@ -1,12 +1,13 @@
 <%= turbo_frame_tag "chunking_status" do %>
   <div class='chunking-status-notice'>
-    <div class="lds-hourglass"></div>
-    <p>Creating chunk <%= "#{chunk.order + 2}..." %></p>
     <% if chunk.last %>
       <p>Done!</p>
       <script>
         setTimeout(() => { location.reload() }, 3000)
       </script>
+    <% else %>
+      <div class="lds-hourglass"></div>
+      <p>Creating chunk <%= "#{chunk.order + 2}..." %></p>
     <% end %>
   </div>
 
