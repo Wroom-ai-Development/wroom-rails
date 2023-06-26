@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+mount ActionCable.server => '/cable'
 
 Rails.application.routes.draw do
   resources :conversations do
