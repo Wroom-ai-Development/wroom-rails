@@ -1,3 +1,4 @@
+<%= turbo_stream_from @document.id, 'chunking_status' %>
 <div id='view-header'>
   <h1><%= @document.title %></h1>
   <%= link_to "edit", edit_document_path(@document) %>
@@ -25,6 +26,10 @@
         <%= @document.document_chunks.first.content %>
       </p>
     </div>
+    <% elsif @document.document_chunks.count == 0 %>
+      <%= turbo_frame_tag 'chunking_status' do %>
+        Processing document, please wait...
+      <% end %>
     <% end %>
   </div>
 </div>
