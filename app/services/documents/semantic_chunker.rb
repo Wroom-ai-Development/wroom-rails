@@ -3,7 +3,7 @@
 module Documents
   class SemanticChunker
     # TODO : Dynamically set this value depending on tokens in messages
-    CHUNK_MAX_TOKEN_SIZE = 3000
+    CHUNK_MAX_TOKEN_SIZE = 14_000
     # TODO : Implement actual token counts
     CHARACTERS_PER_TOKEN = 4
     HEADER_RECOGNITION_THRESHOLD = 5
