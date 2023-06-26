@@ -3,17 +3,17 @@
   <h1><%= @conversation.title %></h1>
   <%= link_to "edit", edit_conversation_path %>
 </div>
-<div id='conversation-documents'>
-  <div id='conversation-documents-header'>
-    Reference material:
-  </div>
-  <% @conversation.documents.each do |document| %>
-    <div class='conversation-document'>
-      <span class='bullet'>•</span> <%= link_to document.title, document %>
-    </div>
-  <% end %>
-</div>
 <div id='conversation'>
+  <div id='conversation-documents'>
+    <div id='conversation-documents-header'>
+      Reference material:
+    </div>
+    <% @conversation.documents.each do |document| %>
+      <div class='conversation-document'>
+        <span class='bullet'>•</span> <%= link_to document.title, document %>
+      </div>
+    <% end %>
+  </div>
   <div id='messages'>
     <% @conversation.messages.each do |message| %>
       <div class='message <%= message.role %>'>

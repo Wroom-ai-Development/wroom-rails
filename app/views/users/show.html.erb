@@ -1,22 +1,30 @@
+<div id='view-header'>
+  <h1><%= @user.email %></h1>
+  <%= link_to 'edit', edit_user_path(@user) %>
+</div>
+<div id='view-content'>
+  <div class='show-record'>
+    <%= render @user %>
+    <h4> Documents</h4>
+
+    <% @documents.each do |document| %>
+      <p>
+        <%= link_to document.title, document %>
+      </p>
+    <% end %>
+
+    <h4> Conversations</h4>
+    <% @conversations.each do |conversation| %>
+      <p>
+        <%= link_to conversation.title.present? ? conversation.title : "Conversation with id #{conversation.id}", conversation %>
+      </p>
+    <% end %>
+  </div>
+</div>
 
 
-<p style="color: green"><%= notice %></p>
 
-<%= render @user %>
 
-<h2> Documents</h2>
 
-<% @documents.each do |document| %>
-  <p>
-    <%= link_to document.title, document %>
-  </p>
-<% end %>
 
-<h2> Conversations</h2>
-<% @conversations.each do |conversation| %>
-  <p>
-    <%= link_to conversation.title.present? ? conversation.title : "Conversation with id #{conversation.id}", conversation %>
-  </p>
-<% end %>
 
-<%= link_to 'edit', edit_user_path(@user) %>

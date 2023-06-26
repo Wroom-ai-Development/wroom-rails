@@ -3,7 +3,7 @@
   <%= link_to "edit", edit_document_path(@document) %>
 </div>
 <div id='view-content'>
-  <div class='show-document'>
+  <div class='show-record'>
     <%= render @document %>
     <% if @document.document_chunks.count > 1 %>
       <h3>Chunks</h3>
@@ -28,5 +28,3 @@
     <% end %>
   </div>
 </div>
-
-

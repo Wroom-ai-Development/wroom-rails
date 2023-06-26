@@ -24,13 +24,13 @@ div#logo {
   span#wroom {
     font-family: 'MuseoModerno';
     font-weight: 900;
-    font-size: 1rem;
+    font-size: 1.1rem;
     text-decoration: underline 1px red;
   }
   span#ai {
     font-family: 'MuseoModerno';
     font-weight: 400;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     text-decoration: none;
     color: red;
   }
@@ -48,7 +48,7 @@ div#logo {
       margin: 0;
       padding: 0.5rem;
       color: black;
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       font-family: 'Playfair Display', serif;
       font-style: italic;
       font-weight: 300;
@@ -82,7 +82,7 @@ header {
     padding: 1rem;
 
     display: flex;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     a {
       margin-right: 1rem;
       &:hover {
@@ -117,7 +117,7 @@ main {
     }
   
     a {
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       font-family: 'Playfair Display', serif;
       font-style: italic;
       color: rgb(0, 102, 255);
@@ -126,6 +126,7 @@ main {
       line-height: 0.7rem;
       border-bottom: 1px solid rgb(0, 102, 255);
       margin-top: 0.5rem;
+      padding: 0.2rem;
     }
   }
 
@@ -143,7 +144,7 @@ main {
       padding-right: 1rem;
   
       div#index-separator {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
         margin-bottom: 0.5rem;
         margin-top: 1rem;
         font-style: italic;
@@ -156,7 +157,7 @@ main {
         align-items: center;
         justify-content: space-between;
         border: 1px solid gray;
-        font-size: 0.8rem;
+        font-size: 0.9rem;
         margin-bottom: 0.5rem;
         
         &:hover {
@@ -182,7 +183,7 @@ main {
       div.validation {
         margin-top: 1rem;
         text-align: center;
-        font-size: 0.8rem;
+        font-size: 0.9rem;
         font-style: italic;
         div.message {
           font-weight: 300;
@@ -204,7 +205,7 @@ main {
           width: 100%;
           box-sizing: border-box;
           font-family: 'Playfair Display', serif;
-          font-size: 0.8rem;
+          font-size: 0.9rem;
           padding: 0.5rem;
         }
         input#document_file {
@@ -215,11 +216,23 @@ main {
       }
 
       div.checkbox-field {
-        margin-top: 0.8rem;
+        margin-top: 1.4rem;
+        label {
+          margin-bottom: 0.3rem;
+
+        }
+        div.item {
+          display: flex;
+          align-items: center;
+          padding: 0.3rem;
+          input {
+            margin: 0 0.7rem 0 0;
+          }
+        }
       }
 
       label, em {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
         font-style: italic;
       }
     
@@ -230,7 +243,7 @@ main {
         justify-content: center;
         margin-top: 1rem;
         input {
-          font-size: 0.8rem;
+          font-size: 0.9rem;
           font-family: 'Playfair Display', serif;
           font-style: italic;
           color: rgb(0, 102, 255);
@@ -248,14 +261,16 @@ main {
 
   div#conversation-documents {
     text-align: right;
-    margin-right: 1.4rem;
+    max-width: 50rem;
+    margin-bottom: 1rem;
+
     div#conversation-documents-header {
       text-decoration: underline;
       margin-bottom: 0.3rem;
-      font-size: 0.8rem;
+      font-size: 0.9rem;
     }
     div.conversation-document {
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       font-style: italic;
       a:hover {
         text-decoration: underline 1px red;
@@ -269,7 +284,7 @@ main {
     padding: 0 3rem 0 3rem;
 
     margin: 1rem auto 1rem auto;
-    max-width: 30rem;
+    max-width: 50rem;
     div#messages {
       padding: 1rem;
       min-height: 30rem;
@@ -279,7 +294,7 @@ main {
       div.message {
         padding: 0.5rem 0 0.5rem 0;
         text-align: justify;
-        font-size: 0.8rem;
+        font-size: 0.9rem;
         line-height: 1.5rem;
 
         &.user {
@@ -291,7 +306,7 @@ main {
 
     form {
       margin: 1rem auto 1rem auto;
-      max-width: 30rem;
+      max-width: 50rem;
       display: flex;
       input#content {
         flex-grow: 1;
@@ -309,14 +324,14 @@ main {
 
         color: rgb(0, 102, 255);
         background-color: white;
-        font-size: 1rem;
+        font-size: 1.1rem;
         width: 2rem;
       }
     }
   }
 }
 
-div.show-document {
+div.show-record {
   padding: 0 1rem 0 1rem;
   div.record-info {
     width: 100%;
@@ -330,7 +345,7 @@ div.show-document {
     line-height: 1.2rem;
     font-size: 0.7rem;
     details summary {
-      font-size: 1rem;
+      font-size: 1.1rem;
     }
     margin-bottom: 1rem;
   }
@@ -353,7 +368,7 @@ div#devise {
       width: 100%;
       box-sizing: border-box;
       font-family: 'Playfair Display', serif;
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       padding: 0.5rem;
     }
   }
@@ -368,7 +383,7 @@ div#devise {
     align-items: center;
     justify-content: center;
     input {
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       font-family: 'Playfair Display', serif;
       font-style: italic;
       color: rgb(0, 102, 255);
