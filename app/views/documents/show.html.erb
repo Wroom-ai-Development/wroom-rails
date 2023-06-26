@@ -19,7 +19,7 @@
           </details>
         </div>
       <% end %>
-    <% else %>
+    <% elsif @document.document_chunks.count == 1 %>
     <div class='chunk'>
       <p>
         <%= @document.document_chunks.first.content %>
