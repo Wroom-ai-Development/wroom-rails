@@ -179,6 +179,18 @@ main {
       }
     }
 
+    div.chunking-status-notice {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      p {
+        margin: 0;
+        text-align: center;
+        color: rgb(0, 102, 255);
+        font-size: 0.8rem;
+      }
+    }
+
     div.record-form {
       max-width: 50rem;
       min-width: 30rem;
@@ -441,5 +453,37 @@ div#devise {
 
   &.reset-password {
 
+  }
+}
+
+.lds-hourglass {
+  display: inline-block;
+  position: relative;
+  width: 34px;
+  height: 34px;
+}
+.lds-hourglass:after {
+  content: " ";
+  display: block;
+  border-radius: 50%;
+  width: 0;
+  height: 0;
+  margin: 8px;
+  box-sizing: border-box;
+  border: 10px solid rgb(0, 102, 255);
+  border-color: rgb(0, 102, 255) transparent rgb(0, 102, 255) transparent;
+  animation: lds-hourglass 1.2s infinite;
+}
+@keyframes lds-hourglass {
+  0% {
+    transform: rotate(0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  50% {
+    transform: rotate(900deg);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  100% {
+    transform: rotate(1800deg);
   }
 }

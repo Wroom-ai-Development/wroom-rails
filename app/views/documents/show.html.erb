@@ -28,7 +28,10 @@
     </div>
     <% elsif @document.document_chunks.count == 0 %>
       <%= turbo_frame_tag 'chunking_status' do %>
-        Processing document, please wait...
+        <div class='chunking-status-notice'>
+          <div class="lds-hourglass"></div>
+          <p>Creating chunk 1...</p>
+        </div>
       <% end %>
     <% end %>
   </div>
