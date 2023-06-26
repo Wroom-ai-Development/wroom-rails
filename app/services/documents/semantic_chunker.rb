@@ -110,8 +110,6 @@ module Documents
 
     # TODO : Save text as files to storage instead of db
     def save_current_chunk
-      fputs @current_chunk.attributes
-      fputs @document.attributes
       @current_chunk.save!
       @current_chunk_order += 1
       @current_chunk = DocumentChunk.new(document_id: @document.id, section_header: @current_section_header.strip,

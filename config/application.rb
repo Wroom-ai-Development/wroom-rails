@@ -9,7 +9,7 @@ require 'rails/all'
 Bundler.require(*Rails.groups)
 
 def fputs(string)
-  File.open('debug', 'a') { |file| file.puts string }
+  File.open('fputs-debug.log', 'a') { |file| file.puts string }
 end
 
 module WroomRails
