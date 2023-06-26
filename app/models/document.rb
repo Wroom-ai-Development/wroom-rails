@@ -15,6 +15,6 @@ class Document < ApplicationRecord
                elsif file.content_type == 'text/plain'
                  file.download
                end
-    Documents::SemanticChunker.new(self, raw_text).create_chunks
+    DocumentChunkingWorker.perform_async(id, raw_text)
   end
 end

@@ -8,6 +8,10 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+def fputs(string)
+  File.open('debug', 'a') { |file| file.puts string }
+end
+
 module WroomRails
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
