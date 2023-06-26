@@ -1,6 +1,7 @@
+<%= turbo_stream_from @document.id, 'chunking_status' %>
 <div id='view-header'>
   <h1><%= @document.title %></h1>
-  <%= link_to "edit", edit_document_path(@document) %>
+  <%= link_to "edit metadata", edit_document_path(@document) %>
 </div>
 <div id='view-content'>
   <div class='show-record'>
@@ -11,7 +12,7 @@
         <div class='chunk'>
           <details>
             <summary>
-              <%= chunk.section_header.strip %>
+              <%= "Chunk #{chunk.order + 1}: #{chunk.section_header.strip}" %>
             </summary>
             <p>
               <%= chunk.content %>
@@ -25,6 +26,13 @@
         <%= @document.document_chunks.first.content %>
       </p>
     </div>
+    <% elsif @document.document_chunks.count == 0 %>
+      <%= turbo_frame_tag 'chunking_status' do %>
+        <div class='chunking-status-notice'>
+          <div class="lds-hourglass"></div>
+          <p>Creating chunk 1...</p>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>

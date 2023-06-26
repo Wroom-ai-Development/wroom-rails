@@ -13,6 +13,7 @@ module Documents
       @text = text
       @sections = []
       @lines = @text.split("\n").reject(&:blank?)
+      @processing_last_section = false
       consolidate_whitespace
     end
 
@@ -83,7 +84,8 @@ module Documents
 
     def save_chunks_from_sections
       @current_chunk_order = 0
-      @sections.each do |section|
+      @sections.each_with_index do |section, index|
+        @processing_last_section = true if index == @sections.length - 1
         save_chunks(section)
       end
     end
@@ -102,6 +104,8 @@ module Documents
         current_content = @current_chunk.content || ''
         @current_chunk.content = "#{current_content} #{word}"
         chunk_length = @current_chunk.content.gsub(/\s+/, '').length / CHARACTERS_PER_TOKEN
+        @current_chunk.last = true if index == words.length - 1 && @processing_last_section
+
         next unless chunk_length > CHUNK_MAX_TOKEN_SIZE || index == words.length - 1
 
         save_current_chunk
