@@ -7,6 +7,15 @@ class DocumentChunk < ApplicationRecord
 
   after_create_commit :broadcast_status
 
+  include PgSearch::Model
+  pg_search_scope :search,
+                  against: { content: 'A', section_header: 'B' },
+                  using: {
+                    tsearch: {
+                      dictionary: 'english', tsvector_column: 'searchable'
+                    }
+                  }
+
   private
 
   def broadcast_status
