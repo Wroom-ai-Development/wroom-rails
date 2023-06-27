@@ -1,13 +1,13 @@
 <%= turbo_frame_tag "chunking_status" do %>
   <div class='chunking-status-notice'>
-    <% if chunk.last %>
+    <% if chunk.ordinal_number >= chunk.document.document_chunks.pluck(:ordinal_number).max %>
       <p>Done!</p>
       <script>
-        setTimeout(() => { location.reload() }, 3000)
+        setTimeout(() => { location.reload() }, 1000)
       </script>
     <% else %>
       <div class="lds-hourglass"></div>
-      <p>Creating chunk <%= "#{chunk.order + 2}..." %></p>
+      <p>Creating chunk <%= "#{chunk.ordinal_number + 2}..." %></p>
     <% end %>
   </div>
 
