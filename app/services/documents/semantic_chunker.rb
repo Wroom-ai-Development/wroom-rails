@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Documents
-  class SemanticChunker
+  class SemanticChunker # rubocop:disable Metrics/ClassLength
     # TODO : Dynamically set this value depending on tokens in messages
     CHUNK_MAX_TOKEN_SIZE = 14_000
     # TODO : Implement actual token counts
