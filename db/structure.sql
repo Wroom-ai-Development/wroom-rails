@@ -200,7 +200,6 @@ CREATE TABLE public.document_chunks (
     document_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    last boolean DEFAULT false,
     searchable tsvector GENERATED ALWAYS AS ((setweight(to_tsvector('english'::regconfig, COALESCE(content, ''::text)), 'A'::"char") || setweight(to_tsvector('english'::regconfig, COALESCE(section_header, ''::text)), 'B'::"char"))) STORED
 );
 
@@ -675,6 +674,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230627103852'),
 ('20230627160035'),
 ('20230627160217'),
-('20230627165403');
+('20230627165403'),
+('20230627174020');
 
 

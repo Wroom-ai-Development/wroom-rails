@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Documents
-  class SemanticChunker # rubocop:disable Metrics/ClassLength
+  class SemanticChunker
     # TODO : Dynamically set this value depending on tokens in messages
     CHUNK_MAX_TOKEN_SIZE = 14_000
     # TODO : Implement actual token counts
@@ -14,6 +14,7 @@ module Documents
       @sections = []
       @lines = @text.split("\n").reject(&:blank?)
       @processing_last_section = false
+      @current_chunk_ordinal_number = 0
       consolidate_whitespace
     end
 
@@ -93,33 +94,18 @@ module Documents
       end
     end
 
-    def save_chunks(section)
+    def save_chunks(section) # rubocop:disable Metrics/MethodLength
       @current_section_header = section[:section_header]
-      @current_chunk = DocumentChunk.new(document_id: @document.id, section_header: @current_section_header,
-                                         ordinal_number: @current_chunk_ordinal_number)
-      # TODO : Implement Stanford Core NLP to iterate over sentences instead of words
-      words = section[:content].split(' ')
-      process_words_array(words)
-    end
-
-    def process_words_array(words)
-      words.each_with_index do |word, index|
-        current_content = @current_chunk.content || ''
-        @current_chunk.content = "#{current_content} #{word}"
-        chunk_length = @current_chunk.content.gsub(/\s+/, '').length / CHARACTERS_PER_TOKEN
-        @current_chunk.last = true if index == words.length - 1 && @processing_last_section
-
-        next unless chunk_length > CHUNK_MAX_TOKEN_SIZE || index == words.length - 1
-
-        save_current_chunk
+      chunks = section[:content].chars.each_slice(CHUNK_MAX_TOKEN_SIZE * CHARACTERS_PER_TOKEN).map(&:join)
+      chunks.each_with_index do |chunk, _index|
+        DocumentChunk.create!(
+          document_id: @document.id,
+          section_header: section[:section_header].strip,
+          ordinal_number: @current_chunk_ordinal_number,
+          content: chunk
+        )
+        @current_chunk_ordinal_number += 1
       end
-    end
-
-    def save_current_chunk
-      @current_chunk.save!
-      @current_chunk_order += 1
-      @current_chunk = DocumentChunk.new(document_id: @document.id, section_header: @current_section_header.strip,
-                                         order: @current_chunk_order)
     end
 
     def consolidate_whitespace
