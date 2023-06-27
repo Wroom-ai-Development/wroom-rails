@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_27_174020) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_27_165403) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -62,7 +62,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_174020) do
   create_table "document_chunks", force: :cascade do |t|
     t.text "section_header"
     t.text "content", null: false
-    t.integer "order", default: 0, null: false
+    t.integer "ordinal_number", default: 0, null: false
     t.bigint "document_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
