@@ -20,11 +20,8 @@ module Documents
 
     # TODO : Create chunks in resque jobs
     def create_chunks
-      benchmark = Benchmark.measure do
-        divide_text_into_sections
-        save_chunks_from_sections
-      end
-      fputs benchmark
+      divide_text_into_sections
+      save_chunks_from_sections
     end
 
     private
