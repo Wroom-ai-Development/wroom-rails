@@ -2,8 +2,9 @@
 
 class DocumentChunk < ApplicationRecord
   belongs_to :document
-  validates :content, presence: true
   validates :order, presence: true
+  validates :file, presence: true
+  has_one_attached :file
 
   after_create_commit :broadcast_status
 

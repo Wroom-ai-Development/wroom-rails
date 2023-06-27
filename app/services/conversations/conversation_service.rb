@@ -95,7 +95,7 @@ module Conversations
     end
 
     def prepare_messages_for_chunk(chunk)
-      messages = @conversation_messages.dup.unshift({ role: 'system', content: chunk.content })
+      messages = @conversation_messages.dup.unshift({ role: 'system', content: chunk.file.download })
       last_user_message = messages.pop
       messages << { role: 'system', content: META_PROMPT }
       messages << { role: 'system', content: chunk_context_prompt(chunk) }

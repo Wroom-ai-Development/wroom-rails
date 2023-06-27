@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module Documents
-  class SemanticChunker
+  class SemanticChunker # rubocop:disable Metrics/ClassLength
     # TODO : Dynamically set this value depending on tokens in messages
-    CHUNK_MAX_TOKEN_SIZE = 14_000
+    CHUNK_MAX_TOKEN_SIZE = 3_000
     # TODO : Implement actual token counts
     CHARACTERS_PER_TOKEN = 4
     HEADER_RECOGNITION_THRESHOLD = 5
@@ -100,10 +100,10 @@ module Documents
     end
 
     def process_words_array(words)
+      @current_chunk_content = ''
       words.each_with_index do |word, index|
-        current_content = @current_chunk.content || ''
-        @current_chunk.content = "#{current_content} #{word}"
-        chunk_length = @current_chunk.content.gsub(/\s+/, '').length / CHARACTERS_PER_TOKEN
+        @current_chunk_content = "#{@current_chunk_content} #{word}"
+        chunk_length = @current_chunk_content.gsub(/\s+/, '').length / CHARACTERS_PER_TOKEN
         @current_chunk.last = true if index == words.length - 1 && @processing_last_section
 
         next unless chunk_length > CHUNK_MAX_TOKEN_SIZE || index == words.length - 1
@@ -114,8 +114,14 @@ module Documents
 
     # TODO : Save text as files to storage instead of db
     def save_current_chunk
+      filename = "#{@document.title}-chunk-#{@current_chunk.order}-file"
+      file = Tempfile.new([filename, '.txt'])
+      file.write(@current_chunk_content)
+      file.rewind
+      @current_chunk.file.attach(io: file, filename:, content_type: 'text/plain')
       @current_chunk.save!
       @current_chunk_order += 1
+      @current_chunk_content = ''
       @current_chunk = DocumentChunk.new(document_id: @document.id, section_header: @current_section_header.strip,
                                          order: @current_chunk_order)
     end
