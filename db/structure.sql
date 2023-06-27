@@ -196,7 +196,7 @@ CREATE TABLE public.document_chunks (
     id bigint NOT NULL,
     section_header text,
     content text NOT NULL,
-    "order" integer DEFAULT 0 NOT NULL,
+    ordinal_number integer DEFAULT 0 NOT NULL,
     document_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
@@ -674,6 +674,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230626154506'),
 ('20230627103852'),
 ('20230627160035'),
-('20230627160217');
+('20230627160217'),
+('20230627165403');
 
 

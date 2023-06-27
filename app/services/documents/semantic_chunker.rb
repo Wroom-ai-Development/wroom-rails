@@ -19,8 +19,11 @@ module Documents
 
     # TODO : Create chunks in resque jobs
     def create_chunks
-      divide_text_into_sections
-      save_chunks_from_sections
+      benchmark = Benchmark.measure do
+        divide_text_into_sections
+        save_chunks_from_sections
+      end
+      fputs benchmark
     end
 
     private
@@ -83,7 +86,7 @@ module Documents
     end
 
     def save_chunks_from_sections
-      @current_chunk_order = 0
+      @current_chunk_ordinal_number = 0
       @sections.each_with_index do |section, index|
         @processing_last_section = true if index == @sections.length - 1
         save_chunks(section)
@@ -93,7 +96,7 @@ module Documents
     def save_chunks(section)
       @current_section_header = section[:section_header]
       @current_chunk = DocumentChunk.new(document_id: @document.id, section_header: @current_section_header,
-                                         order: @current_chunk_order)
+                                         ordinal_number: @current_chunk_ordinal_number)
       # TODO : Implement Stanford Core NLP to iterate over sentences instead of words
       words = section[:content].split(' ')
       process_words_array(words)
@@ -112,7 +115,6 @@ module Documents
       end
     end
 
-    # TODO : Save text as files to storage instead of db
     def save_current_chunk
       @current_chunk.save!
       @current_chunk_order += 1
