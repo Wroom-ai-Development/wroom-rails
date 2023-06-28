@@ -30,7 +30,7 @@ gem 'stimulus-rails'
 gem 'jbuilder'
 
 # Use Redis adapter to run Action Cable in production
-gem 'redis', '>= 4.0.2'
+gem 'redis', '>= 4.0.3'
 
 gem 'actionpack', '>= 7.0.5.1'
 
@@ -110,5 +110,3 @@ gem 'pdf-reader', '~> 2.11'
 gem 'sass-rails', '~> 6.0'
 
 gem 'sidekiq', '~> 7.1'
-
-gem 'openssl', '~> 3.1'
