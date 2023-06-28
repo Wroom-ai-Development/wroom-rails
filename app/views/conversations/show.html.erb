@@ -15,7 +15,7 @@
     <% end %>
   </div>
   <div id='messages'>
-    <% @conversation.messages.each do |message| %>
+    <% @conversation.messages.reverse.each do |message| %>
       <div class='message <%= message.role %>'>
         <div class='content'>
           <%= message.content %>
@@ -36,22 +36,3 @@
       <%= f.submit '➥', id: 'submit' %>
     <% end %>
 </div>
-
-<script>
-  function animateBorder() {
-    console.log('hello');
-    const messages = document.getElementById('messages');
-    messages.classList.add('messages-animated') 
-  }
-
-  const newMessageForm = document.getElementById('new-message-form')
-
-  newMessageForm.addEventListener('turbo:submit-start', function() {
-    console.log('hello1');  
-    animateBorder();
-    // const submit = document.getElementById('submit');
-    // submit.addEventListener('click', function(e) {
-    //   // e.preventDefault();
-    // })
-  })
-</script>
