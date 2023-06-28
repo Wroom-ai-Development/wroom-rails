@@ -42,7 +42,7 @@ module Conversations
       if chunks.size == 1
         document_identifier = @documents.size > 1 ? " (based on #{document.title})" : ''
         @conversation.messages.create!(role: 'assistant',
-                                       content: get_answer_from_chunk(chunks[0]) + document_identifier)
+                                       content: "#{get_answer_from_chunk(chunks[0])} #{document_identifier}")
       elsif chunks.size > 1
         get_answer_from_multiple_chunks(chunks)
       else
