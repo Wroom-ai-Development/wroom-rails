@@ -15,7 +15,7 @@
     <% end %>
   </div>
   <div id='messages'>
-    <% @conversation.messages.each do |message| %>
+    <% @conversation.messages.reverse.each do |message| %>
       <div class='message <%= message.role %>'>
         <div class='content'>
           <%= message.content %>
@@ -31,7 +31,7 @@
       </div>
     <% end %>
     </div>
-    <%= form_with url: new_user_message_conversation_path do |f| %>
+    <%= form_with url: new_user_message_conversation_path, id: 'new-message-form'  do |f| %>
       <%= f.text_field (:content) %>
       <%= f.submit '➥', id: 'submit' %>
     <% end %>
