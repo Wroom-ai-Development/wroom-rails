@@ -77,8 +77,8 @@ Rails.application.configure do
     port: '25',
     domain: 'wroom-rails-043ae6af063d.herokuapp.com',
     user_name: ENV['SENDGRID_USERNAME'],
-    password: ENV['SENDGRID_PASSWORD'],
-    authentication: 'plain',
+    password: ENV['SENDGRID_API_KEY'],
+    authentication: :plain,
     enable_starttls_auto: true
   }
 
