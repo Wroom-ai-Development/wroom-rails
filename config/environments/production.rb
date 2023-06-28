@@ -2,7 +2,7 @@
 
 require 'active_support/core_ext/integer/time'
 
-Rails.application.configure do
+Rails.application.configure do # rubocop:disable Metrics/BlockLength
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
@@ -68,6 +68,25 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "wroom_rails_production"
 
   config.action_mailer.perform_caching = false
+
+  config.action_mailer.default_url_options = { host: 'wroom-rails-043ae6af063d.herokuapp.com' }
+
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.smtp_settings = {
+    address: 'smtp.sendgrid.net',
+    port: '25',
+    domain: 'wroom-rails-043ae6af063d.herokuapp.com',
+    user_name: ENV['SENDGRID_USERNAME'],
+    password: ENV['SENDGRID_API_KEY'],
+    authentication: :plain,
+    enable_starttls_auto: true
+  }
+
+  # config.action_mailer.default_url_options = {
+  #   host: 'wroom-rails-043ae6af063d.herokuapp.com'
+  # }
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = { address: 'wroom-rails-043ae6af063d.herokuapp.com' }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

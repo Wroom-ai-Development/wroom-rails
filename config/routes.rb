@@ -8,7 +8,10 @@ Rails.application.routes.draw do
     end
   end
   resources :documents
-  devise_for :users
+  devise_for :users, controllers: {
+    confirmations: 'confirmations',
+    registrations: 'registrations'
+  }
   resources :users, except: %i[new create]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
