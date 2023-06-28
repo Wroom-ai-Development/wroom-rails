@@ -21,6 +21,12 @@ html {
   width: 100%;
 }
 
+
+
+.turbo-progress-bar {
+  visibility: hidden;
+}
+
 div#logo {
   padding: 1rem;
   span#wroom {
@@ -297,7 +303,7 @@ main {
     }
   }
   div#conversation {
-    padding: 0 3rem 0 3rem;
+    padding: 0 3rem 3rem 3rem;
 
     margin: 1rem auto 1rem auto;
     max-width: 50rem;
@@ -328,7 +334,7 @@ main {
         background-size: 1px 1px, 1px 1px, 1px 1px, 1px 1px;
         background-position: 0 0, 0 100%, 0 0, 100% 0;
         animation: linearGradientMove .3s infinite linear;   
-    }
+      }
     }
 
     @keyframes linearGradientMove {

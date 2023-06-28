@@ -31,24 +31,27 @@
       </div>
     <% end %>
     </div>
-    <script>
-      function animateBorder() {
-        console.log('hello');
-        const messages = document.getElementById('messages');
-        messages.classList.add('messages-animated') 
-      }
-
-      window.addEventListener('DOMContentLoaded', function() {
-        console.log('hello1');  
-        const submit = document.getElementById('submit');
-        submit.addEventListener('click', function(e) {
-          // e.preventDefault();
-          animateBorder();
-        })
-      })
-    </script>
-    <%= form_with url: new_user_message_conversation_path  do |f| %>
+    <%= form_with url: new_user_message_conversation_path, id: 'new-message-form'  do |f| %>
       <%= f.text_field (:content) %>
       <%= f.submit '➥', id: 'submit' %>
     <% end %>
 </div>
+
+<script>
+  function animateBorder() {
+    console.log('hello');
+    const messages = document.getElementById('messages');
+    messages.classList.add('messages-animated') 
+  }
+
+  const newMessageForm = document.getElementById('new-message-form')
+
+  newMessageForm.addEventListener('turbo:submit-start', function() {
+    console.log('hello1');  
+    animateBorder();
+    // const submit = document.getElementById('submit');
+    // submit.addEventListener('click', function(e) {
+    //   // e.preventDefault();
+    // })
+  })
+</script>
