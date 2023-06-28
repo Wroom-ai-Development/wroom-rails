@@ -12,12 +12,14 @@
  *
  *= require_self
  */
- @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;600;700;800;900&family=MuseoModerno:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;600;700;800;900&family=MuseoModerno:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
- html {
+$wroom-blue: rgb(0, 102, 255);
+
+html {
   height: 100%;
   width: 100%;
- }
+}
 
 div#logo {
   padding: 1rem;
@@ -25,7 +27,7 @@ div#logo {
     font-family: 'MuseoModerno';
     font-weight: 900;
     font-size: 1.1rem;
-    text-decoration: underline 1px red;
+    text-decoration: underline 2px $wroom-blue;
   }
   span#ai {
     font-family: 'MuseoModerno';
@@ -122,11 +124,11 @@ main {
       font-size: 0.9rem;
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      color: rgb(0, 102, 255);
+      color: $wroom-blue;
       font-weight: 300;
-      border-top: 1px solid rgb(0, 102, 255);
+      border-top: 1px solid $wroom-blue;
       line-height: 0.7rem;
-      border-bottom: 1px solid rgb(0, 102, 255);
+      border-bottom: 1px solid $wroom-blue;
       margin-top: 0.5rem;
       padding: 0.2rem;
     }
@@ -186,7 +188,7 @@ main {
       p {
         margin: 0;
         text-align: center;
-        color: rgb(0, 102, 255);
+        color: $wroom-blue;
         font-size: 0.8rem;
       }
     }
@@ -260,11 +262,11 @@ main {
           font-size: 0.9rem;
           font-family: 'Playfair Display', serif;
           font-style: italic;
-          color: rgb(0, 102, 255);
+          color: $wroom-blue;
           font-weight: 300;
-          border-top: 1px solid rgb(0, 102, 255);
+          border-top: 1px solid $wroom-blue;
           // line-height: 0.rem;
-          border-bottom: 1px solid rgb(0, 102, 255);
+          border-bottom: 1px solid $wroom-blue;
           border-left: none;
           border-right: none;
           background-color: white;
@@ -290,7 +292,7 @@ main {
         text-decoration: underline 1px red;
       }
       span.bullet {
-        color: rgb(0, 102, 255)
+        color: $wroom-blue
       }
     }
   }
@@ -316,8 +318,24 @@ main {
           font-style: italic;
         }
       }
+      &.messages-animated {
+        border: none;
+        background: 
+            linear-gradient(90deg, $wroom-blue 50%, transparent 0) repeat-x,
+            linear-gradient(90deg, $wroom-blue 50%, transparent 0) repeat-x,
+            linear-gradient(0deg, $wroom-blue 50%, transparent 0) repeat-y,
+            linear-gradient(0deg, $wroom-blue 50%, transparent 0) repeat-y;
+        background-size: 1px 1px, 1px 1px, 1px 1px, 1px 1px;
+        background-position: 0 0, 0 100%, 0 0, 100% 0;
+        animation: linearGradientMove .3s infinite linear;   
+    }
     }
 
+    @keyframes linearGradientMove {
+      100% {
+          background-position: 1px 0, -1px 100%, 0 -1px, 100% 1px;
+      }
+  } 
     form {
       margin: 1rem auto 1rem auto;
       max-width: 50rem;
@@ -325,7 +343,7 @@ main {
       input#content {
         flex-grow: 1;
         margin-right: 0.5rem;
-        border: 1px solid rgb(0, 102, 255);
+        border: 1px solid $wroom-blue;
         border-radius: 5px;
         padding: 0.5rem;
         font-family: 'Playfair Display', serif;
@@ -333,10 +351,10 @@ main {
       }
 
       input#submit {
-        border: 1px solid rgb(0, 102, 255);
+        border: 1px solid $wroom-blue;
         border-radius: 5px;
 
-        color: rgb(0, 102, 255);
+        color: $wroom-blue;
         background-color: white;
         font-size: 1.1rem;
         width: 2rem;
@@ -401,11 +419,11 @@ div#devise {
       font-size: 0.9rem;
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      color: rgb(0, 102, 255);
+      color: $wroom-blue;
       font-weight: 300;
-      border-top: 1px solid rgb(0, 102, 255);
+      border-top: 1px solid $wroom-blue;
       // line-height: 0.rem;
-      border-bottom: 1px solid rgb(0, 102, 255);
+      border-bottom: 1px solid $wroom-blue;
       border-left: none;
       border-right: none;
       background-color: white;
@@ -470,8 +488,8 @@ div#devise {
   height: 0;
   margin: 8px;
   box-sizing: border-box;
-  border: 10px solid rgb(0, 102, 255);
-  border-color: rgb(0, 102, 255) transparent rgb(0, 102, 255) transparent;
+  border: 10px solid $wroom-blue;
+  border-color: $wroom-blue transparent $wroom-blue transparent;
   animation: lds-hourglass 1.2s infinite;
 }
 @keyframes lds-hourglass {
