@@ -128,6 +128,8 @@ main {
       font-weight: 500;
       font-size: 1.2rem;
       margin: 0;
+      max-width: 29rem;
+      text-align: center;
     }
   
     a {
@@ -149,7 +151,7 @@ main {
     flex-direction: column;
     align-items: center;
     div#index-list {
-      max-width: 50rem;
+      max-width: 30rem;
       min-width: 30rem;
       display: flex;
       flex-direction: column;
