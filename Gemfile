@@ -62,6 +62,8 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
 
+  gem 'mailcatcher', '~> 0.2.4'
+
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
@@ -110,5 +112,3 @@ gem 'pdf-reader', '~> 2.11'
 gem 'sass-rails', '~> 6.0'
 
 gem 'sidekiq', '~> 7.1'
-
-gem 'mailcatcher', '~> 0.2.4'
