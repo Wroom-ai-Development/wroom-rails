@@ -69,7 +69,7 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-  config.action_mailer.default_url_uptions = {
+  config.action_mailer.default_url_options = {
     host: 'wroom-rails-043ae6af063d.herokuapp.com/'
   }
 
