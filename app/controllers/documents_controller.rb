@@ -7,7 +7,7 @@ class DocumentsController < ApplicationController
   # GET /documents or /documents.json
   def index
     @documents = Document.all
-    @users = User.all if current_user.admin?
+    @users = User.where.not(id: current_user.id) if current_user.admin?
   end
 
   # GET /documents/1 or /documents/1.json

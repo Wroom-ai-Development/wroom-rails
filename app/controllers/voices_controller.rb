@@ -7,7 +7,7 @@ class VoicesController < ApplicationController
   # GET /voices or /voices.json
   def index
     @voices = Voice.all
-    @users = User.all if current_user.admin?
+    @users = User.where.not(id: current_user.id) if current_user.admin?
   end
 
   # GET /voices/1 or /voices/1.json

@@ -3,22 +3,22 @@
     <%= link_to "new", new_voice_path %>
 </div>
 <div id='view-content'>
+  <div id="index-list">
+    <div id='index-separator'>My voices</div id='index-separator'>
+    <% current_user.voices.each do |voice| %>
+      <% if can? :manage, voice %>
+        <div id='index-list-item'>
+          <%= link_to voice.name, edit_voice_path(voice) %>
+          <%= button_to "delete", voice, method: :delete %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
   <% if current_user.admin? %>
     <div id="index-list">
       <% @users.each do |user| %>
         <div id='index-separator'><%= user.email %></div id='index-separator'>
         <% user.voices.each do |voice| %>
-          <div id='index-list-item'>
-            <%= link_to voice.name, edit_voice_path(voice) %>
-            <%= button_to "delete", voice, method: :delete %>
-          </div>
-        <% end %>
-      <% end %>
-    </div>
-  <% else %>
-    <div id="index-list">
-      <% current_user.voices.each do |voice| %>
-        <% if can? :manage, voice %>
           <div id='index-list-item'>
             <%= link_to voice.name, edit_voice_path(voice) %>
             <%= button_to "delete", voice, method: :delete %>

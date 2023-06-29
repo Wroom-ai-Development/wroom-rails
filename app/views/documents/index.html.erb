@@ -3,6 +3,17 @@
   <%= link_to "new", new_document_path %>
 </div>
 <div id='view-content'>
+  <div id="index-list">
+    <div id='index-separator'>My documents</div id='index-separator'>
+    <% current_user.documents.each do |document| %>
+      <% if can? :manage, document %>
+        <div id='index-list-item'>
+          <%= link_to document.title.present? ? document.title : document.name, document %>
+          <%= button_to "delete", document, method: :delete %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
   <% if current_user.admin? %>
     <div id="index-list">
       <% @users.each do |user| %>
@@ -10,17 +21,6 @@
         <% user.documents.each do |document| %>
           <div id='index-list-item'>
             <%= link_to document.name, document %>
-            <%= button_to "delete", document, method: :delete %>
-          </div>
-        <% end %>
-      <% end %>
-    </div>
-  <% else %>
-    <div id="index-list">
-      <% current_user.documents.each do |document| %>
-        <% if can? :manage, document %>
-          <div id='index-list-item'>
-            <%= link_to document.title.present? ? document.title : document.name, document %>
             <%= button_to "delete", document, method: :delete %>
           </div>
         <% end %>
