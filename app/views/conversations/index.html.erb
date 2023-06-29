@@ -4,7 +4,9 @@
 </div>
 <div id='view-content'>
   <div id="index-list">
-    <div id='index-separator'>My conversations</div id='index-separator'>
+    <% if current_user.admin? %>
+      <div id='index-separator'>My conversations</div id='index-separator'>
+    <% end %>
     <% current_user.conversations.each do |conversation| %>
       <% if can? :manage, conversation %>
         <div id='index-list-item'>

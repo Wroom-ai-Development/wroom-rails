@@ -4,7 +4,9 @@
 </div>
 <div id='view-content'>
   <div id="index-list">
-    <div id='index-separator'>My documents</div id='index-separator'>
+    <% if current_user.admin? %>
+      <div id='index-separator'>My documents</div id='index-separator'>
+    <% end %>
     <% current_user.documents.each do |document| %>
       <% if can? :manage, document %>
         <div id='index-list-item'>
