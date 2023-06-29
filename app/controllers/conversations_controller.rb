@@ -11,7 +11,11 @@ class ConversationsController < ApplicationController
   end
 
   # GET /conversations/1 or /conversations/1.json
-  def show; end
+  def show
+    return unless @conversation.status == 'ready'
+
+    @conversation.update!(status: 2)
+  end
 
   # GET /conversations/new
   def new
@@ -19,12 +23,9 @@ class ConversationsController < ApplicationController
   end
 
   def new_user_message
+    @conversation.update!(status: 1)
     @conversation.messages.create!(content: params[:content], role: 'user')
-    begin
-      Conversations::ConversationService.new(@conversation).respond
-    rescue Conversations::ConversationService::OpenAIApiError => e
-      @conversation.messages.create!(content: e, role: 'error')
-    end
+    AnswerFetchingWorker.perform_async(@conversation.id)
     redirect_to @conversation
   end
 

@@ -15,6 +15,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;600;700;800;900&family=MuseoModerno:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 $wroom-blue: rgb(0, 102, 255);
+$wroom-baby-blue: rgb(212, 229, 255);
+$wroom-red: red;
 
 html {
   height: 100%;
@@ -27,7 +29,7 @@ html {
   height: 3rem;
   z-index: -500;
   bottom: 0;
-  background:rgb(212, 229, 255)
+  background: $wroom-baby-blue
 }
 
 div#logo {
@@ -43,7 +45,7 @@ div#logo {
     font-weight: 400;
     font-size: 0.9rem;
     text-decoration: none;
-    color: red;
+    color: $wroom-red;
   }
 }
 
@@ -56,7 +58,7 @@ div#logo {
   div#alerts {
     position: absolute;
     right: 1rem;
-    // background-color: red;
+    // background-color: $wroom-red;
     p {
       margin: 0;
       padding: 0.5rem;
@@ -71,7 +73,7 @@ div#logo {
         text-decoration: underline 1px rgb(0, 212, 142);
       }
       &.alert {
-        text-decoration: underline 2px red;
+        text-decoration: underline 2px $wroom-red;
       }
 
     }
@@ -104,12 +106,12 @@ header {
       }
     }
     button {
-      color: red;
+      color: $wroom-red;
       background-color: rgba(0, 0, 0, 0);
       font-family: 'Playfair Display', serif;
       border: none;
       &:hover {
-        text-decoration: underline 1px red;
+        text-decoration: underline 1px $wroom-red;
       }
     }
   }
@@ -183,7 +185,7 @@ main {
         button {
           background-color: white;
           border: none;     
-          color: red;
+          color: $wroom-red;
           font-size: 0.6rem;
           font-family: 'Playfair Display', serif;
           font-style: italic;
@@ -191,6 +193,9 @@ main {
         }
       }
     }
+
+
+
 
     div.chunking-status-notice {
       display: flex;
@@ -214,14 +219,14 @@ main {
         font-style: italic;
         div.message {
           font-weight: 300;
-          text-decoration: underline 2px red;
+          text-decoration: underline 2px $wroom-red;
 
         }
         div.errors {
           margin-top: 0.5rem;
           div.error {
             span.bullet {
-              color: red;
+              color: $wroom-red;
             }
           }
         }
@@ -320,16 +325,22 @@ main {
       height: 30rem;
       display: flex;
       flex-direction: column-reverse;
+      align-items: center;
 
       div.message {
         padding: 0.5rem 0 0.5rem 0;
         text-align: justify;
         font-size: 0.9rem;
         line-height: 1.5rem;
+        width: 100%;
 
         &.user {
           text-align: right;
           font-style: italic;
+        }
+
+        .content {
+          width: 100%;
         }
       }
     }
@@ -508,3 +519,47 @@ div#devise {
     transform: rotate(1800deg);
   }
 }
+
+
+.conversation-hourglass {
+  display: inline-block;
+  position: relative;
+  width: 34px;
+  height: 34px;
+}
+.conversation-hourglass:after {
+  content: " ";
+  display: block;
+  border-radius: 50%;
+  width: 0;
+  height: 0;
+  margin: 8px;
+  box-sizing: border-box;
+  border: 10px solid $wroom-baby-blue;
+  border-color: $wroom-baby-blue transparent $wroom-baby-blue transparent;
+  animation: conversation-hourglass 1.2s infinite;
+}
+@keyframes conversation-hourglass {
+  0% {
+    transform: rotate(0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  50% {
+    transform: rotate(900deg);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  100% {
+    transform: rotate(1800deg);
+  }
+}
+div.conversation-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.7rem;
+  color: $wroom-blue;
+  div.conversation-loading-label {
+    width: min-content;
+    font-style: italic;
+  }
+}    
