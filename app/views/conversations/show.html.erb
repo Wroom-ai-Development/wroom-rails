@@ -26,7 +26,12 @@
     <% @conversation.messages.reverse.each do |message| %>
       <div class='message <%= message.role %>'>
         <div class='content'>
-          <%= message.content %>
+          <div class='main-message'>
+            <p>
+              <%= message.content %>
+            </p>
+            <%= button_to '␡', delete_message_conversation_path(message_id: message.id), method: :delete %>
+          </div>
           <% if message.partial_answers.present? %>
             <details>
               <summary>Partial answers:</summary>

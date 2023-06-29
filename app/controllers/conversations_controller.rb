@@ -29,6 +29,11 @@ class ConversationsController < ApplicationController
     redirect_to @conversation
   end
 
+  def delete_message
+    Message.find(params[:message_id]).destroy
+    redirect_to @conversation
+  end
+
   # GET /conversations/1/edit
   def edit; end
 

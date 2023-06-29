@@ -336,13 +336,51 @@ main {
         line-height: 1.5rem;
         width: 100%;
 
+        div.main-message {
+          display: flex;
+          align-items: center;
+          button {
+            height: 2rem;
+            width: 2rem;
+            font-size: 1.2rem;
+            background-color: white;
+            color: $wroom-red;
+            border: none;
+            content: 'asdasd'
+          }
+        }
+
         &.user {
           text-align: right;
           font-style: italic;
+          div.main-message {
+            flex-direction: row-reverse;
+
+            form {
+              width: 100%
+            }
+  
+            button {
+              margin-right: 1rem;
+            }
+          }
+        }
+
+        &.assistant {
+          div.main-message {  
+            button {
+              margin-left: 1rem;
+            }
+          }
         }
 
         &.error {
           text-decoration: underline 1px $wroom-red;
+          div.main-message {  
+            button {
+              margin-left: 1rem;
+            }
+          }
         }
 
         .content {
