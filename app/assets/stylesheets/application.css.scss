@@ -348,6 +348,9 @@ main {
             border: none;
             content: 'asdasd'
           }
+          form {
+            margin: 0 auto 0 0;
+          }
         }
 
         &.user {
@@ -355,11 +358,6 @@ main {
           font-style: italic;
           div.main-message {
             flex-direction: row-reverse;
-
-            form {
-              width: 100%
-            }
-  
             button {
               margin-right: 1rem;
             }

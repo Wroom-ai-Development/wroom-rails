@@ -27,9 +27,9 @@
       <div class='message <%= message.role %>'>
         <div class='content'>
           <div class='main-message'>
-            <p>
-              <%= message.content %>
-            </p>
+            <div class='main-message-content'>
+              <%= simple_format message.content %>
+            </div>
             <%= button_to '␡', delete_message_conversation_path(message_id: message.id), method: :delete %>
           </div>
           <% if message.partial_answers.present? %>
