@@ -70,7 +70,7 @@ class DocumentsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def document_params
-    params.require(:document).permit(:title, :author, :year_published, :user_id, :file, :text_category)
+    params.require(:document).permit(:name, :title, :author, :year_published, :user_id, :file, :text_category)
   end
 
   def save_section_headers

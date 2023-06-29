@@ -449,6 +449,25 @@ div#devise {
   
   div.ui-box {
     width: 15rem;
+
+    form {
+      div#error_explanation {
+        margin-top: 0.5rem;
+        h2 {
+          text-decoration: underline 1px $wroom-red;
+          font-size: 1rem;
+        }
+        ul {
+          padding: 0;
+          li {
+            font-size: 0.8rem;
+            &::marker {
+              color: $wroom-red;
+            }
+          }
+        }
+      }
+    }
   }
   
   div.field {
