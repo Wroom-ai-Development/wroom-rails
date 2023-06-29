@@ -88,16 +88,32 @@ module Conversations
       filtered_answers
     end
 
-    def get_summary_answer(answers)
+    def get_summary_answer(answers) # rubocop:disable Metrics/MethodLength
       summary_prompt = <<-PROMPT
         Shorten the text below so that no information is repeated. Remove sentences that suggest the speaker#{' '}
         does not have the answer.
       PROMPT
       messages = [
-        { role: 'system', content: summary_prompt },
         { role: 'system', content: answers.join(' ') }
       ]
-      client_chat('gpt-3.5-turbo', messages)
+      messages << { role: 'system', content: summary_prompt }
+      response = client_chat('gpt-3.5-turbo', messages)
+      if @conversation.voices.any?
+        client_chat(
+          'gpt-3.5-turbo',
+          [{
+            role: 'system', content: response
+          }, {
+            role: 'system',
+            content: <<-CONTENT
+              Rewrite the text above taking into account these instructions:#{' '}
+              #{@conversation.voices.pluck(:meta_prompt).join(' ')}
+            CONTENT
+          }]
+        )
+      else
+        response
+      end
     end
 
     def get_answer_from_chunk(chunk)
