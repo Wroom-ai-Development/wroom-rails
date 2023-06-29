@@ -16,6 +16,7 @@ class DocumentsController < ApplicationController
   # GET /documents/new
   def new
     @document = Document.new
+    raise "Sraka"
   end
 
   # GET /documents/1/edit

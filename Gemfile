@@ -112,3 +112,5 @@ gem 'pdf-reader', '~> 2.11'
 gem 'sass-rails', '~> 6.0'
 
 gem 'sidekiq', '~> 7.1'
+
+gem 'sentry-raven'
