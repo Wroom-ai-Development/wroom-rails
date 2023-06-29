@@ -113,6 +113,7 @@ header {
       &:hover {
         text-decoration: underline 1px $wroom-red;
       }
+      padding: 0;
     }
   }
 }
@@ -583,5 +584,20 @@ div.conversation-status {
 
   main div#conversation {
     padding: 0 0.5rem 0.5rem 0.5rem;
+  }
+
+  header nav {
+    font-size: 0.7rem;
+    button {
+      font-size: 0.7rem;  
+    }
+    .link-wrapper {
+      display: flex;
+      align-items: center;
+    }
+    a {
+      margin-right: 0.6rem;
+      height: fit-content;
+    }
   }
 }
