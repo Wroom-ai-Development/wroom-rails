@@ -113,6 +113,6 @@ gem 'sass-rails', '~> 6.0'
 
 gem 'sidekiq', '~> 7.1'
 
+gem 'sentry-rails'
 gem 'sentry-raven'
-gem "sentry-rails"gem "sentry-ruby"
-
+gem 'sentry-ruby'
