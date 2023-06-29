@@ -148,13 +148,14 @@ main {
     }
   }
 
+
+
   div#view-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     div#index-list {
-      max-width: 30rem;
-      min-width: 30rem;
+      width: 30rem;
       display: flex;
       flex-direction: column;
       margin-top: 1rem;
@@ -210,8 +211,7 @@ main {
     }
 
     div.record-form {
-      max-width: 50rem;
-      min-width: 30rem;
+      width: 50rem;
       div.validation {
         margin-top: 1rem;
         text-align: center;
@@ -563,3 +563,25 @@ div.conversation-status {
     font-style: italic;
   }
 }    
+
+@media only screen and (max-width: 1000px) {
+  main div#view-content div#index-list {
+    width: 95%;
+  }
+
+  main div#view-content div.record-form {
+    width: 95%;
+  }
+
+  div.show-record {
+    width: 95%;
+
+    div.chunk {
+      width: 100%;
+    }
+  }
+
+  main div#conversation {
+    padding: 0 0.5rem 0.5rem 0.5rem;
+  }
+}
