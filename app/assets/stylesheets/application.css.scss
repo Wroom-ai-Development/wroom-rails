@@ -315,6 +315,7 @@ main {
   }
   div#conversation {
     padding: 0 3rem 3rem 3rem;
+    max-height: 100vh;
 
     margin: 1rem auto 1rem auto;
     max-width: 50rem;
@@ -323,10 +324,10 @@ main {
       border: 1px solid gray;
       border-radius: 10px;
       overflow-y: scroll;
-      height: 30rem;
       display: flex;
       flex-direction: column-reverse;
       align-items: center;
+      height: 61vh;
 
       div.message {
         padding: 0.5rem 0 0.5rem 0;
@@ -608,6 +609,26 @@ div.conversation-status {
 }
 @media only screen and (max-width: 550px) {
   body div#alerts {
+    display: none;
+  }
+}
+
+@media only screen and (max-height: 500px) {
+  main div#conversation div#messages {
+    height: 44vh;
+  }
+
+  main div#conversation {
+    max-width: 72rem;
+  }
+
+  main div#conversation form {
+    max-width: 72rem;
+  }
+}
+
+@media only screen and (max-width: 340px) {
+  body {
     display: none;
   }
 }
