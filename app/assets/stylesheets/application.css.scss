@@ -328,6 +328,16 @@ main {
 
     margin: 1rem auto 1rem auto;
     max-width: 50rem;
+
+    div.request-counter {
+      display: flex;
+      justify-content: space-between;
+      p {
+        color: $wroom-blue;
+        font-size: 0.7rem;
+      }
+    }
+
     div#messages {
       padding: 1rem;
       border: 1px solid gray;

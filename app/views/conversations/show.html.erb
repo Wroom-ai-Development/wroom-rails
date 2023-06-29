@@ -60,4 +60,14 @@
       <%= f.text_field (:content) %>
       <%= f.submit '➥', id: 'submit' %>
     <% end %>
+    <% if current_user.admin? %>
+      <div class="request-counter">
+        <p>
+          <i>Requests in total:</i> <%= @conversation.total_requests %>
+        </p>
+        <p>
+          <i>Requests on last query:</i> <%= @conversation.last_query_requests %>
+        </p>
+      </div>
+    <% end %>
 </div>

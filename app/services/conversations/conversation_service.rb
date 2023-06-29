@@ -19,21 +19,31 @@ module Conversations
         m.role == 'error'
       end
       @conversation_messages = @conversation_messages.map { |message| { role: message.role, content: message.content } }
+      @requests_for_current_query = 0
     end
 
-    def respond
+    def respond # rubocop:disable Metrics/MethodLength
       if @documents.any?
         @documents.each do |document|
           get_answer_from_document(document)
+          update_request_counts
         end
       else
         answer = get_answer_without_documents
+        update_request_counts
         @conversation.update!(status: 0)
         @conversation.messages.create!(role: 'assistant', content: answer)
       end
     end
 
     private
+
+    def update_request_counts
+      @conversation.update!(
+        total_requests: @conversation.total_requests + @requests_for_current_query,
+        last_query_requests: @requests_for_current_query
+      )
+    end
 
     def get_answer_without_documents
       get_answer_from_messages(@conversation_messages)
@@ -158,6 +168,7 @@ module Conversations
           messages:
         }
       )
+      @requests_for_current_query += 1
       raise OpenAIApiError, response['error']['message'] if response['error']
 
       response.dig('choices', 0, 'message', 'content')
