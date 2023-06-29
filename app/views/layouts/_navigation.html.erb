@@ -4,13 +4,19 @@
   </div>
   <nav>
     <% if can? :manage, User %>
-      <%= link_to "Users", users_path %>
+      <div class="link-wrapper">
+        <%= link_to "Users", users_path %>
+      </div>
     <% end %>
     <% if can? :manage, Document %>
-      <%= link_to "Documents", documents_path %>
+      <div class="link-wrapper">
+        <%= link_to "Documents", documents_path %>
+      </div>
     <% end %>
     <% if can? :manage, Conversation %>
-      <%= link_to "Conversations", conversations_path %>
+      <div class="link-wrapper">
+        <%= link_to "Conversations", conversations_path %>
+      </div>
     <% end %>
     <% if current_user %>
       <%= button_to "Sign out", destroy_user_session_path, method: :delete %>

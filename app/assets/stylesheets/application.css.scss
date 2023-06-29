@@ -113,6 +113,7 @@ header {
       &:hover {
         text-decoration: underline 1px $wroom-red;
       }
+      padding: 0;
     }
   }
 }
@@ -148,13 +149,14 @@ main {
     }
   }
 
+
+
   div#view-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     div#index-list {
-      max-width: 30rem;
-      min-width: 30rem;
+      width: 30rem;
       display: flex;
       flex-direction: column;
       margin-top: 1rem;
@@ -210,8 +212,7 @@ main {
     }
 
     div.record-form {
-      max-width: 50rem;
-      min-width: 30rem;
+      width: 50rem;
       div.validation {
         margin-top: 1rem;
         text-align: center;
@@ -314,6 +315,7 @@ main {
   }
   div#conversation {
     padding: 0 3rem 3rem 3rem;
+    max-height: 100vh;
 
     margin: 1rem auto 1rem auto;
     max-width: 50rem;
@@ -322,10 +324,10 @@ main {
       border: 1px solid gray;
       border-radius: 10px;
       overflow-y: scroll;
-      height: 30rem;
       display: flex;
       flex-direction: column-reverse;
       align-items: center;
+      height: 61vh;
 
       div.message {
         padding: 0.5rem 0 0.5rem 0;
@@ -563,3 +565,70 @@ div.conversation-status {
     font-style: italic;
   }
 }    
+
+@media only screen and (max-width: 1000px) {
+  main div#view-content div#index-list {
+    width: 95%;
+  }
+
+  main div#view-content div.record-form {
+    width: 95%;
+  }
+
+  div.show-record {
+    width: 95%;
+
+    div.chunk {
+      width: 100%;
+    }
+  }
+
+  main div#conversation {
+    padding: 0 0.5rem 0.5rem 0.5rem;
+  }
+
+  header nav {
+    font-size: 0.7rem;
+    button {
+      font-size: 0.7rem;  
+    }
+    .link-wrapper {
+      display: flex;
+      align-items: center;
+    }
+    a {
+      margin-right: 0.6rem;
+      height: fit-content;
+    }
+  }
+
+  body div#alerts p.alert {
+    max-width: 6rem;
+    font-size: 1rem;
+  }
+}
+@media only screen and (max-width: 550px) {
+  body div#alerts {
+    display: none;
+  }
+}
+
+@media only screen and (max-height: 500px) {
+  main div#conversation div#messages {
+    height: 44vh;
+  }
+
+  main div#conversation {
+    max-width: 72rem;
+  }
+
+  main div#conversation form {
+    max-width: 72rem;
+  }
+}
+
+@media only screen and (max-width: 340px) {
+  body {
+    display: none;
+  }
+}
