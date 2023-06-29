@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :conversations do
     member do
       post 'new_user_message'
+      delete 'delete_message'
     end
   end
   resources :documents
