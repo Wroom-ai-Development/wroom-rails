@@ -361,6 +361,13 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    sentry-rails (5.9.0)
+      railties (>= 5.0)
+      sentry-ruby (~> 5.9.0)
+    sentry-raven (3.1.2)
+      faraday (>= 1.0)
+    sentry-ruby (5.9.0)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
     sidekiq (7.1.2)
       concurrent-ruby (< 2)
       connection_pool (>= 2.3.0)
@@ -468,6 +475,9 @@ DEPENDENCIES
   ruby-openai (~> 4.2)
   sass-rails (~> 6.0)
   selenium-webdriver
+  sentry-rails
+  sentry-raven
+  sentry-ruby
   sidekiq (~> 7.1)
   simplecov
   sprockets-rails
