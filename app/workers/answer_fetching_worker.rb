@@ -9,6 +9,7 @@ class AnswerFetchingWorker
     begin
       Conversations::ConversationService.new(conversation).respond
     rescue Conversations::ConversationService::OpenAIApiError => e
+      conversation.update!(status: 3)
       conversation.messages.create!(content: e, role: 'error')
     end
   end
