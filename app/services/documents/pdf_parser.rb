@@ -5,7 +5,7 @@ module Documents
   class PdfParser
     def initialize(file)
       @file = file
-      @reader = PDF::Reader.new(StringIO.new(file.download))
+      @reader = PDF::Reader.new(StringIO.new(file.download, 'rb'))
     end
 
     def parse_text

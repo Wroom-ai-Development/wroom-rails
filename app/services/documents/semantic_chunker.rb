@@ -11,11 +11,11 @@ module Documents
     def initialize(document, text)
       @document = document
       @text = text
+      prepare_text
       @sections = []
       @lines = @text.split("\n").reject(&:blank?)
       @processing_last_section = false
       @current_chunk_ordinal_number = 0
-      consolidate_whitespace
     end
 
     # TODO : Create chunks in resque jobs
@@ -105,14 +105,17 @@ module Documents
       end
     end
 
+    def prepare_text
+      remove_null_bytes
+      consolidate_whitespace
+    end
+
+    def remove_null_bytes
+      @text = @text.gsub("\u0000", '')
+    end
+
     def consolidate_whitespace
-      # Convert multiple whitespaces to a single whitespace
-      consolidated = @lines.map do |line|
-        line.gsub(/\s+/, ' ')
-      end.join("\n")
-      # Preserve newline characters
-      # consolidated.gsub!(/(\S)\n(\S)/, '\1 \2')
-      @text = consolidated
+      @text = @text.gsub(/\s+/, ' ')
     end
   end
 end
