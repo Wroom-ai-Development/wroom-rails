@@ -600,4 +600,14 @@ div.conversation-status {
       height: fit-content;
     }
   }
+
+  body div#alerts p.alert {
+    max-width: 6rem;
+    font-size: 1rem;
+  }
+}
+@media only screen and (max-width: 550px) {
+  body div#alerts {
+    display: none;
+  }
 }
