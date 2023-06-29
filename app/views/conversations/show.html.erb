@@ -4,15 +4,27 @@
   <%= link_to "edit", edit_conversation_path %>
 </div>
 <div id='conversation'>
-  <div id='conversation-documents'>
-    <div id='conversation-documents-header'>
-      Reference material:
-    </div>
-    <% @conversation.documents.each do |document| %>
-      <div class='conversation-document'>
-        <span class='bullet'>•</span> <%= link_to document.title, document %>
+  <div id='conversation-settings'>
+    <div class="conversation-setting left">
+      <div id='conversation-setting-header'>
+        Voices used:
       </div>
-    <% end %>
+      <% @conversation.voices.each do |voice| %>
+        <div class='conversation-setting'>
+          <span class='bullet'>•</span> <%= link_to voice.name, edit_voice_path(voice) %>
+        </div>
+      <% end %>
+    </div>
+    <div class="conversation-setting right">
+      <div id='conversation-setting-header'>
+        Reference material:
+      </div>
+      <% @conversation.documents.each do |document| %>
+        <div class='conversation-setting'>
+          <span class='bullet'>•</span> <%= link_to document.title.present? ? document.title : document.name, document %>
+        </div>
+      <% end %>
+    </div>
   </div>
   <div id='messages'>
     <% if @conversation.status == 1 %>

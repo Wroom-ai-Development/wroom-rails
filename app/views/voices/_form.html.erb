@@ -1,12 +1,12 @@
 <div class='record-form'>
-  <%= form_with(model: conversation) do |form| %>
-    <% if conversation.errors.any? %>
+  <%= form_with(model: voice) do |form| %>
+    <% if voice.errors.any? %>
       <div class='validation'>
         <div class='message'>
-          <%= pluralize(conversation.errors.count, "error") %> prohibited this conversation from being saved:
+          <%= pluralize(voice.errors.count, "error") %> prohibited this voice from being saved:
         </div>
         <div class='errors'>
-          <% conversation.errors.each do |error| %>
+          <% voice.errors.each do |error| %>
             <div class='error'><span class='bullet'>• </span><%= error.full_message %></div>
           <% end %>
         </div>
@@ -14,9 +14,10 @@
     <% end %>
 
     <div class='field'>
-      <%= form.label :title, style: "display: block" %>
-      <%= form.text_field :title %>
+      <%= form.label :name, style: "display: block" %>
+      <%= form.text_field :name %>
     </div>
+
     <% if current_user.admin? %>
       <div class='field'>
         <%= form.label :user_id, style: "display: block" %>
@@ -28,26 +29,26 @@
         <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
       </div>
     <% end %>
-    <div class='checkbox-field'>
-      <%= form.label 'Reference material:', style: "display: block" %>
-      <%= form.collection_check_boxes :document_ids, Document.accessible_by(current_ability), :id, :name, { hide_label: true } do |item| %>
-        <div class='item'>
-        <%= item.check_box %>
-          <%= item.label %>
-        </div>
-      <% end %>
+
+
+    <div class='field'>
+      <%= form.label :meta_prompt, style: "display: block" %>
+      <%= form.text_area :meta_prompt %>
     </div>
+
     <div class='checkbox-field'>
-      <%= form.label 'Voices:', style: "display: block" %>
-      <%= form.collection_check_boxes :voice_ids, Voice.accessible_by(current_ability), :id, :name, { hide_label: true } do |item| %>
+      <%= form.label 'Conversations', style: "display: block" %>
+      <%= form.collection_check_boxes :conversation_ids, Conversation.accessible_by(current_ability), :id, :title, { hide_label: true } do |item| %>
         <div class='item'>
           <%= item.check_box %>
           <%= item.label %>
         </div>
       <% end %>
     </div>
-    <div class='actions'>
+
+    <div class="actions">
       <%= form.submit %>
     </div>
   <% end %>
 </div>
+

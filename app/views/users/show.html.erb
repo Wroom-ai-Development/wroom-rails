@@ -9,14 +9,20 @@
 
     <% @documents.each do |document| %>
       <p>
-        <%= link_to document.title, document %>
+        <%= link_to document.title.present? ? document.title : document.name, document %>
       </p>
     <% end %>
 
-    <h4> Conversations</h4>
+    <h4>Conversations</h4>
     <% @conversations.each do |conversation| %>
       <p>
         <%= link_to conversation.title.present? ? conversation.title : "Conversation with id #{conversation.id}", conversation %>
+      </p>
+    <% end %>
+        <h4>Voices</h4>
+    <% @user.voices.each do |voice| %>
+      <p>
+        <%= link_to voice.name, edit_voice_path(voice) %>
       </p>
     <% end %>
   </div>

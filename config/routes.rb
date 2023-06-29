@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :voices
   mount ActionCable.server => '/cable'
   resources :conversations do
     member do

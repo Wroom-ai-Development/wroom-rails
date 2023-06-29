@@ -99,10 +99,16 @@ module Conversations
       answer
     end
 
-    def prepare_messages_for_chunk(chunk)
+    def prepare_messages_for_chunk(chunk) # rubocop:disable Metrics/MethodLength
       messages = @conversation_messages.dup.unshift({ role: 'system', content: chunk.content })
       last_user_message = messages.pop
-      messages << { role: 'system', content: META_PROMPT }
+      if @conversation.voices.any?
+        @conversation.voices.each do |voice|
+          messages << { role: 'system', content: voice.meta_prompt }
+        end
+      else
+        messages << { role: 'system', content: META_PROMPT }
+      end
       messages << { role: 'system', content: chunk_context_prompt(chunk) }
       messages << last_user_message
       messages

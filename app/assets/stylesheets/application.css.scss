@@ -234,7 +234,7 @@ main {
       }
       div.field {
         padding-top: 0.5rem;
-        input, select {
+        input, select, textarea {
           width: 100%;
           box-sizing: border-box;
           font-family: 'Playfair Display', serif;
@@ -245,6 +245,9 @@ main {
           input#file-upload-button {
             margin-right: 1rem;
           }
+        }
+        textarea {
+          height: 45vh;
         }
       }
 
@@ -274,7 +277,6 @@ main {
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: 1rem;
         input {
           font-size: 0.9rem;
           font-family: 'Playfair Display', serif;
@@ -292,17 +294,17 @@ main {
     }
   }
 
-  div#conversation-documents {
-    text-align: right;
+  div#conversation-settings {
     max-width: 50rem;
     margin-bottom: 1rem;
-
-    div#conversation-documents-header {
+    display: flex;
+    justify-content: space-between;
+    div#conversation-setting-header {
       text-decoration: underline;
       margin-bottom: 0.3rem;
       font-size: 0.9rem;
     }
-    div.conversation-document {
+    div.conversation-setting {
       font-size: 0.9rem;
       font-style: italic;
       a:hover {
@@ -310,6 +312,13 @@ main {
       }
       span.bullet {
         color: $wroom-blue
+      }
+
+      &.right {
+        text-align: right;
+      }
+      &.left {
+        text-align: left;
       }
     }
   }
@@ -426,6 +435,11 @@ div.show-record {
     width: 100%;
     label {
       font-weight: 600;
+    }
+  }
+  p {
+    a {
+      text-decoration: underline 1px $wroom-blue;
     }
   }
   div.chunk {

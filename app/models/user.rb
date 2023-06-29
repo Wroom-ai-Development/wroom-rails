@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   has_many :documents, dependent: :destroy
   has_many :conversations, dependent: :destroy
+  has_many :voices, dependent: :destroy
 
   validates :email, uniqueness: true, presence: true
 

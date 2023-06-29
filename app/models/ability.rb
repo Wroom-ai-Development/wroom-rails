@@ -10,6 +10,8 @@ class Ability
     return unless user.user?
 
     can(:manage, Document, user:)
+
+    can(:manage, Voice, user:)
     can :manage, Conversation, user:
 
     # Define abilities for the user here. For example:
