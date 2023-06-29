@@ -50,7 +50,7 @@
     <% if current_user.admin? %>
       <div class='field'>
         <%= form.label :user_id, style: "display: block" %>
-        <%= form.collection_select :user_id, User.all, :id, :email %>
+        <%= form.collection_select :user_id, User.all, :id, :email, { selected: current_user.id } %>
       </div>
     <% else %>
       <div class='field' style='display: none;'>
