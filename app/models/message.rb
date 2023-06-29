@@ -10,9 +10,8 @@ class Message < ApplicationRecord
   private
 
   def force_conversation_refresh
-    return unless conversation.status.zero?
+    return unless role == 'assistant' || role == 'error'
 
-    Rails.logger.debug 'FORCE REFRESH CALLBACK CALLED && MESSAGE READY'
     broadcast_replace_to(
       conversation.id,
       'conversation_status',
