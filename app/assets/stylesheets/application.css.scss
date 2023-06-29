@@ -328,6 +328,16 @@ main {
 
     margin: 1rem auto 1rem auto;
     max-width: 50rem;
+
+    div.request-counter {
+      display: flex;
+      justify-content: space-between;
+      p {
+        color: $wroom-blue;
+        font-size: 0.7rem;
+      }
+    }
+
     div#messages {
       padding: 1rem;
       border: 1px solid gray;
@@ -348,6 +358,18 @@ main {
         div.main-message {
           display: flex;
           align-items: center;
+          flex-direction: row;
+          div.main-message-content {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            details {
+              width: 100%;
+              summary {
+                width: 100%;
+              }
+            }
+          }
           button {
             height: 2rem;
             width: 2rem;
@@ -358,7 +380,7 @@ main {
             content: 'asdasd'
           }
           form {
-            margin: 0 auto 0 0;
+            margin: 0 0 0 0;
           }
         }
 
@@ -367,8 +389,9 @@ main {
           font-style: italic;
           div.main-message {
             flex-direction: row-reverse;
+            justify-content:flex-start;
             button {
-              margin-right: 1rem;
+              margin-left: 1rem;
             }
           }
         }
@@ -376,7 +399,7 @@ main {
         &.assistant {
           div.main-message {  
             button {
-              margin-left: 1rem;
+              margin-right: 1rem;
             }
           }
         }
@@ -384,9 +407,6 @@ main {
         &.error {
           text-decoration: underline 1px $wroom-red;
           div.main-message {  
-            button {
-              margin-left: 1rem;
-            }
           }
         }
 

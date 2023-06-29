@@ -19,21 +19,31 @@ module Conversations
         m.role == 'error'
       end
       @conversation_messages = @conversation_messages.map { |message| { role: message.role, content: message.content } }
+      @requests_for_current_query = 0
     end
 
-    def respond
+    def respond # rubocop:disable Metrics/MethodLength
       if @documents.any?
         @documents.each do |document|
           get_answer_from_document(document)
         end
+        update_request_counts
       else
         answer = get_answer_without_documents
+        update_request_counts
         @conversation.update!(status: 0)
         @conversation.messages.create!(role: 'assistant', content: answer)
       end
     end
 
     private
+
+    def update_request_counts
+      @conversation.update!(
+        total_requests: @conversation.total_requests + @requests_for_current_query,
+        last_query_requests: @requests_for_current_query
+      )
+    end
 
     def get_answer_without_documents
       get_answer_from_messages(@conversation_messages)
@@ -78,16 +88,32 @@ module Conversations
       filtered_answers
     end
 
-    def get_summary_answer(answers)
+    def get_summary_answer(answers) # rubocop:disable Metrics/MethodLength
       summary_prompt = <<-PROMPT
-        Shorten the text above so that no information is repeated. Remove sentences that suggest the speaker#{' '}
+        Shorten the text below so that no information is repeated. Remove sentences that suggest the speaker#{' '}
         does not have the answer.
       PROMPT
       messages = [
-        { role: 'system', content: answers.join(' ') },
-        { role: 'user', content: summary_prompt }
+        { role: 'system', content: answers.join(' ') }
       ]
-      client_chat('gpt-3.5-turbo', messages)
+      messages << { role: 'system', content: summary_prompt }
+      response = client_chat('gpt-3.5-turbo', messages)
+      if @conversation.voices.any?
+        client_chat(
+          'gpt-3.5-turbo',
+          [{
+            role: 'system', content: response
+          }, {
+            role: 'system',
+            content: <<-CONTENT
+              Rewrite the text above taking into account these instructions:#{' '}
+              #{@conversation.voices.pluck(:meta_prompt).join(' ')}
+            CONTENT
+          }]
+        )
+      else
+        response
+      end
     end
 
     def get_answer_from_chunk(chunk)
@@ -118,29 +144,29 @@ module Conversations
       document = chunk.document
       prompt = ['The following question concerns']
       if document.document_chunks.count > 1
-        prompt << chunk.section_header.present? ? chunk.section_header.to_s : 'an excerpt'
+        prompt << (chunk.section_header.present? ? chunk.section_header.to_s : 'an excerpt')
         prompt << 'from the provided'
       else
         prompt << 'the provided'
       end
-      prompt << document.text_category.present? ? document.text_category.to_s : 'text'
+      prompt << (document.text_category.present? ? document.text_category.to_s : 'text')
       prompt << '.'
 
       if document.title.present?
         prompt << 'The title of the'
-        prompt << document.text_category.present? ? document.text_category.to_s : 'text'
+        prompt << (document.text_category.present? ? document.text_category.to_s : 'text')
         prompt << "is #{document.title}."
       end
 
       if document.author.present?
         prompt << 'The author of the'
-        prompt << document.text_category.present? ? document.text_category.to_s : 'text'
+        prompt << (document.text_category.present? ? document.text_category.to_s : 'text')
         prompt << "is #{document.author}."
       end
 
       if document.year_published.present?
         prompt << 'The publication year of the'
-        prompt << document.text_category.present? ? document.text_category.to_s : 'text'
+        prompt << (document.text_category.present? ? document.text_category.to_s : 'text')
         prompt << "is #{document.year_published}."
       end
 
@@ -158,6 +184,7 @@ module Conversations
           messages:
         }
       )
+      @requests_for_current_query += 1
       raise OpenAIApiError, response['error']['message'] if response['error']
 
       response.dig('choices', 0, 'message', 'content')
