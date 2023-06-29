@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_29_103452) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_29_110712) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -49,6 +49,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_29_103452) do
     t.datetime "updated_at", null: false
     t.index ["conversation_id"], name: "index_context_references_on_conversation_id"
     t.index ["document_id"], name: "index_context_references_on_document_id"
+  end
+
+  create_table "conversation_voices", force: :cascade do |t|
+    t.bigint "conversation_id", null: false
+    t.bigint "voice_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conversation_id"], name: "index_conversation_voices_on_conversation_id"
+    t.index ["voice_id"], name: "index_conversation_voices_on_voice_id"
   end
 
   create_table "conversations", force: :cascade do |t|
@@ -110,12 +119,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_29_103452) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "voices", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "user_id", null: false
+    t.text "meta_prompt"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_voices_on_user_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "context_references", "conversations"
   add_foreign_key "context_references", "documents"
+  add_foreign_key "conversation_voices", "conversations"
+  add_foreign_key "conversation_voices", "voices"
   add_foreign_key "conversations", "users"
   add_foreign_key "document_chunks", "documents"
   add_foreign_key "documents", "users"
   add_foreign_key "messages", "conversations"
+  add_foreign_key "voices", "users"
 end

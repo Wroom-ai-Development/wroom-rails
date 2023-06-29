@@ -1,27 +1,27 @@
 <div id='view-header'>
-  <h1>Documents</h1>
-  <%= link_to "new", new_document_path %>
+  <h1>Voices</h1>
+    <%= link_to "new", new_voice_path %>
 </div>
 <div id='view-content'>
   <% if current_user.admin? %>
     <div id="index-list">
       <% @users.each do |user| %>
         <div id='index-separator'><%= user.email %></div id='index-separator'>
-        <% user.documents.each do |document| %>
+        <% user.voices.each do |voice| %>
           <div id='index-list-item'>
-            <%= link_to document.name, document %>
-            <%= button_to "delete", document, method: :delete %>
+            <%= link_to voice.name, voice %>
+            <%= button_to "delete", voice, method: :delete %>
           </div>
         <% end %>
       <% end %>
     </div>
   <% else %>
     <div id="index-list">
-      <% current_user.documents.each do |document| %>
-        <% if can? :manage, document %>
+      <% current_user.voices.each do |voice| %>
+        <% if can? :manage, voice %>
           <div id='index-list-item'>
-            <%= link_to document.title.present? ? document.title : document.name, document %>
-            <%= button_to "delete", document, method: :delete %>
+            <%= link_to voice.name, voice %>
+            <%= button_to "delete", voice, method: :delete %>
           </div>
         <% end %>
       <% end %>

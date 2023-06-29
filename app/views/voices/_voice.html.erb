@@ -1,0 +1,19 @@
+<div id="<%= dom_id voice %>">
+  <p>
+    <strong>Name:</strong>
+    <%= voice.name %>
+  </p>
+
+  <% if current_user.admin? %>
+    <p>
+      <strong>User:</strong>
+      <%= voice.user.email %>
+    </p>
+  <% end %>
+
+  <p>
+    <strong>Meta prompt:</strong>
+    <%= simple_format voice.meta_prompt %>
+  </p>
+
+</div>

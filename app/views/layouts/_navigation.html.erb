@@ -18,6 +18,11 @@
         <%= link_to "Conversations", conversations_path %>
       </div>
     <% end %>
+    <% if can? :manage, Voice %>
+      <div class="link-wrapper">
+        <%= link_to "Voices", voices_path %>
+      </div>
+    <% end %>
     <% if current_user %>
       <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
     <% end %>
