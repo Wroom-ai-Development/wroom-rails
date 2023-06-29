@@ -39,12 +39,9 @@
       <div class='message <%= message.role %>'>
         <div class='content'>
           <div class='main-message'>
+            <%= button_to('␡', delete_message_conversation_path(message_id: message.id), method: :delete) %>
             <div class='main-message-content'>
-              <%= button_to('␡', delete_message_conversation_path(message_id: message.id), method: :delete) if message.role != 'user' %>
-
               <%= simple_format message.content %>
-              <%= button_to('␡', delete_message_conversation_path(message_id: message.id), method: :delete) if message.role == 'user' %>
-
             </div>
           </div>
           <% if message.partial_answers.present? %>

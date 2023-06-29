@@ -382,7 +382,7 @@ main {
           font-style: italic;
           div.main-message {
             flex-direction: row-reverse;
-            justify-content:space-between;
+            justify-content:flex-start;
             button {
               margin-left: 1rem;
             }
