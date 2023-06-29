@@ -341,6 +341,10 @@ main {
           font-style: italic;
         }
 
+        &.error {
+          text-decoration: underline 1px $wroom-red;
+        }
+
         .content {
           width: 100%;
         }
