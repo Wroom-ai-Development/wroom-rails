@@ -35,7 +35,7 @@
         </div>
       <% end %>
     <% end %>
-    <% @conversation.messages.reverse.each do |message| %>
+    <% @conversation.messages.order(:created_at).reverse.each do |message| %>
       <div class='message <%= message.role %>'>
         <div class='content'>
           <div class='main-message'>

@@ -26,8 +26,8 @@ module Conversations
       if @documents.any?
         @documents.each do |document|
           get_answer_from_document(document)
-          update_request_counts
         end
+        update_request_counts
       else
         answer = get_answer_without_documents
         update_request_counts
@@ -90,12 +90,12 @@ module Conversations
 
     def get_summary_answer(answers)
       summary_prompt = <<-PROMPT
-        Shorten the text above so that no information is repeated. Remove sentences that suggest the speaker#{' '}
+        Shorten the text below so that no information is repeated. Remove sentences that suggest the speaker#{' '}
         does not have the answer.
       PROMPT
       messages = [
-        { role: 'system', content: answers.join(' ') },
-        { role: 'user', content: summary_prompt }
+        { role: 'system', content: summary_prompt },
+        { role: 'system', content: answers.join(' ') }
       ]
       client_chat('gpt-3.5-turbo', messages)
     end
@@ -128,29 +128,29 @@ module Conversations
       document = chunk.document
       prompt = ['The following question concerns']
       if document.document_chunks.count > 1
-        prompt << chunk.section_header.present? ? chunk.section_header.to_s : 'an excerpt'
+        prompt << (chunk.section_header.present? ? chunk.section_header.to_s : 'an excerpt')
         prompt << 'from the provided'
       else
         prompt << 'the provided'
       end
-      prompt << document.text_category.present? ? document.text_category.to_s : 'text'
+      prompt << (document.text_category.present? ? document.text_category.to_s : 'text')
       prompt << '.'
 
       if document.title.present?
         prompt << 'The title of the'
-        prompt << document.text_category.present? ? document.text_category.to_s : 'text'
+        prompt << (document.text_category.present? ? document.text_category.to_s : 'text')
         prompt << "is #{document.title}."
       end
 
       if document.author.present?
         prompt << 'The author of the'
-        prompt << document.text_category.present? ? document.text_category.to_s : 'text'
+        prompt << (document.text_category.present? ? document.text_category.to_s : 'text')
         prompt << "is #{document.author}."
       end
 
       if document.year_published.present?
         prompt << 'The publication year of the'
-        prompt << document.text_category.present? ? document.text_category.to_s : 'text'
+        prompt << (document.text_category.present? ? document.text_category.to_s : 'text')
         prompt << "is #{document.year_published}."
       end
 
