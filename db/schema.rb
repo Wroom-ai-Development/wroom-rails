@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_29_042639) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_29_103452) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -72,7 +72,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_29_042639) do
   end
 
   create_table "documents", force: :cascade do |t|
-    t.string "title", null: false
+    t.string "title"
     t.string "author"
     t.integer "year_published"
     t.bigint "user_id", null: false
@@ -80,7 +80,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_29_042639) do
     t.datetime "updated_at", null: false
     t.text "section_headers", default: [], array: true
     t.text "text_category"
-    t.index ["title"], name: "index_documents_on_title", unique: true
+    t.text "name", default: "", null: false
     t.index ["user_id"], name: "index_documents_on_user_id"
   end
 

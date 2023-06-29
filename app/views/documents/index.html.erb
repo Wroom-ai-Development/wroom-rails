@@ -9,7 +9,7 @@
         <div id='index-separator'><%= user.email %></div id='index-separator'>
         <% user.documents.each do |document| %>
           <div id='index-list-item'>
-            <%= link_to document.title, document %>
+            <%= link_to document.name, document %>
             <%= button_to "delete", document, method: :delete %>
           </div>
         <% end %>

@@ -2,7 +2,7 @@
 
 class Document < ApplicationRecord
   belongs_to :user
-  validates :title, presence: true, uniqueness: true
+  validates :name, presence: true, uniqueness: { scope: :user_id }
   validates :file, presence: true
   has_one_attached :file
   has_many :context_references, dependent: :destroy
