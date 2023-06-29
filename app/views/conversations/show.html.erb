@@ -42,16 +42,17 @@
             <%= button_to('␡', delete_message_conversation_path(message_id: message.id), method: :delete) %>
             <div class='main-message-content'>
               <%= simple_format message.content %>
+              <% if message.partial_answers.present? %>
+                <details>
+                  <summary>Partial answers:</summary>
+                  <% message.partial_answers.each do |answer| %>
+                    <p><%= answer %></p>
+                  <% end %>
+                </details>
+              <% end %>
             </div>
           </div>
-          <% if message.partial_answers.present? %>
-            <details>
-              <summary>Partial answers:</summary>
-              <% message.partial_answers.each do |answer| %>
-                <p><%= answer %></p>
-              <% end %>
-            </details>
-          <% end %>
+
         </div>
       </div>
     <% end %>

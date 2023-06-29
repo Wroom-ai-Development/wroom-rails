@@ -362,6 +362,13 @@ main {
           div.main-message-content {
             display: flex;
             align-items: center;
+            flex-direction: column;
+            details {
+              width: 100%;
+              summary {
+                width: 100%;
+              }
+            }
           }
           button {
             height: 2rem;
