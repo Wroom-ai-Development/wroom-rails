@@ -27,7 +27,9 @@ module Conversations
           get_answer_from_document(document)
         end
       else
-        @conversation.messages.create!(role: 'assistant', content: get_answer_without_documents)
+        answer = get_answer_without_documents
+        @conversation.update!(status: 0)
+        @conversation.messages.create!(role: 'assistant', content: answer)
       end
     end
 
@@ -37,12 +39,14 @@ module Conversations
       get_answer_from_messages(@conversation_messages)
     end
 
-    def get_answer_from_document(document)
+    def get_answer_from_document(document) # rubocop:disable Metrics/MethodLength
       chunks = document.document_chunks
       if chunks.size == 1
         document_identifier = @documents.size > 1 ? " (based on #{document.title})" : ''
+        answer = get_answer_from_chunk(chunks[0])
+        @conversation.update!(status: 0)
         @conversation.messages.create!(role: 'assistant',
-                                       content: get_answer_from_chunk(chunks[0]) + document_identifier)
+                                       content: "#{answer} #{document_identifier}")
       elsif chunks.size > 1
         get_answer_from_multiple_chunks(chunks)
       else
@@ -54,6 +58,7 @@ module Conversations
       answers = chunks.map { |chunk| get_answer_from_chunk(chunk) }
       answers = filter_out_non_answers(answers)
       summary_answer = get_summary_answer(answers)
+      @conversation.update!(status: 0)
       @conversation.messages.create!(role: 'assistant', content: summary_answer, partial_answers: answers)
     end
 

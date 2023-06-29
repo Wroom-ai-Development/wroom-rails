@@ -1,4 +1,4 @@
-
+<%= turbo_stream_from @conversation.id, 'conversation_status' %>
 <div id='view-header'>
   <h1><%= @conversation.title %></h1>
   <%= link_to "edit", edit_conversation_path %>
@@ -15,6 +15,14 @@
     <% end %>
   </div>
   <div id='messages'>
+    <% if @conversation.status == 1 %>
+      <%= turbo_frame_tag 'conversation_status' do %>
+        <div class='conversation-status'>
+          <div class="conversation-hourglass"></div>
+          <div class="conversation-loading-label">churning...</div>
+        </div>
+      <% end %>
+    <% end %>
     <% @conversation.messages.reverse.each do |message| %>
       <div class='message <%= message.role %>'>
         <div class='content'>
