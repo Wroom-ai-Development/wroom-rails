@@ -22,7 +22,7 @@
         <h4>Voices</h4>
     <% @user.voices.each do |voice| %>
       <p>
-        <%= link_to voice.name, voice %>
+        <%= link_to voice.name, edit_voice_path(voice) %>
       </p>
     <% end %>
   </div>

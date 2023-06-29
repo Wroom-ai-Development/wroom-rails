@@ -11,7 +11,7 @@
       </div>
       <% @conversation.voices.each do |voice| %>
         <div class='conversation-setting'>
-          <span class='bullet'>•</span> <%= link_to voice.name, voice %>
+          <span class='bullet'>•</span> <%= link_to voice.name, edit_voice_path(voice) %>
         </div>
       <% end %>
     </div>

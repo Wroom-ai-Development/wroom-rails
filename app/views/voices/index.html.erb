@@ -9,7 +9,7 @@
         <div id='index-separator'><%= user.email %></div id='index-separator'>
         <% user.voices.each do |voice| %>
           <div id='index-list-item'>
-            <%= link_to voice.name, voice %>
+            <%= link_to voice.name, edit_voice_path(voice) %>
             <%= button_to "delete", voice, method: :delete %>
           </div>
         <% end %>
@@ -20,7 +20,7 @@
       <% current_user.voices.each do |voice| %>
         <% if can? :manage, voice %>
           <div id='index-list-item'>
-            <%= link_to voice.name, voice %>
+            <%= link_to voice.name, edit_voice_path(voice) %>
             <%= button_to "delete", voice, method: :delete %>
           </div>
         <% end %>
