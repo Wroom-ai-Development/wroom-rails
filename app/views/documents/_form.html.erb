@@ -34,10 +34,16 @@
         <%= form.submit %>
       </div>
     <% else %>
-      <%= form.submit 'Save', id: 'save-document' %>
+      <%= form.submit 'Save', id: 'save-document', style: 'display: none;' %>
       <div class='field content'>
         <%= form.rich_text_area :content %>
       </div>
+      <script>
+        const editor = document.getElementById('document_content');
+        editor.addEventListener('blur', function() {
+          document.getElementById("save-document").click();
+        })
+      </script>
     <% end %>
 
   <% end %>
