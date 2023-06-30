@@ -1,4 +1,4 @@
-
+<%= turbo_stream_from conversation.id, 'conversation_status' %>
 <div id='conversation'>
   <div id='conversation-settings'>
     <% if @in_document_editor %>
@@ -39,7 +39,7 @@
       <div class='message <%= message.role %>'>
         <div class='content'>
           <div class='main-message'>
-            <%= button_to('␡', delete_message_conversation_path(message_id: message.id), method: :delete) %>
+            <%= button_to('␡', delete_message_conversation_path(message_id: message.id, in_document_editor: @in_document_editor), method: :delete) %>
             <div class='main-message-content'>
               <%= simple_format message.content %>
               <% if message.partial_answers.present? %>
@@ -57,7 +57,7 @@
       </div>
     <% end %>
     </div>
-    <%= form_with url: new_user_message_conversation_path, id: 'new-message-form'  do |f| %>
+    <%= form_with url: new_user_message_conversation_path(id: conversation.id, in_document_editor: @in_document_editor), id: 'new-message-form'  do |f| %>
       <%= f.text_field (:content) %>
       <%= f.submit '➥', id: 'submit' %>
     <% end %>

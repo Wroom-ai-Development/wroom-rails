@@ -669,7 +669,7 @@ div.view-content.edit-document {
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 1rem 3rem 3rem 3rem;
+  padding: 0 1rem 3rem 1rem;
 
   div.record-form {
     height: 61vh;
@@ -682,10 +682,28 @@ div.view-content.edit-document {
   }
 
   div#conversation {
-    width: 30vw;
+    width: 40vw;
     height: 100%;
     margin: 0 0 0 1rem;
     padding: 0;
+
+    div.content {
+      div.main-message {
+        button {
+          width: 1rem !important;
+          height: 1rem !important;
+        }
+      }
+    }
+
+    div#messages {
+      padding: 0.5rem 1rem 0.5rem 0.5rem;
+      div.message {
+        font-size: 0.7rem;
+        line-height: 0.9rem;
+      }
+    }
+
 
     div#conversation-settings {
       margin: 0;

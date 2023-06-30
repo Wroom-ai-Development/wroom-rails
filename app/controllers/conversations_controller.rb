@@ -2,7 +2,7 @@
 
 class ConversationsController < ApplicationController
   before_action :set_conversation, only: %i[show edit update destroy new_user_message]
-  load_and_authorize_resource
+  load_and_authorize_resource except: [:delete_message]
 
   # GET /conversations or /conversations.json
   def index
@@ -25,12 +25,23 @@ class ConversationsController < ApplicationController
     @conversation.update!(status: 1)
     @conversation.messages.create!(content: params[:content], role: 'user')
     AnswerFetchingWorker.perform_async(@conversation.id)
-    redirect_to @conversation
+    if params[:in_document_editor]
+      redirect_to @conversation.documents.first
+    else
+      redirect_to @conversation
+    end
   end
 
   def delete_message
-    Message.find(params[:message_id]).destroy
-    redirect_to @conversation
+    message = Message.find(params[:message_id])
+    conversation = message.conversation
+    authorize! :edit, conversation
+    message.destroy
+    if params[:in_document_editor]
+      redirect_to conversation.documents.first
+    else
+      redirect_to conversation
+    end
   end
 
   # GET /conversations/1/edit
