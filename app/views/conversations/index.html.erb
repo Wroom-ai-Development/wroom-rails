@@ -7,7 +7,7 @@
     <% if current_user.admin? %>
       <div id='index-separator'>My conversations</div id='index-separator'>
     <% end %>
-    <% current_user.conversations.each do |conversation| %>
+    <% current_user.conversations.where.missing(:documents).each do |conversation| %>
       <% if can? :manage, conversation %>
         <div id='index-list-item'>
           <%= link_to conversation.title, conversation %>
@@ -23,7 +23,7 @@
     <div id="index-list">
       <% @users.each do |user| %>
         <div id='index-separator'><%= user.email %></div id='index-separator'>
-        <% user.conversations.each do |conversation| %>
+        <% user.conversations.where.missing(:documents).each do |conversation| %>
           <div id='index-list-item'>
             <%= link_to conversation.title, conversation %>
             <div class="controls">

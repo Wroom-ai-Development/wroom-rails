@@ -6,7 +6,6 @@ class ConversationsController < ApplicationController
 
   # GET /conversations or /conversations.json
   def index
-    @conversations = Conversation.all
     @users = User.where.not(id: current_user.id) if current_user.admin?
   end
 
