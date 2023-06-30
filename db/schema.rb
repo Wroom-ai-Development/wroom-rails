@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_30_075821) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_30_121510) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "action_text_rich_texts", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "body"
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
+  end
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -82,6 +92,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_30_075821) do
     t.index ["source_id"], name: "index_document_chunks_on_source_id"
   end
 
+  create_table "documents", force: :cascade do |t|
+    t.string "title"
+    t.bigint "user_id", null: false
+    t.bigint "conversation_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conversation_id"], name: "index_documents_on_conversation_id"
+    t.index ["user_id"], name: "index_documents_on_user_id"
+  end
+
   create_table "messages", force: :cascade do |t|
     t.integer "role", null: false
     t.text "content", null: false
@@ -138,6 +158,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_30_075821) do
   add_foreign_key "conversation_voices", "voices"
   add_foreign_key "conversations", "users"
   add_foreign_key "document_chunks", "sources"
+  add_foreign_key "documents", "conversations"
+  add_foreign_key "documents", "users"
   add_foreign_key "messages", "conversations"
   add_foreign_key "sources", "users"
   add_foreign_key "voices", "users"

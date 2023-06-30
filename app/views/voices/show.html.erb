@@ -2,7 +2,7 @@
   <h1><%= @voice.name %></h1>
   <%= link_to '✍︎', edit_voice_path(@voice) %>
 </div>
-<div id='view-content'>
+<div class='view-content'>
   <div class='show-record'>
     <%= render @voice %>
     <% if @voice.conversations.any? %>

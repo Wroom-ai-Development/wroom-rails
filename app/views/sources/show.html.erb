@@ -3,7 +3,7 @@
   <h1><%= @source.name || @source.title || "Untitled" %></h1>
   <%= link_to "✍︎", edit_source_path(@source) %>
 </div>
-<div id='view-content'>
+<div class='view-content'>
   <div class='show-record'>
     <%= render @source %>
     <% if @source.document_chunks.count > 1 %>

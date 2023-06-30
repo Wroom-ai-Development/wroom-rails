@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :sources, dependent: :destroy
   has_many :conversations, dependent: :destroy
   has_many :voices, dependent: :destroy
+  has_many :documents, dependent: :destroy
 
   validates :email, uniqueness: true, presence: true
 

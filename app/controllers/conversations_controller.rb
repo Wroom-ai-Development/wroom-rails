@@ -2,11 +2,10 @@
 
 class ConversationsController < ApplicationController
   before_action :set_conversation, only: %i[show edit update destroy new_user_message]
-  load_and_authorize_resource
+  load_and_authorize_resource except: [:delete_message]
 
   # GET /conversations or /conversations.json
   def index
-    @conversations = Conversation.all
     @users = User.where.not(id: current_user.id) if current_user.admin?
   end
 
@@ -26,12 +25,23 @@ class ConversationsController < ApplicationController
     @conversation.update!(status: 1)
     @conversation.messages.create!(content: params[:content], role: 'user')
     AnswerFetchingWorker.perform_async(@conversation.id)
-    redirect_to @conversation
+    if params[:in_document_editor]
+      redirect_to @conversation.documents.first
+    else
+      redirect_to @conversation
+    end
   end
 
   def delete_message
-    Message.find(params[:message_id]).destroy
-    redirect_to @conversation
+    message = Message.find(params[:message_id])
+    conversation = message.conversation
+    authorize! :edit, conversation
+    message.destroy
+    if params[:in_document_editor]
+      redirect_to conversation.documents.first
+    else
+      redirect_to conversation
+    end
   end
 
   # GET /conversations/1/edit
@@ -44,23 +54,26 @@ class ConversationsController < ApplicationController
     respond_to do |format|
       if @conversation.save
         format.html { redirect_to conversation_url(@conversation), notice: 'Conversation was successfully created.' }
-        format.json { render :show, status: :created, location: @conversation }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @conversation.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # PATCH/PUT /conversations/1 or /conversations/1.json
-  def update
+  def update # rubocop:disable Metrics/MethodLength
     respond_to do |format|
       if @conversation.update(conversation_params)
-        format.html { redirect_to conversation_url(@conversation), notice: 'Conversation was successfully updated.' }
-        format.json { render :show, status: :ok, location: @conversation }
+        if @conversation.documents.any?
+          format.html do
+            redirect_to edit_document_url(@conversation.documents.first),
+                        notice: 'Conversation was successfully updated.'
+          end
+        else
+          format.html { redirect_to conversation_url(@conversation), notice: 'Conversation was successfully updated.' }
+        end
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @conversation.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -71,7 +84,6 @@ class ConversationsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to conversations_url, notice: 'Conversation was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 

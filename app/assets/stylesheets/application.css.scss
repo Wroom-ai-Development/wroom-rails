@@ -151,7 +151,7 @@ main {
 
 
 
-  div#view-content {
+  div.view-content {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -664,12 +664,86 @@ div.conversation-status {
   }
 }    
 
+div.view-content.edit-document {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0 1rem 3rem 1rem;
+
+  div.record-form {
+    height: 61vh;
+    margin-top: 0.4rem;
+    width: 100%;
+    input {
+      border-radius: 10px;
+      border: 1px solid gray;
+    }
+
+    input#save-document {
+      border: none;
+      background-color: white;
+      margin-top: 0.5rem;
+      font-family: 'Playfair Display', serif;
+      color: $wroom-blue;
+      font-style: italic;
+      font-size: 0.8rem;
+      width: 100%;
+      text-align: end;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    trix-editor {
+      height: 53.7vh;
+      font-size: 0.8rem;
+      overflow-y: scroll;
+    }
+  }
+
+  div#conversation {
+    width: 40vw;
+    height: 100%;
+    margin: 0 0 0 1rem;
+    padding: 0;
+
+    div.content {
+      div.main-message {
+        button {
+          width: 1rem !important;
+          height: 1rem !important;
+        }
+      }
+    }
+
+    div#messages {
+      padding: 0.5rem 1rem 0.5rem 0.5rem;
+      div.message {
+        font-size: 0.7rem;
+        line-height: 0.9rem;
+      }
+    }
+
+
+    div#conversation-settings {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      a#edit-link { 
+        font-size: 1.5rem;
+        color: $wroom-blue;
+      }
+    }
+  }
+}
+
 @media only screen and (max-width: 1000px) {
-  main div#view-content div#index-list {
+  main div.view-content div#index-list {
     width: 95%;
   }
 
-  main div#view-content div.record-form {
+  main div.view-content div.record-form {
     width: 95%;
   }
 
@@ -730,3 +804,4 @@ div.conversation-status {
     display: none;
   }
 }
+@import 'actiontext.css';
