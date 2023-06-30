@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Document < ApplicationRecord
+class Source < ApplicationRecord
   belongs_to :user
   has_one_attached :file
   has_many :context_references, dependent: :destroy
@@ -13,10 +13,10 @@ class Document < ApplicationRecord
 
   def parse_document_chunks_from_file
     raw_text = if file.content_type == 'application/pdf'
-                 Documents::PdfParser.new(file).parse_text
+                 Sources::PdfParser.new(file).parse_text
                elsif file.content_type == 'text/plain'
                  file.download
                end
-    DocumentChunkingWorker.perform_async(id, raw_text)
+    SourceChunkingWorker.perform_async(id, raw_text)
   end
 end

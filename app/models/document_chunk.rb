@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class DocumentChunk < ApplicationRecord
-  belongs_to :document
+  belongs_to :source
   validates :content, presence: true
   validates :ordinal_number, presence: true
 
@@ -11,9 +11,9 @@ class DocumentChunk < ApplicationRecord
 
   def broadcast_status
     broadcast_replace_to(
-      document.id,
+      source.id,
       'chunking_status',
-      partial: 'documents/chunking_status',
+      partial: 'sources/chunking_status',
       locals: { chunk: self },
       target: 'chunking_status'
     )

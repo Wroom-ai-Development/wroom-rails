@@ -30,7 +30,7 @@
     <% end %>
     <div class='checkbox-field'>
       <%= form.label 'Reference material:', style: "display: block" %>
-      <%= form.collection_check_boxes :document_ids, Document.accessible_by(current_ability), :id, :name, { hide_label: true } do |item| %>
+      <%= form.collection_check_boxes :source_ids, Source.accessible_by(current_ability), :id, :name, { hide_label: true } do |item| %>
         <div class='item'>
         <%= item.check_box %>
           <%= item.label %>

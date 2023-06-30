@@ -14,13 +14,13 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe '/documents', type: :request do
+RSpec.describe '/sources', type: :request do
   # This should return the minimal set of attributes required to create a valid
-  # Document. As you add validations to Document, be sure to
+  # Source. As you add validations to Source, be sure to
   # adjust the attributes here as well.
   let(:user) { create(:user) }
   let(:valid_attributes) do
-    { name: 'Document name',
+    { name: 'Source name',
       user_id: user.id,
       file: ActiveStorage::Blob.create_and_upload!(
         io: File.open(Rails.root.join('spec/factories/files/file.pdf'), 'rb'),
@@ -42,58 +42,58 @@ RSpec.describe '/documents', type: :request do
 
   describe 'GET /index' do
     it 'renders a successful response' do
-      Document.create! valid_attributes
-      get documents_url
+      Source.create! valid_attributes
+      get sources_url
       expect(response).to be_successful
     end
   end
 
   describe 'GET /show' do
     it 'renders a successful response' do
-      document = Document.create! valid_attributes
-      get document_url(document)
+      source = Source.create! valid_attributes
+      get source_url(source)
       expect(response).to be_successful
     end
   end
 
   describe 'GET /new' do
     it 'renders a successful response' do
-      get new_document_url
+      get new_source_url
       expect(response).to be_successful
     end
   end
 
   describe 'GET /edit' do
     it 'renders a successful response' do
-      document = Document.create! valid_attributes
-      get edit_document_url(document)
+      source = Source.create! valid_attributes
+      get edit_source_url(source)
       expect(response).to be_successful
     end
   end
 
   xdescribe 'POST /create' do
     context 'with valid parameters' do
-      it 'creates a new Document' do
+      it 'creates a new Source' do
         expect do
-          post documents_url, params: { document: valid_attributes }
-        end.to change(Document, :count).by(1)
+          post sources_url, params: { source: valid_attributes }
+        end.to change(Source, :count).by(1)
       end
 
-      it 'redirects to the created document' do
-        post documents_url, params: { document: valid_attributes }
-        expect(response).to redirect_to(document_url(Document.last))
+      it 'redirects to the created source' do
+        post sources_url, params: { source: valid_attributes }
+        expect(response).to redirect_to(source_url(Source.last))
       end
     end
 
     context 'with invalid parameters' do
-      it 'does not create a new Document' do
+      it 'does not create a new Source' do
         expect do
-          post documents_url, params: { document: invalid_attributes }
-        end.to change(Document, :count).by(0)
+          post sources_url, params: { source: invalid_attributes }
+        end.to change(Source, :count).by(0)
       end
 
       it "renders a response with 422 status (i.e. to display the 'new' template)" do
-        post documents_url, params: { document: invalid_attributes }
+        post sources_url, params: { source: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -108,42 +108,42 @@ RSpec.describe '/documents', type: :request do
         }
       end
 
-      it 'updates the requested document' do
-        document = Document.create! valid_attributes
-        patch document_url(document), params: { document: new_attributes }
-        document.reload
-        expect(document.title).to eq('New doc')
+      it 'updates the requested source' do
+        source = Source.create! valid_attributes
+        patch source_url(source), params: { source: new_attributes }
+        source.reload
+        expect(source.title).to eq('New doc')
       end
 
-      it 'redirects to the document' do
-        document = Document.create! valid_attributes
-        patch document_url(document), params: { document: new_attributes }
-        document.reload
-        expect(response).to redirect_to(document_url(document))
+      it 'redirects to the source' do
+        source = Source.create! valid_attributes
+        patch source_url(source), params: { source: new_attributes }
+        source.reload
+        expect(response).to redirect_to(source_url(source))
       end
     end
 
     context 'with invalid parameters' do
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
-        document = Document.create! valid_attributes
-        patch document_url(document), params: { document: invalid_attributes }
+        source = Source.create! valid_attributes
+        patch source_url(source), params: { source: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
 
   describe 'DELETE /destroy' do
-    it 'destroys the requested document' do
-      document = Document.create! valid_attributes
+    it 'destroys the requested source' do
+      source = Source.create! valid_attributes
       expect do
-        delete document_url(document)
-      end.to change(Document, :count).by(-1)
+        delete source_url(source)
+      end.to change(Source, :count).by(-1)
     end
 
-    it 'redirects to the documents list' do
-      document = Document.create! valid_attributes
-      delete document_url(document)
-      expect(response).to redirect_to(documents_url)
+    it 'redirects to the sources list' do
+      source = Source.create! valid_attributes
+      delete source_url(source)
+      expect(response).to redirect_to(sources_url)
     end
   end
 end

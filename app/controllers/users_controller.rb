@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @documents = user.documents
+    @sources = user.sources
     @conversations = user.conversations
   end
 

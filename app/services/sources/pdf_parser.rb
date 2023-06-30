@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # TODO : Implement better pdf parser
-module Documents
+module Sources
   class PdfParser
     def initialize(file)
       @file = file

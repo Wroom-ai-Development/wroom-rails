@@ -2,7 +2,7 @@
 
 module Conversations
   class ConversationService # rubocop:disable Metrics/ClassLength
-    class DocumentHasNoDocumentChunks < StandardError; end
+    class SourceHasNoDocumentChunks < StandardError; end
     class OpenAIApiError < StandardError; end
 
     META_PROMPT = <<-PROMPT
@@ -12,7 +12,7 @@ module Conversations
 
     def initialize(conversation)
       @conversation = conversation
-      @documents = conversation.documents
+      @sources = conversation.sources
       @client = OpenAI::Client.new(access_token: ENV['OPENAI_ACCESS_KEY'])
       @last_user_question = @conversation.messages.where(role: 'user').last.content
       @conversation_messages = @conversation.messages.reject do |m|
@@ -23,13 +23,13 @@ module Conversations
     end
 
     def respond # rubocop:disable Metrics/MethodLength
-      if @documents.any?
-        @documents.each do |document|
-          get_answer_from_document(document)
+      if @sources.any?
+        @sources.each do |source|
+          get_answer_from_source(source)
         end
         update_request_counts
       else
-        answer = get_answer_without_documents
+        answer = get_answer_without_sources
         update_request_counts
         @conversation.update!(status: 0)
         @conversation.messages.create!(role: 'assistant', content: answer)
@@ -45,22 +45,22 @@ module Conversations
       )
     end
 
-    def get_answer_without_documents
+    def get_answer_without_sources
       get_answer_from_messages(@conversation_messages)
     end
 
-    def get_answer_from_document(document) # rubocop:disable Metrics/MethodLength
-      chunks = document.document_chunks
+    def get_answer_from_source(source) # rubocop:disable Metrics/MethodLength
+      chunks = source.source_chunks
       if chunks.size == 1
-        document_identifier = @documents.size > 1 ? " (based on #{document.title})" : ''
+        source_identifier = @sources.size > 1 ? " (based on #{source.title})" : ''
         answer = get_answer_from_chunk(chunks[0])
         @conversation.update!(status: 0)
         @conversation.messages.create!(role: 'assistant',
-                                       content: "#{answer} #{document_identifier}")
+                                       content: "#{answer} #{source_identifier}")
       elsif chunks.size > 1
         get_answer_from_multiple_chunks(chunks)
       else
-        raise DocumentHasNoDocumentChunks
+        raise SourceHasNoDocumentChunks
       end
     end
 
@@ -119,7 +119,7 @@ module Conversations
     def get_answer_from_chunk(chunk)
       messages = prepare_messages_for_chunk(chunk)
       answer = get_answer_from_messages(messages)
-      if chunk.section_header.present? && chunk.document.document_chunks.size > 1
+      if chunk.section_header.present? && chunk.source.source_chunks.size > 1
         answer << "(based on #{chunk.section_header})"
       end
       answer
@@ -141,33 +141,33 @@ module Conversations
     end
 
     def chunk_context_prompt(chunk) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-      document = chunk.document
+      source = chunk.source
       prompt = ['The following question concerns']
-      if document.document_chunks.count > 1
+      if source.source_chunks.count > 1
         prompt << (chunk.section_header.present? ? chunk.section_header.to_s : 'an excerpt')
         prompt << 'from the provided'
       else
         prompt << 'the provided'
       end
-      prompt << (document.text_category.present? ? document.text_category.to_s : 'text')
+      prompt << (source.text_category.present? ? source.text_category.to_s : 'text')
       prompt << '.'
 
-      if document.title.present?
+      if source.title.present?
         prompt << 'The title of the'
-        prompt << (document.text_category.present? ? document.text_category.to_s : 'text')
-        prompt << "is #{document.title}."
+        prompt << (source.text_category.present? ? source.text_category.to_s : 'text')
+        prompt << "is #{source.title}."
       end
 
-      if document.author.present?
+      if source.author.present?
         prompt << 'The author of the'
-        prompt << (document.text_category.present? ? document.text_category.to_s : 'text')
-        prompt << "is #{document.author}."
+        prompt << (source.text_category.present? ? source.text_category.to_s : 'text')
+        prompt << "is #{source.author}."
       end
 
-      if document.year_published.present?
+      if source.year_published.present?
         prompt << 'The publication year of the'
-        prompt << (document.text_category.present? ? document.text_category.to_s : 'text')
-        prompt << "is #{document.year_published}."
+        prompt << (source.text_category.present? ? source.text_category.to_s : 'text')
+        prompt << "is #{source.year_published}."
       end
 
       prompt.join(' ')

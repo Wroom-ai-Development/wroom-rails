@@ -3,6 +3,6 @@
 FactoryBot.define do
   factory :context_reference do
     conversation { nil }
-    document { nil }
+    source { nil }
   end
 end
