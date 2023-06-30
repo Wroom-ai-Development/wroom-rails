@@ -30,12 +30,13 @@
           <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
         </div>
       <% end %>
-      <div class='field' style=>
+      <div class='field'>
         <%= form.submit %>
       </div>
     <% else %>
+      <%= form.submit 'Save', id: 'save-document' %>
       <div class='field content'>
-        <%= form.text_field :content, { onchange: 'this.form.submit()' }  %>
+        <%= form.rich_text_area :content %>
       </div>
     <% end %>
 

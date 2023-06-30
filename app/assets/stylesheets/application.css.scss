@@ -679,6 +679,26 @@ div.view-content.edit-document {
       border-radius: 10px;
       border: 1px solid gray;
     }
+
+    input#save-document {
+      border: none;
+      background-color: white;
+      margin-top: 0.5rem;
+      font-family: 'Playfair Display', serif;
+      color: $wroom-blue;
+      font-style: italic;
+      font-size: 0.8rem;
+      width: 100%;
+      text-align: end;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    trix-editor {
+      height: 53.7vh;
+      overflow-y: scroll;
+    }
   }
 
   div#conversation {
@@ -783,3 +803,4 @@ div.view-content.edit-document {
     display: none;
   }
 }
+@import 'actiontext.css';

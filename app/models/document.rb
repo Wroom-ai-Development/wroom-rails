@@ -5,4 +5,5 @@ class Document < ApplicationRecord
   belongs_to :conversation
 
   validates :title, presence: true
+  has_rich_text :content
 end
