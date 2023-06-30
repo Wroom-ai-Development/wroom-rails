@@ -7,7 +7,7 @@
     <% @users.each do |user| %>
       <div id='index-list-item'>
         <%= link_to user.email, user %>
-        <%= button_to "delete", user, method: :delete %>
+        <%= button_to "␡", user, method: :delete %>
       </div>
     <% end %>
   </div>

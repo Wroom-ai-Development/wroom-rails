@@ -11,7 +11,7 @@
       <% if can? :manage, voice %>
         <div id='index-list-item'>
           <%= link_to voice.name, edit_voice_path(voice) %>
-          <%= button_to "delete", voice, method: :delete %>
+          <%= button_to "␡", voice, method: :delete %>
         </div>
       <% end %>
     <% end %>
@@ -23,7 +23,7 @@
         <% user.voices.each do |voice| %>
           <div id='index-list-item'>
             <%= link_to voice.name, edit_voice_path(voice) %>
-            <%= button_to "delete", voice, method: :delete %>
+            <%= button_to "␡", voice, method: :delete %>
           </div>
         <% end %>
       <% end %>

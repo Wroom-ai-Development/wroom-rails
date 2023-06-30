@@ -11,7 +11,7 @@
       <% if can? :manage, conversation %>
         <div id='index-list-item'>
           <%= link_to conversation.title, conversation %>
-          <%= button_to "delete", conversation, method: :delete %>
+          <%= button_to "␡", conversation, method: :delete %>
         </div>
       <% end %>
     <% end %>
@@ -23,7 +23,7 @@
         <% user.conversations.each do |conversation| %>
           <div id='index-list-item'>
             <%= link_to conversation.title, conversation %>
-            <%= button_to "delete", conversation, method: :delete %>
+            <%= button_to "␡", conversation, method: :delete %>
           </div>
         <% end %>
       <% end %>
