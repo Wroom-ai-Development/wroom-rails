@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Documents
+module Sources
   class SemanticChunker
     # TODO : Dynamically set this value depending on tokens in messages
     CHUNK_MAX_TOKEN_SIZE = 14_000
@@ -8,8 +8,8 @@ module Documents
     CHARACTERS_PER_TOKEN = 4
     HEADER_RECOGNITION_THRESHOLD = 5
 
-    def initialize(document, text)
-      @document = document
+    def initialize(source, text)
+      @source = source
       @text = text
       prepare_text
       @sections = []
@@ -27,7 +27,7 @@ module Documents
     private
 
     def divide_text_into_sections
-      if document_seems_to_have_sections?
+      if source_seems_to_have_sections?
         process_sections
       else
         @sections = [{ section_header: '', content: @text }]
@@ -75,12 +75,12 @@ module Documents
       @sections << @current_section
     end
 
-    def document_seems_to_have_sections?
-      @document.section_headers.any? && @text =~ headers_regex
+    def source_seems_to_have_sections?
+      @source.section_headers.any? && @text =~ headers_regex
     end
 
     def headers_regex
-      @headers_regex ||= /\b(?:#{@document.section_headers.join("|")})\b/i
+      @headers_regex ||= /\b(?:#{@source.section_headers.join("|")})\b/i
     end
 
     def save_chunks_from_sections
@@ -96,7 +96,7 @@ module Documents
       chunks = section[:content].chars.each_slice(CHUNK_MAX_TOKEN_SIZE * CHARACTERS_PER_TOKEN).map(&:join)
       chunks.each_with_index do |chunk, _index|
         DocumentChunk.create!(
-          document_id: @document.id,
+          source_id: @source.id,
           section_header: section[:section_header].strip,
           ordinal_number: @current_chunk_ordinal_number,
           content: chunk

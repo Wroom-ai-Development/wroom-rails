@@ -8,9 +8,9 @@
         <%= link_to "Users", users_path %>
       </div>
     <% end %>
-    <% if can? :manage, Document %>
+    <% if can? :manage, Sources %>
       <div class="link-wrapper">
-        <%= link_to "Documents", documents_path %>
+        <%= link_to "Sources", sources_path %>
       </div>
     <% end %>
     <% if can? :manage, Conversation %>

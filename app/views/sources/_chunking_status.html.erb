@@ -1,6 +1,6 @@
 <%= turbo_frame_tag "chunking_status" do %>
   <div class='chunking-status-notice'>
-    <% if chunk.ordinal_number >= chunk.document.document_chunks.pluck(:ordinal_number).max %>
+    <% if chunk.ordinal_number >= chunk.source.document_chunks.pluck(:ordinal_number).max %>
       <p>Done!</p>
       <script>
         setTimeout(() => { location.reload() }, 1000)

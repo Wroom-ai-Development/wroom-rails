@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       delete 'delete_message'
     end
   end
-  resources :documents
+  resources :sources
   devise_for :users, controllers: {
     confirmations: 'confirmations',
     registrations: 'registrations'

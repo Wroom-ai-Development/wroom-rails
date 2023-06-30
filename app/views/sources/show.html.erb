@@ -1,14 +1,14 @@
-<%= turbo_stream_from @document.id, 'chunking_status' %>
+<%= turbo_stream_from @source.id, 'chunking_status' %>
 <div id='view-header'>
-  <h1><%= @document.name || @document.title || "Untitled" %></h1>
-  <%= link_to "✍︎", edit_document_path(@document) %>
+  <h1><%= @source.name || @source.title || "Untitled" %></h1>
+  <%= link_to "✍︎", edit_source_path(@source) %>
 </div>
 <div id='view-content'>
   <div class='show-record'>
-    <%= render @document %>
-    <% if @document.document_chunks.count > 1 %>
+    <%= render @source %>
+    <% if @source.document_chunks.count > 1 %>
       <h3>Chunks</h3>
-      <% @document.document_chunks.each do |chunk| %>
+      <% @source.document_chunks.each do |chunk| %>
         <div class='chunk'>
           <details>
             <summary>
@@ -20,17 +20,17 @@
           </details>
         </div>
       <% end %>
-    <% elsif @document.document_chunks.count == 1 %>
+    <% elsif @source.document_chunks.count == 1 %>
     <div class='chunk'>
       <p>
-        <%= @document.document_chunks.first.content %>
+        <%= @source.document_chunks.first.content %>
       </p>
     </div>
-    <% elsif @document.document_chunks.count == 0 %>
+    <% elsif @source.document_chunks.count == 0 %>
       <%= turbo_frame_tag 'chunking_status' do %>
         <div class='chunking-status-notice'>
           <div class="lds-hourglass"></div>
-          <p><i>processing your document...</i></p>
+          <p><i>processing your source...</i></p>
           <p><i>if you experience a delay of more than a few seconds, </i></p>
           <p><i>try reloading the page<i></p>
         </div>

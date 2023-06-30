@@ -19,9 +19,9 @@
       <div id='conversation-setting-header'>
         Reference material:
       </div>
-      <% @conversation.documents.each do |document| %>
+      <% @conversation.sources.each do |source| %>
         <div class='conversation-setting'>
-          <span class='bullet'>•</span> <%= link_to document.title.present? ? document.title : document.name, document %>
+          <span class='bullet'>•</span> <%= link_to source.title.present? ? source.title : source.name, source %>
         </div>
       <% end %>
     </div>

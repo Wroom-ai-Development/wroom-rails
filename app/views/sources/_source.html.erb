@@ -1,34 +1,34 @@
 <div class='record-info'>
   <div class='field'>
     <label>Name:</label>
-    <%= document.name %>
+    <%= source.name %>
   </div>
   <div class='field'>
     <label>Title:</label>
-    <%= document.title %>
+    <%= source.title %>
   </div>
   <div class='field'>
     <label>Author:</label>
-    <%= document.author %>
+    <%= source.author %>
   </div>
   <div class='field'>
     <label>Year published:</label>
-    <%= document.year_published %>
+    <%= source.year_published %>
   </div>
   <div class='field'>
     <label>Section headers:</label>
-    <%= document.section_headers.join(', ') %>
+    <%= source.section_headers.join(', ') %>
   </div>
   <div class='field'>
     <label>File:</label>
-    <% if document.file.attached? %>
-      <%= link_to document.file.filename, rails_blob_path(document.file, disposition: 'attachment') %>
+    <% if source.file.attached? %>
+      <%= link_to source.file.filename, rails_blob_path(source.file, disposition: 'attachment') %>
     <% else %>
       None attached
     <% end %>
   </div>
   <div class='field'>
     <label>User:</label>
-    <%= document.user_id %>
+    <%= source.user_id %>
   </div>
 </div>

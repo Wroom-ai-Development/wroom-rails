@@ -1,12 +1,12 @@
 <div class='record-form'>
-  <%= form_with(model: document) do |form| %>
-    <% if document.errors.any? %>
+  <%= form_with(model: source) do |form| %>
+    <% if source.errors.any? %>
       <div class='validation'>
         <div class='message'>
-          <%= pluralize(document.errors.count, "error") %> prohibited this document from being saved:
+          <%= pluralize(source.errors.count, "error") %> prohibited this source from being saved:
         </div>
         <div class='errors'>
-          <% document.errors.each do |error| %>
+          <% source.errors.each do |error| %>
             <div class='error'><span class='bullet'>• </span><%= error.full_message %></div>
           <% end %>
         </div>
@@ -36,10 +36,10 @@
       <%= form.label :year_published, style: "display: block" %>
       <%= form.number_field :year_published %>
     </div>
-    <% if document.id.blank? %>
+    <% if source.id.blank? %>
       <div class='field'>
         <%= form.label :section_headers, style: "display: block" %>
-        <%= form.text_field :section_headers, value: document.section_headers.present? ? document.section_headers.join(', ') : '' %>
+        <%= form.text_field :section_headers, value: source.section_headers.present? ? source.section_headers.join(', ') : '' %>
       </div>
       <div class='field'>
         <%= form.label :file %>

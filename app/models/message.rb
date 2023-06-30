@@ -15,7 +15,7 @@ class Message < ApplicationRecord
     broadcast_replace_to(
       conversation.id,
       'conversation_status',
-      partial: 'documents/conversation_status',
+      partial: 'conversations/conversation_status',
       target: 'conversation_status'
     )
   end
