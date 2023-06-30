@@ -27,7 +27,7 @@ class SourcesController < ApplicationController
     save_section_headers
     respond_to do |format|
       if @source.save
-        @source.parse_source_chunks_from_file
+        @source.parse_document_chunks_from_file
         format.html { redirect_to source_url(@source), notice: 'Source was successfully created.' }
         format.json { render :show, status: :created, location: @source }
       else

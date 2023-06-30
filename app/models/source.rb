@@ -11,7 +11,7 @@ class Source < ApplicationRecord
   validates :file, presence: true
   validates :year_published, numericality: { only_integer: true }, length: { in: 0..4 }, allow_nil: true
 
-  def parse_source_chunks_from_file
+  def parse_document_chunks_from_file
     raw_text = if file.content_type == 'application/pdf'
                  Sources::PdfParser.new(file).parse_text
                elsif file.content_type == 'text/plain'

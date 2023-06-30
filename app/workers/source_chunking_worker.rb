@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class DocumentChunkingWorker
+class SourceChunkingWorker
   include Sidekiq::Worker
   sidekiq_options retry: false
 

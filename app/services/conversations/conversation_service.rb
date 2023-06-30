@@ -50,7 +50,7 @@ module Conversations
     end
 
     def get_answer_from_source(source) # rubocop:disable Metrics/MethodLength
-      chunks = source.source_chunks
+      chunks = source.document_chunks
       if chunks.size == 1
         source_identifier = @sources.size > 1 ? " (based on #{source.title})" : ''
         answer = get_answer_from_chunk(chunks[0])
@@ -119,7 +119,7 @@ module Conversations
     def get_answer_from_chunk(chunk)
       messages = prepare_messages_for_chunk(chunk)
       answer = get_answer_from_messages(messages)
-      if chunk.section_header.present? && chunk.source.source_chunks.size > 1
+      if chunk.section_header.present? && chunk.source.document_chunks.size > 1
         answer << "(based on #{chunk.section_header})"
       end
       answer
@@ -143,7 +143,7 @@ module Conversations
     def chunk_context_prompt(chunk) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       source = chunk.source
       prompt = ['The following question concerns']
-      if source.source_chunks.count > 1
+      if source.document_chunks.count > 1
         prompt << (chunk.section_header.present? ? chunk.section_header.to_s : 'an excerpt')
         prompt << 'from the provided'
       else
