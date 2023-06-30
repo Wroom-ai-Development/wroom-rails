@@ -27,7 +27,7 @@ class VoicesController < ApplicationController
 
     respond_to do |format|
       if @voice.save
-        format.html { redirect_to voice_url(@voice), notice: 'Voice was successfully created.' }
+        format.html { redirect_to voices_url, notice: 'Voice was successfully created.' }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -38,7 +38,7 @@ class VoicesController < ApplicationController
   def update
     respond_to do |format|
       if @voice.update(voice_params)
-        format.html { redirect_to voice_url(@voice), notice: 'Voice was successfully updated.' }
+        format.html { redirect_to voices_url, notice: 'Voice was successfully updated.' }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
