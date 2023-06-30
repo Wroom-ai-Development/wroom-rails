@@ -46,7 +46,7 @@
                 <details>
                   <summary>Partial answers:</summary>
                   <% message.partial_answers.each do |answer| %>
-                    <p><%= answer %></p>
+                    <%= simple_format answer %>
                   <% end %>
                 </details>
               <% end %>
