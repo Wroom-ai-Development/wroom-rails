@@ -2,7 +2,7 @@
 <div id='conversation'>
   <div id='conversation-settings'>
     <% if @in_document_editor %>
-      <%= link_to "✍︎", edit_conversation_path(conversation), id: 'edit-link' %>
+      <%= link_to "sources: #{conversation.sources.count}, voices: #{conversation.voices.count}", edit_conversation_path(conversation), id: 'edit-link' %>
     <% else %>
       <div class="conversation-setting left">
         <div id='conversation-setting-header'>

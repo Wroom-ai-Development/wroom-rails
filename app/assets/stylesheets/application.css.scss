@@ -23,8 +23,6 @@ html {
   width: 100%;
 }
 
-
-
 .turbo-progress-bar {
   height: 3rem;
   z-index: -500;
@@ -118,6 +116,8 @@ header {
   }
 }
 main {
+  background: rgb(230,230,230);
+  background: linear-gradient(0deg, rgba(230,230,230,1) 0%, rgba(255,255,255,1) 40%);
   padding: 0;
   width: 100%;
   height: 100%;
@@ -127,6 +127,7 @@ main {
     flex-direction: column;
     align-items: center;
     margin-top: 1rem;
+
     h1 {
       font-weight: 500;
       font-size: 1.2rem;
@@ -179,6 +180,7 @@ main {
         border: 1px solid gray;
         font-size: 0.9rem;
         margin-bottom: 0.5rem;
+        background-color: white;
         
         &:hover {
           border: 1px solid $wroom-blue;
@@ -355,6 +357,8 @@ main {
       flex-direction: column-reverse;
       align-items: center;
       height: 61vh;
+      background-color: white;
+
 
       div.message {
         padding: 0.5rem 0 0.5rem 0;
@@ -397,6 +401,7 @@ main {
             text-align: right;
             font-style: italic;
             justify-content: space-between;
+            border-bottom: 1px solid rgb(220, 220, 220);
           }
         }
         div.main-message {  
@@ -423,7 +428,7 @@ main {
       }
   } 
     form {
-      margin: 1rem auto 1rem auto;
+      margin: 1rem auto 0 auto;
       max-width: 50rem;
       display: flex;
       input#content {
@@ -696,9 +701,10 @@ div.view-content.edit-document {
     }
 
     trix-editor {
-      height: 53.7vh;
+      height: 57.6vh;
       font-size: 0.8rem;
       overflow-y: scroll;
+      background-color: white;
     }
   }
 
@@ -727,11 +733,14 @@ div.view-content.edit-document {
 
 
     div#conversation-settings {
-      margin: 0;
+      margin: 1rem 0 0 0;
       display: flex;
       justify-content: center;
+      
       a#edit-link { 
-        font-size: 1.5rem;
+        font-size: 0.7rem;
+        font-style: italic;
+        margin-bottom: 0.1rem;
         color: $wroom-blue;
       }
     }
