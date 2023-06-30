@@ -1,6 +1,6 @@
 <div id='view-header'>
   <h1>Conversations</h1>
-  <%= link_to "new", new_conversation_path %>
+  <%= link_to "+", new_conversation_path %>
 </div>
 <div id='view-content'>
   <div id="index-list">
@@ -11,7 +11,10 @@
       <% if can? :manage, conversation %>
         <div id='index-list-item'>
           <%= link_to conversation.title, conversation %>
-          <%= button_to "␡", conversation, method: :delete %>
+          <div class="controls">
+            <%= link_to "✍︎", edit_conversation_path(conversation) %>
+            <%= button_to "␡", conversation, method: :delete %>
+          </div>
         </div>
       <% end %>
     <% end %>
@@ -23,7 +26,10 @@
         <% user.conversations.each do |conversation| %>
           <div id='index-list-item'>
             <%= link_to conversation.title, conversation %>
-            <%= button_to "␡", conversation, method: :delete %>
+            <div class="controls">
+              <%= link_to "✍︎", edit_conversation_path(conversation) %>
+              <%= button_to "␡", conversation, method: :delete %>
+            </div>
           </div>
         <% end %>
       <% end %>
