@@ -1,17 +1,20 @@
 <div id='view-header'>
-  <h1>Documents</h1>
-  <%= link_to "new", new_document_path %>
+  <h1>documents</h1>
+  <%= link_to "+", new_document_path %>
 </div>
 <div id='view-content'>
   <div id="index-list">
     <% if current_user.admin? %>
-      <div id='index-separator'>My documents</div id='index-separator'>
+      <div id='index-separator'>my documents</div id='index-separator'>
     <% end %>
     <% current_user.documents.each do |document| %>
       <% if can? :manage, document %>
         <div id='index-list-item'>
-          <%= link_to document.title.present? ? document.title : document.name, document %>
-          <%= button_to "␡", document, method: :delete %>
+          <%= link_to document.name.present? ? document.name : (document.title || "Document ID: #{document.id}"), document %>
+          <div class="controls">
+            <%= link_to "✍︎", edit_document_path(document) %>
+            <%= button_to "␡", document, method: :delete %>
+          </div>
         </div>
       <% end %>
     <% end %>
@@ -23,7 +26,10 @@
         <% user.documents.each do |document| %>
           <div id='index-list-item'>
             <%= link_to document.name, document %>
-            <%= button_to "␡", document, method: :delete %>
+            <div class="controls">
+              <%= link_to "✍︎", edit_document_path(document) %>
+              <%= button_to "␡", document, method: :delete %>
+            </div>
           </div>
         <% end %>
       <% end %>

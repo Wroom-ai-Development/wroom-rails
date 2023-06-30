@@ -183,6 +183,15 @@ main {
         &:hover {
           border: 1px solid $wroom-blue;
         }
+
+        div.controls {
+          display: flex;
+          align-items: center;
+          a {
+            color: $wroom-blue;
+            margin-right: 0.4rem;
+          }
+        }
   
         button {
           background-color: white;
