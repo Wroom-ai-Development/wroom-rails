@@ -11,9 +11,9 @@ module Sources
     def initialize(source, text)
       @source = source
       @text = text
+      @lines = @text.split("\n").reject(&:blank?)
       prepare_text
       @sections = []
-      @lines = @text.split("\n").reject(&:blank?)
       @processing_last_section = false
       @current_chunk_ordinal_number = 0
     end
@@ -115,7 +115,13 @@ module Sources
     end
 
     def consolidate_whitespace
-      @text = @text.gsub(/\s+/, ' ')
+      # Convert multiple whitespaces to a single whitespace
+      consolidated = @lines.map do |line|
+        line.gsub(/\s+/, ' ')
+      end.join("\n")
+      # Preserve newline characters
+      # consolidated.gsub!(/(\S)\n(\S)/, '\1 \2')
+      @text = consolidated
     end
   end
 end
