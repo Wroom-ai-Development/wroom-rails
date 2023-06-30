@@ -1,6 +1,6 @@
 <div id='view-header'>
   <h1>Voices</h1>
-    <%= link_to "new", new_voice_path %>
+    <%= link_to "+", new_voice_path %>
 </div>
 <div id='view-content'>
   <div id="index-list">
@@ -9,10 +9,14 @@
     <% end %>
     <% current_user.voices.each do |voice| %>
       <% if can? :manage, voice %>
-        <div id='index-list-item'>
-          <%= link_to voice.name, edit_voice_path(voice) %>
-          <%= button_to "delete", voice, method: :delete %>
-        </div>
+
+          <div id='index-list-item'>
+            <%= link_to voice.name, voice %>
+            <div class="controls">
+              <%= link_to "✍︎", edit_voice_path(voice) %>
+              <%= button_to "␡", voice, method: :delete %>
+            </div>
+          </div>
       <% end %>
     <% end %>
   </div>
@@ -22,8 +26,11 @@
         <div id='index-separator'><%= user.email %></div id='index-separator'>
         <% user.voices.each do |voice| %>
           <div id='index-list-item'>
-            <%= link_to voice.name, edit_voice_path(voice) %>
-            <%= button_to "delete", voice, method: :delete %>
+            <%= link_to voice.name, voice %>
+            <div class="controls">
+              <%= link_to "✍︎", edit_voice_path(voice) %>
+              <%= button_to "␡", voice, method: :delete %>
+            </div>
           </div>
         <% end %>
       <% end %>

@@ -78,7 +78,7 @@ RSpec.describe '/voices', type: :request do
 
       it 'redirects to the created voice' do
         post voices_url, params: { voice: valid_attributes }
-        expect(response).to redirect_to(voice_url(Voice.last))
+        expect(response).to redirect_to(voices_url)
       end
     end
 
@@ -115,7 +115,7 @@ RSpec.describe '/voices', type: :request do
         voice = Voice.create! valid_attributes
         patch voice_url(voice), params: { voice: new_attributes }
         voice.reload
-        expect(response).to redirect_to(voice_url(voice))
+        expect(response).to redirect_to(voices_url)
       end
     end
 

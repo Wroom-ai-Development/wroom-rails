@@ -1,7 +1,7 @@
 <%= turbo_stream_from @document.id, 'chunking_status' %>
 <div id='view-header'>
-  <h1><%= @document.title %></h1>
-  <%= link_to "edit metadata", edit_document_path(@document) %>
+  <h1><%= @document.name || @document.title || "Untitled" %></h1>
+  <%= link_to "✍︎", edit_document_path(@document) %>
 </div>
 <div id='view-content'>
   <div class='show-record'>

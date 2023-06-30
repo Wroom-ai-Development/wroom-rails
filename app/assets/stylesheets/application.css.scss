@@ -183,14 +183,22 @@ main {
         &:hover {
           border: 1px solid $wroom-blue;
         }
+
+        div.controls {
+          display: flex;
+          align-items: center;
+          a {
+            color: $wroom-blue;
+            margin-right: 0.4rem;
+          }
+        }
   
         button {
           background-color: white;
           border: none;     
           color: $wroom-red;
-          font-size: 0.6rem;
+          font-size: 1rem;
           font-family: 'Playfair Display', serif;
-          font-style: italic;
           font-weight: 300;
         }
       }
@@ -385,22 +393,15 @@ main {
         }
 
         &.user {
-          text-align: right;
-          font-style: italic;
           div.main-message {
-            flex-direction: row-reverse;
-            justify-content:flex-start;
-            button {
-              margin-left: 1rem;
-            }
+            text-align: right;
+            font-style: italic;
+            justify-content: space-between;
           }
         }
-
-        &.assistant {
-          div.main-message {  
-            button {
-              margin-right: 1rem;
-            }
+        div.main-message {  
+          button {
+            margin-right: 1rem;
           }
         }
 
@@ -452,7 +453,11 @@ div.show-record {
   padding: 0 1rem 0 1rem;
   width: 50rem;
   div.record-info {
+    font-size: 0.9rem;
     width: 100%;
+    div.field {
+      margin-bottom: 0.5rem;
+    }
     label {
       font-weight: 600;
     }
