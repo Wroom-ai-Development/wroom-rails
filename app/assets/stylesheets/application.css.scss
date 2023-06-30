@@ -151,7 +151,7 @@ main {
 
 
 
-  div#view-content {
+  div.view-content {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -664,12 +664,47 @@ div.conversation-status {
   }
 }    
 
+div.view-content.edit-document {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1rem 3rem 3rem 3rem;
+
+  div.record-form {
+    height: 61vh;
+    margin-top: 0.4rem;
+    width: 100%;
+    input {
+      border-radius: 10px;
+      border: 1px solid gray;
+    }
+  }
+
+  div#conversation {
+    width: 30vw;
+    height: 100%;
+    margin: 0 0 0 1rem;
+    padding: 0;
+
+    div#conversation-settings {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      a#edit-link { 
+        font-size: 1.5rem;
+        color: $wroom-blue;
+      }
+    }
+  }
+}
+
 @media only screen and (max-width: 1000px) {
-  main div#view-content div#index-list {
+  main div.view-content div#index-list {
     width: 95%;
   }
 
-  main div#view-content div.record-form {
+  main div.view-content div.record-form {
     width: 95%;
   }
 

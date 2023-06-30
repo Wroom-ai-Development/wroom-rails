@@ -16,7 +16,9 @@ class DocumentsController < ApplicationController
   end
 
   # GET /documents/1/edit
-  def edit; end
+  def edit
+    @in_document_editor = true
+  end
 
   # POST /documents or /documents.json
   def create # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
@@ -29,7 +31,7 @@ class DocumentsController < ApplicationController
     @document.conversation_id = conversation.id
     respond_to do |format|
       if @document.save
-        format.html { redirect_to documents_url, notice: 'Document was successfully created.' }
+        format.html { redirect_to edit_document_url(@document), notice: 'Document was successfully created.' }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -40,7 +42,7 @@ class DocumentsController < ApplicationController
   def update
     respond_to do |format|
       if @document.update(document_params)
-        format.html { redirect_to documents_url, notice: 'Document was successfully updated.' }
+        format.html { redirect_to edit_document_url(@document), notice: 'Document was successfully updated.' }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end

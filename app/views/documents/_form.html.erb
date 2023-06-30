@@ -15,28 +15,29 @@
 
     <div class='field'>
       <%= form.label :title, style: "display: block" %>
-      <%= form.text_field :title %>
+      <%= form.text_field :title, { onchange: action_name == 'new' ? '' : 'this.form.submit()' } %>
     </div>
 
-    <div class='field'>
-      <%= form.label :content, style: "display: block" %>
-      <%= form.text_field :content %>
-    </div>
-
-    <% if current_user.admin? %>
-      <div class='field'>
-        <%= form.label :user_id, style: "display: block" %>
-        <%= form.collection_select :user_id, User.all, :id, :email, { selected: current_user.id } %>
+    <% if action_name == 'new' %>
+      <% if current_user.admin? %>
+        <div class='field'>
+          <%= form.label :user_id, style: "display: block" %>
+          <%= form.collection_select :user_id, User.all, :id, :email, { selected: current_user.id, readonly: true } %>
+        </div>
+      <% else %>
+        <div class='field' style='display: none;'>
+          <%= form.label :user_id, style: "display: block" %>
+          <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
+        </div>
+      <% end %>
+      <div class='field' style=>
+        <%= form.submit %>
       </div>
     <% else %>
-      <div class='field' style='display: none;'>
-        <%= form.label :user_id, style: "display: block" %>
-        <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
+      <div class='field content'>
+        <%= form.text_field :content, { onchange: 'this.form.submit()' }  %>
       </div>
     <% end %>
 
-    <div class='field'>
-      <%= form.submit %>
-    </div>
   <% end %>
 </div>

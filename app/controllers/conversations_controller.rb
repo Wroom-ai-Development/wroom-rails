@@ -43,23 +43,26 @@ class ConversationsController < ApplicationController
     respond_to do |format|
       if @conversation.save
         format.html { redirect_to conversation_url(@conversation), notice: 'Conversation was successfully created.' }
-        format.json { render :show, status: :created, location: @conversation }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @conversation.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # PATCH/PUT /conversations/1 or /conversations/1.json
-  def update
+  def update # rubocop:disable Metrics/MethodLength
     respond_to do |format|
       if @conversation.update(conversation_params)
-        format.html { redirect_to conversation_url(@conversation), notice: 'Conversation was successfully updated.' }
-        format.json { render :show, status: :ok, location: @conversation }
+        if @conversation.documents.any?
+          format.html do
+            redirect_to edit_document_url(@conversation.documents.first),
+                        notice: 'Conversation was successfully updated.'
+          end
+        else
+          format.html { redirect_to conversation_url(@conversation), notice: 'Conversation was successfully updated.' }
+        end
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @conversation.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -70,7 +73,6 @@ class ConversationsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to conversations_url, notice: 'Conversation was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 
