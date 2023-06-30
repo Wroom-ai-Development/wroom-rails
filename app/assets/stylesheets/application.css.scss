@@ -385,22 +385,15 @@ main {
         }
 
         &.user {
-          text-align: right;
-          font-style: italic;
           div.main-message {
-            flex-direction: row-reverse;
-            justify-content:flex-start;
-            button {
-              margin-left: 1rem;
-            }
+            text-align: right;
+            font-style: italic;
+            justify-content: space-between;
           }
         }
-
-        &.assistant {
-          div.main-message {  
-            button {
-              margin-right: 1rem;
-            }
+        div.main-message {  
+          button {
+            margin-right: 1rem;
           }
         }
 
