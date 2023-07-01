@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class DocumentsController < ApplicationController
-  before_action :set_document, only: %i[edit update destroy]
+  before_action :set_document, only: %i[edit update destroy autosave]
   load_and_authorize_resource
 
   # GET /documents or /documents.json
@@ -18,6 +18,13 @@ class DocumentsController < ApplicationController
   # GET /documents/1/edit
   def edit
     @in_document_editor = true
+  end
+
+  def autosave
+    @document.assign_attributes(document_params)
+    @document.save!
+
+    head :ok
   end
 
   # POST /documents or /documents.json

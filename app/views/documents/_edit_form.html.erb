@@ -18,19 +18,13 @@
 
     <div class='field'>
       <%= form.label :title, style: "display: block" %>
-      <%= form.text_field :title, { onchange: action_name == 'new' ? '' : 'this.form.submit()' } %>
+      <%= form.text_field :title, data: { action: "keyup->document#save blur->document#save" } %>
     </div>
 
     <div class='field content'>
-      <%= form.rich_text_area :content %>
+      <%= form.rich_text_area :content, data: { action: "keyup->document#save blur->document#save" } %>
     </div>
     <%= form.submit 'Save', id: 'save-document' %>
-    <script>
-      // const editor = document.getElementById('document_content');
-      // editor.addEventListener('blur', function() {
-      //   document.getElementById("save-document").click();
-      // })
-    </script>
 
   <% end %>
 </div>
