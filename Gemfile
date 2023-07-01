@@ -116,3 +116,5 @@ gem 'sidekiq', '~> 7.1'
 gem 'sentry-rails'
 gem 'sentry-raven'
 gem 'sentry-ruby'
+
+gem 'jsbundling-rails', '~> 1.1'
