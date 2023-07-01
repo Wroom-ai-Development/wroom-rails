@@ -1,5 +1,5 @@
 <div class="record-form">
-  <%= form_with(model: document) do |form| %>
+  <%= form_with(model: document, data: { controller: 'editor'} ) do |form| %>
     <% if document.errors.any? %>
       <div class='validation'>
         <div class='message'>
@@ -34,7 +34,12 @@
         <%= form.submit %>
       </div>
     <% else %>
-
+      <div class='field'>
+        <%= form.text_field :content %>
+      </div>
+      <div class='field'>
+        <%= form.submit %>
+      </div>
     <% end %>
 
   <% end %>

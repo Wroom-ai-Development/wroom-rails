@@ -6,6 +6,19 @@
   "author": "Marcel Wojdylo <marcel.wojdylo@wroom.ai>",
   "license": "MIT",
   "dependencies": {
-    "@editorjs/editorjs": "^2.27.2"
+    "@editorjs/code": "^2.8.0",
+    "@editorjs/delimiter": "^1.3.0",
+    "@editorjs/editorjs": "^2.27.2",
+    "@editorjs/inline-code": "^1.4.0",
+    "@editorjs/link": "^2.5.0",
+    "@editorjs/marker": "^1.3.0",
+    "@editorjs/nested-list": "^1.3.0",
+    "@editorjs/quote": "^2.5.0",
+    "@editorjs/simple-image": "^1.5.1",
+    "@editorjs/table": "^2.2.2",
+    "@editorjs/text-variant-tune": "^1.0.1",
+    "@editorjs/underline": "^1.1.0",
+    "editorjs-header-with-alignment": "^1.0.1",
+    "editorjs-paragraph-with-alignment": "^3.0.0"
   }
 }
