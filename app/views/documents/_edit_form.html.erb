@@ -24,7 +24,5 @@
     <div class='field content'>
       <%= form.rich_text_area :content, data: { action: "keyup->document#save blur->document#save" } %>
     </div>
-    <%= form.submit 'Save', id: 'save-document' %>
-
   <% end %>
 </div>
