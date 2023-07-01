@@ -36,10 +36,10 @@
       <%= form.text_area :meta_prompt %>
     </div>
 
-    <% if Conversation.accessible_by(current_ability).any? %>
+    <% if current_user.conversations.any? %>
       <div class='checkbox-field'>
-        <%= form.label 'Conversations', style: "display: block" %>
-        <%= form.collection_check_boxes :conversation_ids, Conversation.accessible_by(current_ability), :id, :title, { hide_label: true } do |item| %>
+        <%= form.label 'Documents', style: "display: block" %>
+        <%= form.collection_check_boxes :conversation_ids, current_user.conversations, :id, :title, { hide_label: true } do |item| %>
           <div class='item'>
             <%= item.check_box %>
             <%= item.label %>
