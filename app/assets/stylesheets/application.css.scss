@@ -384,6 +384,9 @@ main {
             display: flex;
             align-items: center;
             flex-direction: column;
+            p {
+              width: 100%;
+            }
             details {
               width: 100%;
               summary {
