@@ -20,7 +20,7 @@
     <% if current_user.admin? %>
       <div class='field'>
         <%= form.label :user_id, style: "display: block" %>
-        <%= form.collection_select :user_id, User.all, :id, :email, { selected: current_user.id },  disabled: conversation.documents.any? %>
+        <%= form.collection_select :user_id, User.all, :id, :email, { selected: action_name == 'new' ? current_user.id : conversation.user_id },  disabled: conversation.documents.any? %>
       </div>
     <% else %>
       <div class='field' style='display: none;'>
@@ -28,24 +28,28 @@
         <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
       </div>
     <% end %>
-    <div class='checkbox-field'>
-      <%= form.label 'Reference material:', style: "display: block" %>
-      <%= form.collection_check_boxes :source_ids, Source.accessible_by(current_ability), :id, :name, { hide_label: true } do |item| %>
-        <div class='item'>
-        <%= item.check_box %>
-          <%= item.label %>
-        </div>
-      <% end %>
-    </div>
-    <div class='checkbox-field'>
-      <%= form.label 'Voices:', style: "display: block" %>
-      <%= form.collection_check_boxes :voice_ids, Voice.accessible_by(current_ability), :id, :name, { hide_label: true } do |item| %>
-        <div class='item'>
+    <% if current_user.sources.any? %>
+      <div class='checkbox-field'>
+        <%= form.label 'Reference material:', style: "display: block" %>
+        <%= form.collection_check_boxes :source_ids, current_user.sources, :id, :name, { hide_label: true } do |item| %>
+          <div class='item'>
           <%= item.check_box %>
-          <%= item.label %>
-        </div>
-      <% end %>
-    </div>
+            <%= item.label %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+    <% if current_user.voices.any? %>
+      <div class='checkbox-field'>
+        <%= form.label 'Voices:', style: "display: block" %>
+        <%= form.collection_check_boxes :voice_ids, current_user.voices, :id, :name, { hide_label: true } do |item| %>
+          <div class='item'>
+            <%= item.check_box %>
+            <%= item.label %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
     <div class='actions'>
       <%= form.submit %>
     </div>

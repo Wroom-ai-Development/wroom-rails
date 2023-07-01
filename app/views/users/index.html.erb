@@ -1,14 +1,14 @@
 
-<div id='view-header'>
+<div class='view-header'>
   <h1>Users</h1>
 </div>
 <div class='view-content'>
-  <div id="index-list">
+  <ul class="index-list">
     <% @users.each do |user| %>
-      <div id='index-list-item'>
+      <li class='index-list-item'>
         <%= link_to user.email, user %>
         <%= button_to "␡", user, method: :delete %>
-      </div>
+      </li>
     <% end %>
-  </div>
+  </ul>
 </div>

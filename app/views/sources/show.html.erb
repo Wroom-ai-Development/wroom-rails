@@ -1,5 +1,5 @@
 <%= turbo_stream_from @source.id, 'chunking_status' %>
-<div id='view-header'>
+<div class='view-header'>
   <h1><%= @source.name || @source.title || "Untitled" %></h1>
   <%= link_to "✍︎", edit_source_path(@source) %>
 </div>

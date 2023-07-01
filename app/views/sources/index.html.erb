@@ -1,38 +1,38 @@
-<div id='view-header'>
+<div class='view-header'>
   <h1>Sources</h1>
   <%= link_to "+", new_source_path %>
 </div>
 <div class='view-content'>
-  <div id="index-list">
-    <% if current_user.admin? %>
-      <div id='index-separator'>My sources</div id='index-separator'>
-    <% end %>
+  <% if current_user.admin? %>
+    <div class='index-separator'>My sources</div class='index-separator'>
+  <% end %>
+  <ul class="index-list">
     <% current_user.sources.each do |source| %>
       <% if can? :manage, source %>
-        <div id='index-list-item'>
+        <li class='index-list-item'>
           <%= link_to source.name.present? ? source.name : (source.title || "Source ID: #{source.id}"), source %>
           <div class="controls">
             <%= link_to "✍︎", edit_source_path(source) %>
             <%= button_to "␡", source, method: :delete %>
           </div>
-        </div>
+        </li>
       <% end %>
     <% end %>
-  </div>
+  </ul>
   <% if current_user.admin? %>
-    <div id="index-list">
       <% @users.each do |user| %>
-        <div id='index-separator'><%= user.email %></div id='index-separator'>
-        <% user.sources.each do |source| %>
-          <div id='index-list-item'>
-            <%= link_to source.name, source %>
-            <div class="controls">
-              <%= link_to "✍︎", edit_source_path(source) %>
-              <%= button_to "␡", source, method: :delete %>
-            </div>
-          </div>
-        <% end %>
+        <div class='index-separator'><%= user.email %></div>
+        <ul class="index-list">
+          <% user.sources.each do |source| %>
+            <li class='index-list-item'>
+              <%= link_to source.name, source %>
+              <div class="controls">
+                <%= link_to "✍︎", edit_source_path(source) %>
+                <%= button_to "␡", source, method: :delete %>
+              </div>
+            </li>
+          <% end %>
+        </ul>
       <% end %>
-    </div>
   <% end %>
 </div>

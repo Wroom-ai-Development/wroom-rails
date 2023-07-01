@@ -1,39 +1,40 @@
-<div id='view-header'>
+<div class='view-header'>
   <h1>Voices</h1>
     <%= link_to "+", new_voice_path %>
 </div>
 <div class='view-content'>
-  <div id="index-list">
-    <% if current_user.admin? %>
-      <div id='index-separator'>My voices</div id='index-separator'>
-    <% end %>
+  <% if current_user.admin? %>
+    <div class='index-separator'>My voices</div class='index-separator'>
+  <% end %>
+  <ul class="index-list">
     <% current_user.voices.each do |voice| %>
       <% if can? :manage, voice %>
 
-          <div id='index-list-item'>
+          <li class='index-list-item'>
             <%= link_to voice.name, voice %>
             <div class="controls">
               <%= link_to "✍︎", edit_voice_path(voice) %>
               <%= button_to "␡", voice, method: :delete %>
             </div>
-          </div>
+          </li>
       <% end %>
     <% end %>
-  </div>
+  </ul>
   <% if current_user.admin? %>
-    <div id="index-list">
+
       <% @users.each do |user| %>
-        <div id='index-separator'><%= user.email %></div id='index-separator'>
-        <% user.voices.each do |voice| %>
-          <div id='index-list-item'>
-            <%= link_to voice.name, voice %>
-            <div class="controls">
-              <%= link_to "✍︎", edit_voice_path(voice) %>
-              <%= button_to "␡", voice, method: :delete %>
-            </div>
-          </div>
-        <% end %>
+        <div class='index-separator'><%= user.email %></div class='index-separator'>
+        <ul class="index-list">
+          <% user.voices.each do |voice| %>
+            <li class='index-list-item'>
+              <%= link_to voice.name, voice %>
+              <div class="controls">
+                <%= link_to "✍︎", edit_voice_path(voice) %>
+                <%= button_to "␡", voice, method: :delete %>
+              </div>
+            </li>
+          <% end %>
+        </ul>
       <% end %>
-    </div>
   <% end %>
 </div>

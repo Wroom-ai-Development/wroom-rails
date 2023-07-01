@@ -7,6 +7,9 @@
       <div class="link-wrapper">
         <%= link_to "Users", users_path %>
       </div>
+      <div class="link-wrapper">
+        <%= link_to "Conversations", conversations_path %>
+      </div>
     <% end %>
     <% if can? :manage, Source %>
       <div class="link-wrapper">
@@ -16,11 +19,6 @@
     <% if can? :manage, Document %>
       <div class="link-wrapper">
         <%= link_to "Documents", documents_path %>
-      </div>
-    <% end %>
-    <% if can? :manage, Conversation %>
-      <div class="link-wrapper">
-        <%= link_to "Conversations", conversations_path %>
       </div>
     <% end %>
     <% if can? :manage, Voice %>
