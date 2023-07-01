@@ -3,10 +3,10 @@
     <%= link_to "+", new_voice_path %>
 </div>
 <div class='view-content'>
+  <% if current_user.admin? %>
+    <div id='index-separator'>My voices</div id='index-separator'>
+  <% end %>
   <div id="index-list">
-    <% if current_user.admin? %>
-      <div id='index-separator'>My voices</div id='index-separator'>
-    <% end %>
     <% current_user.voices.each do |voice| %>
       <% if can? :manage, voice %>
 
@@ -21,19 +21,20 @@
     <% end %>
   </div>
   <% if current_user.admin? %>
-    <div id="index-list">
+
       <% @users.each do |user| %>
         <div id='index-separator'><%= user.email %></div id='index-separator'>
-        <% user.voices.each do |voice| %>
-          <div id='index-list-item'>
-            <%= link_to voice.name, voice %>
-            <div class="controls">
-              <%= link_to "✍︎", edit_voice_path(voice) %>
-              <%= button_to "␡", voice, method: :delete %>
-            </div>
+          <div id="index-list">
+            <% user.voices.each do |voice| %>
+              <div id='index-list-item'>
+                <%= link_to voice.name, voice %>
+                <div class="controls">
+                  <%= link_to "✍︎", edit_voice_path(voice) %>
+                  <%= button_to "␡", voice, method: :delete %>
+                </div>
+              </div>
+            <% end %>
           </div>
-        <% end %>
       <% end %>
-    </div>
   <% end %>
 </div>

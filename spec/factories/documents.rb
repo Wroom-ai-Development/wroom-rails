@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :document do
     title { 'MyString' }
     content { 'MyString' }
-    user { nil }
-    conversation { nil }
+    user
+    conversation
   end
 end
