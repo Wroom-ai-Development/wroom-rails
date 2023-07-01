@@ -116,8 +116,7 @@ header {
   }
 }
 main {
-  background: rgb(230,230,230);
-  background: linear-gradient(0deg, rgba(230,230,230,1) 0%, rgba(255,255,255,1) 40%);
+  background: linear-gradient(0deg, #ebf2ff 0%, #fcfdff 40%);
   padding: 0;
   width: 100%;
   min-height: 100%;
@@ -127,13 +126,13 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 1rem;
 
     h1 {
       font-weight: 500;
       font-size: 1.2rem;
       margin: 0;
       max-width: 29rem;
+      margin-top: 1rem;
       text-align: center;
     }
   
