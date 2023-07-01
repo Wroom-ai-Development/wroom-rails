@@ -28,10 +28,10 @@
         <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
       </div>
     <% end %>
-    <% if current_user.sources.any? %>
+    <% if conversation.user.sources.any? %>
       <div class='checkbox-field'>
         <%= form.label 'Reference material:', style: "display: block" %>
-        <%= form.collection_check_boxes :source_ids, current_user.sources, :id, :name, { hide_label: true } do |item| %>
+        <%= form.collection_check_boxes :source_ids, conversation.user.sources, :id, :name, { hide_label: true } do |item| %>
           <div class='item'>
           <%= item.check_box %>
             <%= item.label %>
@@ -39,10 +39,10 @@
         <% end %>
       </div>
     <% end %>
-    <% if current_user.voices.any? %>
+    <% if conversation.user.voices.any? %>
       <div class='checkbox-field'>
         <%= form.label 'Voices:', style: "display: block" %>
-        <%= form.collection_check_boxes :voice_ids, current_user.voices, :id, :name, { hide_label: true } do |item| %>
+        <%= form.collection_check_boxes :voice_ids, conversation.user.voices, :id, :name, { hide_label: true } do |item| %>
           <div class='item'>
             <%= item.check_box %>
             <%= item.label %>
