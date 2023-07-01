@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :documents, except: [:show]
+  resources :documents, except: [:show] do
+    member do
+      patch 'autosave'
+    end
+  end
   resources :voices
   mount ActionCable.server => '/cable'
   resources :conversations do
@@ -20,5 +24,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+
   root 'documents#index'
 end

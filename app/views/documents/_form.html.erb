@@ -1,5 +1,7 @@
 <div class="record-form">
-  <%= form_with(model: document) do |form| %>
+  <%= form_with(
+    model: document
+  ) do |form| %>
     <% if document.errors.any? %>
       <div class='validation'>
         <div class='message'>
@@ -18,33 +20,20 @@
       <%= form.text_field :title, { onchange: action_name == 'new' ? '' : 'this.form.submit()' } %>
     </div>
 
-    <% if action_name == 'new' %>
-      <% if current_user.admin? %>
-        <div class='field'>
-          <%= form.label :user_id, style: "display: block" %>
-          <%= form.collection_select :user_id, User.all, :id, :email, { selected: caction_name == 'new' ? current_user.id : document.user_id , readonly: true } %>
-        </div>
-      <% else %>
-        <div class='field' style='display: none;'>
-          <%= form.label :user_id, style: "display: block" %>
-          <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
-        </div>
-      <% end %>
+    <% if current_user.admin? %>
       <div class='field'>
-        <%= form.submit %>
+        <%= form.label :user_id, style: "display: block" %>
+        <%= form.collection_select :user_id, User.all, :id, :email, { selected: action_name == 'new' ? current_user.id : document.user_id , readonly: true } %>
       </div>
     <% else %>
-      <%= form.submit 'Save', id: 'save-document', style: 'display: none;' %>
-      <div class='field content'>
-        <%= form.rich_text_area :content %>
+      <div class='field' style='display: none;'>
+        <%= form.label :user_id, style: "display: block" %>
+        <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
       </div>
-      <script>
-        const editor = document.getElementById('document_content');
-        editor.addEventListener('blur', function() {
-          document.getElementById("save-document").click();
-        })
-      </script>
     <% end %>
+    <div class='field'>
+      <%= form.submit %>
+    </div>
 
   <% end %>
 </div>

@@ -1,0 +1,30 @@
+<div class="record-form">
+  <%= form_with(
+    model: document,
+    data: {controller: 'document', autosave_delay: '250'}
+  ) do |form| %>
+    <% if document.errors.any? %>
+      <div class='validation'>
+        <div class='message'>
+          <%= pluralize(document.errors.count, "error") %> prohibited this document from being saved:
+        </div>
+        <div class='errors'>
+          <% document.errors.each do |error| %>
+            <div class='error'><span class='bullet'>• </span><%= error.full_message %></div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class='field'>
+      <%= form.label :title, style: "display: block" %>
+      <%= form.text_field :title, data: { action: "keyup->document#save blur->document#save" } %>
+    </div>
+
+    <div class='field content'>
+      <%= form.rich_text_area :content, data: { action: "keyup->document#save blur->document#save" } %>
+    </div>
+    <%= form.submit 'Save', id: 'save-document' %>
+
+  <% end %>
+</div>
