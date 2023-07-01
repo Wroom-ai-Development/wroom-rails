@@ -32,7 +32,7 @@ class DocumentsController < ApplicationController
     conversation_title = (document_params[:title].presence || 'Document Conversation')
     conversation = Conversation.create!(
       title: conversation_title,
-      user_id: current_user.id
+      user_id: document_params[:user_id]
     )
     @document = Document.new(document_params)
     @document.conversation_id = conversation.id
