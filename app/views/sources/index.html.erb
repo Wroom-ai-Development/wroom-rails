@@ -21,8 +21,8 @@
   </div>
   <% if current_user.admin? %>
       <% @users.each do |user| %>
+        <div id='index-separator'><%= user.email %></div id='index-separator'>
         <div id="index-list">
-          <div id='index-separator'><%= user.email %></div id='index-separator'>
           <% user.sources.each do |source| %>
             <div id='index-list-item'>
               <%= link_to source.name, source %>
