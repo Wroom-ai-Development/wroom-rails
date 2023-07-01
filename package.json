@@ -1,0 +1,11 @@
+{
+  "name": "wroom-rails",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/marcelwojdylo/wroom-rails.git",
+  "author": "Marcel Wojdylo <marcel.wojdylo@wroom.ai>",
+  "license": "MIT",
+  "dependencies": {
+    "@editorjs/editorjs": "^2.27.2"
+  }
+}
