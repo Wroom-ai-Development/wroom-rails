@@ -732,6 +732,12 @@ div.view-content.edit-document {
       border: 1px solid gray;
     }
 
+    &.document-form {
+      border: none;
+      background-color: rgba(0, 0, 0, 0);
+      padding: 0;
+    }
+
     button.save-as-source {
       border: none;
       margin-top: 0.5rem;
