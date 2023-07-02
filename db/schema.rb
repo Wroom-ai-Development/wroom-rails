@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_02_091336) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_02_143821) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -109,6 +109,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_02_091336) do
     t.datetime "updated_at", null: false
     t.text "partial_answers", array: true
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+  end
+
+  create_table "monitoring_events", force: :cascade do |t|
+    t.string "note"
+    t.bigint "trackable_id"
+    t.string "trackable_type"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "sources", force: :cascade do |t|
