@@ -745,7 +745,7 @@ div.view-content.edit-document {
       color: $wroom-blue;
       font-style: italic;
       background-color: rgba(0, 0, 0, 0);
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       width: 100%;
       text-align: end;
       &:hover {
@@ -754,7 +754,7 @@ div.view-content.edit-document {
     }
 
     trix-editor {
-      height: 58.2vh;
+      height: 58.3vh;
       font-size: 0.8rem;
       overflow-y: scroll;
       background-color: white;
