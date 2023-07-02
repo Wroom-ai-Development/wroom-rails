@@ -359,7 +359,6 @@ main {
     div#messages {
       padding: 1rem;
       border: 1px solid gray;
-      border-radius: 10px;
       overflow-y: scroll;
       display: flex;
       flex-direction: column-reverse;
@@ -446,7 +445,6 @@ main {
         flex-grow: 1;
         margin-right: 0.5rem;
         border: 1px solid $wroom-blue;
-        border-radius: 5px;
         padding: 0.5rem;
         font-family: 'Playfair Display', serif;
         
@@ -454,7 +452,6 @@ main {
 
       input#submit {
         border: 1px solid $wroom-blue;
-        border-radius: 5px;
 
         color: $wroom-blue;
         background-color: white;
@@ -470,7 +467,6 @@ div.show-record {
   width: 50rem;
   background-color: white;
   border: 1px solid gray;
-  border-radius: 10px;
   padding: 1rem;
   margin-top: 1rem;
   div.instructions {
@@ -651,7 +647,6 @@ div#devise {
 .lds-hourglass:after {
   content: " ";
   display: block;
-  border-radius: 50%;
   width: 0;
   height: 0;
   margin: 8px;
@@ -684,7 +679,6 @@ div#devise {
 .conversation-hourglass:after {
   content: " ";
   display: block;
-  border-radius: 50%;
   width: 0;
   height: 0;
   margin: 8px;
@@ -730,7 +724,6 @@ div.view-content.edit-document {
     margin-top: 0.4rem;
     width: 100%;
     input {
-      border-radius: 10px;
       border: 1px solid gray;
     }
 
