@@ -727,13 +727,13 @@ div.view-content.edit-document {
       border: 1px solid gray;
     }
 
-    input#save-document {
+    button.save-as-source {
       border: none;
-      background-color: white;
       margin-top: 0.5rem;
       font-family: 'Playfair Display', serif;
       color: $wroom-blue;
       font-style: italic;
+      background-color: rgba(0, 0, 0, 0);
       font-size: 0.8rem;
       width: 100%;
       text-align: end;
@@ -743,7 +743,7 @@ div.view-content.edit-document {
     }
 
     trix-editor {
-      height: 57.6vh;
+      height: 58.2vh;
       font-size: 0.8rem;
       overflow-y: scroll;
       background-color: white;

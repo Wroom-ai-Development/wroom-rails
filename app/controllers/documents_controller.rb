@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class DocumentsController < ApplicationController
-  before_action :set_document, only: %i[edit update destroy autosave]
+  before_action :set_document, only: %i[edit update destroy autosave save_as_source]
   load_and_authorize_resource
 
   # GET /documents or /documents.json
@@ -25,6 +25,19 @@ class DocumentsController < ApplicationController
     @document.save!
 
     head :ok
+  end
+
+  def save_as_source
+    source = Source.create!(
+      user_id: @document.user_id,
+      name: @document.title,
+      from_document: true,
+      title: @document.title
+    )
+    source.parse_document_chunks_from_text(@document.content.to_plain_text)
+    respond_to do |format|
+      format.html { redirect_to source, notice: 'Document was successfully created.' }
+    end
   end
 
   # POST /documents or /documents.json

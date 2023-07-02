@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :documents, except: [:show] do
     member do
       patch 'autosave'
+      post 'save_as_source'
     end
   end
   resources :voices

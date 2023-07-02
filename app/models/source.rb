@@ -8,11 +8,11 @@ class Source < ApplicationRecord
   has_many :document_chunks, dependent: :destroy
 
   validates :name, presence: true, uniqueness: { scope: :user_id }
-  validates :file, presence: true
+  validates :file, presence: true, unless: -> { from_document == true }
   validates :year_published, numericality: { only_integer: true }, length: { in: 0..4 }, allow_nil: true
   validate :file_type
 
-  def parse_document_chunks_from_file # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def parse_document_chunks_from_file # rubocop:disable Metrics/MethodLength
     raw_text = if file.content_type == 'application/pdf'
                  Sources::PdfParser.new(file).parse_text
                elsif file.content_type == 'text/plain'
@@ -23,6 +23,10 @@ class Source < ApplicationRecord
                ]
                  Sources::WordParser.new(file).parse_text
                end
+    parse_document_chunks_from_text(raw_text)
+  end
+
+  def parse_document_chunks_from_text(raw_text)
     SourceChunkingWorker.perform_async(id, raw_text)
   end
 
