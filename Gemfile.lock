@@ -112,6 +112,9 @@ GEM
     digest-crc (0.6.4)
       rake (>= 12.0.0, < 14.0.0)
     docile (1.4.0)
+    docx (0.8.0)
+      nokogiri (~> 1.13, >= 1.13.0)
+      rubyzip (~> 2.0)
     dotenv (2.8.1)
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
@@ -460,6 +463,7 @@ DEPENDENCIES
   capybara
   debug
   devise (~> 4.9)
+  docx (~> 0.8.0)
   dotenv-rails (~> 2.8)
   factory_bot_rails
   ffaker (~> 2.21)
