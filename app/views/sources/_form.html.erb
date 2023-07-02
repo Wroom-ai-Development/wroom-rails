@@ -36,16 +36,14 @@
       <%= form.label :year_published, style: "display: block" %>
       <%= form.number_field :year_published %>
     </div>
-    <% if source.id.blank? %>
-      <div class='field'>
-        <%= form.label :section_headers, style: "display: block" %>
-        <%= form.text_field :section_headers, value: source.section_headers.present? ? source.section_headers.join(', ') : '' %>
-      </div>
-      <div class='field'>
-        <%= form.label :file %>
-        <%= form.file_field :file %>
-      </div>
-    <% end %>
+    <div class='field'>
+      <%= form.label :section_headers, style: "display: block" %>
+      <%= form.text_field :section_headers, value: source.section_headers.present? ? source.section_headers.join(', ') : '' %>
+    </div>
+    <div class='field'>
+      <%= form.label :file %>
+      <%= form.file_field :file %>
+    </div>
     
     <% if current_user.admin? %>
       <div class='field'>

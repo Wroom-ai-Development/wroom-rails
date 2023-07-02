@@ -5,6 +5,8 @@ class SourceChunkingWorker
   sidekiq_options retry: false
 
   def perform(source_id, raw_text)
-    Sources::SemanticChunker.new(Source.find(source_id), raw_text).create_chunks
+    @source = Source.find(source_id)
+    @source.document_chunks.destroy_all
+    Sources::SemanticChunker.new(@source, raw_text).create_chunks
   end
 end
