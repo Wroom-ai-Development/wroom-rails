@@ -74,7 +74,7 @@
     <% end %>
     </div>
     <%= form_with url: new_user_message_conversation_path(id: conversation.id, in_document_editor: @in_document_editor), id: 'new-message-form'  do |f| %>
-      <%= f.text_field (:content) %>
+      <%= f.text_field (:content), required: 'required' %>
       <%= f.submit '➥', id: 'submit' %>
     <% end %>
     <% if current_user.admin? %>
