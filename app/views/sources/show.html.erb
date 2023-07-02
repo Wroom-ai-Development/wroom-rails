@@ -6,7 +6,14 @@
 <div class='view-content'>
   <div class='show-record'>
     <%= render @source %>
+  </div>
+  <div class='show-record'>
     <% if @source.document_chunks.count > 1 %>
+      <% if @source.truncated? %>
+        <div class='truncation-notice'>
+          This source exceeded our text volume limits, and has been truncated.
+        </div>
+      <% end %>
       <h3>Chunks</h3>
       <% @source.document_chunks.each do |chunk| %>
         <div class='chunk'>

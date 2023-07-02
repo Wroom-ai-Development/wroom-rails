@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 module Sources
-  class SemanticChunker
+  class SemanticChunker # rubocop:disable Metrics/ClassLength
     # TODO : Dynamically set this value depending on tokens in messages
     CHUNK_MAX_TOKEN_SIZE = 14_000
     # TODO : Implement actual token counts
     CHARACTERS_PER_TOKEN = 4
     HEADER_RECOGNITION_THRESHOLD = 5
+    MAX_CHUNKS = 4
 
     def initialize(source, text)
       @source = source
@@ -91,10 +92,14 @@ module Sources
       end
     end
 
-    def save_chunks(section) # rubocop:disable Metrics/MethodLength
+    def save_chunks(section) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      return if @source.truncated?
+
       @current_section_header = section[:section_header]
       chunks = section[:content].chars.each_slice(CHUNK_MAX_TOKEN_SIZE * CHARACTERS_PER_TOKEN).map(&:join)
       chunks.each_with_index do |chunk, _index|
+        break if @source.document_chunks.count >= MAX_CHUNKS
+
         DocumentChunk.create!(
           source_id: @source.id,
           section_header: section[:section_header].strip,
@@ -103,6 +108,7 @@ module Sources
         )
         @current_chunk_ordinal_number += 1
       end
+      @source.update(truncated: true) if @source.document_chunks.count >= MAX_CHUNKS
     end
 
     def prepare_text

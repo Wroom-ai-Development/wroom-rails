@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_01_163520) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_02_070956) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -121,6 +121,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_01_163520) do
     t.text "section_headers", default: [], array: true
     t.text "text_category"
     t.text "name", default: "", null: false
+    t.boolean "truncated", default: false, null: false
     t.index ["user_id"], name: "index_sources_on_user_id"
   end
 
