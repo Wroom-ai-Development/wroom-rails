@@ -2,18 +2,36 @@
   <tr>
     <td class='left'>Name:</td>
     <td class='right'><%= source.name %></td>
+  </tr>
+  <tr>
     <td class='left'>Title:</td>
     <td class='right'><%= source.title %></td>
   </tr>
+  <tr>
     <td class='left'>Author:</td>
     <td class='right'><%= source.author %></td>
+  </tr>
+  <tr>
+    <td class='left'>Text category:</td>
+    <td class='right'><%= source.text_category %></td>
+  </tr>
+  <tr>
     <td class='left'>Year published:</td>
     <td class='right'><%= source.year_published %></td>
+  </tr>
   <tr>
     <td class='left'>Section headers:</td>
     <td class='right'><%= source.section_headers.join(', ') %></td>
+  </tr>
+  <tr>
     <td class='left'>File:</td>
-    <td class='right'><%= link_to source.file.filename, rails_blob_path(source.file, disposition: 'attachment') %></td>
+    <td class='right'>
+      <% if source.file.attached? %>
+        <%= link_to source.file.filename, rails_blob_path(source.file, disposition: 'attachment') %>
+      <% else %>
+        None attached
+      <% end %>
+    </td>
   </tr>
   <% if current_user.admin? %>
     <tr>
