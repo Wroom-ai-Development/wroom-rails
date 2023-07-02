@@ -2,7 +2,6 @@
 
 module Conversations
   class ConversationService # rubocop:disable Metrics/ClassLength
-    class SourceHasNoDocumentChunks < StandardError; end
     class OpenAIApiError < StandardError; end
 
     META_PROMPT = <<-PROMPT
@@ -130,7 +129,7 @@ module Conversations
       elsif chunks.size > 1
         get_answer_from_multiple_chunks(chunks)
       else
-        raise SourceHasNoDocumentChunks
+        respond_nicely("There was a problem processing #{source.name}, you may have to upload it again.")
       end
     end
 
