@@ -1,34 +1,27 @@
-<div class='record-info'>
-  <div class='field'>
-    <label>Name:</label>
-    <%= source.name %>
-  </div>
-  <div class='field'>
-    <label>Title:</label>
-    <%= source.title %>
-  </div>
-  <div class='field'>
-    <label>Author:</label>
-    <%= source.author %>
-  </div>
-  <div class='field'>
-    <label>Year published:</label>
-    <%= source.year_published %>
-  </div>
-  <div class='field'>
-    <label>Section headers:</label>
-    <%= source.section_headers.join(', ') %>
-  </div>
-  <div class='field'>
-    <label>File:</label>
-    <% if source.file.attached? %>
-      <%= link_to source.file.filename, rails_blob_path(source.file, disposition: 'attachment') %>
-    <% else %>
-      None attached
-    <% end %>
-  </div>
-  <div class='field'>
-    <label>User:</label>
-    <%= source.user_id %>
-  </div>
+<table>
+  <tr>
+    <td class='left'>Name:</td>
+    <td class='right'><%= source.name %></td>
+    <td class='left'>Title:</td>
+    <td class='right'><%= source.title %></td>
+  </tr>
+    <td class='left'>Author:</td>
+    <td class='right'><%= source.author %></td>
+    <td class='left'>Year published:</td>
+    <td class='right'><%= source.year_published %></td>
+  <tr>
+    <td class='left'>Section headers:</td>
+    <td class='right'><%= source.section_headers.join(', ') %></td>
+    <td class='left'>File:</td>
+    <td class='right'><%= link_to source.file.filename, rails_blob_path(source.file, disposition: 'attachment') %></td>
+  </tr>
+  <% if current_user.admin? %>
+    <tr>
+      <td class='left'>User:</td>
+      <td class='right'><%= source.user.email %></td>
+    </tr>
+  <% end %>
+</table>
+<div class='instructions'>
+  Providing the above metadata for the source makes it easier for our language model to give contextually relevant answers. 
 </div>

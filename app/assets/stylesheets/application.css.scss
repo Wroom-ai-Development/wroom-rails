@@ -468,6 +468,18 @@ main {
 div.show-record {
   padding: 0 1rem 0 1rem;
   width: 50rem;
+  background-color: white;
+  border: 1px solid gray;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-top: 1rem;
+  div.instructions {
+    text-align: center;
+    font-style: italic;
+    font-size: 0.8rem;
+    margin-top: 1rem;
+    // color: $wroom-blue;
+  }
   div.record-info {
     font-size: 0.9rem;
     width: 100%;
@@ -483,6 +495,32 @@ div.show-record {
       text-decoration: underline 1px $wroom-blue;
     }
   }
+
+  table {
+    width: 100%;
+
+    td.left {
+      width: 9rem;
+      font-weight: 600;
+      text-align: right;
+      padding-right: 1rem;
+    }
+    td.right {
+      font-style: italic;
+    }
+    tr {
+      height: 3rem;
+    }
+  }
+
+  div.truncation-notice {
+    text-align: center;
+    padding: 1rem;
+    border: 1px solid red;
+    margin-top: 1rem;
+    font-size: 0.8rem;
+  }
+  
   div.chunk {
     width: 50rem;
     text-align: justify;
