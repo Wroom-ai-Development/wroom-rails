@@ -42,7 +42,11 @@ class SourcesController < ApplicationController
     respond_to do |format|
       if @source.update(source_params)
         old_headers = @source.section_headers
-        save_section_headers
+        if params[:source][:section_headers].blank?
+          @source.update(section_headers: [])
+        else
+          save_section_headers
+        end
 
         @source.rechunk if @source.section_headers != old_headers
         format.html { redirect_to source_url(@source), notice: 'Source was successfully updated.' }
