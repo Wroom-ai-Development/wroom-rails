@@ -5,6 +5,9 @@
   <nav>
     <% if can? :manage, User %>
       <div class="link-wrapper">
+        <%= link_to "Monitoring", monitoring_path %>
+      </div>
+      <div class="link-wrapper">
         <%= link_to "Users", users_path %>
       </div>
       <div class="link-wrapper">
