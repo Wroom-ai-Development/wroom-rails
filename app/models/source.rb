@@ -12,11 +12,16 @@ class Source < ApplicationRecord
   validates :year_published, numericality: { only_integer: true }, length: { in: 0..4 }, allow_nil: true
   validate :file_type
 
-  def parse_document_chunks_from_file
+  def parse_document_chunks_from_file # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     raw_text = if file.content_type == 'application/pdf'
                  Sources::PdfParser.new(file).parse_text
                elsif file.content_type == 'text/plain'
                  file.download
+               elsif file.content_type.in? %w[
+                 application/msword
+                 application/vnd.openxmlformats-officedocument.wordprocessingml.document
+               ]
+                 Sources::WordParser.new(file).parse_text
                end
     SourceChunkingWorker.perform_async(id, raw_text)
   end
@@ -26,8 +31,14 @@ class Source < ApplicationRecord
   def file_type
     return unless file.attached?
 
-    return if file.content_type.in?(%w[text/plain application/pdf])
+    return if file.content_type.in?(%w[
+                                      text/plain
+                                      application/pdf
+                                      application/msword
+                                      application/vnd.openxmlformats-officedocument.wordprocessingml.document
 
-    errors.add(:file, 'must be a .pdf or .txt')
+                                    ])
+
+    errors.add(:file, 'must be a .pdf,.docx or .txt')
   end
 end
