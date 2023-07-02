@@ -11,7 +11,7 @@
       <% if can? :manage, voice %>
 
           <li class='index-list-item'>
-            <%= link_to voice.name, voice %>
+            <%= link_to voice.name, edit_voice_path(voice) %>
             <div class="controls">
               <%= link_to "✍︎", edit_voice_path(voice) %>
               <%= button_to "␡", voice, method: :delete %>
@@ -27,7 +27,7 @@
         <ul class="index-list">
           <% user.voices.each do |voice| %>
             <li class='index-list-item'>
-              <%= link_to voice.name, voice %>
+              <%= link_to voice.name, edit_voice_path(voice) %>
               <div class="controls">
                 <%= link_to "✍︎", edit_voice_path(voice) %>
                 <%= button_to "␡", voice, method: :delete %>
