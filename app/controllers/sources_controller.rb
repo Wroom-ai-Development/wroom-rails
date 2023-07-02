@@ -38,10 +38,13 @@ class SourcesController < ApplicationController
   end
 
   # PATCH/PUT /sources/1 or /sources/1.json
-  def update
+  def update # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     respond_to do |format|
       if @source.update(source_params)
+        old_headers = @source.section_headers
         save_section_headers
+
+        @source.rechunk if @source.section_headers != old_headers
         format.html { redirect_to source_url(@source), notice: 'Source was successfully updated.' }
         format.json { render :show, status: :ok, location: @source }
       else

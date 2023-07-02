@@ -30,6 +30,16 @@ class Source < ApplicationRecord
     SourceChunkingWorker.perform_async(id, raw_text)
   end
 
+  def rechunk
+    update!(truncated: false)
+    text = document_chunks.map(&:content).join(' ')
+    if from_document
+      parse_document_chunks_from_text(text)
+    else
+      parse_document_chunks_from_file
+    end
+  end
+
   private
 
   def file_type
