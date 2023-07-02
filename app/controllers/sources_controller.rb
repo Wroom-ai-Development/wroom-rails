@@ -84,7 +84,7 @@ class SourcesController < ApplicationController
     return if params[:source][:section_headers].blank?
 
     @source.section_headers = []
-    params[:source][:section_headers].split(',').map { |header| @source.section_headers << header.strip }
+    params[:source][:section_headers].split(',').map { |header| @source.section_headers << header.strip.singularize }
     @source.save!
   end
 end
