@@ -46,7 +46,8 @@ class Source < ApplicationRecord
   private
 
   def log_event
-    monitoring_events.create!(user_id: user&.id, note: "#{user&.email} created source #{name} at #{Time.zone.now}")
+    monitoring_events.create!(user_id: user&.id, note: "#{user&.email} created source #{name} at #{Time.zone.now}",
+                              event_type: 'create_record')
   end
 
   def file_type

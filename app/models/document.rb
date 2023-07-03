@@ -13,6 +13,7 @@ class Document < ApplicationRecord
   private
 
   def log_event
-    monitoring_events.create!(user_id: user&.id, note: "#{user&.email} created document #{title} at #{Time.zone.now}")
+    monitoring_events.create!(user_id: user&.id, note: "#{user&.email} created document #{title} at #{Time.zone.now}",
+                              event_type: 'create_record')
   end
 end

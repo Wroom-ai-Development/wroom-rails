@@ -12,6 +12,7 @@ class Voice < ApplicationRecord
   private
 
   def log_event
-    monitoring_events.create!(user_id: user&.id, note: "#{user&.email} created voice #{name} at #{Time.zone.now}")
+    monitoring_events.create!(user_id: user&.id, note: "#{user&.email} created voice #{name} at #{Time.zone.now}",
+                              event_type: 'create_record')
   end
 end
