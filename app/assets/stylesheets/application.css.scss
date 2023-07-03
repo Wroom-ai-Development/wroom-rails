@@ -52,7 +52,8 @@ div#logo {
   height: 100%;
   padding: 0;
   margin: 0;
-
+  width: fit-content;
+  min-width: 100%;
   div#alerts {
     position: absolute;
     right: 1rem;
@@ -878,3 +879,42 @@ div.view-content.edit-document {
   }
 }
 @import 'actiontext.css';
+
+div.view-content.monitoring {
+  padding-right: 3rem;
+  align-items: flex-start;
+  width: 100%;
+  font-family: 'Inconsolata', monospace;
+  color: #ffd9d9;
+  background: #2d2a67;
+  min-height: 100vh;
+  margin: 0;
+  h1 {
+
+  }
+
+  h4 {
+
+  }
+  div.lists {
+    display: flex;
+    width: fit-content;
+    
+      ul {
+        columns: 1;
+        width: 30rem;
+        li {
+          background-color: rgb(20, 23, 67);
+          width: 100%;
+          font-size: 0.8rem;
+          padding: 0.5rem;
+          margin-bottom: 0.8rem;
+          font-weight: 700;
+          line-height: 1rem;
+          border-radius: 5px;
+          list-style-type: none;
+        }
+
+      }
+  }
+}

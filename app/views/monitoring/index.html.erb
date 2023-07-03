@@ -1,13 +1,30 @@
-
-<div class='view-header'>
-  <h1>Monitoring</h1>
-</div>
-<div class='view-content'>
-  <ul class="index-list">
-    <% @monitoring_events.each do |event| %>
-      <li class='index-list-item'>
-        <%= event.note %>
-      </li>
-    <% end %>
-  </ul>
+<%= turbo_stream_from 'monitoring' %>
+<%= turbo_frame_tag 'monitoring'%>
+<div class='view-content monitoring'>
+  <div class='lists'>
+    <ul>
+      <h4>All</h4>
+      <% @monitoring_events.each do |event| %>
+        <li class='index-list-item'>
+          <%= event.note %>
+        </li>
+      <% end %>
+    </ul>
+    <ul>
+      <h4>Records created</h4>
+      <% @create_record_events.each do |event| %>
+        <li class='index-list-item'>
+          <%= event.note %>
+        </li>
+      <% end %>
+    </ul>
+    <ul>
+      <h4>Messages</h4>
+      <% @message_events.each do |event| %>
+        <li class='index-list-item'>
+          <%= event.note %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 </div>
