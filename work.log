@@ -1,0 +1,3 @@
+- fixed voices implementation
+- fixed partial answers
+- refactored conversation service
