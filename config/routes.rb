@@ -18,7 +18,8 @@ Rails.application.routes.draw do
   resources :sources
   devise_for :users, controllers: {
     confirmations: 'confirmations',
-    registrations: 'registrations'
+    registrations: 'registrations',
+    sessions: 'sessions'
   }
   resources :users, except: %i[new create]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

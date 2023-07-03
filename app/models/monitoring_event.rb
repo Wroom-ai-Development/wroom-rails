@@ -4,7 +4,9 @@ class MonitoringEvent < ApplicationRecord
   belongs_to :trackable, polymorphic: true
   enum event_type: {
     'create_record': 0,
-    'message': 1
+    'message': 1,
+    'registration': 2,
+    'sign_in': 3
   }
 
   after_create_commit :broadcast_status

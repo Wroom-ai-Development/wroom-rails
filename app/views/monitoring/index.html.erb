@@ -3,27 +3,33 @@
 <div class='view-content monitoring'>
   <div class='lists'>
     <ul>
-      <h4>All</h4>
-      <% @monitoring_events.each do |event| %>
-        <li class='index-list-item'>
-          <%= event.note %>
-        </li>
+      <h4>Messages</h4>
+      <% @message_events.each do |event| %>
+        <%= render 'event', event: event%>
+      <% end %>
+    </ul>
+    <ul>
+      <h4>Registrations</h4>
+      <% @registration_events.each do |event| %>
+        <%= render 'event', event: event%>
+      <% end %>
+    </ul>
+    <ul>
+      <h4>Sign-ins</h4>
+      <% @sign_in_events.each do |event| %>
+        <%= render 'event', event: event%>
       <% end %>
     </ul>
     <ul>
       <h4>Records created</h4>
       <% @create_record_events.each do |event| %>
-        <li class='index-list-item'>
-          <%= event.note %>
-        </li>
+        <%= render 'event', event: event%>
       <% end %>
     </ul>
     <ul>
-      <h4>Messages</h4>
-      <% @message_events.each do |event| %>
-        <li class='index-list-item'>
-          <%= event.note %>
-        </li>
+      <h4>All</h4>
+      <% @monitoring_events.each do |event| %>
+        <%= render 'event', event: event%>
       <% end %>
     </ul>
   </div>
