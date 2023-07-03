@@ -381,8 +381,32 @@ main {
 
         div.main-message {
           display: flex;
-          align-items: center;
+          align-items: end;
           flex-direction: row;
+          // min-height: 4rem;
+          div.message-controls {
+            form {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              padding-left: 0;
+              padding-right: 1rem;
+              
+              button {
+                height: 2rem;
+                width: 2rem;
+                font-size: 1.2rem;
+                background-color: white;
+                color: $wroom-red;
+                border: none;
+                margin: 0;
+                content: 'asdasd';
+                &.copy {
+                  color: $wroom-blue;
+                }
+              }
+            }
+          }
           div.main-message-content {
             display: flex;
             align-items: center;
@@ -396,15 +420,6 @@ main {
                 width: 100%;
               }
             }
-          }
-          button {
-            height: 2rem;
-            width: 2rem;
-            font-size: 1.2rem;
-            background-color: white;
-            color: $wroom-red;
-            border: none;
-            content: 'asdasd'
           }
           form {
             margin: 0 0 0 0;
@@ -767,17 +782,8 @@ div.view-content.edit-document {
     margin: 0 0 0 1rem;
     padding: 0;
 
-    div.content {
-      div.main-message {
-        button {
-          width: 1rem !important;
-          height: 1rem !important;
-        }
-      }
-    }
-
     div#messages {
-      padding: 0.5rem 1rem 0.5rem 0.5rem;
+      padding: 0.5rem 2rem 0.5rem 0.5rem;
       div.message {
         font-size: 0.7rem;
         line-height: 0.9rem;
