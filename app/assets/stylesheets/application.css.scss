@@ -274,21 +274,26 @@ main {
         }
       }
 
-      div.checkbox-field {
-        margin-top: 1.4rem;
-        label {
-          margin-bottom: 0.3rem;
-
-        }
-        div.item {
-          display: flex;
-          align-items: center;
-          padding: 0.3rem;
-          input {
-            margin: 0 0.7rem 0 0;
+      div.lists {
+        display: flex;
+        div.checkbox-field {
+          margin-top: 1.4rem;
+          margin-right: 5rem;
+          label {
+            margin-bottom: 0.3rem;
+  
+          }
+          div.item {
+            display: flex;
+            align-items: center;
+            padding: 0.3rem;
+            input {
+              margin: 0 0.7rem 0 0;
+            }
           }
         }
       }
+
 
       label, em {
         font-size: 0.9rem;
