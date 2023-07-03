@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :conversations, dependent: :destroy
   has_many :voices, dependent: :destroy
   has_many :documents, dependent: :destroy
+  has_many :monitoring_events, as: :trackable, dependent: :nullify
 
   validates :email, uniqueness: true, presence: true
 
@@ -18,5 +19,17 @@ class User < ApplicationRecord
 
   def set_default_role
     self.role ||= :user
+  end
+
+  after_create_commit :log_event
+
+  private
+
+  def log_event
+    monitoring_events.create!(
+      user_id: id,
+      event_type: 'registration',
+      note: "#{email} registered for wroom"
+    )
   end
 end

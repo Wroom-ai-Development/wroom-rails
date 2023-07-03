@@ -883,36 +883,44 @@ div.view-content.edit-document {
 div.view-content.monitoring {
   padding-right: 3rem;
   align-items: flex-start;
-  width: 100%;
+  width: 97vw;
+  overflow-x: scroll;
+
+  overflow-y: scroll;
+  
   font-family: 'Inconsolata', monospace;
   color: #ffd9d9;
   background: #2d2a67;
-  min-height: 100vh;
+  height: 91vh;
   margin: 0;
-  h1 {
-
-  }
-
-  h4 {
-
-  }
   div.lists {
     display: flex;
-    width: fit-content;
+    // width: fit-content;
+    padding: 0 0 0 1rem;
     
       ul {
         columns: 1;
-        width: 30rem;
+        width: 16rem;
+        margin: 0 4rem 0 0;
+        padding: 0;
         li {
           background-color: rgb(20, 23, 67);
           width: 100%;
           font-size: 0.8rem;
-          padding: 0.5rem;
+          padding: 1rem;
           margin-bottom: 0.8rem;
           font-weight: 700;
           line-height: 1rem;
           border-radius: 5px;
           list-style-type: none;
+
+          div.note {
+            color: #e97070;
+          }
+
+          div.timestamp {
+
+          }
         }
 
       }
