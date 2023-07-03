@@ -36,20 +36,8 @@
       <%= form.text_area :meta_prompt %>
     </div>
 
-    <% if current_user.conversations.any? %>
-      <div class='checkbox-field'>
-        <%= form.label 'Documents', style: "display: block" %>
-        <%= form.collection_check_boxes :conversation_ids, current_user.conversations, :id, :title, { hide_label: true } do |item| %>
-          <div class='item'>
-            <%= item.check_box %>
-            <%= item.label %>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-
     <div class="actions">
-      <%= form.submit %>
+      <%= form.submit 'confirm' %>
     </div>
   <% end %>
 </div>
