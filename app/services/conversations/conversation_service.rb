@@ -25,29 +25,40 @@ module Conversations
       @requests_for_current_query = 0
     end
 
-    def respond # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-      if @sources.count == 1
-        get_answer_from_source(@sources.first)
-        update_request_counts
-      elsif @sources.count > 1 && @sources.count < 4
-        if all_sources_fit_in_multi_limit?
-          get_answer_from_multiple_sources
-        else
-          refuse_answering_from_multiple_sources_that_are_too_big
-        end
-        update_request_counts
-      elsif @sources.count >= 4
-        refuse_answering_from_too_many_sources
-        update_request_counts
-      else
-        answer = get_answer_without_sources
-        update_request_counts
-        @conversation.update!(status: 0)
-        @conversation.messages.create!(role: 'assistant', content: answer)
-      end
+    def respond
+      answer = handle_business
+      @conversation.update!(status: 0)
+      @conversation.messages.create!(role: 'assistant', content: answer, partial_answers: @partial_answers || [])
     end
 
     private
+
+    def handle_business
+      answer = obtain_answer
+      answer = rephrase_with_voices(answer)
+      update_request_counts
+      answer
+    end
+
+    def obtain_answer
+      if @sources.count == 1
+        get_answer_from_source(@sources.first)
+      elsif @sources.count > 1 && @sources.count < 4
+        handle_multiple_sources
+      elsif @sources.count >= 4
+        refuse_answering_from_too_many_sources
+      else
+        get_answer_without_sources
+      end
+    end
+
+    def handle_multiple_sources
+      if all_sources_fit_in_multi_limit?
+        get_answer_from_multiple_sources
+      else
+        refuse_answering_from_multiple_sources_that_are_too_big
+      end
+    end
 
     def get_answer_from_multiple_sources # rubocop:disable Metrics/MethodLength
       messages = []
@@ -64,9 +75,7 @@ module Conversations
           All the sources that are the context of this query are: #{@sources.map(&:name).join(' ')}
         CONTENT
       }
-      response = get_answer_from_messages(messages)
-      @conversation.update!(status: 0)
-      @conversation.messages.create!(role: 'assistant', content: response)
+      client_chat(messages)
     end
 
     def all_sources_fit_in_multi_limit?
@@ -83,18 +92,18 @@ module Conversations
     end
 
     def refuse_answering_from_multiple_sources_that_are_too_big
-      respond_nicely(
+      rephrase_nicely(
         'At the moment WROOM can only handle small sources when using more source than one at the same time. If you would like to ask about larger sources, please link them up one at a time.' # rubocop:disable Layout/LineLength
       )
     end
 
     def refuse_answering_from_too_many_sources
-      respond_nicely(
+      rephrase_nicely(
         "At the moment WROOM cannot handle more three four small-volume sources at once, but I\'ve been told by the development team that this will soon change." # rubocop:disable Layout/LineLength
       )
     end
 
-    def respond_nicely(text)
+    def rephrase_nicely(text)
       prompt = <<-PROMPT
         Please rephrase this sentence:#{' '}
         "#{text}"
@@ -102,9 +111,7 @@ module Conversations
         Make it nice, quirky, and not very apologetic.
       PROMPT
       messages = [{ role: 'user', content: prompt }]
-      response = client_chat(messages, 'gpt-3.5-turbo')
-      @conversation.update!(status: 0)
-      @conversation.messages.create!(role: 'assistant', content: response)
+      client_chat(messages, 'gpt-3.5-turbo')
     end
 
     def update_request_counts
@@ -115,30 +122,24 @@ module Conversations
     end
 
     def get_answer_without_sources
-      get_answer_from_messages(@conversation_messages)
+      client_chat(@conversation_messages)
     end
 
-    def get_answer_from_source(source) # rubocop:disable Metrics/MethodLength
+    def get_answer_from_source(source)
       chunks = source.document_chunks
       if chunks.size == 1
-        source_identifier = @sources.size > 1 ? " (based on #{source.title})" : ''
-        answer = get_answer_from_chunk(chunks[0])
-        @conversation.update!(status: 0)
-        @conversation.messages.create!(role: 'assistant',
-                                       content: "#{answer} #{source_identifier}")
+        get_answer_from_chunk(chunks.first)
       elsif chunks.size > 1
         get_answer_from_multiple_chunks(chunks)
       else
-        respond_nicely("There was a problem processing #{source.name}, you may have to upload it again.")
+        rephrase_nicely("There was a problem processing #{source.name}, you may have to upload it again.")
       end
     end
 
     def get_answer_from_multiple_chunks(chunks)
       answers = chunks.map { |chunk| { text: get_answer_from_chunk(chunk), source_name: chunk.source.name } }
-      answers = filter_out_non_answers(answers)
-      summary_answer = get_summary_answer(answers)
-      @conversation.update!(status: 0)
-      @conversation.messages.create!(role: 'assistant', content: summary_answer, partial_answers: answers)
+      @partial_answers = filter_out_non_answers(answers)
+      get_summary_answer(answers)
     end
 
     def filter_out_non_answers(answers) # rubocop:disable Metrics/MethodLength
@@ -152,12 +153,12 @@ module Conversations
             content: message_content }
         ]
         decision = client_chat(messages, 'gpt-3.5-turbo')
-        filtered_answers << answer unless decision.include?('NO')
+        filtered_answers << answer[:text] unless decision.include?('NO')
       end
       filtered_answers
     end
 
-    def get_summary_answer(answers) # rubocop:disable Metrics/MethodLength
+    def get_summary_answer(answers)
       summary_prompt = <<-PROMPT
         Shorten the text below so that no information is repeated. Remove sentences that suggest the speaker#{' '}
         does not have the answer.
@@ -166,11 +167,14 @@ module Conversations
         { role: 'system', content: answers.join(' ') }
       ]
       messages << { role: 'system', content: summary_prompt }
-      response = client_chat(messages, 'gpt-3.5-turbo')
+      client_chat(messages, 'gpt-3.5-turbo')
+    end
+
+    def rephrase_with_voices(string) # rubocop:disable Metrics/MethodLength
       if @conversation.voices.any?
         client_chat(
           [{
-            role: 'system', content: response
+            role: 'system', content: string
           }, {
             role: 'system',
             content: <<-CONTENT
@@ -181,29 +185,23 @@ module Conversations
           'gpt-3.5-turbo'
         )
       else
-        response
+        string
       end
     end
 
     def get_answer_from_chunk(chunk)
       messages = prepare_messages_for_chunk(chunk)
-      answer = get_answer_from_messages(messages)
+      answer = client_chat(messages)
       if chunk.section_header.present? && chunk.source.document_chunks.size > 1
         answer << "(based on #{chunk.section_header})"
       end
       answer
     end
 
-    def prepare_messages_for_chunk(chunk) # rubocop:disable Metrics/MethodLength
+    def prepare_messages_for_chunk(chunk)
       messages = @conversation_messages.dup.unshift({ role: 'system', content: chunk.content })
       last_user_message = messages.pop
-      if @conversation.voices.any?
-        @conversation.voices.each do |voice|
-          messages << { role: 'system', content: voice.meta_prompt }
-        end
-      else
-        messages << { role: 'system', content: META_PROMPT }
-      end
+      messages << { role: 'system', content: META_PROMPT }
       messages << { role: 'system', content: chunk_context_prompt(chunk) }
       messages << last_user_message
       messages
@@ -240,10 +238,6 @@ module Conversations
       end
 
       prompt.join(' ')
-    end
-
-    def get_answer_from_messages(messages)
-      client_chat(messages)
     end
 
     def client_chat(messages, model = 'gpt-3.5-turbo-16k')
