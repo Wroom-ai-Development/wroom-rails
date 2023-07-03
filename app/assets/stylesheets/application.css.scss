@@ -888,7 +888,6 @@ div.view-content.monitoring {
 
   overflow-y: scroll;
   
-  font-family: 'Inconsolata', monospace;
   color: #ffd9d9;
   background: #2d2a67;
   height: 91vh;
@@ -897,8 +896,14 @@ div.view-content.monitoring {
     display: flex;
     // width: fit-content;
     padding: 0 0 0 1rem;
-    
+
+      h4 {
+        font-family: 'MuseoModerno';
+        margin: 2rem 0 0.5rem 0.1rem;
+        color: #4a468e;
+      }
       ul {
+        font-family: 'Inconsolata', monospace;
         columns: 1;
         width: 16rem;
         margin: 0 4rem 0 0;
@@ -908,7 +913,7 @@ div.view-content.monitoring {
           width: 100%;
           font-size: 0.8rem;
           padding: 1rem;
-          margin-bottom: 0.8rem;
+          margin-bottom: 0.7rem;
           font-weight: 700;
           line-height: 1rem;
           border-radius: 5px;
