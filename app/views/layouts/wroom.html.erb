@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+  <head>
+    <title><%= t('.site_title')%></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <%= favicon_link_tag asset_path('wroom-favicon.png') %>
+  </head>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      document.body.style.height = `${viewportHeight}px`;
+      document.body.style.width = `${viewportWidth}px`;
+    });
+  </script>
+  <body id='wroom'>
+    <%= yield %>
+  </body>
+</html>
