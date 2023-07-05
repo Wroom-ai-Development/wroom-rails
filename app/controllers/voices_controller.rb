@@ -3,7 +3,6 @@
 class VoicesController < ApplicationController
   before_action :set_voice, only: %i[show edit update destroy delete_from_frame]
   load_and_authorize_resource
-  layout 'wroom', only: %i[edit]
 
   def delete_from_frame
     @voice.destroy

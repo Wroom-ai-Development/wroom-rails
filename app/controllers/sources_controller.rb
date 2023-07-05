@@ -3,7 +3,6 @@
 class SourcesController < ApplicationController
   before_action :set_source, only: %i[show edit update destroy]
   load_and_authorize_resource
-  layout 'wroom', only: %i[show edit]
 
   # GET /sources or /sources.json
   def index
