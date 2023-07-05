@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     member do
       patch 'autosave'
       post 'save_as_source'
-      post 'save_as_source_from_frame'
+      get 'save_as_source_from_frame'
       delete 'destroy_from_frame'
       get 'edit_frame'
     end

@@ -35,7 +35,14 @@ body#wroom {
       border-bottom: 1px solid $wroom-light-gray;
       background-color: white;
 
-      a {
+      a#save-as-source {
+        font-size: 0.8rem;
+        font-style: italic;
+        color: $wroom-blue;
+        width: 9rem;
+      }
+
+      a#library-link {
         height: 1rem;
         width: 3.5rem;
         // background-color: $wroom-blue;
@@ -176,6 +183,27 @@ body#wroom {
         height: 87vh;
         background-color: white;
         overflow-x: clip;
+
+        div#initial-message {
+          text-decoration: underline 1px $wroom-blue;
+          width: 100%;
+          padding: 1rem;
+          text-align: left;
+          box-sizing: border-box;
+        }
+
+        div.conversation-status {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          font-size: 0.7rem;
+          color: $wroom-blue;
+          padding: 1rem;
+          div.conversation-loading-label {
+            width: min-content;
+            font-style: italic;
+          }
+        }    
   
         div.message {
           padding: 0.5rem 1rem 0 1rem;
@@ -199,18 +227,27 @@ body#wroom {
                 padding-right: 1rem;
                 padding-bottom: 0;
                 
-                button {
-                  height: 2rem;
-                  width: 2rem;
-                  font-size: 1.2rem;
-                  background-color: white;
-                  color: $wroom-red;
-                  border: none;
-                  margin: 0;
-                  content: 'asdasd';
-                  &.copy {
-                    color: $wroom-blue;
-                  }
+              }
+              div.button-wrapper {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding-left: 0.7rem;
+                padding-right: 1rem;
+                padding-bottom: 0;
+              };
+
+              button {
+                height: 2rem;
+                width: 2rem;
+                font-size: 1.2rem;
+                background-color: white;
+                color: $wroom-red;
+                border: none;
+                margin: 0;
+                content: 'asdasd';
+                &.copy {
+                  color: $wroom-blue;
                 }
               }
             }
@@ -269,7 +306,7 @@ body#wroom {
 
       trix-toolbar {
         margin-top: 1rem;
-        padding: 0 1rem 1rem 1rem;
+        padding: 0 1rem 2rem 1rem;
       }
 
       trix-editor {
@@ -279,7 +316,6 @@ body#wroom {
         background-color: white;
         border: none;
         border-top: 1px solid $wroom-light-gray;
-        border-bottom: 1px solid $wroom-light-gray;
         padding: 1rem;
         text-align: justify;
         line-height: 1.6rem;
@@ -323,7 +359,6 @@ body#wroom {
       width: -webkit-fill-available;
       min-height: 1rem;
       background-color: white;
-      border-bottom: 1px solid $wroom-light-gray;
       &#document {
         display: flex;
         flex-direction: row;
@@ -371,6 +406,16 @@ body#wroom {
           }
         }
 
+        &#new-document {
+          border-bottom: 1px solid $wroom-light-gray;
+          input#document_title {
+            font-weight: 700;
+            &::placeholder {
+              font-weight: 100;
+            }
+          }
+        }
+
         &#edit-document-form {
           display: flex;
           flex-direction: column;
@@ -392,7 +437,7 @@ body#wroom {
           font-size: 0.9rem;
           background-color: white;
           height: fit-content;
-
+          border-bottom: 1px solid $wroom-light-gray;
           a {
             display: flex;
             flex-direction: row;
@@ -441,6 +486,7 @@ body#wroom {
     display: flex;
     background-color: white;
     height: 4rem;
+    border-bottom: 1px solid $wroom-light-gray;
 
     div {
       span#wroom {

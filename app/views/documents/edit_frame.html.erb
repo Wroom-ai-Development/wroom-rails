@@ -7,9 +7,9 @@
     ) do |form| %>
         <div class='top-pane'>
           <%= form.text_field :title, data: { action: "keyup->document#save blur->document#save" } %>
+          <%= link_to "↳ Save as a source", save_as_source_from_frame_document_path(@document), id: 'save-as-source' %>
         </div>
-        <%= form.rich_text_area :content, data: { action: "keyup->document#save blur->document#save" } %>
+        <%= form.rich_text_area :content, placeholder: 'Use this space to make notes and save useful fragments of your conversation.', data: { action: "keyup->document#save blur->document#save" } %>
     <% end %>
-    <%= button_to "↳ Save as a source", save_as_source_from_frame_document_path(@document), method: :post, class: 'link' %>
   </div>
 <% end %>

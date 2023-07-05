@@ -15,7 +15,7 @@ class ConversationsController < ApplicationController
     @conversation.update!(status: 1)
     @conversation.messages.create!(content: params[:content], role: 'user')
     AnswerFetchingWorker.perform_async(@conversation.id)
-    redirect_to root_path, status: :see_other
+    redirect_to root_path(document_id: @conversation.documents.first.id), status: :see_other
   end
 
   def delete_message_from_frame
@@ -23,7 +23,7 @@ class ConversationsController < ApplicationController
     conversation = message.conversation
     authorize! :edit, conversation
     message.destroy
-    redirect_to root_path, status: :see_other
+    redirect_to root_path(document_id: conversation.documents.first.id), status: :see_other
   end
 
   def edit_frame

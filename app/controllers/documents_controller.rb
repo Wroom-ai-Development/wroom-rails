@@ -41,9 +41,10 @@ class DocumentsController < ApplicationController
   end
 
   def save_as_source_from_frame
+    source_name = create_unique_source_name(@document.title)
     source = Source.create!(
       user_id: @document.user_id,
-      name: @document.title,
+      name: source_name,
       from_document: true,
       title: @document.title
     )
@@ -51,7 +52,13 @@ class DocumentsController < ApplicationController
     redirect_to root_path, status: :see_other
   end
 
-
+  def create_unique_source_name(string)
+    if @document.user.sources.where(name: string).any?
+      create_unique_source_name(string + " Copy")
+    else
+      string
+    end
+  end
 
 
 
