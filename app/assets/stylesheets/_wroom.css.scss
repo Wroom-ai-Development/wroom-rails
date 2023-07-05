@@ -4,7 +4,7 @@
 body#wroom {
   display: flex;
   font-family: 'Playfair Display', serif;
-
+  overflow: hidden;
 
   .panel {
     height: initial;
