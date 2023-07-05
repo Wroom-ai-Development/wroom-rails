@@ -170,6 +170,7 @@ body#wroom {
           color: $wroom-blue;
           background-color: white;
           font-size: 1.1rem;
+          margin-right: 1rem;
           width: 2rem;
         }
       }
@@ -180,7 +181,7 @@ body#wroom {
         display: flex;
         flex-direction: column-reverse;
         align-items: center;
-        height: 87vh;
+        height: 82vh;
         background-color: white;
         overflow-x: clip;
 
