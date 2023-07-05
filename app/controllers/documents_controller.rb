@@ -23,7 +23,7 @@ class DocumentsController < ApplicationController
     @document = Document.new(document_params)
     @document.conversation_id = conversation.id
     @document.save
-    redirect_to root_path, status: :see_other
+    redirect_to root_path(document_id: @document.id), status: :see_other
   end
 
   def destroy_from_frame

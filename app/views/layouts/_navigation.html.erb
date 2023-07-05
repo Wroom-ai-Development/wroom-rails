@@ -1,7 +1,9 @@
 <header>
-  <div id='logo'>
-    <span id='wroom'>WROOM</span><span id='ai'>.ai</span>
-  </div>
+  <%= link_to root_path do %>
+    <div id='logo'>
+      <span id="back">back to </span><span id='wroom'>WROOM</span><span id='ai'>.ai</span>
+    </div>
+  <% end %>
   <nav>
     <% if can? :manage, User %>
       <div class="link-wrapper">

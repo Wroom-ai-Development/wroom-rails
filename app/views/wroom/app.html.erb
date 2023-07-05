@@ -1,4 +1,4 @@
-<div id="left-panel" class="panel">
+<div id="documents-panel" class="panel">
   <div class='panel-element' id='wroom-logo'>
     <div>
       <span id='wroom'>WROOM</span><span id='ai'>.ai</span>
@@ -22,7 +22,7 @@
     <%= turbo_frame_tag "conversation_frame", src: show_in_frame_conversation_path(@document.conversation) %>
   <% end %>
 </div>
-<div id="right-panel" class="panel">
+<div id="context-panel" class="panel">
   <% if @document.conversation %>
     <%= turbo_frame_tag "edit_conversation_frame", src: edit_frame_conversation_path(@document.conversation) %>
   <% end %>

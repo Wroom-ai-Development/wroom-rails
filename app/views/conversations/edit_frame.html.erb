@@ -26,6 +26,7 @@
     }
   </script>
   <div class='top-pane'>
+    <%= link_to "Library", sources_path %>
   </div>
   <div id='conversation-context'>
     <%= form_with(
@@ -39,14 +40,14 @@
         <% if @conversation.user&.sources.present? %>
           <div class='header'>
             <%= form.label 'Sources', style: "display: block" %>
-            <%= link_to "+", new_source_path %>
+            <%= link_to "✙", new_source_path %>
           </div>
           <div id='sources' class='list'>
             <%= form.collection_check_boxes :source_ids, @conversation.user.sources, :id, :name, { hide_label: true } do |item| %>
               <div class='list-item'>
                 <%= item.check_box onchange: "this.form.submit();", class: 'checkbox' %>
                 <%= item.label %>
-                <%= link_to "✍︎", edit_source_path(id: item.value), class: 'edit' %>
+                <%= link_to "☉", edit_source_path(id: item.value), class: 'edit' %>
                 <a class='delete' onClick='deleteSource(<%= item.value %>);'>␡</a>
               </div>
             <% end %>
@@ -55,14 +56,14 @@
         <% if @conversation.user.voices.present? %>
           <div class='header'>
             <%= form.label 'Voices', style: "display: block" %>
-            <%= link_to "+", new_voice_path %>
+            <%= link_to "✙", new_voice_path %>
           </div>
           <div id='voices' class='list'>
             <%= form.collection_check_boxes :voice_ids, @conversation.user.voices, :id, :name, { hide_label: true } do |item| %>
               <div class='list-item'>
                 <%= item.check_box onchange: "this.form.submit();", class: 'checkbox' %>
                 <%= item.label %>
-                <%= link_to "✍︎", edit_voice_path(id: item.value), class: 'edit' %>
+                <%= link_to "☉", edit_voice_path(id: item.value), class: 'edit' %>
                 <a class='delete' onClick='deleteVoice(<%= item.value %>);'>␡</a>
               </div>
             <% end %>

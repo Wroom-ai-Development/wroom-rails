@@ -27,6 +27,13 @@ div#logo {
     text-decoration: none;
     color: $wroom-red;
   }
+
+  span#back {
+    color: $wroom-blue;
+    font-style: italic;
+    font-size: 0.9rem;
+    margin-right: 0.3rem;
+  }
 }
 
  body {
@@ -84,6 +91,21 @@ header {
       margin-right: 1rem;
       &:hover {
         text-decoration: underline 1px $wroom-blue;
+      }
+
+      &#wroom {
+        height: 1rem;
+        width: 3.5rem;
+        // background-color: $wroom-blue;
+        border: 1px solid $wroom-blue;
+        font-weight: 900;
+        color: black;
+        padding: 0.5rem;
+        border-radius: 40px;
+        font-size: 0.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
     }
     button {

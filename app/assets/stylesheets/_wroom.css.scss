@@ -13,7 +13,7 @@ body#wroom {
     display: flex;
     flex-direction: column;
 
-    &#left-panel {
+    &#documents-panel {
       width: 20%;
     }
     &#document-panel {
@@ -22,7 +22,7 @@ body#wroom {
     &#conversation-panel {
       width: 25%;
     }
-    &#right-panel {
+    &#context-panel {
       width: 20%;
     }
 
@@ -30,9 +30,29 @@ body#wroom {
       height: 4rem;
       display: flex;
       flex-direction: row;
-      padding-right: 1rem;
+      align-items: center;
+      justify-content: center;
       border-bottom: 1px solid $wroom-light-gray;
       background-color: white;
+
+      a {
+        height: 1rem;
+        width: 3.5rem;
+        // background-color: $wroom-blue;
+        border: 1px dotted $wroom-blue;
+        font-weight: 700;
+        color: black;
+        padding: 0.5rem;
+        border-radius: 40px;
+        font-size: 0.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+          text-decoration: underline 1px $wroom-blue;
+        }
+      }
 
       form {
         display: flex;
@@ -63,14 +83,16 @@ body#wroom {
       div.header {
         min-height: 2rem;
         padding: 1rem;
-        border-top: 1px solid $wroom-light-gray;
         border-bottom: 1px solid $wroom-light-gray;
         display: flex;
         align-items: center;
         justify-content: space-between;
         font-size: 1rem;
-        font-weight: 700;
         text-align: center;
+        
+        &::not(:first-child) {
+          border-top: 1px solid $wroom-light-gray;
+        }
 
         a {
           color: $wroom-blue;
@@ -379,7 +401,6 @@ body#wroom {
             margin-right: 0.5rem;
           }
 
-          border-bottom: 1px solid $wroom-light-gray;
           &:hover {
             background-color: $wroom-baby-blue;
           }
