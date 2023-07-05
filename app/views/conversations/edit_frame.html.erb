@@ -37,11 +37,11 @@
           value: @conversation.user.id,
           readonly: cannot?(:manage, User),
           style: "display: none;" %>
+        <div class='header'>
+          <%= form.label 'Sources', style: "display: block" %>
+          <%= link_to "✙", new_source_path %>
+        </div>
         <% if @conversation.user&.sources.present? %>
-          <div class='header'>
-            <%= form.label 'Sources', style: "display: block" %>
-            <%= link_to "✙", new_source_path %>
-          </div>
           <div id='sources' class='list'>
             <%= form.collection_check_boxes :source_ids, @conversation.user.sources, :id, :name, { hide_label: true } do |item| %>
               <div class='list-item'>
@@ -53,11 +53,11 @@
             <% end %>
           </div>
         <% end %>
+        <div class='header'>
+          <%= form.label 'Voices', style: "display: block" %>
+          <%= link_to "✙", new_voice_path %>
+        </div>
         <% if @conversation.user.voices.present? %>
-          <div class='header'>
-            <%= form.label 'Voices', style: "display: block" %>
-            <%= link_to "✙", new_voice_path %>
-          </div>
           <div id='voices' class='list'>
             <%= form.collection_check_boxes :voice_ids, @conversation.user.voices, :id, :name, { hide_label: true } do |item| %>
               <div class='list-item'>
