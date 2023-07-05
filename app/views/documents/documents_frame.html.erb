@@ -1,0 +1,16 @@
+<%= turbo_frame_tag "documents_frame" do %>
+    <ul id="documents-list">
+        <% @documents.each do |document| %>
+            <% if can? :manage, document %>
+                <li>
+                    <%= link_to root_path(document_id: document.id) do %>
+                        <%= document.title %>
+                        <div class="controls">
+                            <%= button_to "␡", destroy_from_frame_document_path(document), method: :delete %>
+                        </div>
+                    <% end %>
+                </li>
+            <% end %>
+        <% end %>
+    </ul>
+<% end %>

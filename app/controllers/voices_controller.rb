@@ -1,8 +1,14 @@
 # frozen_string_literal: true
 
 class VoicesController < ApplicationController
-  before_action :set_voice, only: %i[show edit update destroy]
+  before_action :set_voice, only: %i[show edit update destroy delete_from_frame]
   load_and_authorize_resource
+
+  def delete_from_frame
+    @voice.destroy
+
+    head :ok
+  end
 
   # GET /voices or /voices.json
   def index

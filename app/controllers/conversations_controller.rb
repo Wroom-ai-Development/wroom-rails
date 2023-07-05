@@ -1,12 +1,37 @@
 # frozen_string_literal: true
 
 class ConversationsController < ApplicationController
-  before_action :set_conversation, only: %i[show edit update destroy new_user_message]
+  before_action :set_conversation, only: %i[ edit_frame update_from_frame show edit update destroy new_user_message show_in_frame new_user_message_from_frame]
   load_and_authorize_resource except: [:delete_message]
 
   # GET /conversations or /conversations.json
   def index
     @users = User.where.not(id: current_user.id) if current_user.admin?
+  end
+
+  def show_in_frame; end
+
+  def new_user_message_from_frame
+    @conversation.update!(status: 1)
+    @conversation.messages.create!(content: params[:content], role: 'user')
+    AnswerFetchingWorker.perform_async(@conversation.id)
+    redirect_to root_path, status: :see_other
+  end
+
+  def delete_message_from_frame
+    message = Message.find(params[:message_id])
+    conversation = message.conversation
+    authorize! :edit, conversation
+    message.destroy
+    redirect_to root_path, status: :see_other
+  end
+
+  def edit_frame
+  end
+
+  def update_from_frame
+    @conversation.update(conversation_params)
+    redirect_to root_path, status: :see_other
   end
 
   # GET /conversations/1 or /conversations/1.json

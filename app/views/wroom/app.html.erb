@@ -1,3 +1,29 @@
-<div id='wroom'>
+<div id="left-panel" class="panel">
+  <div class='panel-element' id='wroom-logo'>
+    <div>
+      <span id='wroom'>WROOM</span><span id='ai'>.ai</span>
+    </div>
+  </div>
+  <div class='panel-element' id='new_document'>
+    <%= turbo_frame_tag "new_document_frame", src: new_frame_documents_path %>
+  </div>
+  <div class='panel-element' id='documents'>
+    <%= turbo_frame_tag "documents_frame", src: documents_frame_documents_path %>
+  </div>
 
+</div>
+<div id="document-panel" class="panel">
+  <% if @document %>
+    <%= turbo_frame_tag "edit_document_frame", src: edit_frame_document_path(@document) %>
+  <% end %>
+</div>
+<div id="conversation-panel" class="panel">
+  <% if @document.conversation %>
+    <%= turbo_frame_tag "conversation_frame", src: show_in_frame_conversation_path(@document.conversation) %>
+  <% end %>
+</div>
+<div id="right-panel" class="panel">
+  <% if @document.conversation %>
+    <%= turbo_frame_tag "edit_conversation_frame", src: edit_frame_conversation_path(@document.conversation) %>
+  <% end %>
 </div>

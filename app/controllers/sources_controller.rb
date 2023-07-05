@@ -68,6 +68,12 @@ class SourcesController < ApplicationController
     end
   end
 
+  def delete_from_frame
+    @source.destroy
+
+    head :ok
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

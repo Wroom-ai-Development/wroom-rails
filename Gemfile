@@ -118,3 +118,5 @@ gem 'sentry-raven'
 gem 'sentry-ruby'
 
 gem 'docx', '~> 0.8.0'
+
+gem "erb_lint", "~> 0.4.0"

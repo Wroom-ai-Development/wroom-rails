@@ -5,17 +5,38 @@ Rails.application.routes.draw do
     member do
       patch 'autosave'
       post 'save_as_source'
+      post 'save_as_source_from_frame'
+      delete 'destroy_from_frame'
+      get 'edit_frame'
+    end
+    collection do
+      get 'documents_frame'
+      get 'new_frame'
+      post 'create_from_frame'
     end
   end
-  resources :voices
+  resources :voices do
+    member do
+      delete 'delete_from_frame'
+    end
+  end
   mount ActionCable.server => '/cable'
   resources :conversations do
     member do
       post 'new_user_message'
+      post 'new_user_message_from_frame'
       delete 'delete_message'
+      get 'show_in_frame'
+      delete 'delete_message_from_frame'
+      get 'edit_frame'
+      patch 'update_from_frame'
     end
   end
-  resources :sources
+  resources :sources do
+    member do
+      delete 'delete_from_frame'
+    end
+  end
   devise_for :users, controllers: {
     confirmations: 'confirmations',
     registrations: 'registrations',

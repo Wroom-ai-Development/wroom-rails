@@ -1,0 +1,15 @@
+<%= turbo_frame_tag "edit_document_frame" do %>
+  <div id='edit-document'>
+    <%= form_with(
+        model: @document,
+        data: {controller: 'document', autosave_delay: '250'},
+        id: 'edit-document'
+    ) do |form| %>
+        <div class='top-pane'>
+          <%= form.text_field :title, data: { action: "keyup->document#save blur->document#save" } %>
+        </div>
+        <%= form.rich_text_area :content, data: { action: "keyup->document#save blur->document#save" } %>
+    <% end %>
+    <%= button_to "↳ Save as a source", save_as_source_from_frame_document_path(@document), method: :post, class: 'link' %>
+  </div>
+<% end %>

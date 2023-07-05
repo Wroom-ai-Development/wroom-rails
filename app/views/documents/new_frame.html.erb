@@ -1,0 +1,13 @@
+  <%= turbo_frame_tag "new_document_frame" do %>
+    <%= form_with(
+      model: @document,
+      url: create_from_frame_documents_url,
+      id: 'new-document'
+    ) do |form| %>
+
+      <%= form.text_field :title, { placeholder: 'New document title', onchange: action_name == 'new' ? '' : 'this.form.submit()' } %>
+      <%= form.text_field :user_id, value: current_user.id, style: 'display: none;', readonly: cannot?(:manage, User) %>
+      <%= form.submit '✓' %>
+
+    <% end %>
+  <% end %>

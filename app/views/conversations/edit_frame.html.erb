@@ -1,0 +1,75 @@
+<%= turbo_frame_tag "edit_conversation_frame" do %>
+  <script>
+    function deleteSource(id) {
+      fetch(
+        location.origin + `/sources/${id}/delete_from_frame`,
+        {
+          method: 'delete',
+          headers: {
+            "X-CSRF-Token": document.querySelector("meta[name='csrf-token']").content
+          },
+          credentials: 'same-origin'
+        }
+      ).then(() => {location.reload();})
+    }
+    function deleteVoice(id) {
+      fetch(
+        location.origin + `/voices/${id}/delete_from_frame`,
+        {
+          method: 'delete',
+          headers: {
+            "X-CSRF-Token": document.querySelector("meta[name='csrf-token']").content
+          },
+          credentials: 'same-origin'
+        }
+      ).then(() => {location.reload();})
+    }
+  </script>
+  <div class='top-pane'>
+  </div>
+  <div id='conversation-context'>
+    <%= form_with(
+      model: @conversation,
+      url: update_from_frame_conversation_url
+    ) do |form| %>
+        <%= form.text_field :user_id,
+          value: @conversation.user.id,
+          readonly: cannot?(:manage, User),
+          style: "display: none;" %>
+        <% if @conversation.user&.sources.present? %>
+          <div class='header'>
+            <%= form.label 'Sources', style: "display: block" %>
+            <%= link_to "+", new_source_path %>
+          </div>
+          <div id='sources' class='list'>
+            <%= form.collection_check_boxes :source_ids, @conversation.user.sources, :id, :name, { hide_label: true } do |item| %>
+              <div class='list-item'>
+                <%= item.check_box onchange: "this.form.submit();", class: 'checkbox' %>
+                <%= item.label %>
+                <%= link_to "✍︎", edit_source_path(id: item.value), class: 'edit' %>
+                <a class='delete' onClick='deleteSource(<%= item.value %>);'>␡</a>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+        <% if @conversation.user.voices.present? %>
+          <div class='header'>
+            <%= form.label 'Voices', style: "display: block" %>
+            <%= link_to "+", new_voice_path %>
+          </div>
+          <div id='voices' class='list'>
+            <%= form.collection_check_boxes :voice_ids, @conversation.user.voices, :id, :name, { hide_label: true } do |item| %>
+              <div class='list-item'>
+                <%= item.check_box onchange: "this.form.submit();", class: 'checkbox' %>
+                <%= item.label %>
+                <%= link_to "✍︎", edit_voice_path(id: item.value), class: 'edit' %>
+                <a class='delete' onClick='deleteVoice(<%= item.value %>);'>␡</a>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <%= form.submit style: 'display:none;' %>
+    <% end %>
+  </div>
+<% end %>
