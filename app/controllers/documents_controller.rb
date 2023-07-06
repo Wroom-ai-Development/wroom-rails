@@ -1,10 +1,67 @@
 # frozen_string_literal: true
 
-class DocumentsController < ApplicationController
-  before_action :set_document, only: %i[edit update destroy autosave save_as_source]
+class DocumentsController < ApplicationController # rubocop:disable Metrics/ClassLength
+  before_action :set_document,
+                only: %i[edit_frame edit update destroy autosave save_as_source destroy_from_frame
+                         save_as_source_from_frame]
   load_and_authorize_resource
 
   # GET /documents or /documents.json
+
+  def documents_frame
+    @documents = current_user.documents.order(:created_at)
+  end
+
+  def new_frame
+    @document = Document.new
+  end
+
+  def create_from_frame
+    conversation_title = (document_params[:title].presence || 'Document Conversation')
+    conversation = Conversation.create!(
+      title: conversation_title,
+      user_id: document_params[:user_id]
+    )
+    @document = Document.new(document_params)
+    @document.conversation_id = conversation.id
+    @document.save
+    redirect_to root_path(document_id: @document.id), status: :see_other
+  end
+
+  def destroy_from_frame
+    @document.destroy
+    redirect_to root_path, status: :see_other
+  end
+
+  def edit_frame
+    @document = if params[:id].present?
+                  Document.find(params[:id])
+                else
+                  current_user.documents.first
+                end
+    @conversation = @document.conversation
+  end
+
+  def save_as_source_from_frame
+    source_name = create_unique_source_name(@document.title)
+    source = Source.create!(
+      user_id: @document.user_id,
+      name: source_name,
+      from_document: true,
+      title: @document.title
+    )
+    source.parse_document_chunks_from_text(@document.content.to_plain_text)
+    redirect_to root_path, status: :see_other
+  end
+
+  def create_unique_source_name(string)
+    if @document.user.sources.where(name: string).any?
+      create_unique_source_name("#{string} Copy")
+    else
+      string
+    end
+  end
+
   def index
     @documents = Document.all
     @users = User.where.not(id: current_user.id) if current_user.admin?
@@ -23,7 +80,6 @@ class DocumentsController < ApplicationController
   def autosave
     @document.assign_attributes(document_params)
     @document.save!
-
     head :ok
   end
 
@@ -51,7 +107,7 @@ class DocumentsController < ApplicationController
     @document.conversation_id = conversation.id
     respond_to do |format|
       if @document.save
-        format.html { redirect_to edit_document_url(@document), notice: 'Document was successfully created.' }
+        format.html { head :ok }
       else
         format.html { render :new, status: :unprocessable_entity }
       end

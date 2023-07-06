@@ -72,6 +72,13 @@ GEM
     afm (0.2.2)
     ast (2.4.2)
     bcrypt (3.1.19)
+    better_html (2.0.2)
+      actionview (>= 6.0)
+      activesupport (>= 6.0)
+      ast (~> 2.0)
+      erubi (~> 1.4)
+      parser (>= 2.4)
+      smart_properties
     bindex (0.8.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
@@ -119,6 +126,13 @@ GEM
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
       railties (>= 3.2)
+    erb_lint (0.4.0)
+      activesupport
+      better_html (>= 2.0.1)
+      parser (>= 2.7.1.4)
+      rainbow
+      rubocop
+      smart_properties
     erubi (1.12.0)
     eventmachine (1.2.7)
     factory_bot (6.2.1)
@@ -401,6 +415,7 @@ GEM
     skinny (0.2.2)
       eventmachine (~> 1.0)
       thin
+    smart_properties (1.17.0)
     sprockets (4.2.0)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -465,6 +480,7 @@ DEPENDENCIES
   devise (~> 4.9)
   docx (~> 0.8.0)
   dotenv-rails (~> 2.8)
+  erb_lint (~> 0.4.0)
   factory_bot_rails
   ffaker (~> 2.21)
   google-cloud-storage (~> 1.44)

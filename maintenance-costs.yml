@@ -1,0 +1,52 @@
+total: $68 per month
+comment: this will start rising pretty much as 
+         soon as we open up to users
+production:
+  total: $34 per month
+  commment: this is the main instance of our app
+            that users use
+  postgres:
+    amount: $5 per month
+    comment: database, lowest plan (will rise 
+             with more traffic)
+  sendgrid:
+    amount: free
+    comment: mailing service
+  redis:
+    amount: $15 per month
+    description: additional database for handling 
+                 background jobs like processing 
+                 documents and conversations, will 
+                 rise very very quickly with 
+                 more users
+  sentry:
+    amount: free
+    description: error reporting and notifications.
+                 the free tier is not even covering 
+                 us right now
+  dynos:
+    comment: dynos is Heroku's name for virtual 
+             machines that are running our app
+    web:
+      amount: $7 per month
+      comment: this is the machine that handles all 
+               in-browser user traffic
+    woker:
+      amount: $7 per month
+      comment: this is the machine that handles all
+               background tasks (or workers)
+staging:
+  total: $34 per month
+  comment: this is the instance of wroom where I can
+           test functionality works in Heroku without
+           risking breaking something in production
+           (the instance available to users)
+  postgres: 
+    amount: $5 per month
+  redis:
+    amount: $15 per month
+  dynos:
+    web:
+      amount: $7 per month
+    woker:
+      amount: $7 per month

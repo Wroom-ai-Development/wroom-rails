@@ -1,0 +1,514 @@
+@import 'colors';
+@import 'mixins';
+
+body#wroom {
+  display: flex;
+  font-family: 'Playfair Display', serif;
+  overflow: hidden;
+
+  .panel {
+    height: initial;
+    border-left: 1px solid $wroom-light-gray;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+
+    &#documents-panel {
+      width: 20%;
+    }
+    &#document-panel {
+      width: 35%;
+    }
+    &#conversation-panel {
+      width: 25%;
+    }
+    &#context-panel {
+      width: 20%;
+    }
+
+    div.top-pane {
+      height: 4rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid $wroom-light-gray;
+      background-color: white;
+
+      a#save-as-source {
+        font-size: 0.8rem;
+        font-style: italic;
+        color: $wroom-blue;
+        width: 9rem;
+      }
+
+      a#library-link {
+        height: 1rem;
+        width: 3.5rem;
+        // background-color: $wroom-blue;
+        border: 1px dotted $wroom-blue;
+        font-weight: 700;
+        color: black;
+        padding: 0.5rem;
+        border-radius: 40px;
+        font-size: 0.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+          text-decoration: underline 1px $wroom-blue;
+        }
+      }
+
+      form {
+        display: flex;
+        padding-left: 1rem;
+      }
+
+      button.link {
+        padding: 0;
+        border: none;
+        font-family: 'Playfair Display', serif;
+        color: $wroom-blue;
+        font-style: italic;
+        background-color: rgba(0, 0, 0, 0);
+        font-size: 0.7rem;
+        width: 100%;
+        text-align: end;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+
+    div#conversation-context {
+      font-size: 0.8rem;
+      height: 100%;
+      height: min-content;
+    
+      div.header {
+        min-height: 2rem;
+        padding: 1rem;
+        border-bottom: 1px solid $wroom-light-gray;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 1rem;
+        text-align: center;
+        
+        &::not(:first-child) {
+          border-top: 1px solid $wroom-light-gray;
+        }
+
+        a {
+          color: $wroom-blue;
+          font-size: 1.4rem;
+          margin-right: 0.2rem;
+        }
+      }
+      div.list {
+        height: 40.5vh;
+        overflow-y: auto;
+
+        div.list-item {
+          min-height: 1rem;
+          padding: 0.6rem 1rem;
+          display: flex;
+          align-items: center;
+          &:not(:last-child) {
+            border-bottom: 1px solid $wroom-light-gray;
+          }
+          .checkbox {
+            margin-right: 1rem;
+          }
+          a.delete {
+            color: $wroom-red;
+            font-size: 1.4rem;
+            margin-left: 1rem;
+            &:hover {
+              cursor: pointer;
+            }
+          }
+
+          a.edit {
+            color: $wroom-blue;
+            font-size: 1.4rem;
+            margin-left: auto;
+          }
+        }
+      }
+    }
+
+    div#conversation {
+      height: min-content;
+      background-color: white;
+      max-height: 90vh;
+      form#new-message-form {
+        margin: 0;
+        padding: 1rem 0 1rem 0;
+        max-width: 50rem;
+        display: flex;
+
+        input#content {
+          border: none;
+          flex-grow: 1;
+          padding: 0.5rem;
+          padding-left: 1rem;
+          font-family: 'Playfair Display', serif;
+          font-style: italic;
+          &::placeholder {
+            color: $wroom-blue;
+          }
+          &:focus {
+            outline: none !important;
+          }
+        }
+
+        input#submit {
+          border: none;
+          color: $wroom-blue;
+          background-color: white;
+          font-size: 1.1rem;
+          margin-right: 1rem;
+          width: 2rem;
+        }
+      }
+
+      div#messages {
+        border-bottom: 1px solid $wroom-light-gray;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        height: 82vh;
+        background-color: white;
+        overflow-x: clip;
+
+        div#initial-message {
+          text-decoration: underline 1px $wroom-blue;
+          width: 100%;
+          padding: 1rem;
+          text-align: left;
+          box-sizing: border-box;
+        }
+
+        div.conversation-status {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          font-size: 0.7rem;
+          color: $wroom-blue;
+          padding: 1rem;
+          div.conversation-loading-label {
+            width: min-content;
+            font-style: italic;
+          }
+        }    
+  
+        div.message {
+          padding: 0.5rem 1rem 0 1rem;
+          text-align: justify;
+          font-size: 0.8rem;
+          line-height: 1.1rem;
+          width: 100%;
+  
+          div.main-message {
+            display: flex;
+            align-items: end;
+            flex-direction: row;
+            // min-height: 4rem;
+            div.message-controls {
+              padding-bottom: 1rem;
+              form {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding-left: 0.7rem;
+                padding-right: 1rem;
+                padding-bottom: 0;
+                
+              }
+              div.button-wrapper {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding-left: 0.7rem;
+                padding-right: 1rem;
+                padding-bottom: 0;
+              };
+
+              button {
+                height: 2rem;
+                width: 2rem;
+                font-size: 1.2rem;
+                background-color: white;
+                color: $wroom-red;
+                border: none;
+                margin: 0;
+                content: 'asdasd';
+                &.copy {
+                  color: $wroom-blue;
+                }
+              }
+            }
+            div.main-message-content {
+              display: flex;
+              align-items: center;
+              flex-direction: column;
+              p {
+                width: 100%;
+              }
+              details {
+                width: 100%;
+                summary {
+                  width: 100%;
+                }
+              }
+            }
+            form {
+              margin: 0 0 0 0;
+            }
+          }
+  
+          &.user {
+            div.main-message {
+              text-align: right;
+              font-style: italic;
+              justify-content: space-between;
+              border-bottom: 1px solid rgb(220, 220, 220);
+            }
+          }
+          div.main-message {  
+            button {
+              margin-right: 1rem;
+            }
+            padding-right: 2rem;
+          }
+  
+          &.error {
+            text-decoration: underline 1px $wroom-red;
+            div.main-message {  
+            }
+          }
+  
+          .content {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    div#edit-document {
+      height: -webkit-fill-available;
+      background-color: white;
+      padding: 0;
+
+
+      trix-toolbar {
+        margin-top: 1rem;
+        padding: 0 1rem 0.2rem 1rem;
+
+        .trix-button--icon {
+          width: 1.8rem !important;
+          height: 1.4rem !important;
+        }
+      }
+
+      trix-editor {
+        height: 75.9vh;
+        font-size: 0.9rem;
+        overflow-y: auto;
+        background-color: white;
+        border: none;
+        border-top: 1px solid $wroom-light-gray;
+        padding: 1rem;
+        text-align: justify;
+        line-height: 1.6rem;
+      }
+      form#edit-document {
+
+
+        input#document_title {
+          width: -webkit-fill-available;
+          padding: 1rem;
+          font-family: 'Playfair Display', serif;
+          font-size: 1.4rem;
+          font-weight: 700;
+          border: none;
+          &:focus {
+            outline: none;
+          }
+        }
+
+      }
+
+      button.link {
+        padding: 1.4rem;
+        // padding-right: 1rem;
+        border: none;
+
+        font-family: 'Playfair Display', serif;
+        color: $wroom-blue;
+        font-style: italic;
+        background-color: rgba(0, 0, 0, 0);
+        font-size: 0.9rem;
+        width: 100%;
+        text-align: end;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+
+    .panel-element {
+      width: -webkit-fill-available;
+      min-height: 1rem;
+      background-color: white;
+      &#document {
+        display: flex;
+        flex-direction: row;
+        div#editor {
+          width: 44rem;
+          display: flex;
+          flex-direction: column;
+
+        }
+      }
+      
+
+
+      form {
+        background-color: white;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 1rem;
+        width: -webkit-fill-available;
+        
+        input {
+          font-family: 'Playfair Display', serif;
+          font-style: italic;
+          width: -webkit-fill-available;
+          border: none;
+          padding: 0;
+          height: -webkit-fill-available;
+          &::placeholder {
+            color: $wroom-blue;
+          }
+          &:focus {
+            outline: none;
+          }
+
+          &[type='submit'] {
+            background-color: white;
+            color: $wroom-blue;
+            font-weight: 300;
+            font-size: 1.5rem;
+            width: min-content;
+            padding-right: 0.5rem;
+          }
+        }
+
+        &#new-document {
+          border-bottom: 1px solid $wroom-light-gray;
+          input#document_title {
+            font-weight: 700;
+            &::placeholder {
+              font-weight: 100;
+            }
+          }
+        }
+
+        &#edit-document-form {
+          display: flex;
+          flex-direction: column;
+          
+        }
+      }
+
+
+      ul {
+        margin: 0;
+        padding-inline: 0;
+        background-color: white;
+        overflow-y: auto;
+        height: 85vh;
+        li {
+          list-style: none;
+          padding: 0 1rem 0 1rem;
+          width: -webkit-fill-available;
+          font-size: 0.9rem;
+          background-color: white;
+          height: fit-content;
+          border-bottom: 1px solid $wroom-light-gray;
+          a {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            margin-right: 0.5rem;
+          }
+
+          &:hover {
+            background-color: $wroom-baby-blue;
+          }
+          
+  
+
+    
+        }
+
+        &#documents-list {
+          li {
+            div.controls {
+              display: flex;
+              align-items: center;
+              form.button_to {
+                padding: 1rem 0 1rem 0;
+                background-color: rgba(0,0,0,0);
+                margin-left: 1rem;
+                button {
+                  background-color: rgba(0,0,0,0);
+                  border: none;     
+                  color: $wroom-red;
+                  font-size: 1.5rem;
+                  font-family: 'Playfair Display', serif;
+                  font-weight: 300;
+                  padding: 0;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  div#wroom-logo {
+    @include flex-center-content;
+    display: flex;
+    background-color: white;
+    height: 4rem;
+    border-bottom: 1px solid $wroom-light-gray;
+
+    div {
+      span#wroom {
+        font-family: 'MuseoModerno';
+        font-weight: 900;
+        font-size: 2.1rem;
+        text-decoration: underline 4px $wroom-blue;
+      }
+      span#ai {
+        font-family: 'MuseoModerno';
+        font-weight: 400;
+        font-size: 1.5rem;
+        text-decoration: none;
+        color: $wroom-red;
+      }
+    }
+  }
+}
+
