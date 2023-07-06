@@ -307,7 +307,12 @@ body#wroom {
 
       trix-toolbar {
         margin-top: 1rem;
-        padding: 0 1rem 2rem 1rem;
+        padding: 0 1rem 0.2rem 1rem;
+
+        .trix-button--icon {
+          width: 1.8rem !important;
+          height: 1.4rem !important;
+        }
       }
 
       trix-editor {

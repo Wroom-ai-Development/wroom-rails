@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class ConversationsController < ApplicationController
-  before_action :set_conversation, only: %i[ edit_frame update_from_frame show edit update destroy new_user_message show_in_frame new_user_message_from_frame]
+  before_action :set_conversation,
+                only: %i[edit_frame update_from_frame show edit update destroy new_user_message show_in_frame
+                         new_user_message_from_frame]
   load_and_authorize_resource except: [:delete_message]
 
   # GET /conversations or /conversations.json
@@ -26,8 +28,7 @@ class ConversationsController < ApplicationController
     redirect_to root_path(document_id: conversation.documents.first.id), status: :see_other
   end
 
-  def edit_frame
-  end
+  def edit_frame; end
 
   def update_from_frame
     @conversation.update(conversation_params)

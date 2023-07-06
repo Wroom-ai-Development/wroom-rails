@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
-class DocumentsController < ApplicationController
-  before_action :set_document, only: %i[edit_frame edit update destroy autosave save_as_source destroy_from_frame save_as_source_from_frame]
+class DocumentsController < ApplicationController # rubocop:disable Metrics/ClassLength
+  before_action :set_document,
+                only: %i[edit_frame edit update destroy autosave save_as_source destroy_from_frame
+                         save_as_source_from_frame]
   load_and_authorize_resource
 
   # GET /documents or /documents.json
@@ -33,10 +35,10 @@ class DocumentsController < ApplicationController
 
   def edit_frame
     @document = if params[:id].present?
-      Document.find(params[:id])
-    else
-      current_user.documents.first
-    end
+                  Document.find(params[:id])
+                else
+                  current_user.documents.first
+                end
     @conversation = @document.conversation
   end
 
@@ -54,13 +56,11 @@ class DocumentsController < ApplicationController
 
   def create_unique_source_name(string)
     if @document.user.sources.where(name: string).any?
-      create_unique_source_name(string + " Copy")
+      create_unique_source_name("#{string} Copy")
     else
       string
     end
   end
-
-
 
   def index
     @documents = Document.all
@@ -71,9 +71,6 @@ class DocumentsController < ApplicationController
   def new
     @document = Document.new
   end
-
-
-  
 
   # GET /documents/1/edit
   def edit
