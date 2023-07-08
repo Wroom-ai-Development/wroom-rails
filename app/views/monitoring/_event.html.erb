@@ -3,6 +3,6 @@
     <%= event.note %>
   </div>
   <div class='timestamp'>
-    <%= event.created_at %>
+    <%= ActiveSupport::TimeZone['Europe/Warsaw'].parse(event.created_at.to_s) %>
   </div>
 </li>

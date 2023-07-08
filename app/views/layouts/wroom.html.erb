@@ -13,11 +13,15 @@
   </head>
 
   <script>
-    window.addEventListener('DOMContentLoaded', () => {
+    function setBodyDimensions () {
       const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
       const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
       document.body.style.height = `${viewportHeight}px`;
       document.body.style.width = `${viewportWidth}px`;
+    }
+    window.addEventListener('DOMContentLoaded', () => {
+      setBodyDimensions();
+      addEventListener('resize', setBodyDimensions, true)
     });
   </script>
   <body id='wroom'>

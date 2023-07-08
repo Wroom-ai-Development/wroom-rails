@@ -16,7 +16,7 @@ module Conversations
     def initialize(conversation)
       @conversation = conversation
       @sources = conversation.sources
-      @client = OpenAI::Client.new(access_token: ENV['OPENAI_ACCESS_KEY'])
+      @client = OpenaiService.new.client
       @last_user_question = @conversation.messages.where(role: 'user').last.content
       @conversation_messages = @conversation.messages.reject do |m|
         m.role == 'error'

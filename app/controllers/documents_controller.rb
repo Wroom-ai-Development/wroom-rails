@@ -47,7 +47,7 @@ class DocumentsController < ApplicationController # rubocop:disable Metrics/Clas
     source = Source.create!(
       user_id: @document.user_id,
       name: source_name,
-      from_document: true,
+      fileless: true,
       title: @document.title
     )
     source.parse_document_chunks_from_text(@document.content.to_plain_text)
@@ -87,7 +87,7 @@ class DocumentsController < ApplicationController # rubocop:disable Metrics/Clas
     source = Source.create!(
       user_id: @document.user_id,
       name: @document.title,
-      from_document: true,
+      fileless: true,
       title: @document.title
     )
     source.parse_document_chunks_from_text(@document.content.to_plain_text)
