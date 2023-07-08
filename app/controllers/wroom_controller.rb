@@ -3,9 +3,9 @@
 class WroomController < ApplicationController
   layout 'wroom'
 
-  def app # rubocop:disable Metrics/AbcSize
+  def app
     create_welcome_records unless current_user.onboarded?
-      
+
     @document = if params[:document_id].present?
                   Document.find(params[:document_id])
                 elsif current_user.documents.any?
@@ -21,13 +21,13 @@ class WroomController < ApplicationController
     create_welcome_voices
   end
 
-  def create_welcome_source
+  def create_welcome_source # rubocop:disable Metrics/MethodLength
     source = Source.create!(
       user_id: current_user.id,
       name: "'Sympathy' by Emily Brontë",
       fileless: true,
-      title: "Sympathy",
-      author: "by Emily Brontë",
+      title: 'Sympathy',
+      author: 'by Emily Brontë',
       year_published: '1846',
       text_category: 'poem'
     )
@@ -40,7 +40,7 @@ class WroomController < ApplicationController
       May flow down like a river:
       Are not the best beloved of years
       Around your heart for ever?
-      
+
       They weep, you weep, it must be so;
       Winds sigh as you are sighing,
       And winter sheds its grief in snow
@@ -55,9 +55,9 @@ class WroomController < ApplicationController
 
   def create_welcome_voices
     voices = [
-      ["Pirate", "Speak like a pirate"],
-      ["Worried mother", "Speak like a mother who is constantly worried about her child."],
-      ["Hepcat", "Speak like a hepcat"]
+      ['Pirate', 'Speak like a pirate'],
+      ['Worried mother', 'Speak like a mother who is constantly worried about her child.'],
+      ['Hepcat', 'Speak like a hepcat']
     ]
     voices.each do |voice|
       current_user.voices.create(name: voice[0], meta_prompt: voice[1])

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OpenaiService
   attr_accessor :client
 
@@ -9,7 +11,7 @@ class OpenaiService
     @client.chat(
       parameters: {
         model: 'gpt-3.5-turbo',
-        messages: messages
+        messages:
       }
     ).dig('choices', 0, 'message', 'content')
   end
@@ -18,7 +20,7 @@ class OpenaiService
     @client.chat(
       parameters: {
         model: 'gpt-3.5-turbo-16k',
-        messages: messages
+        messages:
       }
     ).dig('choices', 0, 'message', 'content')
   end
