@@ -12,7 +12,7 @@
       <% end %>
       <% if @conversation.messages.count == 0 %>
         <div id='initial-message'>
-          Hello, may I be of assistance?
+          Hello, may I be of any help?
         </div>
       <% end %>
       <% @conversation.messages.order(:created_at).reverse.each do |message| %>
