@@ -1,7 +1,5 @@
 <%= turbo_frame_tag "conversation_frame" do %>
   <%= turbo_stream_from @conversation.id, 'conversation_status' %>
-  <div class='top-pane'>
-  </div>
   <div id='conversation'>
     <div id='messages'>
       <% if @conversation.status == 1 %>
@@ -66,7 +64,7 @@
       <% end %>
     </div>
     <%= form_with url: new_user_message_from_frame_conversation_path(id: @conversation.id), id: 'new-message-form'  do |f| %>
-      <%= f.text_area :content, required: 'required', rows: 4, id: 'new-message-text-area' %>
+      <%= f.text_area :content, required: 'required', rows: 2, id: 'new-message-text-area' %>
       <%= f.submit '➥', id: 'submit' %>
     <% end %>
     <script>

@@ -6,6 +6,20 @@ body#wroom {
   font-family: 'Playfair Display', serif;
   overflow: hidden;
 
+  button.sign-out {
+    border: none;
+    font-family: 'Playfair Display', serif;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    margin-left: 0.5rem;
+    font-size: 0.7rem;
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 10px;
+    &:hover {
+      background-color: $wroom-light-gray;
+    }
+  }
+
   .panel {
     height: initial;
     border-left: 1px solid $wroom-light-gray;
@@ -14,51 +28,75 @@ body#wroom {
     flex-direction: column;
 
     &#documents-panel {
-      width: 20%;
+      width: 15%;
+      display: flex;
+      flex-direction: column;
     }
     &#document-panel {
-      width: 35%;
+      width: 50%;
     }
     &#conversation-panel {
-      width: 25%;
-    }
-    &#context-panel {
       width: 20%;
     }
+    &#context-panel {
+      width: 15%;
 
-    div.top-pane {
-      height: 4rem;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      border-bottom: 1px solid $wroom-light-gray;
-      background-color: white;
-
-      a#save-as-source {
-        font-size: 0.8rem;
-        font-style: italic;
-        color: $wroom-blue;
-        width: auto;
-      }
-
-      a#library-link {
-        height: 1rem;
-        width: 3.5rem;
-        // background-color: $wroom-blue;
-        border: 1px dotted $wroom-blue;
-        font-weight: 700;
-        color: black;
-        padding: 0.5rem;
-        border-radius: 40px;
-        font-size: 0.8rem;
+      div.links {
+        font-size: 0.7rem;
         display: flex;
         align-items: center;
         justify-content: center;
+        padding-top: 0.5rem
+        a {
+          color: $wroom-blue;
+        }
+      }
+    }
+
+    a#library-link {
+      font-family: 'Playfair Display', serif;
+      height: 1rem;
+      width: fit-content;
+      font-weight: 400;
+      color: $wroom-blue;
+      font-size: 0.7rem;
+      display: flex;
+      border: none;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0,0,0,0);
+      text-decoration: none;
+      margin-top: 1rem;
+
+      &:hover {
+        text-decoration: underline 1px $wroom-blue;
+      }
+    }
+
+    div.top-pane {
+      height: 2rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+
+
+      a#save-as-source {
+        font-size: 0.7rem;
+        font-style: italic;
+        color: $wroom-blue;
+        width: auto;
+        min-width: 6rem;
+        text-align: right;
 
         &:hover {
           text-decoration: underline 1px $wroom-blue;
         }
+      }
+
+      form.button_to {
+        margin: 0;
+        padding: 0;
       }
 
       form {
@@ -83,18 +121,18 @@ body#wroom {
     }
 
     div#conversation-context {
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       height: 100%;
       height: min-content;
     
       div.header {
-        min-height: 2rem;
-        padding: 1rem;
+        padding: 0.5rem;
         border-bottom: 1px solid $wroom-light-gray;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-size: 1rem;
+        font-size: 0.7rem;
+        font-weight: 500;
         text-align: center;
         
         &::not(:first-child) {
@@ -103,29 +141,28 @@ body#wroom {
 
         a {
           color: $wroom-blue;
-          font-size: 1.4rem;
+          font-size: 1rem;
           margin-right: 0.2rem;
         }
       }
       div.list {
         height: 40.5vh;
         overflow-y: auto;
-
+        font-size: 0.7rem;
         div.list-item {
-          min-height: 1rem;
-          padding: 0.6rem 1rem;
+          padding: 0.5rem;
           display: flex;
           align-items: center;
           &:not(:last-child) {
             border-bottom: 1px solid $wroom-light-gray;
           }
           .checkbox {
-            margin-right: 1rem;
+            margin-right: 0.5rem;
           }
           a.delete {
             color: $wroom-red;
-            font-size: 1.4rem;
-            margin-left: 1rem;
+            font-size: 1rem;
+            margin-left: 0.5rem;
             &:hover {
               cursor: pointer;
             }
@@ -133,8 +170,12 @@ body#wroom {
 
           a.edit {
             color: $wroom-blue;
-            font-size: 1.4rem;
+            font-size: 1rem;
             margin-left: auto;
+          }
+
+          &:hover {
+            background-color: $wroom-light-gray;
           }
         }
       }
@@ -146,7 +187,6 @@ body#wroom {
       max-height: 90vh;
       form#new-message-form {
         margin: 0;
-        max-width: 50rem;
         display: flex;
 
         textarea {
@@ -154,10 +194,10 @@ body#wroom {
 
           border: none;
           flex-grow: 1;
-          padding: 0.5rem;
-          padding-left: 1rem;
+          padding: 0.5rem 0 0 0.5rem;
           font-family: 'Playfair Display', serif;
           font-style: italic;
+          font-size: 0.7rem;
           &::placeholder {
             color: $wroom-blue;
           }
@@ -173,7 +213,7 @@ body#wroom {
           border: none;
           color: $wroom-blue;
           background-color: white;
-          font-size: 1.1rem;
+          font-size: 1rem;
           width: 2rem;
         }
       }
@@ -184,11 +224,12 @@ body#wroom {
         display: flex;
         flex-direction: column-reverse;
         align-items: center;
-        height: 77vh;
+        height: 90vh;
         background-color: white;
         overflow-x: clip;
 
         div#initial-message {
+          font-size: 0.7rem;
           text-decoration: underline 1px $wroom-blue;
           width: 100%;
           padding: 1rem;
@@ -212,40 +253,38 @@ body#wroom {
         div.message {
           padding: 0.5rem 1rem 0 1rem;
           text-align: justify;
-          font-size: 0.8rem;
+          font-size: 0.6rem;
           hyphens: auto;
-          line-height: 1.1rem;
+          line-height: 0.8rem;
           width: 100%;
   
           div.main-message {
             display: flex;
             align-items: end;
             flex-direction: row;
-            // min-height: 4rem;
             div.message-controls {
-              padding-bottom: 1rem;
+              padding-bottom: 0.5rem;
               form {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                padding-left: 0.7rem;
+                padding-left: 0.5rem;
                 padding-right: 1rem;
-                padding-bottom: 0;
                 
               }
               div.button-wrapper {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                padding-left: 0.7rem;
+                padding-left: 0.5rem;
                 padding-right: 1rem;
-                padding-bottom: 0;
+                padding-bottom: 0.5rem;
               };
 
               button {
-                height: 2rem;
-                width: 2rem;
-                font-size: 1.2rem;
+                height: 1rem;
+                width: 1rem;
+                font-size: 1rem;
                 background-color: white;
                 color: $wroom-red;
                 border: none;
@@ -285,9 +324,9 @@ body#wroom {
           }
           div.main-message {  
             button {
-              margin-right: 1rem;
+              margin-right: 0.5rem;
             }
-            padding-right: 2rem;
+            padding-right: 1rem;
           }
   
           &.error {
@@ -305,41 +344,46 @@ body#wroom {
 
     div#edit-document {
       height: -webkit-fill-available;
-      background-color: white;
       padding: 0;
 
 
       trix-toolbar {
-        margin-top: 1rem;
-        padding: 0 1rem 0.2rem 1rem;
+        margin-top: 0.5rem;
+        padding: 0;
+
+        .tool-button-row {
+          height: fit-content;
+        }
 
         .trix-button--icon {
-          width: 1.8rem !important;
-          height: 1.4rem !important;
+          width: 1.4rem !important;
+          height: 1rem !important;
         }
       }
 
       trix-editor {
         height: 75.9vh;
-        font-size: 0.9rem;
+        font-size: 0.7rem;
         overflow-y: auto;
         background-color: white;
+        padding-right: 1rem;
         border: none;
-        border-top: 1px solid $wroom-light-gray;
-        padding: 1rem;
         text-align: justify;
-        line-height: 1.6rem;
+        line-height: 1.4rem;
       }
       form#edit-document {
-
+        margin-top:3rem;
+        padding: 0 3vw;
 
         input#document_title {
           width: -webkit-fill-available;
-          padding: 1rem;
+          margin-right: 1rem;
           font-family: 'Playfair Display', serif;
-          font-size: 1.4rem;
-          font-weight: 700;
+          font-size: 1rem;
+          font-weight: 500;
+          background-color: white;
           border: none;
+          box-sizing: content-box;
           &:focus {
             outline: none;
           }
@@ -356,7 +400,7 @@ body#wroom {
         color: $wroom-blue;
         font-style: italic;
         background-color: rgba(0, 0, 0, 0);
-        font-size: 0.9rem;
+        font-size: 0.7rem;
         width: 100%;
         text-align: end;
         &:hover {
@@ -389,16 +433,19 @@ body#wroom {
         align-items: center;
         justify-content: space-between;
         width: 100%;
-        padding: 1rem;
+        padding: 0.5rem;
         width: -webkit-fill-available;
         
         input {
           font-family: 'Playfair Display', serif;
           font-style: italic;
-          width: -webkit-fill-available;
+          width: 60%;
           border: none;
           padding: 0;
           height: -webkit-fill-available;
+          font-size: 0.7rem;
+          width: 100%;
+
           &::placeholder {
             color: $wroom-blue;
           }
@@ -410,15 +457,14 @@ body#wroom {
             background-color: white;
             color: $wroom-blue;
             font-weight: 300;
-            font-size: 1.5rem;
+            font-size: 1rem;
             width: min-content;
-            padding-right: 0.5rem;
           }
         }
 
         &#new-document {
           input#document_title {
-            font-weight: 700;
+            font-weight: 300;
             &::placeholder {
               font-weight: 100;
             }
@@ -441,7 +487,9 @@ body#wroom {
         height: 85vh;
         li {
           list-style: none;
-          padding: 0 1rem 0 1rem;
+          display: flex;
+          justify-content: space-between;
+          padding: 0.5rem 0.5rem 0.5rem 0.5rem;
           width: -webkit-fill-available;
           font-size: 0.9rem;
           background-color: white;
@@ -455,11 +503,11 @@ body#wroom {
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
-            margin-right: 0.5rem;
+            font-size: 0.7rem;
           }
 
           &:hover {
-            background-color: $wroom-baby-blue;
+            background-color: $wroom-light-gray;
           }
           
   
@@ -468,23 +516,32 @@ body#wroom {
         }
 
         &#documents-list {
+
           li {
+            min-height: 2rem;
+            a {
+              display: flex;
+              justify-content: space-between;
+              width: -webkit-fill-available;
+            }
             div.controls {
               display: flex;
               align-items: center;
               form.button_to {
-                padding: 1rem 0 1rem 0;
+                padding: 0;
+              }
+              form.delete-document {
                 background-color: rgba(0,0,0,0);
                 margin-left: 1rem;
-                button {
-                  background-color: rgba(0,0,0,0);
-                  border: none;     
-                  color: $wroom-red;
-                  font-size: 1.5rem;
-                  font-family: 'Playfair Display', serif;
-                  font-weight: 300;
-                  padding: 0;
-                }
+              }
+              button.delete-document {
+                background-color: rgba(0,0,0,0);
+                border: none;     
+                color: $wroom-red;
+                font-size: 1rem;
+                font-family: 'Playfair Display', serif;
+                font-weight: 300;
+                padding: 0;
               }
             }
           }
@@ -497,20 +554,20 @@ body#wroom {
     @include flex-center-content;
     display: flex;
     background-color: white;
-    height: 4rem;
+    height: 2rem;
     border-bottom: 1px solid $wroom-light-gray;
 
     div {
       span#wroom {
         font-family: 'MuseoModerno';
         font-weight: 900;
-        font-size: 2.1rem;
-        text-decoration: underline 4px $wroom-blue;
+        font-size: 1rem;
+        text-decoration: underline 2px $wroom-blue;
       }
       span#ai {
         font-family: 'MuseoModerno';
         font-weight: 400;
-        font-size: 1.5rem;
+        font-size: 0.8rem;
         text-decoration: none;
         color: $wroom-red;
       }

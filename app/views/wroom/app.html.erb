@@ -10,6 +10,7 @@
   <div class='panel-element' id='documents'>
     <%= turbo_frame_tag "documents_frame", src: documents_frame_documents_path %>
   </div>
+  <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: 'sign-out' %>
 
 </div>
 <div id="document-panel" class="panel">
