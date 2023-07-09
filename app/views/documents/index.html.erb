@@ -1,11 +1,11 @@
 <%= turbo_frame_tag 'documents' %>
 <div class='view-header'>
-  <h1>Documents</h1>
+  <h1>Projects</h1>
   <%= link_to "+", new_document_path %>
 </div>
 <div class='view-content'>
   <% if current_user.admin? %>
-    <div class='index-separator'>My documents</div class='index-separator'>
+    <div class='index-separator'>My projects</div class='index-separator'>
   <% end %>
   <ul class="index-list">
     <% current_user.documents.each do |document| %>
