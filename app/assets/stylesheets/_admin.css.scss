@@ -191,7 +191,7 @@ main {
         // width: 25rem;
         align-items: center;
         justify-content: space-between;
-        border: 1px solid gray;
+        border: 1px solid $wroom-light-gray;
         font-size: 0.7rem;
         margin-bottom: 0.5rem;
         background-color: white;
@@ -239,7 +239,7 @@ main {
     div.record-form {
       width: 50rem;
       background-color: white;
-      border: 1px solid gray;
+      border: 1px solid $wroom-light-gray;
       padding: 1rem;
       margin-top: 1rem;
       margin-bottom: 1rem;
@@ -375,7 +375,7 @@ main {
 
     div#messages {
       padding: 1rem;
-      border: 1px solid gray;
+      border: 1px solid $wroom-light-gray;
       overflow-y: scroll;
       display: flex;
       flex-direction: column-reverse;
@@ -498,7 +498,7 @@ div.show-record {
   padding: 0 1rem 0 1rem;
   width: 40rem;
   background-color: white;
-  border: 1px solid gray;
+  border: 1px solid $wroom-light-gray;
   padding: 0.5rem;
   margin-top: 1rem;
   div.instructions {
@@ -516,6 +516,17 @@ div.show-record {
     }
     label {
       font-weight: 600;
+    }
+  }
+  div.chunks {
+    padding: 0 2rem;
+    div.chunk {
+      summary {
+        font-size: 0.8rem;
+      }
+      p {
+        font-size: 0.7rem;
+      }
     }
   }
   p {
@@ -755,7 +766,7 @@ div.view-content.edit-document {
     margin-top: 0.4rem;
     width: 100%;
     input {
-      border: 1px solid gray;
+      border: 1px solid $wroom-light-gray;
     }
 
     &.document-form {

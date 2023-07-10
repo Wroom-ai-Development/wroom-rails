@@ -14,19 +14,21 @@
           This source exceeded our text volume limits, and has been truncated.
         </div>
       <% end %>
-      <h3>Chunks</h3>
-      <% @source.document_chunks.each do |chunk| %>
-        <div class='chunk'>
-          <details>
-            <summary>
-              <%= "Chunk #{chunk.ordinal_number + 1}: #{chunk.section_header.strip}" %>
-            </summary>
-            <p>
-              <%= chunk.content %>
-            </p>
-          </details>
-        </div>
-      <% end %>
+      <div class='chunks'>
+        <h3>Chunks</h3>
+        <% @source.document_chunks.each do |chunk| %>
+          <div class='chunk'>
+            <details>
+              <summary>
+                <%= "Chunk #{chunk.ordinal_number + 1}: #{chunk.section_header.strip}" %>
+              </summary>
+              <p>
+                <%= chunk.content %>
+              </p>
+            </details>
+          </div>
+        <% end %>
+      </div>
     <% elsif @source.document_chunks.count == 1 %>
     <div class='chunk'>
       <p>
