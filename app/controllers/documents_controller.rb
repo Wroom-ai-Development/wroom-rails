@@ -51,7 +51,7 @@ class DocumentsController < ApplicationController # rubocop:disable Metrics/Clas
       title: @document.title
     )
     source.parse_document_chunks_from_text(@document.content.to_plain_text)
-    redirect_to root_path, status: :see_other
+    redirect_to root_path(document_id: @document.id), status: :see_other
   end
 
   def create_unique_source_name(string)

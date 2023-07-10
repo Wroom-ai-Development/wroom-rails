@@ -32,7 +32,7 @@ class ConversationsController < ApplicationController
 
   def update_from_frame
     @conversation.update(conversation_params)
-    redirect_to root_path, status: :see_other
+    redirect_to root_path(document_id: @conversation.documents.first.id), status: :see_other
   end
 
   # GET /conversations/1 or /conversations/1.json
