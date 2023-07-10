@@ -3,7 +3,7 @@
 class WroomController < ApplicationController
   layout 'wroom'
 
-  def app
+  def app # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     create_welcome_records unless current_user.onboarded?
 
     @document = if params[:document_id].present?
@@ -13,19 +13,23 @@ class WroomController < ApplicationController
                 elsif current_user.documents.any?
                   current_user.documents.first
                 end
-    create_no_document_messages unless @document
+    if @document
+      current_user.update!(current_document_id: @document.id)
+    else
+      create_no_document_messages
+    end
   end
 
   private
 
   def create_no_document_messages
     service = OpenaiService.new
-    @message =  "☚ Have you created any projects yet?"
-    
+    @message = '☚ Have you created any projects yet?'
+
     @haiku = service.gpt_3_5_turbo([{
-      role: 'user',
-      content: 'Write a haiku about starting a new venture.'
-    }])
+                                     role: 'user',
+                                     content: 'Write a haiku about starting a new venture.'
+                                   }])
   end
 
   def create_welcome_records

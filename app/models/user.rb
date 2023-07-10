@@ -11,7 +11,7 @@ class User < ApplicationRecord
   has_many :voices, dependent: :destroy
   has_many :documents, dependent: :destroy
   has_many :monitoring_events, as: :trackable, dependent: :nullify
-  has_one :current_document, class_name: 'Document'
+  has_one :current_document, class_name: 'Document', dependent: :nullify
   validates :email, uniqueness: true, presence: true
 
   enum role: { 'admin': 0, 'user': 1, 'supplicant': 2 }
