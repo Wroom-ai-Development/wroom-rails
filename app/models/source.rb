@@ -9,7 +9,7 @@ class Source < ApplicationRecord
   has_many :monitoring_events, as: :trackable, dependent: :nullify
 
   validates :name, presence: true, uniqueness: { scope: :user_id }
-  validates :file, presence: true, unless: -> { from_document == true }
+  validates :file, presence: true, unless: -> { fileless == true }
   validates :year_published, numericality: { only_integer: true }, length: { in: 0..4 }, allow_nil: true
   validate :file_type
 
@@ -36,7 +36,7 @@ class Source < ApplicationRecord
   def rechunk
     update!(truncated: false)
     text = document_chunks.map(&:content).join(' ')
-    if from_document
+    if fileless
       parse_document_chunks_from_text(text)
     else
       parse_document_chunks_from_file

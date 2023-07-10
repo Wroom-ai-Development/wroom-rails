@@ -6,7 +6,8 @@ class MonitoringEvent < ApplicationRecord
     'create_record': 0,
     'message': 1,
     'registration': 2,
-    'sign_in': 3
+    'sign_in': 3,
+    'confirmation': 4
   }
 
   after_create_commit :broadcast_status

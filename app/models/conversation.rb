@@ -5,7 +5,7 @@ class Conversation < ApplicationRecord
   has_many :messages, dependent: :destroy
   has_many :context_references, dependent: :destroy
   has_many :sources, through: :context_references
-  has_many :documents, dependent: :nullify
+  has_many :documents, dependent: :destroy
   has_many :conversation_voices, dependent: :destroy
   has_many :voices, through: :conversation_voices
   validates :title, presence: true

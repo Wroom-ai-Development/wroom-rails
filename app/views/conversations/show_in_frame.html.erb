@@ -1,7 +1,5 @@
 <%= turbo_frame_tag "conversation_frame" do %>
   <%= turbo_stream_from @conversation.id, 'conversation_status' %>
-  <div class='top-pane'>
-  </div>
   <div id='conversation'>
     <div id='messages'>
       <% if @conversation.status == 1 %>
@@ -14,7 +12,7 @@
       <% end %>
       <% if @conversation.messages.count == 0 %>
         <div id='initial-message'>
-          Hello, may I be of assistance?
+          Hello, may I be of any help?
         </div>
       <% end %>
       <% @conversation.messages.order(:created_at).reverse.each do |message| %>
@@ -24,7 +22,7 @@
               <div class='main-message'>
                 <%= button_to('␡', delete_message_from_frame_conversation_path(message_id: message.id), method: :delete) %>
                 <div class='main-message-content'>
-                  You have exceeded the token limit in this @conversation. If you would like to chat further,
+                  You have exceeded the token limit in this conversation. If you would like to chat further,
                   you can remove some messages to make space. If you would like to keep some of the content,
                   copy it to your document.
                 </div>
@@ -52,7 +50,7 @@
                   <%= simple_format message.content %>
                   <% if message.partial_answers.present? %>
                     <details>
-                      <summary>Partial answers:</summary>
+                      <summary>Alternative answers:</summary>
                       <% message.partial_answers.each do |answer| %>
                         <%= simple_format answer %>
                       <% end %>
@@ -60,15 +58,26 @@
                   <% end %>
                 </div>
               </div>
-
             </div>
           </div>
         <% end %>
       <% end %>
-      </div>
-      <%= form_with url: new_user_message_from_frame_conversation_path(id: @conversation.id), id: 'new-message-form'  do |f| %>
-        <%= f.text_field (:content), required: 'required', placeholder: 'New message' %>
-        <%= f.submit '➥', id: 'submit' %>
-      <% end %>
+    </div>
+    <%= form_with url: new_user_message_from_frame_conversation_path(id: @conversation.id), id: 'new-message-form'  do |f| %>
+      <%= f.text_area :content, required: 'required', rows: 2, id: 'new-message-text-area' %>
+      <%= f.submit '➥', id: 'submit' %>
+    <% end %>
+    <script>
+      function handleEnter(e) {
+        const newMessageForm = document.getElementById('new-message-form')
+        const submitButton = document.getElementById('submit')
+        if (e.which === 13 && !e.shiftKey) {
+          e.preventDefault();
+          submitButton.click();
+        }
+      }
+      const newMessageTextArea = document.getElementById('new-message-text-area')
+      newMessageTextArea.addEventListener('keypress', handleEnter)
+    </script>
   </div>
 <% end %>

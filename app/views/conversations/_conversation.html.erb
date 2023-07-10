@@ -70,7 +70,7 @@
                 <%= simple_format message.content %>
                 <% if message.partial_answers.present? %>
                   <details>
-                    <summary>Partial answers:</summary>
+                    <summary>Alternative answers:</summary>
                     <% message.partial_answers.each do |answer| %>
                       <%= simple_format answer %>
                     <% end %>
@@ -85,7 +85,7 @@
     <% end %>
     </div>
     <%= form_with url: new_user_message_conversation_path(id: conversation.id, in_document_editor: @in_document_editor), id: 'new-message-form'  do |f| %>
-      <%= f.text_field (:content), required: 'required' %>
+      <%= f.text_area :content, required: 'required' %>
       <%= f.submit '➥', id: 'submit' %>
     <% end %>
     <% if current_user.admin? %>

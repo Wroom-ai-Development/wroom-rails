@@ -6,7 +6,7 @@ html {
 }
 
 .turbo-progress-bar {
-  height: 3rem;
+  height: 2rem;
   z-index: -500;
   bottom: 0;
   background-color: $wroom-baby-blue;
@@ -23,7 +23,7 @@ div#logo {
   span#ai {
     font-family: 'MuseoModerno';
     font-weight: 400;
-    font-size: 0.9rem;
+    font-size: 0.7rem;
     text-decoration: none;
     color: $wroom-red;
   }
@@ -31,7 +31,7 @@ div#logo {
   span#back {
     color: $wroom-blue;
     font-style: italic;
-    font-size: 0.9rem;
+    font-size: 0.6rem;
     margin-right: 0.3rem;
   }
 }
@@ -51,7 +51,7 @@ div#logo {
       margin: 0;
       padding: 0.5rem;
       color: black;
-      font-size: 0.9rem;
+      font-size: 0.7rem;
       font-family: 'Playfair Display', serif;
       font-style: italic;
       font-weight: 300;
@@ -81,11 +81,11 @@ header {
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid rgb(226, 226, 226);
-  height: 3rem;
+  height: 2rem;
 
   nav {
     display: flex;
-    font-size: 0.9rem;
+    font-size: 0.7rem;
     margin-right: 1rem;
     a {
       margin-right: 1rem;
@@ -102,7 +102,7 @@ header {
         color: black;
         padding: 0.5rem;
         border-radius: 40px;
-        font-size: 0.8rem;
+        font-size: 0.7rem;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -112,6 +112,8 @@ header {
       color: $wroom-red;
       background-color: rgba(0, 0, 0, 0);
       font-family: 'Playfair Display', serif;
+      font-size: 0.7rem;
+      margin-right: 0.5rem;
       border: none;
       &:hover {
         text-decoration: underline 1px $wroom-red;
@@ -121,7 +123,7 @@ header {
   }
 }
 main {
-  background: linear-gradient(0deg, #ebf2ff 0%, #fcfdff 40%);
+  background: linear-gradient(0deg, #e3e4e6 0%, #fcfdff 40%);
   padding: 0;
   width: 100%;
   min-height: 100%;
@@ -134,7 +136,7 @@ main {
 
     h1 {
       font-weight: 500;
-      font-size: 1.2rem;
+      font-size: 1rem;
       margin: 0;
       max-width: 29rem;
       margin-top: 1rem;
@@ -142,7 +144,7 @@ main {
     }
   
     a {
-      font-size: 0.9rem;
+      font-size: 0.7rem;
       font-family: 'Playfair Display', serif;
       font-style: italic;
       color: $wroom-blue;
@@ -161,9 +163,9 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-      
+    font-size: 0.7rem;
     div.index-separator {
-      font-size: 0.9rem;
+      font-size: 0.7rem;
       margin-bottom: 0.5rem;
       margin-top: 2rem;
       font-style: italic;
@@ -190,7 +192,7 @@ main {
         align-items: center;
         justify-content: space-between;
         border: 1px solid gray;
-        font-size: 0.9rem;
+        font-size: 0.7rem;
         margin-bottom: 0.5rem;
         background-color: white;
         height: fit-content;
@@ -212,7 +214,7 @@ main {
           background-color: white;
           border: none;     
           color: $wroom-red;
-          font-size: 1rem;
+          font-size: 0.7rem;
           font-family: 'Playfair Display', serif;
           font-weight: 300;
         }
@@ -244,7 +246,7 @@ main {
       div.validation {
         margin-top: 1rem;
         text-align: center;
-        font-size: 0.9rem;
+        font-size: 0.7rem;
         font-style: italic;
         div.message {
           font-weight: 300;
@@ -266,7 +268,7 @@ main {
           width: 100%;
           box-sizing: border-box;
           font-family: 'Playfair Display', serif;
-          font-size: 0.9rem;
+          font-size: 0.7rem;
           padding: 0.5rem;
         }
         input#source_file {
@@ -301,7 +303,7 @@ main {
 
 
       label, em {
-        font-size: 0.9rem;
+        font-size: 0.7rem;
         font-style: italic;
       }
     
@@ -311,7 +313,7 @@ main {
         align-items: center;
         justify-content: center;
         input {
-          font-size: 0.9rem;
+          font-size: 0.7rem;
           font-family: 'Playfair Display', serif;
           font-style: italic;
           color: $wroom-blue;
@@ -321,7 +323,7 @@ main {
           border-bottom: 1px solid $wroom-blue;
           border-left: none;
           border-right: none;
-          background-color: white;
+          background-color: rgba(0, 0, 0, 0);
         }
       }
     }
@@ -335,10 +337,10 @@ main {
     div#conversation-setting-header {
       text-decoration: underline;
       margin-bottom: 0.3rem;
-      font-size: 0.9rem;
+      font-size: 0.7rem;
     }
     div.conversation-setting {
-      font-size: 0.9rem;
+      font-size: 0.7rem;
       font-style: italic;
       a:hover {
         text-decoration: underline 1px $wroom-blue;
@@ -385,7 +387,7 @@ main {
       div.message {
         padding: 0.5rem 0 0.5rem 0;
         text-align: justify;
-        font-size: 0.9rem;
+        font-size: 0.7rem;
         line-height: 1.5rem;
         width: 100%;
 
@@ -494,20 +496,20 @@ main {
 
 div.show-record {
   padding: 0 1rem 0 1rem;
-  width: 50rem;
+  width: 40rem;
   background-color: white;
   border: 1px solid gray;
-  padding: 1rem;
+  padding: 0.5rem;
   margin-top: 1rem;
   div.instructions {
     text-align: center;
     font-style: italic;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     margin-top: 1rem;
     // color: $wroom-blue;
   }
   div.record-info {
-    font-size: 0.9rem;
+    font-size: 0.7rem;
     width: 100%;
     div.field {
       margin-bottom: 0.5rem;
@@ -548,7 +550,7 @@ div.show-record {
   }
   
   div.chunk {
-    width: 50rem;
+    width: auto;
     text-align: justify;
     line-height: 1.2rem;
     font-size: 0.7rem;
@@ -574,7 +576,7 @@ div#devise {
         margin-top: 0.5rem;
         h2 {
           text-decoration: underline 1px $wroom-red;
-          font-size: 1rem;
+          font-size: 0.7rem;
         }
         ul {
           padding: 0;
@@ -595,7 +597,7 @@ div#devise {
       width: 100%;
       box-sizing: border-box;
       font-family: 'Playfair Display', serif;
-      font-size: 0.9rem;
+      font-size: 0.7rem;
       padding: 0.5rem;
     }
   }
@@ -610,7 +612,7 @@ div#devise {
     align-items: center;
     justify-content: center;
     input {
-      font-size: 0.9rem;
+      font-size: 0.7rem;
       font-family: 'Playfair Display', serif;
       font-style: italic;
       color: $wroom-blue;
@@ -620,7 +622,7 @@ div#devise {
       border-bottom: 1px solid $wroom-blue;
       border-left: none;
       border-right: none;
-      background-color: white;
+      background-color: rgba(0, 0, 0, 0);
     }
   }
 
@@ -748,7 +750,6 @@ div.view-content.edit-document {
   justify-content: space-between;
   align-items: flex-start;
   padding: 0 1rem 3rem 1rem;
-
   div.record-form {
     height: 61vh;
     margin-top: 0.4rem;
@@ -854,7 +855,7 @@ div.view-content.edit-document {
 
   body div#alerts p.alert {
     max-width: 6rem;
-    font-size: 1rem;
+    font-size: 0.7rem;
   }
 }
 @media only screen and (max-width: 550px) {
@@ -894,7 +895,7 @@ div.view-content.monitoring {
   
   color: #ffd9d9;
   background: #2d2a67;
-  height: 91vh;
+  height: -webkit-fill-available;
   margin: 0;
   div.lists {
     display: flex;
@@ -904,20 +905,20 @@ div.view-content.monitoring {
       h4 {
         font-family: 'MuseoModerno';
         margin: 2rem 0 0.5rem 0.1rem;
-        color: #4a468e;
+        color: #7d79c0;
       }
       ul {
         font-family: 'Inconsolata', monospace;
         columns: 1;
-        width: 16rem;
-        margin: 0 4rem 0 0;
+        width: 12rem;
+        margin: 0 2rem 0 0;
         padding: 0;
         li {
           background-color: rgb(20, 23, 67);
           width: 100%;
           font-size: 0.8rem;
-          padding: 1rem;
-          margin-bottom: 0.7rem;
+          padding: 0.5rem;
+          margin-bottom: 0.4rem;
           font-weight: 700;
           line-height: 1rem;
           border-radius: 5px;

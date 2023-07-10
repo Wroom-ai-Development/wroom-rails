@@ -4,9 +4,9 @@
             <% if can? :manage, document %>
                 <li>
                     <%= link_to root_path(document_id: document.id) do %>
-                        <%= document.title %>
+                        <span><%= document.title %></span>
                         <div class="controls">
-                            <%= button_to "␡", destroy_from_frame_document_path(document), method: :delete %>
+                            <%= button_to "␡", destroy_from_frame_document_path(document), class: 'delete-document', method: :delete %>
                         </div>
                     <% end %>
                 </li>
