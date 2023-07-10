@@ -9,7 +9,7 @@ class DocumentsController < ApplicationController # rubocop:disable Metrics/Clas
   # GET /documents or /documents.json
 
   def documents_frame
-    @documents = current_user.documents.order(:created_at)
+    @documents = current_user.documents.order(:created_at).reverse
   end
 
   def new_frame

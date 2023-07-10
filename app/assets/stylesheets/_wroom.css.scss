@@ -20,6 +20,10 @@ body#wroom {
     }
   }
 
+  div#no-docs-message {
+    margin-top: 4rem;
+  }
+
   .panel {
     height: initial;
     border-left: 1px solid $wroom-light-gray;
@@ -34,6 +38,27 @@ body#wroom {
     }
     &#document-panel {
       width: 50%;
+    }
+
+    &#no-docs-panel {
+      width: -webkit-fill-available;
+      height: auto;
+      border-left: 1px solid $wroom-light-gray;
+      padding-left: 0.5rem;
+
+      div.message {
+        margin-top: 2.6rem;
+        font-size: 0.9rem;
+      }
+      p {
+        margin-left: 47vw;
+        margin-top: 37vh;
+        padding-left: 0.5rem;
+        border-left: 7px solid $wroom-light-gray;
+        font-style: italic;
+        font-weight: 100;
+        color: $wroom-gray;
+      }
     }
     &#conversation-panel {
       width: 20%;
@@ -531,15 +556,16 @@ body#wroom {
             div.controls {
               display: flex;
               align-items: center;
+              
               form.button_to {
                 padding: 0;
               }
               form.delete-document {
-                background-color: rgba(0,0,0,0);
+                background-color: rgba(0,0,0,0) !important;
                 margin-left: 1rem;
               }
               button.delete-document {
-                background-color: rgba(0,0,0,0);
+                background-color: rgba(0,0,0,0) !important;
                 border: none;     
                 color: $wroom-red;
                 font-size: 1rem;
