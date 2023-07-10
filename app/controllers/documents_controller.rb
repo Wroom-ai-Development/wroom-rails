@@ -29,6 +29,7 @@ class DocumentsController < ApplicationController # rubocop:disable Metrics/Clas
   end
 
   def destroy_from_frame
+    current_user.update!(current_document_id: nil) if @document.id == current_user.current_document_id
     @document.destroy
     redirect_to root_path, status: :see_other
   end
