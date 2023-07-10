@@ -9,7 +9,7 @@ class DocumentsController < ApplicationController # rubocop:disable Metrics/Clas
   # GET /documents or /documents.json
 
   def documents_frame
-    @documents = current_user.documents.order(:created_at)
+    @documents = current_user.documents.order(:created_at).reverse
   end
 
   def new_frame
@@ -29,6 +29,7 @@ class DocumentsController < ApplicationController # rubocop:disable Metrics/Clas
   end
 
   def destroy_from_frame
+    current_user.update!(current_document_id: nil) if @document.id == current_user.current_document_id
     @document.destroy
     redirect_to root_path, status: :see_other
   end
@@ -51,7 +52,7 @@ class DocumentsController < ApplicationController # rubocop:disable Metrics/Clas
       title: @document.title
     )
     source.parse_document_chunks_from_text(@document.content.to_plain_text)
-    redirect_to root_path, status: :see_other
+    redirect_to root_path(document_id: @document.id), status: :see_other
   end
 
   def create_unique_source_name(string)

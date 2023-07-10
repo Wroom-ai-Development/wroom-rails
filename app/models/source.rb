@@ -29,6 +29,10 @@ class Source < ApplicationRecord
     parse_document_chunks_from_text(raw_text)
   end
 
+  def clear_chunks
+    document_chunks.destroy_all
+  end
+
   def parse_document_chunks_from_text(raw_text)
     SourceChunkingWorker.perform_async(id, raw_text)
   end

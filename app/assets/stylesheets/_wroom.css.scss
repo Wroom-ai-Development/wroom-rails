@@ -6,6 +6,20 @@ body#wroom {
   font-family: 'Playfair Display', serif;
   overflow: hidden;
 
+  button.library-link {
+    border: none;
+    font-family: 'Playfair Display', serif;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    margin-left: 0.5rem;
+    font-size: 0.7rem;
+    color: $wroom-blue;
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 10px;
+    &:hover {
+      background-color: $wroom-light-gray;
+    }
+  }
   button.sign-out {
     border: none;
     font-family: 'Playfair Display', serif;
@@ -18,6 +32,10 @@ body#wroom {
     &:hover {
       background-color: $wroom-light-gray;
     }
+  }
+
+  div#no-docs-message {
+    margin-top: 4rem;
   }
 
   .panel {
@@ -34,6 +52,27 @@ body#wroom {
     }
     &#document-panel {
       width: 50%;
+    }
+
+    &#no-docs-panel {
+      width: -webkit-fill-available;
+      height: auto;
+      border-left: 1px solid $wroom-light-gray;
+      padding-left: 0.5rem;
+
+      div.message {
+        margin-top: 2.6rem;
+        font-size: 0.9rem;
+      }
+      p {
+        margin-left: 47vw;
+        margin-top: 37vh;
+        padding-left: 0.5rem;
+        border-left: 7px solid $wroom-light-gray;
+        font-style: italic;
+        font-weight: 100;
+        color: $wroom-gray;
+      }
     }
     &#conversation-panel {
       width: 20%;
@@ -53,25 +92,6 @@ body#wroom {
       }
     }
 
-    a#library-link {
-      font-family: 'Playfair Display', serif;
-      height: 1rem;
-      width: fit-content;
-      font-weight: 400;
-      color: $wroom-blue;
-      font-size: 0.7rem;
-      display: flex;
-      border: none;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba(0,0,0,0);
-      text-decoration: none;
-      margin-top: 1rem;
-
-      &:hover {
-        text-decoration: underline 1px $wroom-blue;
-      }
-    }
 
     div.top-pane {
       height: 2rem;
@@ -320,6 +340,10 @@ body#wroom {
               font-style: italic;
               justify-content: space-between;
               border-bottom: 1px solid rgb(220, 220, 220);
+
+              &:last-child {
+                border-bottom: none;
+              }
             }
           }
           div.main-message {  
@@ -527,15 +551,16 @@ body#wroom {
             div.controls {
               display: flex;
               align-items: center;
+              
               form.button_to {
                 padding: 0;
               }
               form.delete-document {
-                background-color: rgba(0,0,0,0);
+                background-color: rgba(0,0,0,0) !important;
                 margin-left: 1rem;
               }
               button.delete-document {
-                background-color: rgba(0,0,0,0);
+                background-color: rgba(0,0,0,0) !important;
                 border: none;     
                 color: $wroom-red;
                 font-size: 1rem;

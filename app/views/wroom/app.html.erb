@@ -10,21 +10,28 @@
   <div class='panel-element' id='documents'>
     <%= turbo_frame_tag "documents_frame", src: documents_frame_documents_path %>
   </div>
+  <%= button_to "Library", sources_path, class: 'library-link', method: :get %>
   <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: 'sign-out' %>
-
 </div>
-<div id="document-panel" class="panel">
-  <% if @document %>
-    <%= turbo_frame_tag "edit_document_frame", src: edit_frame_document_path(@document) %>
-  <% end %>
-</div>
-<div id="conversation-panel" class="panel">
-  <% if @document.conversation %>
-    <%= turbo_frame_tag "conversation_frame", src: show_in_frame_conversation_path(@document.conversation) %>
-  <% end %>
-</div>
-<div id="context-panel" class="panel">
-  <% if @document.conversation %>
-    <%= turbo_frame_tag "edit_conversation_frame", src: edit_frame_conversation_path(@document.conversation) %>
-  <% end %>
-</div>
+<% if @document %>
+  <div id="document-panel" class="panel">
+      <%= turbo_frame_tag "edit_document_frame", src: edit_frame_document_path(@document) %>
+  </div>
+  <div id="conversation-panel" class="panel">
+    <% if @document.conversation %>
+      <%= turbo_frame_tag "conversation_frame", src: show_in_frame_conversation_path(@document.conversation) %>
+    <% end %>
+  </div>
+  <div id="context-panel" class="panel">
+    <% if @document.conversation %>
+      <%= turbo_frame_tag "edit_conversation_frame", src: edit_frame_conversation_path(@document.conversation) %>
+    <% end %>
+  </div>
+<% else %>
+  <div id='no-docs-panel' class='panel'>
+    <div class='message'>
+      <%= @message %>
+    </div>
+    <%= simple_format(@haiku) %>
+  </div>
+<% end %>

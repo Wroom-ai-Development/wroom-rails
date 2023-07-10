@@ -35,7 +35,6 @@ module Conversations
 
     def handle_business
       answer = obtain_answer
-      answer = rephrase_with_voices(answer)
       update_request_counts
       answer
     end
@@ -48,13 +47,13 @@ module Conversations
       elsif @sources.count >= 4
         refuse_answering_from_too_many_sources
       else
-        get_answer_without_sources
+        rephrase_with_voices(get_answer_without_sources)
       end
     end
 
     def handle_multiple_sources
       if all_sources_fit_in_multi_limit?
-        get_answer_from_multiple_sources
+        rephrase_with_voices(get_answer_from_multiple_sources)
       else
         refuse_answering_from_multiple_sources_that_are_too_big
       end
@@ -93,13 +92,13 @@ module Conversations
 
     def refuse_answering_from_multiple_sources_that_are_too_big
       rephrase_nicely(
-        'At the moment WROOM can only handle small sources when using more source than one at the same time. If you would like to ask about larger sources, please link them up one at a time.' # rubocop:disable Layout/LineLength
+        'At the moment I can only handle small (one-chunk) sources when there is more than one source on a project. If you would like to chat with me about larger sources, create separate projects for them.' # rubocop:disable Layout/LineLength
       )
     end
 
     def refuse_answering_from_too_many_sources
       rephrase_nicely(
-        "At the moment WROOM cannot handle more three four small-volume sources at once, but I\'ve been told by the development team that this will soon change." # rubocop:disable Layout/LineLength
+        "At the moment I cannot handle more than three small-volume sources at once, but I\'ve been told by the development team that this will soon change." # rubocop:disable Layout/LineLength
       )
     end
 
@@ -108,7 +107,7 @@ module Conversations
         Please rephrase this sentence:#{' '}
         "#{text}"
 
-        Make it nice, quirky, and not very apologetic.
+        Make it longer by one sentence and rewrite it in first person from the perspective of the chatbot called WROOM. Do not use the word "as".
       PROMPT
       messages = [{ role: 'user', content: prompt }]
       client_chat(messages, 'gpt-3.5-turbo')
