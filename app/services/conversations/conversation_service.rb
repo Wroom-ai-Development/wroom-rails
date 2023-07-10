@@ -92,13 +92,13 @@ module Conversations
 
     def refuse_answering_from_multiple_sources_that_are_too_big
       rephrase_nicely(
-        'At the moment WROOM can only handle small sources when using more source than one at the same time. If you would like to ask about larger sources, please link them up one at a time.' # rubocop:disable Layout/LineLength
+        'At the moment I can only handle small (one-chunk) sources when there is more than one source on a project. If you would like to chat with me about larger sources, create separate projects for them.' # rubocop:disable Layout/LineLength
       )
     end
 
     def refuse_answering_from_too_many_sources
       rephrase_nicely(
-        "At the moment WROOM cannot handle more three four small-volume sources at once, but I\'ve been told by the development team that this will soon change." # rubocop:disable Layout/LineLength
+        "At the moment I cannot handle more than three small-volume sources at once, but I\'ve been told by the development team that this will soon change." # rubocop:disable Layout/LineLength
       )
     end
 
