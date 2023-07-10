@@ -47,6 +47,11 @@ class SourcesController < ApplicationController
         else
           save_section_headers
         end
+        if params[:source][:file].present?
+          @source.clear_chunks
+          @source.parse_document_chunks_from_file
+          @source.update!(fileless: false)
+        end
 
         @source.rechunk if @source.section_headers != old_headers
         format.html { redirect_to source_url(@source), notice: 'Source was successfully updated.' }

@@ -6,6 +6,20 @@ body#wroom {
   font-family: 'Playfair Display', serif;
   overflow: hidden;
 
+  button.library-link {
+    border: none;
+    font-family: 'Playfair Display', serif;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    margin-left: 0.5rem;
+    font-size: 0.7rem;
+    color: $wroom-blue;
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 10px;
+    &:hover {
+      background-color: $wroom-light-gray;
+    }
+  }
   button.sign-out {
     border: none;
     font-family: 'Playfair Display', serif;
@@ -78,25 +92,6 @@ body#wroom {
       }
     }
 
-    a#library-link {
-      font-family: 'Playfair Display', serif;
-      height: 1rem;
-      width: fit-content;
-      font-weight: 400;
-      color: $wroom-blue;
-      font-size: 0.7rem;
-      display: flex;
-      border: none;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba(0,0,0,0);
-      text-decoration: none;
-      margin-top: 1rem;
-
-      &:hover {
-        text-decoration: underline 1px $wroom-blue;
-      }
-    }
 
     div.top-pane {
       height: 2rem;
