@@ -247,6 +247,8 @@ module Conversations
                  end
       @requests_for_current_query += 1
       response
+    rescue Faraday::TimeoutError
+      'I have not succeded processing your request, please try again.'
     end
   end
 end
