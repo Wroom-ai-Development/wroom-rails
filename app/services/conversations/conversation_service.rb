@@ -16,13 +16,13 @@ module Conversations
     def initialize(conversation)
       @conversation = conversation
       @sources = conversation.sources
-      @client = OpenaiService.new.client
       @last_user_question = @conversation.messages.where(role: 'user').last.content
       @conversation_messages = @conversation.messages.reject do |m|
         m.role == 'error'
       end
       @conversation_messages = @conversation_messages.map { |message| { role: message.role, content: message.content } }
       @requests_for_current_query = 0
+      @openai_service = OpenaiService.new
     end
 
     def respond
@@ -110,7 +110,7 @@ module Conversations
         Make it longer by one sentence and rewrite it in first person from the perspective of the chatbot called WROOM. Do not use the word "as".
       PROMPT
       messages = [{ role: 'user', content: prompt }]
-      client_chat(messages, 'gpt-3.5-turbo')
+      client_chat(messages, '4k')
     end
 
     def update_request_counts
@@ -151,7 +151,7 @@ module Conversations
           { role: 'user',
             content: message_content }
         ]
-        decision = client_chat(messages, 'gpt-3.5-turbo')
+        decision = client_chat(messages, '4k')
         filtered_answers << answer[:text] unless decision.include?('NO')
       end
       filtered_answers
@@ -166,7 +166,7 @@ module Conversations
         { role: 'system', content: answers.join(' ') }
       ]
       messages << { role: 'system', content: summary_prompt }
-      client_chat(messages, 'gpt-3.5-turbo')
+      client_chat(messages, '4k')
     end
 
     def rephrase_with_voices(string) # rubocop:disable Metrics/MethodLength
@@ -181,7 +181,7 @@ module Conversations
               #{@conversation.voices.pluck(:meta_prompt).join(' ')}
             CONTENT
           }],
-          'gpt-3.5-turbo'
+          '4k'
         )
       else
         string
@@ -239,17 +239,14 @@ module Conversations
       prompt.join(' ')
     end
 
-    def client_chat(messages, model = 'gpt-3.5-turbo-16k')
-      response = @client.chat(
-        parameters: {
-          model:,
-          messages:
-        }
-      )
+    def client_chat(messages, model = '16k')
+      response = if model == '16k'
+                   @openai_service.gpt_3_5_turbo_16k(messages)
+                 else
+                   @openai_service.gpt_3_5_turbo(messages)
+                 end
       @requests_for_current_query += 1
-      raise OpenAIApiError, response['error']['message'] if response['error']
-
-      response.dig('choices', 0, 'message', 'content')
+      response
     end
   end
 end
