@@ -23,14 +23,30 @@ class OpenaiService
     retries > RETRY_LIMIT ? raise(e) : retry
   end
 
+  def gpt_4(messages) # rubocop:disable Metrics/MethodLength
+    retries = 0
+    response = @client.chat(
+      parameters: {
+        model: 'gpt-4',
+        messages:
+      }
+    )
+    response.dig('choices', 0, 'message', 'content')
+  rescue StandardError => e
+    retries += 1
+    sleep 2**retries
+    retries > RETRY_LIMIT ? raise(e) : retry
+  end
+
   def gpt_3_5_turbo_16k(messages) # rubocop:disable Metrics/MethodLength
     retries = 0
-    @client.chat(
+    response = @client.chat(
       parameters: {
         model: 'gpt-3.5-turbo-16k',
         messages:
       }
-    ).dig('choices', 0, 'message', 'content')
+    )
+    response.dig('choices', 0, 'message', 'content')
   rescue StandardError => e
     retries += 1
     sleep 2**retries

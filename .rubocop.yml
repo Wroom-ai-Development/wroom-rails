@@ -17,4 +17,5 @@ Naming/AccessorMethodName:
   Enabled: false
 Rails/BulkChangeTable:
   Enabled: false
-
+Naming/VariableNumber:
+  Enabled: false

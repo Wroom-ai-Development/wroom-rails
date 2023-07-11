@@ -9,7 +9,8 @@ module Conversations
       If the question does not relate to the text, kindly but firmly answer that it is out of the scope of the discussion.
     PROMPT
 
-    REQUEST_MAX_TOKEN_SIZE = 14_000
+    REQUEST_MAX_TOKEN_SIZE_GPT_3 = 16_000
+    REQUEST_MAX_TOKEN_SIZE_GPT_4 = 8_000
     CHARACTERS_PER_TOKEN = 4
     TOKEN_SPACE_FOR_ANSWER = 1000
 
@@ -23,6 +24,7 @@ module Conversations
       @conversation_messages = @conversation_messages.map { |message| { role: message.role, content: message.content } }
       @requests_for_current_query = 0
       @openai_service = OpenaiService.new
+      @token_counter = TokenCounter.new('gpt-4')
     end
 
     def respond
@@ -42,10 +44,8 @@ module Conversations
     def obtain_answer
       if @sources.count == 1
         get_answer_from_source(@sources.first)
-      elsif @sources.count > 1 && @sources.count < 4
+      elsif @sources.count > 1
         handle_multiple_sources
-      elsif @sources.count >= 4
-        refuse_answering_from_too_many_sources
       else
         rephrase_with_voices(get_answer_without_sources)
       end
@@ -78,39 +78,26 @@ module Conversations
     end
 
     def all_sources_fit_in_multi_limit?
-      return false unless @sources.count < 4 && all_sources_have_a_single_chunk?
-
-      per_source_character_limit = CHARACTERS_PER_TOKEN * (REQUEST_MAX_TOKEN_SIZE - TOKEN_SPACE_FOR_ANSWER) / @sources.count # rubocop:disable Layout/LineLength
+      per_source_token_limit = (REQUEST_MAX_TOKEN_SIZE_GPT_3 - TOKEN_SPACE_FOR_ANSWER) / @sources.count
       @sources.all? do |source|
-        source.document_chunks.first.content.length <= per_source_character_limit
+        source.document_chunks.map(&:token_length).compact.sum <= per_source_token_limit
       end
-    end
-
-    def all_sources_have_a_single_chunk?
-      @sources.all? { |source| source.document_chunks.count == 1 }
     end
 
     def refuse_answering_from_multiple_sources_that_are_too_big
       rephrase_nicely(
-        'At the moment I can only handle small (one-chunk) sources when there is more than one source on a project. If you would like to chat with me about larger sources, create separate projects for them.' # rubocop:disable Layout/LineLength
-      )
-    end
-
-    def refuse_answering_from_too_many_sources
-      rephrase_nicely(
-        "At the moment I cannot handle more than three small-volume sources at once, but I\'ve been told by the development team that this will soon change." # rubocop:disable Layout/LineLength
+        'The source material is too large for me to handle. If you have multiple small sources, try to split them across separate projects. If some of your sources are large (over one chunk), you may want to try putting them in one project each.' # rubocop:disable Layout/LineLength
       )
     end
 
     def rephrase_nicely(text)
       prompt = <<-PROMPT
-        Please rephrase this sentence:#{' '}
-        "#{text}"
+        #{text}
 
-        Make it longer by one sentence and rewrite it in first person from the perspective of the chatbot called WROOM. Do not use the word "as".
+        Rewrite the sentence in first person from the perspective of the chatbot called WROOM. Do not use the word "as".
       PROMPT
       messages = [{ role: 'user', content: prompt }]
-      client_chat(messages, '4k')
+      client_chat(messages, simple: true)
     end
 
     def update_request_counts
@@ -151,7 +138,7 @@ module Conversations
           { role: 'user',
             content: message_content }
         ]
-        decision = client_chat(messages, '4k')
+        decision = client_chat(messages, simple: true)
         filtered_answers << answer[:text] unless decision.include?('NO')
       end
       filtered_answers
@@ -166,7 +153,7 @@ module Conversations
         { role: 'system', content: answers.join(' ') }
       ]
       messages << { role: 'system', content: summary_prompt }
-      client_chat(messages, '4k')
+      client_chat(messages, simple: true)
     end
 
     def rephrase_with_voices(string) # rubocop:disable Metrics/MethodLength
@@ -190,11 +177,17 @@ module Conversations
 
     def get_answer_from_chunk(chunk)
       messages = prepare_messages_for_chunk(chunk)
+
       answer = client_chat(messages)
       if chunk.section_header.present? && chunk.source.document_chunks.size > 1
         answer << "(based on #{chunk.section_header})"
       end
       answer
+    end
+
+    def count_tokens_in_messages(messages)
+      full_text = messages.map { |m| m['content'] }.join(' ')
+      @token_counter.count_tokens(full_text)
     end
 
     def prepare_messages_for_chunk(chunk)
@@ -239,14 +232,21 @@ module Conversations
       prompt.join(' ')
     end
 
-    def client_chat(messages, model = '16k')
-      response = if model == '16k'
-                   @openai_service.gpt_3_5_turbo_16k(messages)
-                 else
-                   @openai_service.gpt_3_5_turbo(messages)
-                 end
+    def response_from_messages(messages, simple: false)
+      token_count = count_tokens_in_messages(messages)
+
+      if simple
+        @openai_service.gpt_3_5_turbo(messages)
+      elsif token_count <= REQUEST_MAX_TOKEN_SIZE_GPT_4 - TOKEN_SPACE_FOR_ANSWER
+        @openai_service.gpt_4(messages)
+      else
+        @openai_service.gpt_3_5_turbo_16k(messages)
+      end
+    end
+
+    def client_chat(messages, simple: false)
       @requests_for_current_query += 1
-      response
+      response_from_messages(messages, simple:)
     rescue Faraday::TimeoutError
       'I have not succeded processing your request, please try again.'
     end
