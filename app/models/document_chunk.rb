@@ -7,6 +7,10 @@ class DocumentChunk < ApplicationRecord
 
   after_create_commit :broadcast_status
 
+  def save_token_count
+    update!(token_length: Tiktoken.encoding_for_model('gpt-4').encode(content).length)
+  end
+
   private
 
   def broadcast_status
