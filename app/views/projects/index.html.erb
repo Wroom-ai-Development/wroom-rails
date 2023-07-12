@@ -10,13 +10,14 @@
   <ul class="index-list">
     <% current_user.projects.each do |project| %>
       <% if can? :manage, project %>
-        <li class='index-list-item'>
-          <%= link_to project.title, root_path(project_id: project.id) %>
-          <div class="controls">
-            <%= link_to "✍︎", root_path(project_id: project.id) %>
-            <%= button_to "␡", project, method: :delete %>
-          </div>
-        </li>
+          <li class='index-list-item'>
+            <%= link_to root_path(project_id: project.id) do %>
+              <div class='title'><%= project.title %></div>
+            <% end %>
+            <div class="controls">
+              <%= button_to "␡", project, method: :delete %>
+            </div>
+          </li>
       <% end %>
     <% end %>
   </ul>

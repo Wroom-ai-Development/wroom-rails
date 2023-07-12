@@ -2,7 +2,7 @@
 
 class ConversationsController < ApplicationController
   before_action :set_conversation,
-                only: %i[edit_frame update_from_frame new_user_message show_in_frame
+                only: %i[edit_frame update_from_frame show_in_frame
                          new_user_message_from_frame]
 
   def show_in_frame; end
@@ -11,7 +11,7 @@ class ConversationsController < ApplicationController
     @conversation.update!(status: 1)
     @conversation.messages.create!(content: params[:content], role: 'user')
     AnswerFetchingWorker.perform_async(@conversation.id)
-    redirect_to root_path(project_id: @conversation.projects.first.id), status: :see_other
+    redirect_to root_path(project_id: @conversation.project_id), status: :see_other
   end
 
   def delete_message_from_frame
@@ -26,7 +26,7 @@ class ConversationsController < ApplicationController
 
   def update_from_frame
     @conversation.update(conversation_params)
-    redirect_to root_path(project_id: @conversation.projects.first.id), status: :see_other
+    redirect_to root_path(project_id: @conversation.project_id), status: :see_other
   end
 
   private

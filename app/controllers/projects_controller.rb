@@ -17,14 +17,12 @@ class ProjectsController < ApplicationController # rubocop:disable Metrics/Class
   end
 
   def create_from_frame
-    conversation_title = (project_params[:title].presence || 'Project Conversation')
-    conversation = Conversation.create!(
-      title: conversation_title,
-      user_id: project_params[:user_id]
+    @project = Project.create!(project_params)
+    Conversation.create!(
+      title: @project.title,
+      user_id: @project.user_id,
+      project_id: @project.id
     )
-    @project = Project.new(project_params)
-    @project.conversation_id = conversation.id
-    @project.save
     redirect_to root_path(project_id: @project.id), status: :see_other
   end
 
@@ -93,14 +91,13 @@ class ProjectsController < ApplicationController # rubocop:disable Metrics/Class
   end
 
   # POST /projects or /projects.json
-  def create # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    conversation_title = (project_params[:title].presence || 'Project Conversation')
-    conversation = Conversation.create!(
-      title: conversation_title,
-      user_id: project_params[:user_id]
+  def create # rubocop:disable Metrics/MethodLength
+    @project = Project.create!(project_params)
+    Conversation.create!(
+      title: @project.title,
+      user_id: @project.user_id,
+      project_id: @project.id
     )
-    @project = Project.new(project_params)
-    @project.conversation_id = conversation.id
     respond_to do |format|
       if @project.save
         format.html { redirect_to projects_path }

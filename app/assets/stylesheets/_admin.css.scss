@@ -201,7 +201,12 @@ main {
           border: 1px solid $wroom-blue;
         }
 
+        div.title {
+          width: -webkit-fill-available;
+        }
+
         div.controls {
+          z-index: 999;
           display: flex;
           align-items: center;
           a {

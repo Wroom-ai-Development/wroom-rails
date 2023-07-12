@@ -67,7 +67,7 @@ class WroomController < ApplicationController
       Then, journey on, if not elate,
       Still, NEVER broken-hearted!
     POEM
-    source.parse_project_chunks_from_text(poem)
+    source.parse_document_chunks_from_text(poem)
   end
 
   def create_welcome_voices
@@ -82,10 +82,9 @@ class WroomController < ApplicationController
   end
 
   def create_welcome_project
-    conversation = Conversation.create!(user_id: current_user.id, title: 'Welcome to WROOM!')
     welcome_message = "Welcome to WROOM, the professional's writing assistant!"
-    Project.create!(user_id: current_user.id, title: 'Welcome to WROOM!',
-                    conversation_id: conversation.id, content: welcome_message)
+    project = Project.create!(user_id: current_user.id, title: 'Welcome to WROOM!', content: welcome_message)
+    Conversation.create!(user_id: current_user.id, title: project.title, project_id: project.id)
     current_user.update!(onboarded: true)
   end
 end
