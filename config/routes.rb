@@ -9,11 +9,6 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       delete 'destroy_from_frame'
       get 'edit_frame'
     end
-    collection do
-      get 'projects_frame'
-      get 'new_frame'
-      post 'create_from_frame'
-    end
   end
   resources :voices do
     member do

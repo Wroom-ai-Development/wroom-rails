@@ -1,36 +1,10 @@
 # frozen_string_literal: true
 
-class ProjectsController < ApplicationController # rubocop:disable Metrics/ClassLength
+class ProjectsController < ApplicationController
   before_action :set_project,
-                only: %i[edit_frame update destroy autosave save_as_source destroy_from_frame
+                only: %i[edit_frame update destroy autosave save_as_source
                          save_as_source_from_frame]
   load_and_authorize_resource
-
-  # GET /projects or /projects.json
-
-  def projects_frame
-    @projects = current_user.projects.order(:created_at).reverse
-  end
-
-  def new_frame
-    @project = Project.new
-  end
-
-  def create_from_frame
-    @project = Project.create!(project_params)
-    Conversation.create!(
-      title: @project.title,
-      user_id: @project.user_id,
-      project_id: @project.id
-    )
-    redirect_to root_path(project_id: @project.id), status: :see_other
-  end
-
-  def destroy_from_frame
-    current_user.update!(current_project_id: nil) if @project.id == current_user.current_project_id
-    @project.destroy
-    redirect_to root_path, status: :see_other
-  end
 
   def edit_frame
     @project = if params[:id].present?
@@ -100,7 +74,7 @@ class ProjectsController < ApplicationController # rubocop:disable Metrics/Class
     )
     respond_to do |format|
       if @project.save
-        format.html { redirect_to projects_path }
+        format.html { redirect_to root_path(project_id: @project.id) }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
