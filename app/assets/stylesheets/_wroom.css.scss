@@ -154,6 +154,7 @@ body#wroom {
       div.list {
         overflow-y: auto;
         font-size: 0.7rem;
+        max-height: 35vh;
         div.list-item {
           padding: 0.5rem;
           display: flex;
@@ -574,7 +575,7 @@ body#wroom {
     @include flex-center-content;
     display: flex;
     background-color: white;
-    height: 2rem;
+    min-height: 2rem;
     border-bottom: 1px solid $wroom-light-gray;
 
     div {
