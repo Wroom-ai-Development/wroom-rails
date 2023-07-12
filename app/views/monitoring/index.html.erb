@@ -17,6 +17,9 @@
           <li>
             GPT-3.5-turbo: <%= user.conversations.pluck(:gpt_3_5_turbo_tokens_used).sum %> tokens
           </li>
+          <li>
+            In all: <%= user.tokens_used %> tokens
+          </li>
         </ul>
       <% end %>
     </ul>
