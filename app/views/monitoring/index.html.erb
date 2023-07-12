@@ -9,13 +9,13 @@
         <h4><%= user.email %>:</h4>
         <ul>
           <li>
-            GPT-4: <%= user.conversations.pluck(:gpt_4_tokens_used).sum %> tokens
+            GPT-4: <%= user.conversations.pluck(:gpt_4_tokens_used).compact.sum %> tokens
           </li>
           <li>
-            GPT-3.5-turbo-16k: <%= user.conversations.pluck(:gpt_3_5_turbo_16k_tokens_used).sum %> tokens
+            GPT-3.5-turbo-16k: <%= user.conversations.pluck(:gpt_3_5_turbo_16k_tokens_used).compact.sum %> tokens
           </li>
           <li>
-            GPT-3.5-turbo: <%= user.conversations.pluck(:gpt_3_5_turbo_tokens_used).sum %> tokens
+            GPT-3.5-turbo: <%= user.conversations.pluck(:gpt_3_5_turbo_tokens_used).compact.sum %> tokens
           </li>
           <li>
             In all: <%= user.tokens_used %> tokens
