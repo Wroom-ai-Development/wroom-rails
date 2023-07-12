@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_11_145330) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_12_095106) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -78,6 +78,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_11_145330) do
     t.integer "status"
     t.integer "total_requests", default: 0, null: false
     t.integer "last_query_requests", default: 0, null: false
+    t.bigint "gpt_4_tokens_used"
+    t.bigint "gpt_3_5_turbo_tokens_used"
+    t.bigint "gpt_3_5_turbo_16k_tokens_used"
     t.index ["user_id"], name: "index_conversations_on_user_id"
   end
 
@@ -153,6 +156,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_11_145330) do
     t.string "last_name"
     t.boolean "onboarded"
     t.bigint "current_document_id"
+    t.bigint "tokens_used", default: 0
     t.index ["current_document_id"], name: "index_users_on_current_document_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

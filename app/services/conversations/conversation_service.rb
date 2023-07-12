@@ -14,17 +14,19 @@ module Conversations
     CHARACTERS_PER_TOKEN = 4
     TOKEN_SPACE_FOR_ANSWER = 1000
 
-    def initialize(conversation)
+    def initialize(conversation) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       @conversation = conversation
+      @user = conversation.user
       @sources = conversation.sources
       @last_user_question = @conversation.messages.where(role: 'user').last.content
       @conversation_messages = @conversation.messages.reject do |m|
         m.role == 'error'
       end
       @conversation_messages = @conversation_messages.map { |message| { role: message.role, content: message.content } }
-      @requests_for_current_query = 0
       @openai_service = OpenaiService.new
       @token_counter = TokenCounter.new('gpt-4')
+      @requests_made = 0
+      @tokens_sent = 0
     end
 
     def respond
@@ -102,8 +104,8 @@ module Conversations
 
     def update_request_counts
       @conversation.update!(
-        total_requests: @conversation.total_requests + @requests_for_current_query,
-        last_query_requests: @requests_for_current_query
+        total_requests: @conversation.total_requests + @requests_made,
+        last_query_requests: @requests_made
       )
     end
 
@@ -186,7 +188,7 @@ module Conversations
     end
 
     def count_tokens_in_messages(messages)
-      full_text = messages.map { |m| m['content'] }.join(' ')
+      full_text = messages.map { |m| m[:content] }.join(' ')
       @token_counter.count_tokens(full_text)
     end
 
@@ -232,20 +234,29 @@ module Conversations
       prompt.join(' ')
     end
 
-    def response_from_messages(messages, simple: false)
+    def response_from_messages(messages, simple: false) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       token_count = count_tokens_in_messages(messages)
-
+      @user.update!(tokens_used: @user.tokens_used + token_count)
       if simple
+        @conversation.update!(
+          gpt_3_5_turbo_tokens_used: @conversation.gpt_3_5_turbo_tokens_used + token_count
+        )
         @openai_service.gpt_3_5_turbo(messages)
       elsif token_count <= REQUEST_MAX_TOKEN_SIZE_GPT_4 - TOKEN_SPACE_FOR_ANSWER
+        @conversation.update!(
+          gpt_4_tokens_used: @conversation.gpt_4_tokens_used + token_count
+        )
         @openai_service.gpt_4(messages)
       else
+        @conversation.update!(
+          gpt_3_5_turbo_16k_tokens_used: @conversation.gpt_3_5_turbo_16k_tokens_used + token_count
+        )
         @openai_service.gpt_3_5_turbo_16k(messages)
       end
     end
 
     def client_chat(messages, simple: false)
-      @requests_for_current_query += 1
+      @requests_made += 1
       response_from_messages(messages, simple:)
     rescue Faraday::TimeoutError
       'I have not succeded processing your request, please try again.'
