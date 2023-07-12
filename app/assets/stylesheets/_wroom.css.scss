@@ -45,12 +45,12 @@ body#wroom {
     display: flex;
     flex-direction: column;
 
-    &#documents-panel {
+    &#projects-panel {
       width: 15%;
       display: flex;
       flex-direction: column;
     }
-    &#document-panel {
+    &#project-panel {
       width: 50%;
     }
 
@@ -366,7 +366,7 @@ body#wroom {
       }
     }
 
-    div#edit-document {
+    div#edit-project {
       height: -webkit-fill-available;
       padding: 0;
 
@@ -395,11 +395,11 @@ body#wroom {
         text-align: justify;
         line-height: 1.4rem;
       }
-      form#edit-document {
+      form#edit-project {
         margin-top:3rem;
         padding: 0 3vw;
 
-        input#document_title {
+        input#project_title {
           width: -webkit-fill-available;
           margin-right: 1rem;
           font-family: 'Playfair Display', serif;
@@ -437,7 +437,7 @@ body#wroom {
       width: -webkit-fill-available;
       min-height: 1rem;
       background-color: white;
-      &#document {
+      &#project {
         display: flex;
         flex-direction: row;
         div#editor {
@@ -495,8 +495,8 @@ body#wroom {
           }
         }
 
-        &#new-document {
-          input#document_title {
+        &#new-project {
+          input#project_title {
             font-weight: 300;
             &::placeholder {
               font-weight: 100;
@@ -504,7 +504,7 @@ body#wroom {
           }
         }
 
-        &#edit-document-form {
+        &#edit-project-form {
           display: flex;
           flex-direction: column;
           
@@ -549,7 +549,7 @@ body#wroom {
     
         }
 
-        &#documents-list {
+        &#projects-list {
 
           li {
             min-height: 2rem;
@@ -565,11 +565,11 @@ body#wroom {
               form.button_to {
                 padding: 0;
               }
-              form.delete-document {
+              form.delete-project {
                 background-color: rgba(0,0,0,0) !important;
                 margin-left: 1rem;
               }
-              button.delete-document {
+              button.delete-project {
                 background-color: rgba(0,0,0,0) !important;
                 border: none;     
                 color: $wroom-red;

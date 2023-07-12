@@ -6,23 +6,23 @@ class WroomController < ApplicationController
   def app # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     create_welcome_records unless current_user.onboarded?
 
-    @document = if params[:document_id].present?
-                  Document.find(params[:document_id])
-                elsif current_user.current_document_id.present?
-                  Document.find(current_user.current_document_id)
-                elsif current_user.documents.any?
-                  current_user.documents.first
-                end
-    if @document
-      current_user.update!(current_document_id: @document.id)
+    @project = if params[:project_id].present?
+                 Project.find(params[:project_id])
+               elsif current_user.current_project_id.present?
+                 Project.find(current_user.current_project_id)
+               elsif current_user.projects.any?
+                 current_user.projects.first
+               end
+    if @project
+      current_user.update!(current_project_id: @project.id)
     else
-      create_no_document_messages
+      create_no_project_messages
     end
   end
 
   private
 
-  def create_no_document_messages
+  def create_no_project_messages
     service = OpenaiService.new
     @message = '☚ Have you created any projects yet?'
 
@@ -33,7 +33,7 @@ class WroomController < ApplicationController
   end
 
   def create_welcome_records
-    create_welcome_document
+    create_welcome_project
     create_welcome_source
     create_welcome_voices
   end
@@ -67,7 +67,7 @@ class WroomController < ApplicationController
       Then, journey on, if not elate,
       Still, NEVER broken-hearted!
     POEM
-    source.parse_document_chunks_from_text(poem)
+    source.parse_project_chunks_from_text(poem)
   end
 
   def create_welcome_voices
@@ -81,11 +81,11 @@ class WroomController < ApplicationController
     end
   end
 
-  def create_welcome_document
+  def create_welcome_project
     conversation = Conversation.create!(user_id: current_user.id, title: 'Welcome to WROOM!')
     welcome_message = "Welcome to WROOM, the professional's writing assistant!"
-    Document.create!(user_id: current_user.id, title: 'Welcome to WROOM!',
-                     conversation_id: conversation.id, content: welcome_message)
+    Project.create!(user_id: current_user.id, title: 'Welcome to WROOM!',
+                    conversation_id: conversation.id, content: welcome_message)
     current_user.update!(onboarded: true)
   end
 end

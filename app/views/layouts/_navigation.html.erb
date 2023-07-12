@@ -15,17 +15,16 @@
       <div class="link-wrapper">
         <%= link_to "Conversations", conversations_path %>
       </div>
-      <div class="link-wrapper">
-        <%= link_to "Projects", documents_path %>
-      </div>
     <% end %>
     <% if can? :manage, Source %>
       <div class="link-wrapper">
         <%= link_to "Sources", sources_path %>
       </div>
     <% end %>
-    <% if can? :manage, Document %>
-
+    <% if can? :manage, Project %>
+      <div class="link-wrapper">
+        <%= link_to "Projects", projects_path %>
+      </div>
     <% end %>
     <% if can? :manage, Voice %>
       <div class="link-wrapper">

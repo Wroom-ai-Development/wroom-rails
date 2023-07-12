@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
-  resources :documents, except: [:show] do
+  resources :projects, except: [:show] do
     member do
       patch 'autosave'
       post 'save_as_source'
@@ -10,7 +10,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       get 'edit_frame'
     end
     collection do
-      get 'documents_frame'
+      get 'projects_frame'
       get 'new_frame'
       post 'create_from_frame'
     end

@@ -1,8 +1,8 @@
-  <%= turbo_frame_tag "new_document_frame" do %>
+  <%= turbo_frame_tag "new_project_frame" do %>
     <%= form_with(
-      model: @document,
-      url: create_from_frame_documents_url,
-      id: 'new-document'
+      model: @project,
+      url: create_from_frame_projects_url,
+      id: 'new-project'
     ) do |form| %>
 
       <%= form.text_field :title, { placeholder: 'New project name' } %>

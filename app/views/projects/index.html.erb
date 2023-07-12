@@ -1,20 +1,20 @@
-<%= turbo_frame_tag 'documents' %>
+<%= turbo_frame_tag 'projects' %>
 <div class='view-header'>
   <h1>Projects</h1>
-  <%= link_to "+", new_document_path %>
+  <%= link_to "+", new_project_path %>
 </div>
 <div class='view-content'>
   <% if current_user.admin? %>
     <div class='index-separator'>My projects</div class='index-separator'>
   <% end %>
   <ul class="index-list">
-    <% current_user.documents.each do |document| %>
-      <% if can? :manage, document %>
+    <% current_user.projects.each do |project| %>
+      <% if can? :manage, project %>
         <li class='index-list-item'>
-          <%= link_to document.title, edit_document_path(document) %>
+          <%= link_to project.title, root_path(project_id: project.id) %>
           <div class="controls">
-            <%= link_to "✍︎", edit_document_path(document) %>
-            <%= button_to "␡", document, method: :delete %>
+            <%= link_to "✍︎", root_path(project_id: project.id) %>
+            <%= button_to "␡", project, method: :delete %>
           </div>
         </li>
       <% end %>
@@ -24,12 +24,12 @@
     <% @users.each do |user| %>
       <div class='index-separator'><%= user.email %></div class='index-separator'>
       <ul class="index-list">
-        <% user.documents.each do |document| %>
+        <% user.projects.each do |project| %>
           <li class='index-list-item'>
-            <%= link_to document.title, edit_document_path(document) %>
+            <%= link_to project.title, root_path(project_id: project.id) %>
             <div class="controls">
-              <%= link_to "✍︎", edit_document_path(document) %>
-              <%= button_to "␡", document, method: :delete %>
+              <%= link_to "✍︎", root_path(project_id: project.id) %>
+              <%= button_to "␡", project, method: :delete %>
             </div>
           </li>
         <% end %>

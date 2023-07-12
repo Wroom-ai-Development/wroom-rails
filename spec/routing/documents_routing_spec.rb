@@ -2,34 +2,34 @@
 
 require 'rails_helper'
 
-RSpec.describe DocumentsController, type: :routing do
+RSpec.describe ProjectsController, type: :routing do
   describe 'routing' do
     it 'routes to #index' do
-      expect(get: '/documents').to route_to('documents#index')
+      expect(get: '/projects').to route_to('projects#index')
     end
 
     it 'routes to #new' do
-      expect(get: '/documents/new').to route_to('documents#new')
+      expect(get: '/projects/new').to route_to('projects#new')
     end
 
     it 'routes to #edit' do
-      expect(get: '/documents/1/edit').to route_to('documents#edit', id: '1')
+      expect(get: '/projects/1/edit').to route_to('projects#edit', id: '1')
     end
 
     it 'routes to #create' do
-      expect(post: '/documents').to route_to('documents#create')
+      expect(post: '/projects').to route_to('projects#create')
     end
 
     it 'routes to #update via PUT' do
-      expect(put: '/documents/1').to route_to('documents#update', id: '1')
+      expect(put: '/projects/1').to route_to('projects#update', id: '1')
     end
 
     it 'routes to #update via PATCH' do
-      expect(patch: '/documents/1').to route_to('documents#update', id: '1')
+      expect(patch: '/projects/1').to route_to('projects#update', id: '1')
     end
 
     it 'routes to #destroy' do
-      expect(delete: '/documents/1').to route_to('documents#destroy', id: '1')
+      expect(delete: '/projects/1').to route_to('projects#destroy', id: '1')
     end
   end
 end

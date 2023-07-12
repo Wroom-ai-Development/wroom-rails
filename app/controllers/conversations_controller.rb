@@ -17,7 +17,7 @@ class ConversationsController < ApplicationController
     @conversation.update!(status: 1)
     @conversation.messages.create!(content: params[:content], role: 'user')
     AnswerFetchingWorker.perform_async(@conversation.id)
-    redirect_to root_path(document_id: @conversation.documents.first.id), status: :see_other
+    redirect_to root_path(project_id: @conversation.projects.first.id), status: :see_other
   end
 
   def delete_message_from_frame
@@ -32,7 +32,7 @@ class ConversationsController < ApplicationController
 
   def update_from_frame
     @conversation.update(conversation_params)
-    redirect_to root_path(document_id: @conversation.documents.first.id), status: :see_other
+    redirect_to root_path(project_id: @conversation.projects.first.id), status: :see_other
   end
 
   # GET /conversations/1 or /conversations/1.json
@@ -51,8 +51,8 @@ class ConversationsController < ApplicationController
     @conversation.update!(status: 1)
     @conversation.messages.create!(content: params[:content], role: 'user')
     AnswerFetchingWorker.perform_async(@conversation.id)
-    if params[:in_document_editor]
-      redirect_to @conversation.documents.first
+    if params[:in_project_editor]
+      redirect_to @conversation.projects.first
     else
       redirect_to @conversation
     end
@@ -63,8 +63,8 @@ class ConversationsController < ApplicationController
     conversation = message.conversation
     authorize! :edit, conversation
     message.destroy
-    if params[:in_document_editor]
-      redirect_to conversation.documents.first
+    if params[:in_project_editor]
+      redirect_to conversation.projects.first
     else
       redirect_to conversation
     end
@@ -90,9 +90,9 @@ class ConversationsController < ApplicationController
   def update # rubocop:disable Metrics/MethodLength
     respond_to do |format|
       if @conversation.update(conversation_params)
-        if @conversation.documents.any?
+        if @conversation.projects.any?
           format.html do
-            redirect_to edit_document_url(@conversation.documents.first),
+            redirect_to edit_project_url(@conversation.projects.first),
                         notice: 'Conversation was successfully updated.'
           end
         else
