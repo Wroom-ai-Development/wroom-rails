@@ -21,7 +21,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
   end
   mount ActionCable.server => '/cable'
-  resources :conversations do
+  resources :conversations, only: [] do
     member do
       post 'new_user_message'
       post 'new_user_message_from_frame'
