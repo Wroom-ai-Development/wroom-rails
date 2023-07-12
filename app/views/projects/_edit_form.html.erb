@@ -1,0 +1,29 @@
+<div class="record-form project-form">
+  <%= form_with(
+    model: project,
+    data: {controller: 'project', autosave_delay: '250'}
+  ) do |form| %>
+    <% if project.errors.any? %>
+      <div class='validation'>
+        <div class='message'>
+          <%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:
+        </div>
+        <div class='errors'>
+          <% project.errors.each do |error| %>
+            <div class='error'><span class='bullet'>• </span><%= error.full_message %></div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class='field'>
+      <%= form.label :title, style: "display: block" %>
+      <%= form.text_field :title, data: { action: "keyup->project#save blur->project#save" } %>
+    </div>
+
+    <div class='field content'>
+      <%= form.rich_text_area :content, data: { action: "keyup->project#save blur->project#save" } %>
+    </div>
+  <% end %>
+  <%= button_to "Save as source", save_as_source_project_path(project), method: :post, class: 'save-as-source' %>
+</div>

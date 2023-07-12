@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_12_095106) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_12_120228) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -78,9 +78,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_12_095106) do
     t.integer "status"
     t.integer "total_requests", default: 0, null: false
     t.integer "last_query_requests", default: 0, null: false
-    t.bigint "gpt_4_tokens_used"
-    t.bigint "gpt_3_5_turbo_tokens_used"
-    t.bigint "gpt_3_5_turbo_16k_tokens_used"
+    t.bigint "gpt_4_tokens_used", default: 0, null: false
+    t.bigint "gpt_3_5_turbo_tokens_used", default: 0, null: false
+    t.bigint "gpt_3_5_turbo_16k_tokens_used", default: 0, null: false
+    t.bigint "project_id"
     t.index ["user_id"], name: "index_conversations_on_user_id"
   end
 
@@ -93,16 +94,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_12_095106) do
     t.datetime "updated_at", null: false
     t.bigint "token_length"
     t.index ["source_id"], name: "index_document_chunks_on_source_id"
-  end
-
-  create_table "documents", force: :cascade do |t|
-    t.string "title"
-    t.bigint "user_id", null: false
-    t.bigint "conversation_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["conversation_id"], name: "index_documents_on_conversation_id"
-    t.index ["user_id"], name: "index_documents_on_user_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -123,6 +114,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_12_095106) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "event_type"
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string "title"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
   create_table "sources", force: :cascade do |t|
@@ -155,9 +154,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_12_095106) do
     t.string "first_name"
     t.string "last_name"
     t.boolean "onboarded"
-    t.bigint "current_document_id"
+    t.bigint "current_project_id"
     t.bigint "tokens_used", default: 0
-    t.index ["current_document_id"], name: "index_users_on_current_document_id"
+    t.index ["current_project_id"], name: "index_users_on_current_project_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -179,9 +178,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_12_095106) do
   add_foreign_key "conversation_voices", "voices"
   add_foreign_key "conversations", "users"
   add_foreign_key "document_chunks", "sources"
-  add_foreign_key "documents", "conversations"
-  add_foreign_key "documents", "users"
   add_foreign_key "messages", "conversations"
+  add_foreign_key "projects", "users"
   add_foreign_key "sources", "users"
   add_foreign_key "voices", "users"
 end

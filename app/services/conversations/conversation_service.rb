@@ -115,13 +115,14 @@ module Conversations
 
     def get_answer_from_source(source)
       chunks = source.document_chunks
-      if chunks.size == 1
-        get_answer_from_chunk(chunks.first)
-      elsif chunks.size > 1
-        get_answer_from_multiple_chunks(chunks)
-      else
-        rephrase_nicely("There was a problem processing #{source.name}, you may have to upload it again.")
-      end
+      answer = if chunks.size == 1
+                 get_answer_from_chunk(chunks.first)
+               elsif chunks.size > 1
+                 get_answer_from_multiple_chunks(chunks)
+               else
+                 rephrase_nicely("There was a problem processing #{source.name}, you may have to upload it again.")
+               end
+      rephrase_with_voices(answer)
     end
 
     def get_answer_from_multiple_chunks(chunks)
@@ -155,7 +156,7 @@ module Conversations
         { role: 'system', content: answers.join(' ') }
       ]
       messages << { role: 'system', content: summary_prompt }
-      client_chat(messages, simple: true)
+      rephrase_with_voices(client_chat(messages, simple: true))
     end
 
     def rephrase_with_voices(string) # rubocop:disable Metrics/MethodLength
@@ -169,8 +170,7 @@ module Conversations
               Rewrite the text above taking into account these instructions:#{' '}
               #{@conversation.voices.pluck(:meta_prompt).join(' ')}
             CONTENT
-          }],
-          '4k'
+          }]
         )
       else
         string

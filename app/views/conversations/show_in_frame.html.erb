@@ -24,8 +24,7 @@
                 <div class='main-message-content'>
                   You have exceeded the token limit in this conversation. If you would like to chat further,
                   you can remove some messages to make space. If you would like to keep some of the content,
-                  copy it to your document.
-                </div>
+                copy it to your project's text editor.                </div>
               </div>
 
             </div>
@@ -44,7 +43,7 @@
                   <div class="button-wrapper">
                     <button class='copy' onClick=<%= "copyContent('main-message-content-#{message.id}');" %>>⎘</button>
                   </div>
-                  <%= button_to('␡', delete_message_from_frame_conversation_path(message_id: message.id, in_document_editor: @in_document_editor), method: :delete) %>
+                  <%= button_to('␡', delete_message_from_frame_conversation_path(message_id: message.id), method: :delete) %>
                 </div>
                 <div class='main-message-content' id=<%= "main-message-content-#{message.id}" %>>
                   <%= simple_format message.content %>

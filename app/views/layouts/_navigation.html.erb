@@ -1,7 +1,7 @@
 <header>
   <%= link_to root_path do %>
     <div id='logo'>
-      <span id="back">back to </span><span id='wroom'>WROOM</span><span id='ai'>.ai</span>
+      <span id='wroom'>WROOM</span><span id='ai'>.ai</span>
     </div>
   <% end %>
   <nav>
@@ -12,20 +12,16 @@
       <div class="link-wrapper">
         <%= link_to "Users", users_path %>
       </div>
-      <div class="link-wrapper">
-        <%= link_to "Conversations", conversations_path %>
-      </div>
-      <div class="link-wrapper">
-        <%= link_to "Projects", documents_path %>
-      </div>
     <% end %>
     <% if can? :manage, Source %>
       <div class="link-wrapper">
         <%= link_to "Sources", sources_path %>
       </div>
     <% end %>
-    <% if can? :manage, Document %>
-
+    <% if can? :manage, Project %>
+      <div class="link-wrapper">
+        <%= link_to "Projects", projects_path %>
+      </div>
     <% end %>
     <% if can? :manage, Voice %>
       <div class="link-wrapper">

@@ -201,7 +201,12 @@ main {
           border: 1px solid $wroom-blue;
         }
 
+        div.title {
+          width: -webkit-fill-available;
+        }
+
         div.controls {
+          z-index: 999;
           display: flex;
           align-items: center;
           a {
@@ -755,7 +760,7 @@ div.conversation-status {
   }
 }    
 
-div.view-content.edit-document {
+div.view-content.edit-project {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -769,7 +774,7 @@ div.view-content.edit-document {
       border: 1px solid $wroom-light-gray;
     }
 
-    &.document-form {
+    &.project-form {
       border: none;
       background-color: rgba(0, 0, 0, 0);
       padding: 0;
@@ -921,7 +926,7 @@ div.view-content.monitoring {
       ul {
         font-family: 'Inconsolata', monospace;
         columns: 1;
-        width: 12rem;
+        width: 14rem;
         margin: 0 2rem 0 0;
         padding: 0;
         li {

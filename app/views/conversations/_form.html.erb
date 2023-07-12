@@ -15,12 +15,12 @@
 
     <div class='field'>
       <%= form.label :title, style: "display: block" %>
-      <%= form.text_field :title, disabled: conversation.documents.any? %>
+      <%= form.text_field :title, disabled: conversation.projects.any? %>
     </div>
     <% if current_user.admin? %>
       <div class='field'>
         <%= form.label :user_id, style: "display: block" %>
-        <%= form.collection_select :user_id, User.all, :id, :email, { selected: action_name == 'new' ? current_user.id : conversation.user_id },  disabled: conversation.documents.any? %>
+        <%= form.collection_select :user_id, User.all, :id, :email, { selected: action_name == 'new' ? current_user.id : conversation.user_id },  disabled: conversation.projects.any? %>
       </div>
     <% else %>
       <div class='field' style='display: none;'>

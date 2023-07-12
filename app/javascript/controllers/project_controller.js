@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import debounce from 'lodash.debounce'
-// Connects to data-controller="document"
+// Connects to data-controller="project"
 export default class extends Controller {
   connect() {
     console.log("yay");

@@ -45,14 +45,18 @@ body#wroom {
     display: flex;
     flex-direction: column;
 
-    &#documents-panel {
+    &#context-panel {
       width: 15%;
       display: flex;
       flex-direction: column;
     }
-    &#document-panel {
-      width: 50%;
+    &#project-panel {
+      width: 45%;
     }
+    &#conversation-panel {
+      width: 40%;
+    }
+
 
     &#no-docs-panel {
       width: -webkit-fill-available;
@@ -74,24 +78,6 @@ body#wroom {
         color: $wroom-gray;
       }
     }
-    &#conversation-panel {
-      width: 20%;
-    }
-    &#context-panel {
-      width: 15%;
-
-      div.links {
-        font-size: 0.7rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding-top: 0.5rem
-        a {
-          color: $wroom-blue;
-        }
-      }
-    }
-
 
     div.top-pane {
       height: 2rem;
@@ -166,7 +152,6 @@ body#wroom {
         }
       }
       div.list {
-        height: 40.5vh;
         overflow-y: auto;
         font-size: 0.7rem;
         div.list-item {
@@ -271,7 +256,7 @@ body#wroom {
         }    
   
         div.message {
-          padding: 0.5rem 1rem 0 1rem;
+          padding: 0.5rem 2rem 0 1rem;
           text-align: justify;
           font-size: 0.6rem;
           hyphens: auto;
@@ -366,7 +351,7 @@ body#wroom {
       }
     }
 
-    div#edit-document {
+    div#edit-project {
       height: -webkit-fill-available;
       padding: 0;
 
@@ -395,11 +380,11 @@ body#wroom {
         text-align: justify;
         line-height: 1.4rem;
       }
-      form#edit-document {
+      form#edit-project {
         margin-top:3rem;
         padding: 0 3vw;
 
-        input#document_title {
+        input#project_title {
           width: -webkit-fill-available;
           margin-right: 1rem;
           font-family: 'Playfair Display', serif;
@@ -437,7 +422,7 @@ body#wroom {
       width: -webkit-fill-available;
       min-height: 1rem;
       background-color: white;
-      &#document {
+      &#project {
         display: flex;
         flex-direction: row;
         div#editor {
@@ -495,8 +480,8 @@ body#wroom {
           }
         }
 
-        &#new-document {
-          input#document_title {
+        &#new-project {
+          input#project_title {
             font-weight: 300;
             &::placeholder {
               font-weight: 100;
@@ -504,7 +489,7 @@ body#wroom {
           }
         }
 
-        &#edit-document-form {
+        &#edit-project-form {
           display: flex;
           flex-direction: column;
           
@@ -549,7 +534,7 @@ body#wroom {
     
         }
 
-        &#documents-list {
+        &#projects-list {
 
           li {
             min-height: 2rem;
@@ -565,11 +550,11 @@ body#wroom {
               form.button_to {
                 padding: 0;
               }
-              form.delete-document {
+              form.delete-project {
                 background-color: rgba(0,0,0,0) !important;
                 margin-left: 1rem;
               }
-              button.delete-document {
+              button.delete-project {
                 background-color: rgba(0,0,0,0) !important;
                 border: none;     
                 color: $wroom-red;
