@@ -39,9 +39,6 @@
               <b>Output: </b><%= user.usage_records.pluck(:gpt_3_5_turbo_output_tokens).compact.sum %> tokens  ($0.002 each)
             </p>
           </div>
-          <div>
-            <h6>In all: <%= user.tokens_used %> tokens</h6>
-          </div>
         </li>
       <% end %>
     </ul>
