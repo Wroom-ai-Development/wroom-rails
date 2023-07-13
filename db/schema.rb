@@ -78,10 +78,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_12_120228) do
     t.integer "status"
     t.integer "total_requests", default: 0, null: false
     t.integer "last_query_requests", default: 0, null: false
+    t.bigint "project_id"
     t.bigint "gpt_4_tokens_used", default: 0, null: false
     t.bigint "gpt_3_5_turbo_tokens_used", default: 0, null: false
     t.bigint "gpt_3_5_turbo_16k_tokens_used", default: 0, null: false
-    t.bigint "project_id"
     t.index ["user_id"], name: "index_conversations_on_user_id"
   end
 

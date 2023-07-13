@@ -24,9 +24,7 @@ module Conversations
       end
       @conversation_messages = @conversation_messages.map { |message| { role: message.role, content: message.content } }
       @openai_service = OpenaiService.new
-      @token_counter = TokenCounter.new('gpt-4')
       @requests_made = 0
-      @tokens_sent = 0
     end
 
     def respond
@@ -186,10 +184,6 @@ module Conversations
       answer
     end
 
-    def count_tokens_in_messages(messages)
-      full_text = messages.map { |m| m[:content] }.join(' ')
-      @token_counter.count_tokens(full_text)
-    end
 
     def prepare_messages_for_chunk(chunk)
       messages = @conversation_messages.dup.unshift({ role: 'system', content: chunk.content })
@@ -237,19 +231,10 @@ module Conversations
       token_count = count_tokens_in_messages(messages)
       @user.update!(tokens_used: @user.tokens_used + token_count)
       if simple
-        @conversation.update!(
-          gpt_3_5_turbo_tokens_used: @conversation.gpt_3_5_turbo_tokens_used || 0 + token_count
-        )
         @openai_service.gpt_3_5_turbo(messages)
       elsif token_count <= REQUEST_MAX_TOKEN_SIZE_GPT_4 - TOKEN_SPACE_FOR_ANSWER
-        @conversation.update!(
-          gpt_4_tokens_used: @conversation.gpt_4_tokens_used || 0 + token_count
-        )
         @openai_service.gpt_4(messages)
       else
-        @conversation.update!(
-          gpt_3_5_turbo_16k_tokens_used: @conversation.gpt_3_5_turbo_16k_tokens_used || 0 + token_count
-        )
         @openai_service.gpt_3_5_turbo_16k(messages)
       end
     end

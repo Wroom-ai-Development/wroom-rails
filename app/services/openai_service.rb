@@ -10,6 +10,7 @@ class OpenaiService
   end
 
   def gpt_3_5_turbo(messages) # rubocop:disable Metrics/MethodLength
+    token_count = Tikto
     retries = 0
     @client.chat(
       parameters: {
@@ -52,4 +53,6 @@ class OpenaiService
     sleep 2**retries
     retries > RETRY_LIMIT ? raise(e) : retry
   end
+
+  private
 end
