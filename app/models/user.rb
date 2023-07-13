@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :voices, dependent: :destroy
   has_many :projects, dependent: :destroy
   has_many :monitoring_events, as: :trackable, dependent: :nullify
+  has_many :usage_records, dependent: :nullify
   has_one :current_project, class_name: 'Project', dependent: :nullify
   validates :email, uniqueness: true, presence: true
 

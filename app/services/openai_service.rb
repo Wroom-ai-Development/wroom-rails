@@ -11,12 +11,13 @@ class OpenaiService
 
   def gpt_3_5_turbo(messages) # rubocop:disable Metrics/MethodLength
     retries = 0
-    @client.chat(
+    response = @client.chat(
       parameters: {
         model: 'gpt-3.5-turbo',
         messages:
       }
-    ).dig('choices', 0, 'message', 'content')
+    )
+    response.dig('choices', 0, 'message', 'content')
   rescue StandardError => e
     retries += 1
     sleep 2**retries

@@ -7,20 +7,39 @@
       <h5>Total tokens used since 2023-07-12: <%= @total_tokens_used %></h5>
       <% @users.each do |user| %>
         <h4><%= user.email %>:</h4>
-        <ul>
-          <li>
-            GPT-4: <%= user.conversations.pluck(:gpt_4_tokens_used).compact.sum %> tokens
-          </li>
-          <li>
-            GPT-3.5-turbo-16k: <%= user.conversations.pluck(:gpt_3_5_turbo_16k_tokens_used).compact.sum %> tokens
-          </li>
-          <li>
-            GPT-3.5-turbo: <%= user.conversations.pluck(:gpt_3_5_turbo_tokens_used).compact.sum %> tokens
-          </li>
-          <li>
-            In all: <%= user.tokens_used %> tokens
-          </li>
-        </ul>
+        <li>
+          <div>
+            <h6>GPT-4:</h6>
+            <p>
+              <b>Input: </b><%= user.usage_records.pluck(:gpt_4_input_tokens).compact.sum %> tokens ($0.03 each)
+            </p>
+            <p>
+              <b>Output: </b><%= user.usage_records.pluck(:gpt_4_output_tokens).compact.sum %> tokens ($0.06 each)
+            </p>
+          </div>
+          <div>
+            <h6>
+              GPT-3.5-turbo-16k:
+            </h6>
+            <p>
+              <b>Input: </b><%= user.usage_records.pluck(:gpt_3_5_turbo_16k_input_tokens).compact.sum %> tokens ($0.003 each)
+            </p>
+            <p>
+              <b>Output: </b><%= user.usage_records.pluck(:gpt_3_5_turbo_16k_output_tokens).compact.sum %> tokens ($0.004 each)
+            </p>
+          </div>
+          <div>
+            <h6>
+              GPT-3.5-turbo:
+            </h6>
+            <p>
+              <b>Input: </b><%= user.usage_records.pluck(:gpt_3_5_turbo_input_tokens).compact.sum %> tokens ($0.0015 each)
+            </p>
+            <p>
+              <b>Output: </b><%= user.usage_records.pluck(:gpt_3_5_turbo_output_tokens).compact.sum %> tokens  ($0.002 each)
+            </p>
+          </div>
+        </li>
       <% end %>
     </ul>
     <ul>
