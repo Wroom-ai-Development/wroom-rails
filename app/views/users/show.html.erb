@@ -14,9 +14,9 @@
     <% end %>
 
     <h4>Conversations</h4>
-    <% @conversations.each do |conversation| %>
+    <% @projects.each do |project| %>
       <p>
-        <%= link_to conversation.title.present? ? conversation.title : "Conversation with id #{conversation.id}", conversation %>
+        <%= link_to project.title, root_path(project_id: project.id) %>
       </p>
     <% end %>
         <h4>Voices</h4>
