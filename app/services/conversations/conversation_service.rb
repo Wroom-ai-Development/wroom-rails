@@ -14,7 +14,7 @@ module Conversations
     CHARACTERS_PER_TOKEN = 4
     TOKEN_SPACE_FOR_ANSWER = 1000
 
-    def initialize(conversation) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def initialize(conversation)
       @conversation = conversation
       @user = conversation.user
       @sources = conversation.sources
@@ -184,7 +184,6 @@ module Conversations
       answer
     end
 
-
     def prepare_messages_for_chunk(chunk)
       messages = @conversation_messages.dup.unshift({ role: 'system', content: chunk.content })
       last_user_message = messages.pop
@@ -227,16 +226,27 @@ module Conversations
       prompt.join(' ')
     end
 
-    def response_from_messages(messages, simple: false) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    def count_tokens_in_messages(messages)
+      full_text = messages.map { |m| m[:content] }.join(' ')
+      TokenCounter.new('gpt-4').count_tokens(full_text)
+    end
+
+    def response_from_messages(messages, simple: false) # rubocop:disable Metrics/MethodLength
       token_count = count_tokens_in_messages(messages)
       @user.update!(tokens_used: @user.tokens_used + token_count)
-      if simple
-        @openai_service.gpt_3_5_turbo(messages)
-      elsif token_count <= REQUEST_MAX_TOKEN_SIZE_GPT_4 - TOKEN_SPACE_FOR_ANSWER
-        @openai_service.gpt_4(messages)
-      else
-        @openai_service.gpt_3_5_turbo_16k(messages)
-      end
+      model = ''
+      response = if simple
+                   model = 'gpt-3.5-turbo'
+                   @openai_service.gpt_3_5_turbo(messages)
+                 elsif token_count <= REQUEST_MAX_TOKEN_SIZE_GPT_4 - TOKEN_SPACE_FOR_ANSWER
+                   model = 'gpt-4'
+                   @openai_service.gpt_4(messages)
+                 else
+                   model = 'gpt-3.5-turbo-16k'
+                   @openai_service.gpt_3_5_turbo_16k(messages)
+                 end
+      TokenUsageService.new(@user, @conversation, model).persist_token_usage(messages, response)
+      response
     end
 
     def client_chat(messages, simple: false)

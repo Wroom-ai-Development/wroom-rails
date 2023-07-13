@@ -918,10 +918,19 @@ div.view-content.monitoring {
     // width: fit-content;
     padding: 0 0 0 1rem;
 
-      h4 {
+      h4, h5, h6 {
         font-family: 'MuseoModerno';
-        margin: 2rem 0 0.5rem 0.1rem;
         color: #7d79c0;
+      }
+      
+      h4 {
+        margin: 2rem 0 0.5rem 0.1rem;
+      }
+
+      h6 {
+        font-family: 'Inconsolata', monospace;
+        font-size: 0.9rem;
+        margin: 0;
       }
       ul {
         font-family: 'Inconsolata', monospace;

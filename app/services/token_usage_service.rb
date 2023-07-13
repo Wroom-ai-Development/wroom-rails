@@ -1,14 +1,18 @@
-class TokenUsageService
+# frozen_string_literal: true
 
+class TokenUsageService
   def initialize(user, conversation, model)
     @user = user
     @conversation = conversation
+    @model = model
     @token_counter = TokenCounter.new(model)
-
   end
 
-  def persist_token_usage(messages)
-    count_tokens_in_messages(messages)
+  def persist_token_usage(messages, response)
+    input_token_count = count_tokens_in_messages(messages)
+    output_token_count = @token_counter.count_tokens(response)
+    @user.update!(tokens_used: @user.tokens_used + input_token_count + output_token_count)
+
     persist_usage_record(input_token_count, output_token_count)
   end
 
@@ -19,7 +23,7 @@ class TokenUsageService
     @token_counter.count_tokens(full_text)
   end
 
-  def persist_usage_record(input_token_count, output_token_count)
+  def persist_usage_record(input_token_count, output_token_count) # rubocop:disable Metrics/MethodLength
     case @model
     when 'gpt-3.5-turbo'
       @user.usage_records.create!(

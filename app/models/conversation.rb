@@ -5,6 +5,8 @@ class Conversation < ApplicationRecord
   has_many :messages, dependent: :destroy
   has_many :context_references, dependent: :destroy
   has_many :sources, through: :context_references
+  has_many :usage_records, dependent: :nullify
+
   belongs_to :project
   has_many :conversation_voices, dependent: :destroy
   has_many :voices, through: :conversation_voices

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_12_120228) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_13_090733) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -79,9 +79,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_12_120228) do
     t.integer "total_requests", default: 0, null: false
     t.integer "last_query_requests", default: 0, null: false
     t.bigint "project_id"
-    t.bigint "gpt_4_tokens_used", default: 0, null: false
-    t.bigint "gpt_3_5_turbo_tokens_used", default: 0, null: false
-    t.bigint "gpt_3_5_turbo_16k_tokens_used", default: 0, null: false
     t.index ["user_id"], name: "index_conversations_on_user_id"
   end
 
@@ -137,6 +134,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_12_120228) do
     t.boolean "truncated", default: false, null: false
     t.boolean "fileless", default: false, null: false
     t.index ["user_id"], name: "index_sources_on_user_id"
+  end
+
+  create_table "usage_records", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "gpt_4_output_tokens", default: 0, null: false
+    t.bigint "gpt_4_input_tokens", default: 0, null: false
+    t.bigint "gpt_3_5_turbo_input_tokens", default: 0, null: false
+    t.bigint "gpt_3_5_turbo_output_tokens", default: 0, null: false
+    t.bigint "gpt_3_5_turbo_16k_output_tokens", default: 0, null: false
+    t.bigint "gpt_3_5_turbo_16k_input_tokens", default: 0, null: false
+    t.bigint "user_id"
+    t.bigint "conversation_id"
+    t.index ["conversation_id"], name: "index_usage_records_on_conversation_id"
+    t.index ["user_id"], name: "index_usage_records_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
