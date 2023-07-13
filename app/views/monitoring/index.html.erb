@@ -5,16 +5,16 @@
     <ul>
       <h4>Token usage by user</h4>
       <h5>Total tokens used since 2023-07-12: <%= @total_tokens_used %></h5>
-      <% @users.each do |user| %>
-        <h4><%= user.email %>:</h4>
+      <% @users_data.each do |user| %>
+        <h4><%= user[:email] %>:</h4>
         <li>
           <div>
             <h6>GPT-4:</h6>
             <p>
-              <b>Input: </b><%= user.usage_records.pluck(:gpt_4_input_tokens).compact.sum %> tokens ($0.03 each)
+              <b>Input: </b><%= user[:gpt_4_input_tokens] %> tokens ($<%= "%.2f" % (user[:gpt_4_input_tokens]/1000.0 * 0.03)%>)
             </p>
             <p>
-              <b>Output: </b><%= user.usage_records.pluck(:gpt_4_output_tokens).compact.sum %> tokens ($0.06 each)
+              <b>Output: </b><%= user[:gpt_4_output_tokens] %> tokens ($<%= "%.2f" % (user[:gpt_4_output_tokens]/1000.0 * 0.06)%>)
             </p>
           </div>
           <div>
@@ -22,10 +22,10 @@
               GPT-3.5-turbo-16k:
             </h6>
             <p>
-              <b>Input: </b><%= user.usage_records.pluck(:gpt_3_5_turbo_16k_input_tokens).compact.sum %> tokens ($0.003 each)
+              <b>Input: </b><%= user[:gpt_3_5_turbo_16k_input_tokens] %> tokens ($<%= "%.2f" % (user[:gpt_3_5_turbo_16k_input_tokens]/1000.0 * 0.003)%>)
             </p>
             <p>
-              <b>Output: </b><%= user.usage_records.pluck(:gpt_3_5_turbo_16k_output_tokens).compact.sum %> tokens ($0.004 each)
+              <b>Output: </b><%= user[:gpt_3_5_turbo_16k_output_tokens] %> tokens ($<%= "%.2f" % (user[:gpt_3_5_turbo_16k_output_tokens]/1000.0 * 0.004)%>)
             </p>
           </div>
           <div>
@@ -33,10 +33,10 @@
               GPT-3.5-turbo:
             </h6>
             <p>
-              <b>Input: </b><%= user.usage_records.pluck(:gpt_3_5_turbo_input_tokens).compact.sum %> tokens ($0.0015 each)
+              <b>Input: </b><%= user[:gpt_3_5_turbo_input_tokens] %> tokens ($<%= "%.2f" % (user[:gpt_3_5_turbo_input_tokens]/1000.0 * 0.0015)%>)
             </p>
             <p>
-              <b>Output: </b><%= user.usage_records.pluck(:gpt_3_5_turbo_output_tokens).compact.sum %> tokens  ($0.002 each)
+              <b>Output: </b><%= user[:gpt_3_5_turbo_output_tokens] %> tokens  ($<%= "%.2f" % (user[:gpt_3_5_turbo_output_tokens]/1000.0 * 0.002)%>)
             </p>
           </div>
         </li>
