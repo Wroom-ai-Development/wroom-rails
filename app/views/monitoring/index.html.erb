@@ -11,10 +11,10 @@
           <div>
             <h6>GPT-4:</h6>
             <p>
-              <b>Input: </b><%= user[:gpt_4_input_tokens] %> tokens ($<%= "%.2f" % (user[:gpt_4_input_tokens]/1000.0 * 0.03)%>)
+              <b>Input: </b><%= user[:gpt_4_input_tokens] %> tokens ($<%= "%.2f" % user[:gpt_4_input_tokens_price]%>)
             </p>
             <p>
-              <b>Output: </b><%= user[:gpt_4_output_tokens] %> tokens ($<%= "%.2f" % (user[:gpt_4_output_tokens]/1000.0 * 0.06)%>)
+              <b>Output: </b><%= user[:gpt_4_output_tokens] %> tokens ($<%= "%.2f" % user[:gpt_4_output_tokens_price]%>)
             </p>
           </div>
           <div>
@@ -22,10 +22,10 @@
               GPT-3.5-turbo-16k:
             </h6>
             <p>
-              <b>Input: </b><%= user[:gpt_3_5_turbo_16k_input_tokens] %> tokens ($<%= "%.2f" % (user[:gpt_3_5_turbo_16k_input_tokens]/1000.0 * 0.003)%>)
+              <b>Input: </b><%= user[:gpt_3_5_turbo_16k_input_tokens] %> tokens ($<%= "%.2f" % user[:gpt_3_5_turbo_16k_input_tokens_price]%>)
             </p>
             <p>
-              <b>Output: </b><%= user[:gpt_3_5_turbo_16k_output_tokens] %> tokens ($<%= "%.2f" % (user[:gpt_3_5_turbo_16k_output_tokens]/1000.0 * 0.004)%>)
+              <b>Output: </b><%= user[:gpt_3_5_turbo_16k_output_tokens] %> tokens ($<%= "%.2f" % user[:gpt_3_5_turbo_16k_output_tokens_price]%>)
             </p>
           </div>
           <div>
@@ -33,11 +33,23 @@
               GPT-3.5-turbo:
             </h6>
             <p>
-              <b>Input: </b><%= user[:gpt_3_5_turbo_input_tokens] %> tokens ($<%= "%.2f" % (user[:gpt_3_5_turbo_input_tokens]/1000.0 * 0.0015)%>)
+              <b>Input: </b><%= user[:gpt_3_5_turbo_input_tokens] %> tokens ($<%= "%.2f" % user[:gpt_3_5_turbo_input_tokens_price]%>)
             </p>
             <p>
-              <b>Output: </b><%= user[:gpt_3_5_turbo_output_tokens] %> tokens  ($<%= "%.2f" % (user[:gpt_3_5_turbo_output_tokens]/1000.0 * 0.002)%>)
+              <b>Output: </b><%= user[:gpt_3_5_turbo_output_tokens] %> tokens  ($<%= "%.2f" % user[:gpt_3_5_turbo_output_tokens_price]%>)
             </p>
+          </div>
+          <div>
+            <h6>
+              Total:
+            </h6>
+            $<%= "%.2f" % (user[:gpt_4_input_tokens_price] +
+                user[:gpt_4_output_tokens_price] +
+                user[:gpt_3_5_turbo_16k_input_tokens_price] +
+                user[:gpt_3_5_turbo_16k_output_tokens_price] +
+                user[:gpt_3_5_turbo_input_tokens_price] +
+                user[:gpt_3_5_turbo_output_tokens_price])
+            %>
           </div>
         </li>
       <% end %>
