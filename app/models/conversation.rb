@@ -10,5 +10,5 @@ class Conversation < ApplicationRecord
   has_many :voices, through: :conversation_voices
   validates :title, presence: true
 
-  enum role: { 'ready': 0, 'working': 1, 'idle': 2, 'error': 3 }
+  enum status: { 'ready': 0, 'working': 1, 'idle': 2, 'error': 3 }
 end
