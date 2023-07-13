@@ -23,7 +23,7 @@ class ProjectsController < ApplicationController
       fileless: true,
       title: @project.title
     )
-    source.parse_project_chunks_from_text(@project.content.to_plain_text)
+    source.parse_document_chunks_from_text(@project.content.to_plain_text)
     redirect_to root_path(project_id: @project.id), status: :see_other
   end
 
@@ -58,7 +58,7 @@ class ProjectsController < ApplicationController
       fileless: true,
       title: @project.title
     )
-    source.parse_project_chunks_from_text(@project.content.to_plain_text)
+    source.parse_document_chunks_from_text(@project.content.to_plain_text)
     respond_to do |format|
       format.html { redirect_to source, notice: 'Project was successfully created.' }
     end

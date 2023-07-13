@@ -31,7 +31,6 @@ module Conversations
 
     def respond
       answer = handle_business
-      @conversation.update!(status: 0)
       @conversation.messages.create!(role: 'assistant', content: answer, partial_answers: @partial_answers || [])
     end
 
