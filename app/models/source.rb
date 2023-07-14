@@ -12,7 +12,10 @@ class Source < ApplicationRecord
   validates :file, presence: true, unless: -> { fileless == true || source_url }
   validates :year_published, numericality: { only_integer: true }, length: { in: 0..4 }, allow_nil: true
   validate :file_type
-  validates :source_url, format: { with: URI::DEFAULT_PARSER.make_regexp, message: 'is not a valid URL' }, if: -> { source_url.present? }
+  validates :source_url, format: { with: URI::DEFAULT_PARSER.make_regexp, message: 'is not a valid URL' },
+                         if: lambda {
+                               source_url.present?
+                             }
   validate :source_url_leads_somewhere, if: -> { source_url.present? }
   validate :file_or_source_url, if: -> { fileless == false }
 

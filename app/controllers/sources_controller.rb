@@ -22,7 +22,7 @@ class SourcesController < ApplicationController
   def edit; end
 
   # POST /sources or /sources.json
-  def create # rubocop:disable Metrics/MethodLength
+  def create # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     @source = Source.new(source_params)
     save_section_headers
     respond_to do |format|
