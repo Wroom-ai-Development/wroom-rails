@@ -46,7 +46,7 @@
                   <%= button_to('␡', delete_message_from_frame_conversation_path(message_id: message.id), method: :delete) %>
                 </div>
                 <div class='main-message-content'>
-                  <p id=<%= "main-answer-#{message.id}" %>><%= simple_format message.content %></p>
+                  <div id=<%= "main-answer-#{message.id}" %>><%= simple_format message.content %></div>
                   <% if message.partial_answers.present? %>
                     <details>
                       <summary>Alternative answers:</summary>
