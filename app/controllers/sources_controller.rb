@@ -27,7 +27,11 @@ class SourcesController < ApplicationController
     save_section_headers
     respond_to do |format|
       if @source.save
-        @source.parse_document_chunks_from_file
+        if @source.file.attached?
+          @source.parse_document_chunks_from_file
+        elsif @source.source_url.present?
+          @source.parse_document_chunks_from_source_url
+        end
         format.html { redirect_to source_url(@source), notice: 'Source was successfully created.' }
         format.json { render :show, status: :created, location: @source }
       else
@@ -88,7 +92,8 @@ class SourcesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def source_params
-    params.require(:source).permit(:name, :title, :author, :year_published, :user_id, :file, :text_category)
+    params.require(:source).permit(:name, :title, :author, :year_published, :user_id, :file, :text_category,
+                                   :source_url)
   end
 
   def save_section_headers

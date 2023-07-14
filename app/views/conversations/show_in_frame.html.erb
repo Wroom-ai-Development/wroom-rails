@@ -41,12 +41,12 @@
                 </script>
                 <div class='message-controls' id=<%= "message-controls" %>>
                   <div class="button-wrapper">
-                    <button class='copy' onClick=<%= "copyContent('main-message-content-#{message.id}');" %>>⎘</button>
+                    <button class='copy' onClick=<%= "copyContent('main-answer-#{message.id}');" %>>⎘</button>
                   </div>
                   <%= button_to('␡', delete_message_from_frame_conversation_path(message_id: message.id), method: :delete) %>
                 </div>
-                <div class='main-message-content' id=<%= "main-message-content-#{message.id}" %>>
-                  <%= simple_format message.content %>
+                <div class='main-message-content'>
+                  <p id=<%= "main-answer-#{message.id}" %>><%= simple_format message.content %></p>
                   <% if message.partial_answers.present? %>
                     <details>
                       <summary>Alternative answers:</summary>

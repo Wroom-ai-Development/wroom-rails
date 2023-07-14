@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_13_090733) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_14_132536) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -133,6 +133,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_13_090733) do
     t.text "name", default: "", null: false
     t.boolean "truncated", default: false, null: false
     t.boolean "fileless", default: false, null: false
+    t.string "source_url"
     t.index ["user_id"], name: "index_sources_on_user_id"
   end
 
