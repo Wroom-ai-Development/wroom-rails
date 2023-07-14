@@ -189,6 +189,9 @@ GEM
       thor
       tilt
     hashery (2.1.2)
+    httparty (0.21.0)
+      mini_mime (>= 1.0.0)
+      multi_xml (>= 0.5.2)
     httpclient (2.8.3)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
@@ -234,6 +237,7 @@ GEM
     minitest (5.18.1)
     msgpack (1.7.1)
     multi_json (1.15.0)
+    multi_xml (0.6.0)
     multipart-post (2.3.0)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
@@ -486,6 +490,7 @@ DEPENDENCIES
   factory_bot_rails
   ffaker (~> 2.21)
   google-cloud-storage (~> 1.44)
+  httparty (~> 0.21.0)
   image_processing (~> 1.2)
   importmap-rails
   jbuilder

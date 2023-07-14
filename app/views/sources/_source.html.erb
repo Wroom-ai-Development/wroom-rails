@@ -24,6 +24,10 @@
     <td class='right'><%= source.section_headers.join(', ') %></td>
   </tr>
   <tr>
+    <td class='left'>Source URL:</td>
+    <td class='right'><%= source.source_url %></td>
+  </tr>
+  <tr>
     <td class='left'>File:</td>
     <td class='right'>
       <% if source.file.attached? %>
@@ -41,5 +45,5 @@
   <% end %>
 </table>
 <div class='instructions'>
-  Providing the above metadata for the source makes it easier for our language model to give contextually relevant answers. 
+  Providing the above metadata for the source makes it easier for our language model to give contextually relevant answers.
 </div>

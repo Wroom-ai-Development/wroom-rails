@@ -41,10 +41,14 @@
       <%= form.text_field :section_headers, value: source.section_headers.present? ? source.section_headers.join(', ') : '' %>
     </div>
     <div class='field'>
+      <%= form.label :source_url, style: "display: block" %>
+      <%= form.text_field :source_url %>
+    </div>
+    <div class='field'>
       <%= form.label :file %>
       <%= form.file_field :file %>
     </div>
-    
+
     <% if current_user.admin? %>
       <div class='field'>
         <%= form.label :user_id, style: "display: block" %>
