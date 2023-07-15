@@ -42,7 +42,7 @@ class SourcesController < ApplicationController
   end
 
   # PATCH/PUT /sources/1 or /sources/1.json
-  def update # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  def update # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity
     respond_to do |format|
       if @source.update(source_params)
         old_headers = @source.section_headers
@@ -55,6 +55,9 @@ class SourcesController < ApplicationController
           @source.clear_chunks
           @source.parse_document_chunks_from_file
           @source.update!(fileless: false)
+        elsif params[:source][:source_url].present?
+          @source.clear_chunks
+          @source.parse_document_chunks_from_source_url
         end
 
         @source.rechunk if @source.section_headers != old_headers
@@ -93,7 +96,7 @@ class SourcesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def source_params
     params.require(:source).permit(:name, :title, :author, :year_published, :user_id, :file, :text_category,
-                                   :source_url)
+                                   :source_url, :section_headers)
   end
 
   def save_section_headers

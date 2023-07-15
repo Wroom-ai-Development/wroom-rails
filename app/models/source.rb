@@ -61,7 +61,7 @@ class Source < ApplicationRecord
   private
 
   def file_or_source_url
-    errors.add(:base, 'Must have a file or source url') unless file.attached? || source_url
+    errors.add(:base, 'Must have a file or source url') unless file.attached? || source_url.present?
     errors.add(:base, 'Cannot have both a file and a source url') if file.attached? && source_url.present?
   end
 

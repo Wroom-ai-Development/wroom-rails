@@ -92,7 +92,7 @@ module Sources
       end
     end
 
-    def save_chunks(section) # rubocop:disable Metrics/MethodLength
+    def save_chunks(section) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       return if @source.truncated?
 
       @current_section_header = section[:section_header]
