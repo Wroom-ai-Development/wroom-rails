@@ -7,7 +7,7 @@ module Sources
     # TODO : Implement actual token counts
     CHARACTERS_PER_TOKEN = 4
     HEADER_RECOGNITION_THRESHOLD = 5
-    MAX_CHUNKS = 4
+    MAX_CHUNKS = 25
 
     def initialize(source, text)
       @source = source
@@ -93,12 +93,12 @@ module Sources
     end
 
     def save_chunks(section) # rubocop:disable Metrics/MethodLength
-      # return if @source.truncated?
+      return if @source.truncated?
 
       @current_section_header = section[:section_header]
       chunks = section[:content].chars.each_slice(CHUNK_MAX_TOKEN_SIZE * CHARACTERS_PER_TOKEN).map(&:join)
       chunks.each_with_index do |chunk, _index|
-        # break if @source.document_chunks.count >= MAX_CHUNKS
+        break if @source.document_chunks.count >= MAX_CHUNKS
 
         chunk_token_length = Tiktoken.encoding_for_model('gpt-4').encode(chunk).length
         DocumentChunk.create!(
@@ -110,7 +110,7 @@ module Sources
         )
         @current_chunk_ordinal_number += 1
       end
-      # @source.update(truncated: true) if @source.document_chunks.count >= MAX_CHUNKS
+      @source.update(truncated: true) if @source.document_chunks.count >= MAX_CHUNKS
     end
 
     def prepare_text
