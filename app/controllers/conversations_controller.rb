@@ -9,6 +9,7 @@ class ConversationsController < ApplicationController
 
   def new_user_message_from_frame
     @conversation.update!(status: 1)
+    @conversation.messages.where(role: 'error').destroy_all
     @conversation.messages.create!(content: params[:content], role: 'user')
     AnswerFetchingWorker.perform_async(@conversation.id)
     redirect_to root_path(project_id: @conversation.project_id), status: :see_other
@@ -17,6 +18,7 @@ class ConversationsController < ApplicationController
   def delete_message_from_frame
     message = Message.find(params[:message_id])
     conversation = message.conversation
+
     authorize! :edit, conversation
     message.destroy
     redirect_to root_path, status: :see_other
