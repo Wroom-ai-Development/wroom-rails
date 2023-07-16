@@ -15,6 +15,7 @@ class WroomProjectsController < ApplicationController
   # GET /wroom_projects/new
   def new
     @wroom_project = WroomProject.new
+    @folder_id = params[:folder_id]
   end
 
   # GET /wroom_projects/1/edit
@@ -67,6 +68,6 @@ class WroomProjectsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def wroom_project_params
-    params.require(:wroom_project).permit(:name, :user_id)
+    params.require(:wroom_project).permit(:name, :user_id, :folder_id)
   end
 end

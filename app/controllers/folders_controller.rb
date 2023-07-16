@@ -52,10 +52,10 @@ class FoldersController < ApplicationController
 
   # DELETE /folders/1 or /folders/1.json
   def destroy
+    parent_id = @folder.parent_id
     @folder.destroy
-
     respond_to do |format|
-      format.html { redirect_to folders_url, notice: 'Folder was successfully destroyed.' }
+      format.html { redirect_to folder_url(Folder.find(parent_id)) }
       format.json { head :no_content }
     end
   end

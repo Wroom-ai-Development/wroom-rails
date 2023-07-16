@@ -22,10 +22,12 @@
     </div>
   <% else %>
     <div class='field' style='display: none;'>
-      <%= form.label :user_id, style: "display: block" %>
       <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
     </div>
   <% end %>
+    <div class='field' style='display: none;'>
+      <%= form.text_field :folder_id, value: folder_id, readonly: cannot?(:manage, User) %>
+    </div>
   <div>
     <%= form.submit %>
   </div>

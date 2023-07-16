@@ -2,6 +2,7 @@
 
 class WroomProject < ApplicationRecord
   belongs_to :user
+  belongs_to :folder
 
   has_many :sources, dependent: :destroy
   has_many :voices, dependent: :destroy

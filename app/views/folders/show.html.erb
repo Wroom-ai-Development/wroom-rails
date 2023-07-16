@@ -1,15 +1,20 @@
-<p style="color: green"><%= notice %></p>
 <h1><%= @folder.name %></h1>
   <% unless @folder.type == 'RootFolder' %>
     <%= link_to "Edit this folder", edit_folder_path(@folder) %> |
     <%= link_to "Back to parent", folder_path(@folder.parent) %>
+    <%= button_to "Destroy this folder", folder_path(@folder), method: :delete %>
   <% end %>
 
-  <%#= button_to "Destroy this folder", @folder, method: :delete %>
   <%= link_to "New folder", new_folder_path(parent_id: @folder.id) %>
   <% @folder.children.each do |folder| %>
     <p>
       <%= link_to folder.name, folder %>
+    </p>
+  <% end %>
+  <%= link_to "New wroom project", new_wroom_project_path(folder_id: @folder.id) %>
+  <% @folder.wroom_projects.each do |wroom_project| %>
+    <p>
+      <%= link_to wroom_project.name, wroom_project %>
     </p>
   <% end %>
 
