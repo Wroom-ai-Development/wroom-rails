@@ -1,0 +1,9 @@
+<div id="folders">
+  <% root_folder.folders.each do |folder| %>
+    <p>
+      <%= link_to folder.name, folder %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New folder", new_folder_path %>

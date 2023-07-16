@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CreateWroomProjects < ActiveRecord::Migration[7.0]
-  def change
+  def change # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     create_table :wroom_projects do |t|
       t.string :name
       t.timestamps
@@ -12,9 +12,9 @@ class CreateWroomProjects < ActiveRecord::Migration[7.0]
     add_reference :sources, :wroom_project, foreign_key: true
     User.all.each do |user|
       wroom_project = user.wroom_projects.create(name: 'Previous resources')
-      user.voices.update_all(wroom_project_id: wroom_project.id)
-      user.sources.update_all(wroom_project_id: wroom_project.id)
-      user.projects.update_all(wroom_project_id: wroom_project.id)
+      user.voices.update_all(wroom_project_id: wroom_project.id) # rubocop:disable Rails/SkipsModelValidations
+      user.sources.update_all(wroom_project_id: wroom_project.id) # rubocop:disable Rails/SkipsModelValidations
+      user.projects.update_all(wroom_project_id: wroom_project.id) # rubocop:disable Rails/SkipsModelValidations
     end
   end
 end

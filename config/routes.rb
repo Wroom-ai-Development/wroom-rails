@@ -38,11 +38,16 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     sessions: 'sessions'
   }
   resources :users, except: %i[new create]
+  resources :folders do
+    collection do
+    end
+    get 'root_folder'
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
   # root "articles#index"
   get '/monitoring', to: 'monitoring#index'
   get '/wroom', to: 'wroom#app', as: :wroom_app
-  root 'wroom_projects#index'
+  root 'folders#root_folder'
 end

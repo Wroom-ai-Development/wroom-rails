@@ -13,6 +13,8 @@ class Ability
 
     can(:manage, Project, user:)
     can(:manage, WroomProject, user:)
+    can(:manage, Folder, user:)
+    can(:manage, RootFolder, user:)
 
     can(:manage, Voice, user:)
     can :manage, Conversation, user:

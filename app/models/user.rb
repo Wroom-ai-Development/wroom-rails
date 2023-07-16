@@ -5,7 +5,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
-
+  has_many :folders, dependent: :destroy
   has_many :wroom_projects, dependent: :destroy
   has_many :sources, dependent: :destroy
   has_many :conversations, dependent: :destroy
@@ -14,6 +14,7 @@ class User < ApplicationRecord
   has_many :monitoring_events, as: :trackable, dependent: :nullify
   has_many :usage_records, dependent: :nullify
   has_one :current_project, class_name: 'Project', dependent: :nullify
+  has_one :root_folder, class_name: 'RootFolder', dependent: :destroy
   validates :email, uniqueness: true, presence: true
 
   enum role: { 'admin': 0, 'user': 1, 'supplicant': 2 }
@@ -21,6 +22,10 @@ class User < ApplicationRecord
 
   def set_default_role
     self.role ||= :user
+  end
+
+  def root_folder
+    folders.where(type: 'RootFolder').first_or_create!(name: 'Root')
   end
 
   after_create_commit :log_event
