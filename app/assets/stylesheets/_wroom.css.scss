@@ -479,6 +479,11 @@ body#wroom {
         form.button_to {
           padding: 0;
         }
+
+        p#current-user {
+          font-size: 0.5rem;
+          padding-left: 0.5rem;
+        }
       }
       
 

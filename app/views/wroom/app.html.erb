@@ -10,6 +10,7 @@
   <div class='panel-element' id='navigation'>
     <%= button_to "Library", projects_path, class: 'library-link', method: :get %>
     <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: 'sign-out' %>
+    <p id='current-user'>Logged in as <%= current_user.email %></p>
   </div>
 </div>
 <% if @project %>
