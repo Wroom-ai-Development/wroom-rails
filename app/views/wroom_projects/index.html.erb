@@ -1,7 +1,7 @@
 <h1>Wroom projects</h1>
 
 <div id="wroom_projects">
-  <% @wroom_projects.each do |wroom_project| %>
+  <% current_user.wroom_projects.each do |wroom_project| %>
     <p>
       <%= link_to wroom_project.name, wroom_project %>
     </p>
