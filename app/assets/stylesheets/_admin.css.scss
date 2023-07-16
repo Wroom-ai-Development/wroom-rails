@@ -12,12 +12,21 @@ html {
   background-color: $wroom-baby-blue;
 }
 
-div#logo {
+div#left-aligned {
   padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
   span#wroom {
     font-family: 'MuseoModerno';
     font-weight: 900;
     font-size: 1.1rem;
+  }
+  
+  p#current-user {
+    font-size: 0.5rem;
+    padding-left: 0.5rem;
   }
 
   span#back {
