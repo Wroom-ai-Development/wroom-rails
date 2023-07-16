@@ -3,7 +3,7 @@
 class ConversationsController < ApplicationController
   before_action :set_conversation,
                 only: %i[edit_frame update_from_frame show_in_frame
-                         new_user_message_from_frame]
+                         new_user_message_from_frame clear_chat]
 
   def show_in_frame; end
 
@@ -21,6 +21,12 @@ class ConversationsController < ApplicationController
 
     authorize! :edit, conversation
     message.destroy
+    redirect_to root_path, status: :see_other
+  end
+
+  def clear_chat
+    authorize! :edit, @conversation
+    @conversation.messages.destroy_all
     redirect_to root_path, status: :see_other
   end
 

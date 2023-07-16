@@ -18,13 +18,12 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   mount ActionCable.server => '/cable'
   resources :conversations, only: [] do
     member do
-      post 'new_user_message'
       post 'new_user_message_from_frame'
-      delete 'delete_message'
       get 'show_in_frame'
       delete 'delete_message_from_frame'
       get 'edit_frame'
       patch 'update_from_frame'
+      delete 'clear_chat'
     end
   end
   resources :sources do

@@ -204,6 +204,27 @@ body#wroom {
       height: min-content;
       background-color: white;
       max-height: 90vh;
+
+      div#clear-chat {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 2rem;
+
+        button {
+          font-size: 0.7rem;
+          text-align: center;
+          font-style: italic;
+          color: $wroom-red;
+          font-family: 'Playfair Display', serif;
+          background-color: rgba(0, 0, 0, 0);
+          border: none;
+          &:hover {
+            cursor: pointer;
+            text-decoration: underline 1px $wroom-red;
+          }
+        }
+      }
       form#new-message-form {
         margin: 0;
         display: flex;
