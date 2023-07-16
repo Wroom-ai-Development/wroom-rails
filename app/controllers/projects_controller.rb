@@ -13,6 +13,7 @@ class ProjectsController < ApplicationController
                  current_user.projects.first
                end
     @conversation = @project.conversation
+    @wroom_project_id = @project.wroom_project.id
   end
 
   def save_as_source_from_frame
@@ -24,7 +25,7 @@ class ProjectsController < ApplicationController
       title: @project.title
     )
     source.parse_document_chunks_from_text(@project.content.to_plain_text)
-    redirect_to root_path(project_id: @project.id), status: :see_other
+    redirect_to wroom_app_path(project_id: @project.id), status: :see_other
   end
 
   def create_unique_source_name(string)
@@ -35,14 +36,10 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def index
-    @projects = Project.all
-    @users = User.where.not(id: current_user.id) if current_user.admin?
-  end
-
   # GET /projects/new
   def new
     @project = Project.new
+    @wroom_project_id = params[:wroom_project_id]
   end
 
   def autosave
@@ -74,7 +71,7 @@ class ProjectsController < ApplicationController
     )
     respond_to do |format|
       if @project.save
-        format.html { redirect_to root_path(project_id: @project.id) }
+        format.html { redirect_to wroom_app_path(project_id: @project.id) }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -110,6 +107,6 @@ class ProjectsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def project_params
-    params.require(:project).permit(:title, :content, :user_id)
+    params.require(:project).permit(:title, :content, :user_id, :wroom_project_id)
   end
 end

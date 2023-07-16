@@ -8,7 +8,7 @@
       <%= turbo_frame_tag "edit_conversation_frame", src: edit_frame_conversation_path(@project.conversation) %>
     <% end %>
   <div class='panel-element' id='navigation'>
-    <%= button_to "Library", projects_path, class: 'library-link', method: :get %>
+    <%= button_to "Library", wroom_projects_path, class: 'library-link', method: :get %>
     <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: 'sign-out' %>
     <p id='current-user'>Logged in as <%= current_user.email %></p>
   </div>

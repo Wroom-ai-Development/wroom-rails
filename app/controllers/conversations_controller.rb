@@ -12,7 +12,7 @@ class ConversationsController < ApplicationController
     @conversation.messages.where(role: 'error').destroy_all
     @conversation.messages.create!(content: params[:content], role: 'user')
     AnswerFetchingWorker.perform_async(@conversation.id)
-    redirect_to root_path(project_id: @conversation.project_id), status: :see_other
+    redirect_to wroom_app_path(project_id: @conversation.project_id), status: :see_other
   end
 
   def delete_message_from_frame
@@ -21,20 +21,20 @@ class ConversationsController < ApplicationController
 
     authorize! :edit, conversation
     message.destroy
-    redirect_to root_path, status: :see_other
+    redirect_to wroom_app_path, status: :see_other
   end
 
   def clear_chat
     authorize! :edit, @conversation
     @conversation.messages.destroy_all
-    redirect_to root_path, status: :see_other
+    redirect_to wroom_app_path, status: :see_other
   end
 
   def edit_frame; end
 
   def update_from_frame
     @conversation.update(conversation_params)
-    redirect_to root_path(project_id: @conversation.project_id), status: :see_other
+    redirect_to wroom_app_path(project_id: @conversation.project_id), status: :see_other
   end
 
   private

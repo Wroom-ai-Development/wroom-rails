@@ -13,10 +13,10 @@
       </p>
     <% end %>
 
-    <h4>Conversations</h4>
+    <h4>Projects</h4>
     <% @projects.each do |project| %>
       <p>
-        <%= link_to project.title, root_path(project_id: project.id) %>
+        <%= link_to project.title, wroom_app_path(project_id: project.id) %>
       </p>
     <% end %>
         <h4>Voices</h4>
@@ -27,10 +27,3 @@
     <% end %>
   </div>
 </div>
-
-
-
-
-
-
-

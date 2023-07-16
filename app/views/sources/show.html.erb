@@ -2,6 +2,7 @@
 <div class='view-header'>
   <h1><%= @source.name || @source.title || "Untitled" %></h1>
   <%= link_to "✍︎", edit_source_path(@source) %>
+  <%= link_to "Back to wroom project", @source.wroom_project %>
 </div>
 <div class='view-content'>
   <div class='show-record'>

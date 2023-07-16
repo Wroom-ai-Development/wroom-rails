@@ -1,0 +1,6 @@
+<%= link_to "+", new_voice_path(wroom_project_id: wroom_project.id) %>
+<% wroom_project.voices.each do |voice| %>
+  <%= link_to voice.name, edit_voice_path(voice) %>
+  <%= link_to "✍︎", edit_voice_path(voice) %>
+  <%= button_to "␡", voice, method: :delete %>
+<% end %>

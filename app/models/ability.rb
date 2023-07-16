@@ -12,6 +12,7 @@ class Ability
     can(:manage, Source, user:)
 
     can(:manage, Project, user:)
+    can(:manage, WroomProject, user:)
 
     can(:manage, Voice, user:)
     can :manage, Conversation, user:

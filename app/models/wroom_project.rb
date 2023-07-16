@@ -7,5 +7,5 @@ class WroomProject < ApplicationRecord
   has_many :voices, dependent: :destroy
   has_many :projects, dependent: :destroy
 
-  validate :name, presence: true
+  validates :name, presence: true
 end

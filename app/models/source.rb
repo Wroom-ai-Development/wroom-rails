@@ -2,6 +2,7 @@
 
 class Source < ApplicationRecord
   belongs_to :user
+  belongs_to :wroom_project
   has_one_attached :file
   has_many :context_references, dependent: :destroy
   has_many :conversations, through: :context_references

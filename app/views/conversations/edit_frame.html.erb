@@ -26,6 +26,9 @@
     }
   </script>
   <div id='conversation-context'>
+    <div class='header'>
+      <%= link_to @conversation.wroom_project.name, @conversation.wroom_project %>
+    </div>
     <%= form_with(
       model: @conversation,
       url: update_from_frame_conversation_url
@@ -36,11 +39,11 @@
           style: "display: none;" %>
         <div class='header'>
           <%= form.label 'Sources', style: "display: block" %>
-          <%= link_to "✙", new_source_path %>
+          <%= link_to "✙", new_source_path(wroom_project_id: @conversation.wroom_project.id) %>
         </div>
-        <% if @conversation.user&.sources.present? %>
+        <% if @conversation.wroom_project.sources.present? %>
           <div id='sources' class='list'>
-            <%= form.collection_check_boxes :source_ids, @conversation.user.sources, :id, :name, { hide_label: true } do |item| %>
+            <%= form.collection_check_boxes :source_ids, @conversation.wroom_project.sources, :id, :name, { hide_label: true } do |item| %>
               <div class='list-item'>
                 <%= item.check_box onchange: "this.form.submit();", class: 'checkbox' %>
                 <%= item.label %>
@@ -52,11 +55,11 @@
         <% end %>
         <div class='header'>
           <%= form.label 'Voices', style: "display: block" %>
-          <%= link_to "✙", new_voice_path %>
+          <%= link_to "✙", new_voice_path(wroom_project_id: @conversation.wroom_project.id) %>
         </div>
-        <% if @conversation.user.voices.present? %>
+        <% if @conversation.wroom_project.voices.present? %>
           <div id='voices' class='list'>
-            <%= form.collection_check_boxes :voice_ids, @conversation.user.voices, :id, :name, { hide_label: true } do |item| %>
+            <%= form.collection_check_boxes :voice_ids, @conversation.wroom_project.voices, :id, :name, { hide_label: true } do |item| %>
               <div class='list-item'>
                 <%= item.check_box onchange: "this.form.submit();", class: 'checkbox' %>
                 <%= item.label %>
@@ -68,6 +71,18 @@
         <% end %>
       </div>
       <%= form.submit style: 'display:none;' %>
+    <% end %>
+    <% if @conversation.wroom_project.projects.present? %>
+      <div class='header'>
+        Projects
+      </div>
+      <div id='projects' class='list'>
+        <% @conversation.wroom_project.projects.each do |project| %>
+          <div class='list-item'>
+            <%= link_to project.title, wroom_app_path(project_id: project.id) %>
+          </div>
+        <% end %>
+      </div>
     <% end %>
   </div>
 <% end %>

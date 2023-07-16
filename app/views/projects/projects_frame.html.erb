@@ -3,7 +3,7 @@
         <% @projects.each do |project| %>
             <% if can? :manage, project %>
                 <li>
-                    <%= link_to root_path(project_id: project.id) do %>
+                    <%= link_to wroom_app_path(project_id: project.id) do %>
                         <span><%= project.title %></span>
                         <div class="controls">
                             <%= button_to "␡", destroy_from_frame_project_path(project), class: 'delete-project', method: :delete %>

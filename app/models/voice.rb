@@ -2,6 +2,7 @@
 
 class Voice < ApplicationRecord
   belongs_to :user
+  belongs_to :wroom_project
   has_many :conversation_voices, dependent: :destroy
   has_many :conversations, through: :conversation_voices
   has_many :monitoring_events, as: :trackable, dependent: :nullify

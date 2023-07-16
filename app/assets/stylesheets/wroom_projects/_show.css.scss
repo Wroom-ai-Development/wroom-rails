@@ -1,0 +1,11 @@
+@import '../colors';
+@import '../fonts';
+
+div#show-project {
+  display: flex;
+
+
+  div.column {
+    flex-direction: column;
+  }
+}

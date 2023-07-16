@@ -25,12 +25,15 @@
       </div>
     <% else %>
       <div class='field' style='display: none;'>
-        <%= form.label :user_id, style: "display: block" %>
+        <%= form.label :user_id %>
         <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
       </div>
     <% end %>
 
-
+    <div class='field' style='display: none;'>
+      <%= form.label :wroom_project_id %>
+      <%= form.text_field :wroom_project_id, value: @wroom_project_id, readonly: cannot?(:manage, User) %>
+    </div>
     <div class='field'>
       <%= form.label :meta_prompt, style: "display: block" %>
       <%= form.text_area :meta_prompt %>
@@ -41,4 +44,3 @@
     </div>
   <% end %>
 </div>
-

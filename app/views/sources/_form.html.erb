@@ -60,7 +60,10 @@
         <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
       </div>
     <% end %>
-
+    <div class='field' style='display: none;'>
+      <%= form.label :wroom_project_id %>
+      <%= form.text_field :wroom_project_id, value: @wroom_project_id, readonly: cannot?(:manage, User) %>
+    </div>
     <div class='actions'>
       <%= form.submit %>
     </div>

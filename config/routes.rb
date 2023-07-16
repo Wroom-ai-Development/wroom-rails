@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
-  resources :projects, except: [:show] do
+  resources :wroom_projects
+  resources :projects, except: %i[index show] do
     member do
       patch 'autosave'
       post 'save_as_source'
@@ -10,7 +11,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       get 'edit_frame'
     end
   end
-  resources :voices do
+  resources :voices, except: %i[index show] do
     member do
       delete 'delete_from_frame'
     end
@@ -26,7 +27,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       delete 'clear_chat'
     end
   end
-  resources :sources do
+  resources :sources, except: [:index] do
     member do
       delete 'delete_from_frame'
     end
@@ -42,6 +43,6 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # Defines the root path route ("/")
   # root "articles#index"
   get '/monitoring', to: 'monitoring#index'
-  get '/wroom', to: 'wroom#app'
-  root 'wroom#app'
+  get '/wroom', to: 'wroom#app', as: :wroom_app
+  root 'wroom_projects#index'
 end

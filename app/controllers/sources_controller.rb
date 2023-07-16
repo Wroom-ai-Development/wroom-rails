@@ -4,22 +4,19 @@ class SourcesController < ApplicationController
   before_action :set_source, only: %i[show edit update destroy]
   load_and_authorize_resource
 
-  # GET /sources or /sources.json
-  def index
-    @sources = Source.all
-    @users = User.where.not(id: current_user.id) if current_user.admin?
-  end
-
   # GET /sources/1 or /sources/1.json
   def show; end
 
   # GET /sources/new
   def new
     @source = Source.new
+    @wroom_project_id = params[:wroom_project_id]
   end
 
   # GET /sources/1/edit
-  def edit; end
+  def edit
+    @wroom_project_id = @source.wroom_project.id
+  end
 
   # POST /sources or /sources.json
   def create # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
@@ -96,7 +93,7 @@ class SourcesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def source_params
     params.require(:source).permit(:name, :title, :author, :year_published, :user_id, :file, :text_category,
-                                   :source_url, :section_headers)
+                                   :source_url, :section_headers, :wroom_project_id)
   end
 
   def save_section_headers

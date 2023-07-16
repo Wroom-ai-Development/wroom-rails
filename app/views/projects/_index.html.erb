@@ -1,0 +1,5 @@
+<%= link_to "+", new_project_path(wroom_project_id: wroom_project.id) %>
+<% wroom_project.projects.each do |project| %>
+  <%= link_to project.title, wroom_app_path(project_id: project.id) %>
+  <%= button_to "␡", project, method: :delete %>
+<% end %>

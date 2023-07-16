@@ -19,7 +19,10 @@
       <%= form.label :title, style: "display: block" %>
       <%= form.text_field :title, { onchange: action_name == 'new' ? '' : 'this.form.submit()' } %>
     </div>
-
+    <div class='field' style='display: none;'>
+      <%= form.label :wroom_project_id %>
+      <%= form.text_field :wroom_project_id, value: @wroom_project_id, readonly: cannot?(:manage, User) %>
+    </div>
     <% if current_user.admin? %>
       <div class='field'>
         <%= form.label :user_id, style: "display: block" %>
