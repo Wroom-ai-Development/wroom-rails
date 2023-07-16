@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_14_132536) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_16_091615) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -118,7 +118,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_14_132536) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "wroom_project_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
+    t.index ["wroom_project_id"], name: "index_projects_on_wroom_project_id"
   end
 
   create_table "sources", force: :cascade do |t|
@@ -134,7 +136,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_14_132536) do
     t.boolean "truncated", default: false, null: false
     t.boolean "fileless", default: false, null: false
     t.string "source_url"
+    t.bigint "wroom_project_id"
     t.index ["user_id"], name: "index_sources_on_user_id"
+    t.index ["wroom_project_id"], name: "index_sources_on_wroom_project_id"
   end
 
   create_table "usage_records", force: :cascade do |t|
@@ -180,7 +184,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_14_132536) do
     t.text "meta_prompt"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "wroom_project_id"
     t.index ["user_id"], name: "index_voices_on_user_id"
+    t.index ["wroom_project_id"], name: "index_voices_on_wroom_project_id"
+  end
+
+  create_table "wroom_projects", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_wroom_projects_on_user_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -193,6 +207,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_14_132536) do
   add_foreign_key "document_chunks", "sources"
   add_foreign_key "messages", "conversations"
   add_foreign_key "projects", "users"
+  add_foreign_key "projects", "wroom_projects"
   add_foreign_key "sources", "users"
+  add_foreign_key "sources", "wroom_projects"
   add_foreign_key "voices", "users"
+  add_foreign_key "voices", "wroom_projects"
+  add_foreign_key "wroom_projects", "users"
 end
