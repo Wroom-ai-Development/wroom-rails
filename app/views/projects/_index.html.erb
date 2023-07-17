@@ -1,5 +1,11 @@
-<%= link_to "+", new_project_path(wroom_project_id: wroom_project.id) %>
+<%= link_to "New project", new_project_path(wroom_project_id: wroom_project.id), class: 'new-record' %>
 <% wroom_project.projects.each do |project| %>
-  <%= link_to project.title, wroom_app_path(project_id: project.id) %>
-  <%= button_to "␡", project, method: :delete %>
+    <div class='list-item'>
+      <%= link_to wroom_app_path(project_id: project.id) do %>
+        <div class='show-record'>
+          <%= project.title %>
+        </div>
+      <% end %>
+    <%= button_to "␡", project, method: :delete %>
+    </div>
 <% end %>

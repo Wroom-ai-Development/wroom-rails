@@ -1,6 +1,12 @@
-<%= link_to "+", new_voice_path(wroom_project_id: wroom_project.id) %>
+<%= link_to "New voice", new_voice_path(wroom_project_id: wroom_project.id), class: 'new-record' %>
 <% wroom_project.voices.each do |voice| %>
-  <%= link_to voice.name, edit_voice_path(voice) %>
-  <%= link_to "✍︎", edit_voice_path(voice) %>
-  <%= button_to "␡", voice, method: :delete %>
+    <div class='list-item'>
+      <%= link_to edit_voice_path(voice) do %>
+        <div class='show-record'>
+          <%= voice.name %>
+        </div>
+      <% end %>
+      <%= link_to "✍︎", edit_voice_path(voice) %>
+      <%= button_to "␡", voice, method: :delete %>
+    </div>
 <% end %>

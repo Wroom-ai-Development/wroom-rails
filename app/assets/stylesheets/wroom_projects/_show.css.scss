@@ -2,10 +2,26 @@
 @import '../fonts';
 
 div#show-project {
-  display: flex;
+  padding: 1rem;
+  div.columns {
+    display: flex;
+    
+    div.column {
+      width: 25vw;
+      display: flex;
+      flex-direction: column;
 
+      &:not(:first-child) {
+        margin-left: 3rem;
+      }
 
-  div.column {
-    flex-direction: column;
+      a.new-record {
+        color: $wroom-blue;
+      }
+
+      div.list-item {
+        
+      }
+    }
   }
 }

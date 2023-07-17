@@ -1,21 +1,37 @@
-<h1><%= @folder.name %></h1>
-  <% unless @folder.type == 'RootFolder' %>
-    <%= link_to "Edit this folder", edit_folder_path(@folder) %> |
-    <%= link_to "Back to parent", folder_path(@folder.parent) %>
-    <%= button_to "Destroy this folder", folder_path(@folder), method: :delete %>
-  <% end %>
+<div id='show-folder'>
+    <% unless @folder.type == 'RootFolder' %>
+      <h1><%= @folder.name %></h1>
+      <div class='folder-controls'>
+        <%= link_to "Edit this folder", edit_folder_path(@folder) %>
+        <%= link_to "Back to parent", folder_path(@folder.parent) %>
+        <%= button_to "Destroy this folder", folder_path(@folder), method: :delete %>
+      </div>
+    <% end %>
+    <div class='create-links'>
+      <%= link_to "New folder", new_folder_path(parent_id: @folder.id) %>
+      <%= link_to "New wroom project", new_wroom_project_path(folder_id: @folder.id) %>
+    </div>
 
-  <%= link_to "New folder", new_folder_path(parent_id: @folder.id) %>
-  <% @folder.children.each do |folder| %>
-    <p>
-      <%= link_to folder.name, folder %>
-    </p>
-  <% end %>
-  <%= link_to "New wroom project", new_wroom_project_path(folder_id: @folder.id) %>
-  <% @folder.wroom_projects.each do |wroom_project| %>
-    <p>
-      <%= link_to wroom_project.name, wroom_project %>
-    </p>
-  <% end %>
+    <% @folder.children.each do |folder| %>
+      <div class='list-item'>
+        <%= link_to folder do %>
+          <div class='show-record'>
+            <p><%= folder.name %></p>
+            <p>folder</p>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+    <% @folder.wroom_projects.each do |wroom_project| %>
+      <div class='list-item'>
+        <%= link_to wroom_project do %>
+          <div class='show-record'>
+            <p><%= wroom_project.name %></p>
+            <p>wroom project</p>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
 
+  </div>
 </div>

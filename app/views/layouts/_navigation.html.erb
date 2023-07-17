@@ -1,5 +1,5 @@
 <header>
-  <%= link_to wroom_projects_path do %>
+  <%= link_to folder_path(current_user.root_folder) do %>
     <div id='left-aligned'>
       <span id='wroom'>WROOM</span>
       <p id='current-user'>Logged in as <%= current_user.email %></p>

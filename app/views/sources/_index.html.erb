@@ -1,10 +1,14 @@
 
-  <%= link_to "+", new_source_path(wroom_project_id: wroom_project.id) %>
+  <%= link_to "New source", new_source_path(wroom_project_id: wroom_project.id), class: 'new-record' %>
 
   <% wroom_project.sources.each do |source| %>
-    <% if can? :manage, source %>
-        <%= link_to source.name.present? ? source.name : (source.title || "Source ID: #{source.id}"), source %>
-        <%= link_to "✍︎", edit_source_path(source) %>
-        <%= button_to "␡", source, method: :delete %>
-    <% end %>
+    <div class='list-item'>
+      <%= link_to source do %>
+        <div class='show-record'>
+          <%= source.name.present? ? source.name : (source.title || "Source ID: #{source.id}") %>
+        </div>
+      <% end %>
+      <%= link_to "✍︎", edit_source_path(source) %>
+      <%= button_to "␡", source, method: :delete %>
+    </div>
   <% end %>

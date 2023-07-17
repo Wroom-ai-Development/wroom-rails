@@ -1,16 +1,18 @@
-<%= link_to "Back", folder_path(@wroom_project.folder) %>
-<h1><%= @wroom_project.name %></h1>
-<div id="show-project">
-  <div class="column projects">
-    <h2>Projects</h2>
-    <%= render 'projects/index', wroom_project: @wroom_project %>
-  </div>
-  <div class="column sources">
-    <h2>Sources</h2>
-    <%= render 'sources/index', wroom_project: @wroom_project %>
-  </div>
-  <div class="column voices">
-    <h2>Voices</h2>
-    <%= render 'voices/index', wroom_project: @wroom_project %>
+<div id='show-project'>
+  <%= link_to "Back", folder_path(@wroom_project.folder) %>
+  <h1><%= @wroom_project.name %></h1>
+  <div class="columns">
+    <div class="column projects">
+      <h2>Projects</h2>
+      <%= render 'projects/index', wroom_project: @wroom_project %>
+    </div>
+    <div class="column sources">
+      <h2>Sources</h2>
+      <%= render 'sources/index', wroom_project: @wroom_project %>
+    </div>
+    <div class="column voices">
+      <h2>Voices</h2>
+      <%= render 'voices/index', wroom_project: @wroom_project %>
+    </div>
   </div>
 </div>
