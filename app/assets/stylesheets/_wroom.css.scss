@@ -285,8 +285,9 @@ body#wroom {
           color: $wroom-blue;
           padding: 1rem;
           div.conversation-loading-label {
-            width: min-content;
+            width: auto;
             font-style: italic;
+            font-size: 0.7rem;
           }
         }    
   

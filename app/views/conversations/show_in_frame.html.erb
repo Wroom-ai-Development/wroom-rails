@@ -9,7 +9,13 @@
         <%= turbo_frame_tag 'conversation_status' do %>
           <div class='conversation-status'>
             <div class="conversation-hourglass"></div>
-            <div class="conversation-loading-label">churning...</div>
+            <div class="conversation-loading-label">
+              <% if @conversation.sources.count == 1 && @conversation.sources.first.document_chunks.count > 1 %>
+                <%= @conversation.status_message %>
+              <% else %>
+                churning...
+              <% end %>
+            </div>
           </div>
         <% end %>
       <% end %>

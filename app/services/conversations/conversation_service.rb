@@ -15,7 +15,7 @@ module Conversations
     CHARACTERS_PER_TOKEN = 4
     TOKEN_SPACE_FOR_ANSWER = 1000
 
-    def initialize(conversation)
+    def initialize(conversation) # rubocop:disable Metrics/AbcSize
       @conversation = conversation
       @user = conversation.user
       @sources = conversation.sources
@@ -125,7 +125,12 @@ module Conversations
     end
 
     def get_answer_from_multiple_chunks(chunks)
-      answers = chunks.map { |chunk| { text: get_answer_from_chunk(chunk), source_name: chunk.source.name } }
+      total_chunks = chunks.size
+      answers = []
+      chunks.each_with_index do |chunk, index|
+        answers << { text: get_answer_from_chunk(chunk), source_name: chunk.source.name }
+        @conversation.update!(status_message: "Processing #{index + 1} of #{total_chunks} chunks")
+      end
       @partial_answers = filter_out_non_answers(answers)
       get_summary_answer(answers)
     end
@@ -233,9 +238,10 @@ module Conversations
       TokenCounter.new('gpt-4').count_tokens(full_text)
     end
 
-    def response_from_messages(messages, simple: false) # rubocop:disable Metrics/MethodLength
+    def response_from_messages(messages, simple: false) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       token_count = count_tokens_in_messages(messages)
       raise ContextExceeded if token_count > REQUEST_MAX_TOKEN_SIZE_GPT_3
+
       @user.update!(tokens_used: @user.tokens_used + token_count)
       model = ''
       response = if simple
@@ -248,11 +254,10 @@ module Conversations
                    model = 'gpt-3.5-turbo-16k'
                    @openai_service.gpt_3_5_turbo_16k(messages)
                  end
-      if response['error'].present?
-        raise OpenAIApiError, response['error'].to_json
-      else
-        TokenUsageService.new(@user, @conversation, model).persist_token_usage(messages, response)
-      end
+      raise OpenAIApiError, response['error'].to_json if response['error'].present?
+
+      TokenUsageService.new(@user, @conversation, model).persist_token_usage(messages, response)
+
       response
     end
 

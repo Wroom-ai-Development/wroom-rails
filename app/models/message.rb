@@ -15,6 +15,7 @@ class Message < ApplicationRecord
   def force_conversation_refresh
     return unless role == 'assistant' || role == 'error'
 
+    conversation.update!(status_message: nil)
     broadcast_replace_to(
       conversation.id,
       'conversation_status',

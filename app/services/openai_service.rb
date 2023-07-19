@@ -51,11 +51,9 @@ class OpenaiService
   rescue StandardError => e
     retries += 1
     sleep 2**retries
-    if retries > RETRY_LIMIT
-      raise(e)
-    else
-      retry
-    end
+    raise(e) if retries > RETRY_LIMIT
+
+    retry
   end
 
   private
