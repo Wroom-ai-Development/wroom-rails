@@ -154,8 +154,7 @@ module Conversations
 
     def get_summary_answer(answers)
       summary_prompt = <<-PROMPT
-        Shorten the text above so that no information is repeated. Remove sentences that suggest the speaker#{' '}
-        does not have the answer.
+        Answer the following question in terms of the above: #{@last_user_question}
       PROMPT
       messages = [
         { role: 'system', content: answers.join(' ') }
