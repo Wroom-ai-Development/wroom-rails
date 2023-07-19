@@ -3,6 +3,7 @@
 module Conversations
   class ConversationService # rubocop:disable Metrics/ClassLength
     class OpenAIApiError < StandardError; end
+    class ContextExceeded < StandardError; end
 
     META_PROMPT = <<-PROMPT
       Answer a question about the given text.
@@ -19,10 +20,11 @@ module Conversations
       @user = conversation.user
       @sources = conversation.sources
       @last_user_question = @conversation.messages.where(role: 'user').last.content
-      @conversation_messages = @conversation.messages.reject do |m|
+      @conversation_messages = @conversation.messages.order(:created_at).reject do |m|
         m.role == 'error'
       end
       @conversation_messages = @conversation_messages.map { |message| { role: message.role, content: message.content } }
+
       @openai_service = OpenaiService.new
       @requests_made = 0
     end
@@ -233,6 +235,7 @@ module Conversations
 
     def response_from_messages(messages, simple: false) # rubocop:disable Metrics/MethodLength
       token_count = count_tokens_in_messages(messages)
+      raise ContextExceeded if token_count > REQUEST_MAX_TOKEN_SIZE_GPT_3
       @user.update!(tokens_used: @user.tokens_used + token_count)
       model = ''
       response = if simple
@@ -245,7 +248,11 @@ module Conversations
                    model = 'gpt-3.5-turbo-16k'
                    @openai_service.gpt_3_5_turbo_16k(messages)
                  end
-      TokenUsageService.new(@user, @conversation, model).persist_token_usage(messages, response)
+      if response['error'].present?
+        raise OpenAIApiError, response['error'].to_json
+      else
+        TokenUsageService.new(@user, @conversation, model).persist_token_usage(messages, response)
+      end
       response
     end
 

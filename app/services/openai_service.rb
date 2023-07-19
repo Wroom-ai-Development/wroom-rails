@@ -17,7 +17,7 @@ class OpenaiService
         messages:
       }
     )
-    response.dig('choices', 0, 'message', 'content')
+    handle_response(response)
   rescue StandardError => e
     retries += 1
     sleep 2**retries
@@ -32,7 +32,7 @@ class OpenaiService
         messages:
       }
     )
-    response.dig('choices', 0, 'message', 'content')
+    handle_response(response)
   rescue StandardError => e
     retries += 1
     sleep 2**retries
@@ -47,10 +47,24 @@ class OpenaiService
         messages:
       }
     )
-    response.dig('choices', 0, 'message', 'content')
+    handle_response(response)
   rescue StandardError => e
     retries += 1
     sleep 2**retries
-    retries > RETRY_LIMIT ? raise(e) : retry
+    if retries > RETRY_LIMIT
+      raise(e)
+    else
+      retry
+    end
+  end
+
+  private
+
+  def handle_response(response)
+    if response['error'].present?
+      response
+    else
+      response.dig('choices', 0, 'message', 'content')
+    end
   end
 end
