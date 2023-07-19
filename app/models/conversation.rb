@@ -28,6 +28,9 @@ class Conversation < ApplicationRecord
       id,
       'conversation_status',
       partial: 'conversations/conversation_status',
+      locals: {
+        conversation: self
+      },
       target: 'conversation_status'
     )
   end

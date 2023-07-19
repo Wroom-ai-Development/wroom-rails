@@ -10,7 +10,8 @@ module Conversations
       If the question does not relate to the text, kindly but firmly answer that it is out of the scope of the discussion.
     PROMPT
 
-    REQUEST_MAX_TOKEN_SIZE_GPT_3 = 16_000
+    REQUEST_MAX_TOKEN_SIZE_GPT_3_16K = 16_000
+    REQUEST_MAX_TOKEN_SIZE_GPT_3 = 4_000
     REQUEST_MAX_TOKEN_SIZE_GPT_4 = 8_000
     CHARACTERS_PER_TOKEN = 4
     TOKEN_SPACE_FOR_ANSWER = 1000
@@ -75,11 +76,11 @@ module Conversations
           All the sources that are the context of this query are: #{@sources.map(&:name).join(' ')}
         CONTENT
       }
-      client_chat(messages)
+      response_from_messages(messages)
     end
 
     def all_sources_fit_in_multi_limit?
-      per_source_token_limit = (REQUEST_MAX_TOKEN_SIZE_GPT_3 - TOKEN_SPACE_FOR_ANSWER) / @sources.count
+      per_source_token_limit = (REQUEST_MAX_TOKEN_SIZE_GPT_3_16K - TOKEN_SPACE_FOR_ANSWER) / @sources.count
       @sources.all? do |source|
         source.document_chunks.map(&:token_length).compact.sum <= per_source_token_limit
       end
@@ -98,7 +99,7 @@ module Conversations
         Rewrite the sentence in first person from the perspective of the chatbot called WROOM. Do not use the word "as".
       PROMPT
       messages = [{ role: 'user', content: prompt }]
-      client_chat(messages, simple: true)
+      response_from_messages(messages, simple: true)
     end
 
     def update_request_counts
@@ -109,7 +110,7 @@ module Conversations
     end
 
     def get_answer_without_sources
-      client_chat(@conversation_messages)
+      response_from_messages(@conversation_messages)
     end
 
     def get_answer_from_source(source)
@@ -145,7 +146,7 @@ module Conversations
           { role: 'user',
             content: message_content }
         ]
-        decision = client_chat(messages, simple: true)
+        decision = response_from_messages(messages, simple: true)
         filtered_answers << answer[:text] unless decision.include?('NO')
       end
       filtered_answers
@@ -153,19 +154,19 @@ module Conversations
 
     def get_summary_answer(answers)
       summary_prompt = <<-PROMPT
-        Shorten the text below so that no information is repeated. Remove sentences that suggest the speaker#{' '}
+        Shorten the text above so that no information is repeated. Remove sentences that suggest the speaker#{' '}
         does not have the answer.
       PROMPT
       messages = [
         { role: 'system', content: answers.join(' ') }
       ]
       messages << { role: 'system', content: summary_prompt }
-      rephrase_with_voices(client_chat(messages, simple: true))
+      rephrase_with_voices(response_from_messages(messages))
     end
 
     def rephrase_with_voices(string) # rubocop:disable Metrics/MethodLength
       if @conversation.voices.any?
-        client_chat(
+        response_from_messages(
           [{
             role: 'system', content: string
           }, {
@@ -184,7 +185,7 @@ module Conversations
     def get_answer_from_chunk(chunk)
       messages = prepare_messages_for_chunk(chunk)
 
-      answer = client_chat(messages)
+      answer = response_from_messages(messages)
       if chunk.section_header.present? && chunk.source.document_chunks.size > 1
         answer << "(based on #{chunk.section_header})"
       end
@@ -240,32 +241,30 @@ module Conversations
 
     def response_from_messages(messages, simple: false) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       token_count = count_tokens_in_messages(messages)
-      raise ContextExceeded if token_count > REQUEST_MAX_TOKEN_SIZE_GPT_3
+      raise ContextExceeded if token_count > REQUEST_MAX_TOKEN_SIZE_GPT_3_16K
 
       @user.update!(tokens_used: @user.tokens_used + token_count)
       model = ''
       response = if simple
+                   tokens_left_for_answer = REQUEST_MAX_TOKEN_SIZE_GPT_3 - token_count
                    model = 'gpt-3.5-turbo'
-                   @openai_service.gpt_3_5_turbo(messages)
+                   @openai_service.gpt_3_5_turbo(messages, tokens_left_for_answer)
                  elsif token_count <= REQUEST_MAX_TOKEN_SIZE_GPT_4 - TOKEN_SPACE_FOR_ANSWER
+                   tokens_left_for_answer = REQUEST_MAX_TOKEN_SIZE_GPT_4 - token_count
                    model = 'gpt-4'
-                   @openai_service.gpt_4(messages)
+                   @openai_service.gpt_4(messages, tokens_left_for_answer)
                  else
+                   tokens_left_for_answer = REQUEST_MAX_TOKEN_SIZE_GPT_3_16K - token_count
                    model = 'gpt-3.5-turbo-16k'
-                   @openai_service.gpt_3_5_turbo_16k(messages)
+                   @openai_service.gpt_3_5_turbo_16k(messages, tokens_left_for_answer)
                  end
+      @requests_made += 1
+      # binding.pry if response['error'].present?
       raise OpenAIApiError, response['error'].to_json if response['error'].present?
 
       TokenUsageService.new(@user, @conversation, model).persist_token_usage(messages, response)
 
       response
-    end
-
-    def client_chat(messages, simple: false)
-      @requests_made += 1
-      response_from_messages(messages, simple:)
-    rescue Faraday::TimeoutError
-      'I have not succeded processing your request, please try again.'
     end
   end
 end

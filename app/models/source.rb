@@ -51,11 +51,7 @@ class Source < ApplicationRecord
   def rechunk
     update!(truncated: false)
     text = document_chunks.map(&:content).join(' ')
-    if fileless
-      parse_document_chunks_from_text(text)
-    else
-      parse_document_chunks_from_file
-    end
+    parse_document_chunks_from_text(text)
   end
 
   private
