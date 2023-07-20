@@ -8,8 +8,8 @@ class Conversation < ApplicationRecord
   has_many :usage_records, dependent: :nullify
 
   belongs_to :project
-  has_many :conversation_voices, dependent: :destroy
-  has_many :voices, through: :conversation_voices
+  has_one :conversation_voice, dependent: :destroy
+  has_one :voice, through: :conversation_voice
   validates :title, presence: true
   after_update :broadcast_status_message
 

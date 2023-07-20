@@ -143,6 +143,16 @@ body#wroom {
       font-size: 0.7rem;
       height: 100%;
       height: min-content;
+
+      select {
+        width: -webkit-fill-available;
+        height: 2rem;
+        font-family: 'Playfair Display', serif;
+        font-size: 0.7rem;
+        border: none;
+        border-bottom: 1px solid $wroom-light-gray;
+        background-color: white;
+      }
     
       div.header {
         padding: 0.5rem;
