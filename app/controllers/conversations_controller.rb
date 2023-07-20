@@ -40,6 +40,11 @@ class ConversationsController < ApplicationController
 
   def update_from_frame
     @conversation.update(conversation_params)
+    if params[:conversation][:voice_id].present?
+      ConversationVoice.find_or_create_by!(conversation: @conversation, voice_id: params[:conversation][:voice_id])
+    else
+      @conversation.conversation_voice&.destroy
+    end
     redirect_to root_path(project_id: @conversation.project_id), status: :see_other
   end
 
@@ -52,6 +57,6 @@ class ConversationsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def conversation_params
-    params.require(:conversation).permit(:title, :user_id, source_ids: [], voice_ids: [])
+    params.require(:conversation).permit(:title, :user_id, source_ids: [])
   end
 end

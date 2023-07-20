@@ -51,7 +51,7 @@ module Conversations
       elsif @sources.count > 1
         handle_multiple_sources
       else
-        rephrase_with_voices(get_answer_without_sources)
+        rephrase_with_voice(get_answer_without_sources)
       end
     end
 
@@ -59,7 +59,7 @@ module Conversations
       @conversation.update!(status_message: "Processing #{@sources.count} sources")
 
       if all_sources_fit_in_multi_limit?
-        rephrase_with_voices(get_answer_from_multiple_sources)
+        rephrase_with_voice(get_answer_from_multiple_sources)
       else
         refuse_answering_from_multiple_sources_that_are_too_big
       end
@@ -126,7 +126,7 @@ module Conversations
                else
                  rephrase_nicely("There was a problem processing #{source.name}, you may have to upload it again.")
                end
-      rephrase_with_voices(answer)
+      rephrase_with_voice(answer)
     end
 
     def get_answer_from_multiple_chunks(chunks)
@@ -166,12 +166,12 @@ module Conversations
       ]
       messages << { role: 'system', content: summary_prompt }
       @conversation.update!(status_message: 'Summarizing obtained information')
-      rephrase_with_voices(response_from_messages(messages))
+      rephrase_with_voice(response_from_messages(messages))
     end
 
-    def rephrase_with_voices(string) # rubocop:disable Metrics/MethodLength
-      @conversation.update!(status_message: 'Applying voices')
-      if @conversation.voices.any?
+    def rephrase_with_voice(string) # rubocop:disable Metrics/MethodLength
+      @conversation.update!(status_message: 'Applying voice')
+      if @conversation.voice.present?
         response_from_messages(
           [{
             role: 'system', content: string
@@ -179,7 +179,7 @@ module Conversations
             role: 'system',
             content: <<-CONTENT
               Rewrite the text above taking into account these instructions:#{' '}
-              #{@conversation.voices.pluck(:meta_prompt).join(' ')}
+              #{@conversation.voice.meta_prompt}
             CONTENT
           }]
         )

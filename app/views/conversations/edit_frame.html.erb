@@ -12,18 +12,6 @@
         }
       ).then(() => {location.reload();})
     }
-    function deleteVoice(id) {
-      fetch(
-        location.origin + `/voices/${id}/delete_from_frame`,
-        {
-          method: 'delete',
-          headers: {
-            "X-CSRF-Token": document.querySelector("meta[name='csrf-token']").content
-          },
-          credentials: 'same-origin'
-        }
-      ).then(() => {location.reload();})
-    }
   </script>
   <div id='conversation-context'>
     <%= form_with(
@@ -51,20 +39,11 @@
           </div>
         <% end %>
         <div class='header'>
-          <%= form.label 'Voices', style: "display: block" %>
+          <%= form.label 'Voice', style: "display: block" %>
           <%= link_to "✙", new_voice_path %>
         </div>
         <% if @conversation.user.voices.present? %>
-          <div id='voices' class='list'>
-            <%= form.collection_check_boxes :voice_ids, @conversation.user.voices.order(:name), :id, :name, { hide_label: true } do |item| %>
-              <div class='list-item'>
-                <%= item.check_box onchange: "this.form.submit();", class: 'checkbox' %>
-                <%= item.label %>
-                <%= link_to "☉", edit_voice_path(id: item.value), class: 'edit' %>
-                <a class='delete' onClick='deleteVoice(<%= item.value %>);'>␡</a>
-              </div>
-            <% end %>
-          </div>
+          <%= form.collection_select :voice_id, @conversation.user.voices.order(:name), :id, :name, {include_blank: "None selected", selected: @conversation.voice.try(:id)}, onchange: "this.form.submit();" %>
         <% end %>
       </div>
       <%= form.submit style: 'display:none;' %>

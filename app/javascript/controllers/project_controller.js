@@ -3,13 +3,9 @@ import debounce from 'lodash.debounce'
 // Connects to data-controller="project"
 export default class extends Controller {
   connect() {
-    console.log("yay");
-    console.log(this.element)
     this.formData = new FormData(this.element)
-    console.log(this.formData)
     // this.form = this.element.closes
     this.url = this.element.action + "/autosave"
-    console.log(this.url)
     const delay = parseInt(this.element.dataset.autosaveDelay);
     const requestToDelay = () => this.sendRequest(this.url, this.formData)
     this.debouncedRequest = debounce(requestToDelay, delay)
@@ -21,7 +17,6 @@ export default class extends Controller {
   }
 
   sendRequest(url, formData) {
-    console.log("sending request to" + this.url)
 
     fetch(url, {
       method: 'post',
