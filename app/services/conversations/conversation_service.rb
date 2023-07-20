@@ -56,6 +56,8 @@ module Conversations
     end
 
     def handle_multiple_sources
+      @conversation.update!(status_message: "Processing #{@sources.count} sources")
+
       if all_sources_fit_in_multi_limit?
         rephrase_with_voices(get_answer_from_multiple_sources)
       else
@@ -64,7 +66,6 @@ module Conversations
     end
 
     def get_answer_from_multiple_sources # rubocop:disable Metrics/MethodLength
-      @conversation.update!(status_message: "Processing #{@sources.count} sources")
       messages = []
       @sources.each do |source|
         chunk = source.document_chunks.first
@@ -83,10 +84,8 @@ module Conversations
     end
 
     def all_sources_fit_in_multi_limit?
-      per_source_token_limit = (REQUEST_MAX_TOKEN_SIZE_GPT_3_16K - TOKEN_SPACE_FOR_ANSWER) / @sources.count
-      @sources.all? do |source|
-        source.document_chunks.map(&:token_length).compact.sum <= per_source_token_limit
-      end
+      total_tokens = @sources.map { |source| source.document_chunks.map(&:token_length).compact.sum }.sum
+      total_tokens <= REQUEST_MAX_TOKEN_SIZE_GPT_3_16K - TOKEN_SPACE_FOR_ANSWER
     end
 
     def refuse_answering_from_multiple_sources_that_are_too_big
