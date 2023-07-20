@@ -13,10 +13,18 @@ class Conversation < ApplicationRecord
   validates :title, presence: true
   after_update :broadcast_status_message
 
-  enum role: { 'ready': 0, 'working': 1, 'idle': 2, 'error': 3 }
+  enum role: { 'ready': 0, 'working': 1, 'idle': 2, 'error': 3, 'cancelled': 4 }
 
   def clear_status_message
     update!(status_message: nil)
+  end
+
+  def cancel_processing
+    return if sidekiq_job_id.blank?
+
+    messages.last.destroy!
+    Sidekiq::Status.delete(sidekiq_job_id)
+    update!(sidekiq_job_id: nil, status: 4, status_message: "Processing cancelled at #{Time.zone.now}")
   end
 
   private

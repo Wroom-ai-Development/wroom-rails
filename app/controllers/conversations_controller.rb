@@ -3,7 +3,7 @@
 class ConversationsController < ApplicationController
   before_action :set_conversation,
                 only: %i[edit_frame update_from_frame show_in_frame
-                         new_user_message_from_frame clear_chat]
+                         new_user_message_from_frame clear_chat cancel_processing]
 
   def show_in_frame; end
 
@@ -11,7 +11,8 @@ class ConversationsController < ApplicationController
     @conversation.update!(status: 1)
     @conversation.messages.where(role: 'error').destroy_all
     @conversation.messages.create!(content: params[:content], role: 'user')
-    AnswerFetchingWorker.perform_async(@conversation.id)
+    sidekiq_job_id = AnswerFetchingWorker.perform_async(@conversation.id)
+    @conversation.update!(sidekiq_job_id:)
     redirect_to root_path(project_id: @conversation.project_id), status: :see_other
   end
 
@@ -22,6 +23,10 @@ class ConversationsController < ApplicationController
     authorize! :edit, conversation
     message.destroy
     redirect_to root_path, status: :see_other
+  end
+
+  def cancel_processing
+    @conversation.cancel_processing
   end
 
   def clear_chat
