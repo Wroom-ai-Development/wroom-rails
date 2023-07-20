@@ -27,6 +27,7 @@ class ConversationsController < ApplicationController
 
   def cancel_processing
     @conversation.cancel_processing
+    head :ok
   end
 
   def clear_chat
