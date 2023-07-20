@@ -12,13 +12,17 @@ class Message < ApplicationRecord
 
   private
 
-  def force_conversation_refresh
+  def force_conversation_refresh # rubocop:disable Metrics/MethodLength
     return unless role == 'assistant' || role == 'error'
 
+    conversation.update!(status: 0, status_message: nil)
     broadcast_replace_to(
       conversation.id,
       'conversation_status',
       partial: 'conversations/conversation_status',
+      locals: {
+        conversation:
+      },
       target: 'conversation_status'
     )
   end

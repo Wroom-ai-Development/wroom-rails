@@ -1,5 +1,16 @@
 <%= turbo_frame_tag "conversation_status" do %>
-  <script>
-    location.reload();
-  </script>
+  <% if conversation.status == 1 %>
+    <div class='conversation-status'>
+      <div class="conversation-hourglass"></div>
+      <div class="conversation-loading-label">
+        <% if conversation.sources.count == 1 && conversation.sources.first.document_chunks.count > 1 && conversation.status_message.present? %>
+          <%= conversation.status_message %>
+        <% end %>
+      </div>
+    </div>
+  <% else %>
+    <script>
+      location.reload();
+    </script>
+  <% end %>
 <% end %>
