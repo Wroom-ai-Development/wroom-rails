@@ -40,7 +40,7 @@
         </div>
         <% if @conversation.user&.sources.present? %>
           <div id='sources' class='list'>
-            <%= form.collection_check_boxes :source_ids, @conversation.user.sources, :id, :name, { hide_label: true } do |item| %>
+            <%= form.collection_check_boxes :source_ids, @conversation.user.sources.order(:name), :id, :name, { hide_label: true } do |item| %>
               <div class='list-item'>
                 <%= item.check_box onchange: "this.form.submit();", class: 'checkbox' %>
                 <%= item.label %>
@@ -56,7 +56,7 @@
         </div>
         <% if @conversation.user.voices.present? %>
           <div id='voices' class='list'>
-            <%= form.collection_check_boxes :voice_ids, @conversation.user.voices, :id, :name, { hide_label: true } do |item| %>
+            <%= form.collection_check_boxes :voice_ids, @conversation.user.voices.order(:name), :id, :name, { hide_label: true } do |item| %>
               <div class='list-item'>
                 <%= item.check_box onchange: "this.form.submit();", class: 'checkbox' %>
                 <%= item.label %>
