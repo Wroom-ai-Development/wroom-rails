@@ -62,6 +62,7 @@ module Conversations
     end
 
     def get_answer_from_multiple_sources # rubocop:disable Metrics/MethodLength
+      @conversation.update!(status_message: "Processing #{@sources.count} sources")
       messages = []
       @sources.each do |source|
         chunk = source.document_chunks.first
@@ -110,10 +111,12 @@ module Conversations
     end
 
     def get_answer_without_sources
+      @conversation.update!(status_message: 'Processing without sources')
       response_from_messages(@conversation_messages)
     end
 
     def get_answer_from_source(source)
+      @conversation.update!(status_message: "Processing #{source.name}")
       chunks = source.document_chunks
       answer = if chunks.size == 1
                  get_answer_from_chunk(chunks.first)
@@ -138,9 +141,10 @@ module Conversations
 
     def filter_out_non_answers(answers) # rubocop:disable Metrics/MethodLength
       filtered_answers = []
-      answers.each do |answer|
+      answers.each_with_index do |answer, index|
+        @conversation.update!(status_message: "Reviewing answer based on chunk #{index + 1}")
         message_content = <<-CONTENT
-          #{answer[:text]}\nDoes this text contain the answer to the question: \"#{@last_user_question}\"? Answer YES or NO.
+          #{answer[:text]}\nDoes this text contain the answer to the question: \"#{@last_user_question}\"? Answer YES or NO, and always in English, regardless of the language of the question.
         CONTENT
         messages = [
           { role: 'user',
@@ -160,10 +164,12 @@ module Conversations
         { role: 'system', content: answers.join(' ') }
       ]
       messages << { role: 'system', content: summary_prompt }
+      @conversation.update!(status_message: 'Summarizing obtained information')
       rephrase_with_voices(response_from_messages(messages))
     end
 
     def rephrase_with_voices(string) # rubocop:disable Metrics/MethodLength
+      @conversation.update!(status_message: 'Applying voices')
       if @conversation.voices.any?
         response_from_messages(
           [{
