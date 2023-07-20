@@ -27,7 +27,7 @@ class ConversationsController < ApplicationController
 
   def cancel_processing
     @conversation.cancel_processing
-    head :ok
+    redirect_to root_path, status: :see_other
   end
 
   def clear_chat
