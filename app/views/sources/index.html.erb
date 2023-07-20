@@ -13,7 +13,7 @@
           <%= link_to source.name.present? ? source.name : (source.title || "Source ID: #{source.id}"), source %>
           <div class="controls">
             <%= link_to "✍︎", edit_source_path(source) %>
-            <%= button_to "␡", source, method: :delete %>
+            <%= button_to "␡", source, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Please confirm you meant to delete #{source.name}"} %>
           </div>
         </li>
       <% end %>
@@ -28,7 +28,7 @@
               <%= link_to source.name, source %>
               <div class="controls">
                 <%= link_to "✍︎", edit_source_path(source) %>
-                <%= button_to "␡", source, method: :delete %>
+                <%= button_to "␡", source, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Please confirm you meant to delete #{source.name}"} %>
               </div>
             </li>
           <% end %>
