@@ -7,7 +7,7 @@
     <div class='index-separator'>My sources</div class='index-separator'>
   <% end %>
   <ul class="index-list">
-    <% current_user.sources.each do |source| %>
+    <% current_user.sources.order(:name).each do |source| %>
       <% if can? :manage, source %>
         <li class='index-list-item'>
           <%= link_to source.name.present? ? source.name : (source.title || "Source ID: #{source.id}"), source %>
@@ -23,7 +23,7 @@
       <% @users.each do |user| %>
         <div class='index-separator'><%= user.email %></div>
         <ul class="index-list">
-          <% user.sources.each do |source| %>
+          <% user.sources.order(:name).each do |source| %>
             <li class='index-list-item'>
               <%= link_to source.name, source %>
               <div class="controls">

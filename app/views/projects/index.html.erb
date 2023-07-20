@@ -8,7 +8,7 @@
     <div class='index-separator'>My projects</div class='index-separator'>
   <% end %>
   <ul class="index-list">
-    <% current_user.projects.each do |project| %>
+    <% current_user.projects.order(:title).each do |project| %>
       <% if can? :manage, project %>
           <li class='index-list-item'>
             <%= link_to root_path(project_id: project.id) do %>
@@ -25,7 +25,7 @@
     <% @users.each do |user| %>
       <div class='index-separator'><%= user.email %></div class='index-separator'>
       <ul class="index-list">
-        <% user.projects.each do |project| %>
+        <% user.projects.order(:title).each do |project| %>
           <li class='index-list-item'>
             <%= link_to project.title, root_path(project_id: project.id) %>
             <div class="controls">
