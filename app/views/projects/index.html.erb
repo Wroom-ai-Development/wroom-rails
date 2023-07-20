@@ -5,7 +5,7 @@
 </div>
 <div class='view-content'>
   <% if current_user.admin? %>
-    <div class='index-separator'>My projects</div class='index-separator'>
+    <div class='index-separator'>My documents</div class='index-separator'>
   <% end %>
   <ul class="index-list">
     <% current_user.projects.order(:title).each do |project| %>
@@ -15,7 +15,7 @@
               <div class='title'><%= project.title %></div>
             <% end %>
             <div class="controls">
-              <%= button_to "␡", project, method: :delete %>
+              <%= button_to "␡", project, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Please confirm you meant to delete #{project.title}"} %>
             </div>
           </li>
       <% end %>
@@ -30,7 +30,7 @@
             <%= link_to project.title, root_path(project_id: project.id) %>
             <div class="controls">
               <%= link_to "✍︎", root_path(project_id: project.id) %>
-              <%= button_to "␡", project, method: :delete %>
+              <%= button_to "␡", project, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Please confirm you meant to delete #{project.title}"} %>
             </div>
           </li>
         <% end %>
