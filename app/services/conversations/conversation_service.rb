@@ -4,6 +4,8 @@ module Conversations
   class ConversationService # rubocop:disable Metrics/ClassLength
     class OpenAIApiError < StandardError; end
     class ContextExceeded < StandardError; end
+    class InterruptSignal < StandardError; end
+    class ConversationStatusIsNotWorking < StandardError; end
 
     META_PROMPT = <<-PROMPT
       Answer a question about the given text.
@@ -245,6 +247,7 @@ module Conversations
     end
 
     def response_from_messages(messages, simple: false) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      interrupt_if_warranted
       token_count = count_tokens_in_messages(messages)
       raise ContextExceeded if token_count > REQUEST_MAX_TOKEN_SIZE_GPT_3_16K
 
@@ -264,12 +267,21 @@ module Conversations
                    @openai_service.gpt_3_5_turbo_16k(messages, tokens_left_for_answer)
                  end
       @requests_made += 1
-      # binding.pry if response['error'].present?
+
       raise OpenAIApiError, response['error'].to_json if response['error'].present?
 
       TokenUsageService.new(@user, @conversation, model).persist_token_usage(messages, response)
 
       response
+    end
+
+    def interrupt_if_warranted
+      if @conversation.reload.status == 4
+        @conversation.update!(status_message: 'Conversation was interrupted')
+        raise InterruptSignal
+      elsif @conversation.reload.status != 1
+        raise ConversationStatusIsNotWorking
+      end
     end
   end
 end

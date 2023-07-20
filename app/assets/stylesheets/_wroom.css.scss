@@ -287,7 +287,28 @@ body#wroom {
           div.conversation-loading-label {
             width: auto;
             font-style: italic;
-            font-size: 0.7rem;
+            font-size: 0.9rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            form.button_to {
+              text-align: center;
+            }
+            a {
+              font-size: 0.7rem;
+              text-align: center;
+              font-style: italic;
+              color: $wroom-red;
+              font-family: 'Playfair Display', serif;
+              background-color: rgba(0, 0, 0, 0);
+              border: none;
+              &:hover {
+                cursor: pointer;
+                text-decoration: underline 1px $wroom-red;
+              }
+            }
           }
         }    
   

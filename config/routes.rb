@@ -24,6 +24,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       get 'edit_frame'
       patch 'update_from_frame'
       delete 'clear_chat'
+      get 'cancel_processing'
     end
   end
   resources :sources do

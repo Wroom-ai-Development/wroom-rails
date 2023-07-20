@@ -2,12 +2,21 @@
 
 class AnswerFetchingWorker
   include Sidekiq::Worker
+  include Sidekiq::Status::Worker
   sidekiq_options retry: false
+
+  def expiration
+    @expiration ||= 60 * 60 * 24 * 30 # 30 days
+  end
 
   def perform(conversation_id) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     conversation = Conversation.find(conversation_id)
     begin
       Conversations::ConversationService.new(conversation).respond
+    rescue Conversations::ConversationService::InterruptSignal
+      conversation.update!(status: 0)
+    rescue Conversations::ConversationService::ConversationStatusIsNotWorking
+      nil
     rescue Conversations::ConversationService::ContextExceeded
       conversation.update!(status: 3)
       conversation.messages.create!(content: 'There is too much text in your chat for me to handle',

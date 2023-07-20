@@ -3,9 +3,10 @@
     <div class='conversation-status'>
       <div class="conversation-hourglass"></div>
       <div class="conversation-loading-label">
-        <% if conversation.sources.count == 1 && conversation.sources.first.document_chunks.count > 1 && conversation.status_message.present? %>
+        <% if conversation.status_message.present? %>
           <%= conversation.status_message %>
         <% end %>
+        <%= link_to('cancel request', cancel_processing_conversation_path(id: conversation.id)) %>
       </div>
     </div>
   <% else %>
