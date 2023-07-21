@@ -14,16 +14,6 @@
         <%= link_to "Users", users_path %>
       </div>
     <% end %>
-    <% if can? :manage, Source %>
-      <div class="link-wrapper">
-        <%= link_to "Sources", sources_path %>
-      </div>
-    <% end %>
-    <% if can? :manage, Project %>
-      <div class="link-wrapper">
-        <%= link_to "Documents", projects_path %>
-      </div>
-    <% end %>
     <% if can? :manage, Voice %>
       <div class="link-wrapper">
         <%= link_to "Voices", voices_path %>

@@ -30,13 +30,13 @@ class WroomController < ApplicationController
                                        role: 'user',
                                        content: 'Write a haiku about starting a new venture.'
                                      }],
-                                     model: 'gpt-3-5-turbo')
+                                     'gpt-3.5-turbo', 1000)
   end
 
   def create_welcome_records
-    create_welcome_project
     create_welcome_source
     create_welcome_voices
+    current_user.update!(onboarded: true)
   end
 
   def create_welcome_source # rubocop:disable Metrics/MethodLength
@@ -47,7 +47,8 @@ class WroomController < ApplicationController
       title: 'Sympathy',
       author: 'by Emily Brontë',
       year_published: '1846',
-      text_category: 'poem'
+      text_category: 'poem',
+      project: current_user.projects.first
     )
     poem = <<-POEM
       There should be no despair for you
@@ -80,12 +81,5 @@ class WroomController < ApplicationController
     voices.each do |voice|
       current_user.voices.create(name: voice[0], meta_prompt: voice[1])
     end
-  end
-
-  def create_welcome_project
-    welcome_message = "Welcome to WROOM, the professional's writing assistant!"
-    project = Project.create!(user_id: current_user.id, title: 'Welcome to WROOM!', content: welcome_message)
-    Conversation.create!(user_id: current_user.id, title: project.title, project_id: project.id)
-    current_user.update!(onboarded: true)
   end
 end

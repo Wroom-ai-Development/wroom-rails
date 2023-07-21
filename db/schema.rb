@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_21_132644) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_21_142125) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -72,7 +72,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_21_132644) do
 
   create_table "conversations", force: :cascade do |t|
     t.string "title"
-    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "status"
@@ -81,7 +80,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_21_132644) do
     t.bigint "project_id"
     t.string "status_message"
     t.string "sidekiq_job_id"
-    t.index ["user_id"], name: "index_conversations_on_user_id"
   end
 
   create_table "document_chunks", force: :cascade do |t|
@@ -120,6 +118,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_21_132644) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "source_based", default: false, null: false
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
@@ -193,7 +192,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_21_132644) do
   add_foreign_key "context_references", "projects"
   add_foreign_key "conversation_voices", "conversations"
   add_foreign_key "conversation_voices", "voices"
-  add_foreign_key "conversations", "users"
   add_foreign_key "document_chunks", "sources"
   add_foreign_key "messages", "conversations"
   add_foreign_key "projects", "users"

@@ -1,22 +1,22 @@
-<%= turbo_stream_from @source.id, 'chunking_status' %>
+<%= turbo_stream_from source.id, 'chunking_status' %>
 <div class='view-header'>
-  <h1><%= @source.name || @source.title || "Untitled" %></h1>
-  <%= link_to "✍︎", edit_source_path(@source) %>
+  <h1><%= source.name || source.title || "Untitled" %></h1>
+  <%= link_to "Edit", edit_source_path(source) %>
 </div>
 <div class='view-content'>
   <div class='show-record'>
-    <%= render @source %>
+    <%= render source %>
   </div>
   <div class='show-record'>
-    <% if @source.document_chunks.count > 1 %>
-      <% if @source.truncated? %>
+    <% if source.document_chunks.count > 1 %>
+      <% if source.truncated? %>
         <div class='truncation-notice'>
           This source exceeded our text volume limits, and has been truncated.
         </div>
       <% end %>
       <div class='chunks'>
         <h3>Chunks</h3>
-        <% @source.document_chunks.each do |chunk| %>
+        <% source.document_chunks.each do |chunk| %>
           <div class='chunk'>
             <details>
               <summary>
@@ -29,13 +29,13 @@
           </div>
         <% end %>
       </div>
-    <% elsif @source.document_chunks.count == 1 %>
+    <% elsif source.document_chunks.count == 1 %>
     <div class='chunk'>
       <p>
-        <%= @source.document_chunks.first.content %>
+        <%= source.document_chunks.first.content %>
       </p>
     </div>
-    <% elsif @source.document_chunks.count == 0 %>
+    <% elsif source.document_chunks.count == 0 %>
       <%= turbo_frame_tag 'chunking_status' do %>
         <div class='chunking-status-notice'>
           <div class="lds-hourglass"></div>

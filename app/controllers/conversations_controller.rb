@@ -6,7 +6,7 @@ class ConversationsController < ApplicationController
                          new_user_message_from_frame clear_chat cancel_processing]
 
   def show_in_frame
-    @conversation.user.conversations.where.not(id: @conversation.id).map(&:cancel_processing)
+    # @conversation.user.conversations.where.not(id: @conversation.id).map(&:cancel_processing)
   end
 
   def new_user_message_from_frame
@@ -60,6 +60,6 @@ class ConversationsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def conversation_params
-    params.require(:conversation).permit(:title, :user_id, source_ids: [])
+    params.require(:conversation).permit(:title, source_ids: [])
   end
 end

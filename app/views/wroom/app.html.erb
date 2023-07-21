@@ -4,7 +4,7 @@
       <span id='wroom'>WROOM</span>
     </div>
   </div>
-    <% if @project.conversation %>
+    <% if @project %>
       <%= turbo_frame_tag "edit_conversation_frame", src: edit_frame_conversation_path(@project.conversation) %>
     <% end %>
   <div class='panel-element' id='navigation'>

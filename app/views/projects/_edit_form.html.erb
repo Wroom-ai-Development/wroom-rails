@@ -25,5 +25,4 @@
       <%= form.rich_text_area :content, data: { action: "keyup->project#save blur->project#save" } %>
     </div>
   <% end %>
-  <%= button_to "Save as source", save_as_source_project_path(project), method: :post, class: 'save-as-source' %>
 </div>

@@ -2,8 +2,7 @@
 
 class ProjectsController < ApplicationController
   before_action :set_project,
-                only: %i[edit_frame update destroy autosave save_as_source
-                         save_as_source_from_frame]
+                only: %i[edit_frame update destroy autosave]
   load_and_authorize_resource
 
   def edit_frame
@@ -13,18 +12,6 @@ class ProjectsController < ApplicationController
                  current_user.projects.first
                end
     @conversation = @project.conversation
-  end
-
-  def save_as_source_from_frame
-    source_name = create_unique_source_name(@project.title)
-    source = Source.create!(
-      user_id: @project.user_id,
-      name: source_name,
-      fileless: true,
-      title: @project.title
-    )
-    source.parse_document_chunks_from_text(@project.content.to_plain_text)
-    redirect_to root_path(project_id: @project.id), status: :see_other
   end
 
   def create_unique_source_name(string)
@@ -51,27 +38,9 @@ class ProjectsController < ApplicationController
     head :ok
   end
 
-  def save_as_source
-    source = Source.create!(
-      user_id: @project.user_id,
-      name: @project.title,
-      fileless: true,
-      title: @project.title
-    )
-    source.parse_document_chunks_from_text(@project.content.to_plain_text)
-    respond_to do |format|
-      format.html { redirect_to source, notice: 'Project was successfully created.' }
-    end
-  end
-
   # POST /projects or /projects.json
-  def create # rubocop:disable Metrics/MethodLength
+  def create
     @project = Project.create!(project_params)
-    Conversation.create!(
-      title: @project.title,
-      user_id: @project.user_id,
-      project_id: @project.id
-    )
     respond_to do |format|
       if @project.save
         format.html { redirect_to root_path(project_id: @project.id) }
@@ -95,10 +64,9 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1 or /projects/1.json
   def destroy
     @project.destroy
+    current_user.update!(current_project_id: nil)
 
-    respond_to do |format|
-      format.html { redirect_to projects_url, notice: 'Project was successfully destroyed.' }
-    end
+    redirect_to root_path, status: :see_other
   end
 
   private

@@ -1,15 +1,20 @@
 <%= turbo_frame_tag "edit_project_frame" do %>
   <div id='edit-project'>
+    <%= button_to "␡", @project, class: 'delete-project', method: :delete %>
+
     <%= form_with(
         model: @project,
         data: {controller: 'project', autosave_delay: '250'},
         id: 'edit-project'
     ) do |form| %>
-        <div class='top-pane'>
-          <%= form.text_field :title, data: { action: "keyup->project#save blur->project#save" } %>
-          <%= link_to "↳ Save as a source", save_as_source_from_frame_project_path(@project), id: 'save-as-source' %>
-        </div>
-        <%= form.rich_text_area :content, placeholder: 'Use this space to make notes and save useful fragments of your conversation.', data: { action: "keyup->project#save blur->project#save" } %>
+        <% if @project.source_based %>
+          <%= render 'sources/show', source: @project.source %>
+        <% else %>
+          <div class='top-pane'>
+            <%= form.text_field :title, data: { action: "keyup->project#save blur->project#save" } %>
+          </div>
+          <%= form.rich_text_area :content, placeholder: 'Use this space to make notes and save useful fragments of your conversation.', data: { action: "keyup->project#save blur->project#save" } %>
+        <% end %>
     <% end %>
   </div>
 <% end %>

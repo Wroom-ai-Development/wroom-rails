@@ -2,12 +2,12 @@
 
 class Source < ApplicationRecord
   belongs_to :user
-  belongs_to :project
+  belongs_to :project, optional: true
   has_one_attached :file
   has_many :document_chunks, dependent: :destroy
   has_many :monitoring_events, as: :trackable, dependent: :nullify
 
-  validates :name, presence: true, uniqueness: { scope: :user_id }
+  validates :name, presence: true
   validates :file, presence: true, unless: -> { fileless == true || source_url }
   validates :year_published, numericality: { only_integer: true }, length: { in: 0..4 }, allow_nil: true
   validate :file_type
@@ -19,6 +19,7 @@ class Source < ApplicationRecord
   validate :file_or_source_url, if: -> { fileless == false }
 
   after_create_commit :log_event
+  after_create_commit :create_project
 
   def parse_document_chunks_from_file # rubocop:disable Metrics/MethodLength
     raw_text = if file.content_type == 'application/pdf'
@@ -54,6 +55,11 @@ class Source < ApplicationRecord
   end
 
   private
+
+  def create_project
+    project = Project.create!(title: name, user_id:, source_based: true)
+    update!(project_id: project.id)
+  end
 
   def file_or_source_url
     errors.add(:base, 'Must have a file or source url') unless file.attached? || source_url.present?

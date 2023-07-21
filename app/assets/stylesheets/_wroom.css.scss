@@ -57,6 +57,7 @@ body#wroom {
     background-color: white;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
 
     &#context-panel {
       width: 15%;

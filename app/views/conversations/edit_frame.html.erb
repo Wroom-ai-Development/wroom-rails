@@ -4,31 +4,29 @@
       model: @conversation,
       url: update_from_frame_conversation_url
     ) do |form| %>
-        <%= form.text_field :user_id,
-          value: @conversation.user.id,
-          readonly: cannot?(:manage, User),
-          style: "display: none;" %>
         <div class='header'>
-          <%= form.label 'Projects', style: "display: block" %>
+          <%= form.label 'Documents', style: "display: block" %>
+          <%= link_to "New from source", new_source_path %>
+          <%= link_to "New document", new_project_path %>
         </div>
-        <% if @conversation.user.projects.present? %>
+        <% if @conversation.user&.projects.present? %>
           <div id='sources' class='list'>
             <%= form.collection_check_boxes :source_ids, @conversation.user.projects.order(:title), :id, :title, { hide_label: true } do |item| %>
               <%= link_to root_path(project_id: item.value) do %>
                 <div class='list-item'>
                   <%= item.check_box onchange: "this.form.submit();", class: 'checkbox' %>
-                    <%= item.label %>
+                  <%= item.label %>
                 </div>
               <% end %>
             <% end %>
           </div>
         <% end %>
         <div class='header'>
-          <%= form.label 'Voice', style: "display: block" %>
+          <%= form.label 'Voices', style: "display: block" %>
           <%= link_to "✙", new_voice_path %>
         </div>
         <% if @conversation.user.voices.present? %>
-          <%= form.collection_select :voice_id, @conversation.user.voices.order(:name), :id, :name, {include_blank: "None selected", selected: @conversation.voice.try(:id)}, onchange: "this.form.submit();" %>
+          <%= form.collection_select :voice_id, @conversation.user.voices.order(:name), :id, :name, include_blank: "None selected", selected: @conversation.voice.try(:id) %>
         <% end %>
       </div>
       <%= form.submit style: 'display:none;' %>

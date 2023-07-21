@@ -10,11 +10,16 @@ class Project < ApplicationRecord
   has_many :monitoring_events, as: :trackable, dependent: :nullify
 
   after_create_commit :log_event
+  after_create_commit :create_conversation
 
   private
 
   def log_event
     monitoring_events.create!(user_id: user&.id, note: "#{user&.email} created project #{title}",
                               event_type: 'create_record')
+  end
+
+  def create_conversation
+    Conversation.create!(title:, project_id: id)
   end
 end
