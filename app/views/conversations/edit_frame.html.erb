@@ -1,18 +1,4 @@
 <%= turbo_frame_tag "edit_conversation_frame" do %>
-  <script>
-    function deleteSource(id) {
-      fetch(
-        location.origin + `/sources/${id}/delete_from_frame`,
-        {
-          method: 'delete',
-          headers: {
-            "X-CSRF-Token": document.querySelector("meta[name='csrf-token']").content
-          },
-          credentials: 'same-origin'
-        }
-      ).then(() => {location.reload();})
-    }
-  </script>
   <div id='conversation-context'>
     <%= form_with(
       model: @conversation,
@@ -23,18 +9,17 @@
           readonly: cannot?(:manage, User),
           style: "display: none;" %>
         <div class='header'>
-          <%= form.label 'Sources', style: "display: block" %>
-          <%= link_to "✙", new_source_path %>
+          <%= form.label 'Projects', style: "display: block" %>
         </div>
-        <% if @conversation.user&.sources.present? %>
+        <% if @conversation.user.projects.present? %>
           <div id='sources' class='list'>
-            <%= form.collection_check_boxes :source_ids, @conversation.user.sources.order(:name), :id, :name, { hide_label: true } do |item| %>
-              <div class='list-item'>
-                <%= item.check_box onchange: "this.form.submit();", class: 'checkbox' %>
-                <%= item.label %>
-                <%= link_to "☉", edit_source_path(id: item.value), class: 'edit' %>
-                <a class='delete' onClick='deleteSource(<%= item.value %>);'>␡</a>
-              </div>
+            <%= form.collection_check_boxes :source_ids, @conversation.user.projects.order(:title), :id, :title, { hide_label: true } do |item| %>
+              <%= link_to root_path(project_id: item.value) do %>
+                <div class='list-item'>
+                  <%= item.check_box onchange: "this.form.submit();", class: 'checkbox' %>
+                    <%= item.label %>
+                </div>
+              <% end %>
             <% end %>
           </div>
         <% end %>

@@ -3,6 +3,7 @@
 class Project < ApplicationRecord
   belongs_to :user
   has_one :conversation, dependent: :destroy
+  has_one :source, dependent: :destroy
 
   validates :title, presence: true
   has_rich_text :content

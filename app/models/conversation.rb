@@ -4,7 +4,7 @@ class Conversation < ApplicationRecord
   belongs_to :user
   has_many :messages, dependent: :destroy
   has_many :context_references, dependent: :destroy
-  has_many :sources, through: :context_references
+  has_many :sources, through: :context_references, source: :project
   has_many :usage_records, dependent: :nullify
 
   belongs_to :project

@@ -2,5 +2,7 @@
 
 class ContextReference < ApplicationRecord
   belongs_to :conversation
-  belongs_to :source
+  belongs_to :project
+
+  delegate :source, to: :project
 end

@@ -2,9 +2,8 @@
 
 class Source < ApplicationRecord
   belongs_to :user
+  belongs_to :project
   has_one_attached :file
-  has_many :context_references, dependent: :destroy
-  has_many :conversations, through: :context_references
   has_many :document_chunks, dependent: :destroy
   has_many :monitoring_events, as: :trackable, dependent: :nullify
 

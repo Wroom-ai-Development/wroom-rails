@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_20_133423) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_21_132644) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,11 +54,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_20_133423) do
 
   create_table "context_references", force: :cascade do |t|
     t.bigint "conversation_id", null: false
-    t.bigint "source_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "project_id"
     t.index ["conversation_id"], name: "index_context_references_on_conversation_id"
-    t.index ["source_id"], name: "index_context_references_on_source_id"
+    t.index ["project_id"], name: "index_context_references_on_project_id"
   end
 
   create_table "conversation_voices", force: :cascade do |t|
@@ -136,6 +136,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_20_133423) do
     t.boolean "truncated", default: false, null: false
     t.boolean "fileless", default: false, null: false
     t.string "source_url"
+    t.bigint "project_id"
+    t.index ["project_id"], name: "index_sources_on_project_id"
     t.index ["user_id"], name: "index_sources_on_user_id"
   end
 
@@ -188,13 +190,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_20_133423) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "context_references", "conversations"
-  add_foreign_key "context_references", "sources"
+  add_foreign_key "context_references", "projects"
   add_foreign_key "conversation_voices", "conversations"
   add_foreign_key "conversation_voices", "voices"
   add_foreign_key "conversations", "users"
   add_foreign_key "document_chunks", "sources"
   add_foreign_key "messages", "conversations"
   add_foreign_key "projects", "users"
+  add_foreign_key "sources", "projects"
   add_foreign_key "sources", "users"
   add_foreign_key "voices", "users"
 end
