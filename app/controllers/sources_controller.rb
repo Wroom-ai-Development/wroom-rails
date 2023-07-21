@@ -25,16 +25,15 @@ class SourcesController < ApplicationController
   def create # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     @source = Source.new(source_params)
     save_section_headers
-    respond_to do |format|
-      if @source.save
-        if @source.file.attached?
-          @source.parse_document_chunks_from_file
-        elsif @source.source_url.present?
-          @source.parse_document_chunks_from_source_url
-        end
-        format.html { redirect_to source_url(@source), notice: 'Source was successfully created.' }
-        format.json { render :show, status: :created, location: @source }
-      else
+    if @source.save
+      if @source.file.attached?
+        @source.parse_document_chunks_from_file
+      elsif @source.source_url.present?
+        @source.parse_document_chunks_from_source_url
+      end
+      redirect_to root_path(project_id: @source.project_id)
+    else
+      respond_to do |format|
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @source.errors, status: :unprocessable_entity }
       end
