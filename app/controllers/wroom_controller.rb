@@ -26,10 +26,11 @@ class WroomController < ApplicationController
     service = OpenaiService.new
     @message = '☚ Have you created any projects yet?'
 
-    @haiku = service.gpt_3_5_turbo([{
-                                     role: 'user',
-                                     content: 'Write a haiku about starting a new venture.'
-                                   }])
+    @haiku = service.chat_completion([{
+                                       role: 'user',
+                                       content: 'Write a haiku about starting a new venture.'
+                                     }],
+                                     model: 'gpt-3-5-turbo')
   end
 
   def create_welcome_records
