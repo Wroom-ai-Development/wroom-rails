@@ -5,7 +5,9 @@ class ConversationsController < ApplicationController
                 only: %i[edit_frame update_from_frame show_in_frame
                          new_user_message_from_frame clear_chat cancel_processing]
 
-  def show_in_frame; end
+  def show_in_frame
+    @conversation.user.conversations.where.not(id: @conversation.id).map(&:cancel_processing)
+  end
 
   def new_user_message_from_frame
     @conversation.update!(status: 1)
@@ -26,6 +28,7 @@ class ConversationsController < ApplicationController
   end
 
   def cancel_processing
+    @conversation.messages.last.destroy!
     @conversation.cancel_processing
     redirect_to root_path, status: :see_other
   end

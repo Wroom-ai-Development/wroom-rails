@@ -22,7 +22,6 @@ class Conversation < ApplicationRecord
   def cancel_processing
     return if sidekiq_job_id.blank?
 
-    messages.last.destroy!
     Sidekiq::Status.delete(sidekiq_job_id)
     update!(sidekiq_job_id: nil, status: 4, status_message: "Processing cancelled at #{Time.zone.now}")
   end

@@ -12,9 +12,11 @@ module Conversations
       If the question does not relate to the text, kindly but firmly answer that it is out of the scope of the discussion.
     PROMPT
 
-    REQUEST_MAX_TOKEN_SIZE_GPT_3_16K = 16_000
-    REQUEST_MAX_TOKEN_SIZE_GPT_3 = 4_000
-    REQUEST_MAX_TOKEN_SIZE_GPT_4 = 8_000
+    REQUEST_MAX_TOKEN_SIZES = {
+      'gpt-3.5-turbo-16k' => 16_000,
+      'gpt-3.5-turbo' => 4_000,
+      'gpt-4' => 8_000
+    }.freeze
     CHARACTERS_PER_TOKEN = 4
     TOKEN_SPACE_FOR_ANSWER = 1000
 
@@ -80,12 +82,12 @@ module Conversations
           All the sources that are the context of this query are: #{@sources.map(&:name).join(' ')}
         CONTENT
       }
-      response_from_messages(messages)
+      response_from_messages(messages, model: 'gpt-4')
     end
 
     def all_sources_fit_in_multi_limit?
       total_tokens = @sources.map { |source| source.document_chunks.map(&:token_length).compact.sum }.sum
-      total_tokens <= REQUEST_MAX_TOKEN_SIZE_GPT_3_16K - TOKEN_SPACE_FOR_ANSWER
+      total_tokens <= REQUEST_MAX_TOKEN_SIZES['gpt-3.5-turbo-16k'] - TOKEN_SPACE_FOR_ANSWER
     end
 
     def refuse_answering_from_multiple_sources_that_are_too_big
@@ -101,7 +103,7 @@ module Conversations
         Rewrite the sentence in first person from the perspective of the chatbot called WROOM. Do not use the word "as".
       PROMPT
       messages = [{ role: 'user', content: prompt }]
-      response_from_messages(messages, simple: true)
+      response_from_messages(messages, model: 'gpt-3.5-turbo')
     end
 
     def update_request_counts
@@ -113,7 +115,7 @@ module Conversations
 
     def get_answer_without_sources
       @conversation.update!(status_message: 'Processing without sources')
-      response_from_messages(@conversation_messages)
+      response_from_messages(@conversation_messages, model: 'gpt-3.5-turbo')
     end
 
     def get_answer_from_source(source)
@@ -151,7 +153,7 @@ module Conversations
           { role: 'user',
             content: message_content }
         ]
-        decision = response_from_messages(messages, simple: true)
+        decision = response_from_messages(messages, model: 'gpt-3.5-turbo')
         filtered_answers << answer[:text] unless decision.include?('NO')
       end
       filtered_answers
@@ -166,7 +168,7 @@ module Conversations
       ]
       messages << { role: 'system', content: summary_prompt }
       @conversation.update!(status_message: 'Summarizing obtained information')
-      rephrase_with_voice(response_from_messages(messages))
+      rephrase_with_voice(response_from_messages(messages, model: 'gpt-4'))
     end
 
     def rephrase_with_voice(string) # rubocop:disable Metrics/MethodLength
@@ -181,17 +183,25 @@ module Conversations
               Rewrite the text above taking into account these instructions:#{' '}
               #{@conversation.voice.meta_prompt}
             CONTENT
-          }]
+          }],
+          model: 'gpt-3.5-turbo'
         )
       else
         string
       end
     end
 
-    def get_answer_from_chunk(chunk)
+    def get_answer_from_chunk(chunk) # rubocop:disable Metrics/MethodLength
       messages = prepare_messages_for_chunk(chunk)
 
-      answer = response_from_messages(messages)
+      model = if chunk.token_length <= REQUEST_MAX_TOKEN_SIZES['gpt-3.5-turbo']
+                'gpt-3.5-turbo'
+              elsif chunk.token_length <= REQUEST_MAX_TOKEN_SIZES['gpt-3.5-turbo-16k']
+                'gpt-3.5-turbo-16k'
+              else
+                raise ContextExceeded
+              end
+      answer = response_from_messages(messages, model:)
       if chunk.section_header.present? && chunk.source.document_chunks.size > 1
         answer << "(based on #{chunk.section_header})"
       end
@@ -245,26 +255,16 @@ module Conversations
       TokenCounter.new('gpt-4').count_tokens(full_text)
     end
 
-    def response_from_messages(messages, simple: false) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    def response_from_messages(messages, model: 'gpt-3.5-turbo') # rubocop:disable Metrics/AbcSize
       interrupt_if_warranted
       token_count = count_tokens_in_messages(messages)
-      raise ContextExceeded if token_count > REQUEST_MAX_TOKEN_SIZE_GPT_3_16K
+      raise ContextExceeded if token_count > REQUEST_MAX_TOKEN_SIZES[model]
 
       @user.update!(tokens_used: @user.tokens_used + token_count)
-      model = ''
-      response = if simple
-                   tokens_left_for_answer = REQUEST_MAX_TOKEN_SIZE_GPT_3 - token_count
-                   model = 'gpt-3.5-turbo'
-                   @openai_service.gpt_3_5_turbo(messages, tokens_left_for_answer)
-                 elsif token_count <= REQUEST_MAX_TOKEN_SIZE_GPT_4 - TOKEN_SPACE_FOR_ANSWER
-                   tokens_left_for_answer = REQUEST_MAX_TOKEN_SIZE_GPT_4 - token_count
-                   model = 'gpt-4'
-                   @openai_service.gpt_4(messages, tokens_left_for_answer)
-                 else
-                   tokens_left_for_answer = REQUEST_MAX_TOKEN_SIZE_GPT_3_16K - token_count
-                   model = 'gpt-3.5-turbo-16k'
-                   @openai_service.gpt_3_5_turbo_16k(messages, tokens_left_for_answer)
-                 end
+
+      tokens_left_for_answer = REQUEST_MAX_TOKEN_SIZES[model] - token_count
+      response = @openai_service.chat_completion(messages, model, tokens_left_for_answer)
+
       @requests_made += 1
 
       raise OpenAIApiError, response['error'].to_json if response['error'].present?
