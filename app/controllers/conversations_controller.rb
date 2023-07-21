@@ -26,6 +26,7 @@ class ConversationsController < ApplicationController
   end
 
   def cancel_processing
+    @conversation.messages.last.destroy!
     @conversation.cancel_processing
     redirect_to root_path, status: :see_other
   end
