@@ -1,4 +1,10 @@
 <%= turbo_frame_tag "projects" do %>
+    <details>
+        <summary>New document</summary>
+        <%= link_to "blank", new_project_path %>
+        <%= link_to "from source", new_source_path %>
+    </details>
+
     <ul id="projects-list">
         <% @projects.each do |project| %>
             <% if can? :manage, project %>
