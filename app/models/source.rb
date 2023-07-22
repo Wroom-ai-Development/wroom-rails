@@ -57,6 +57,8 @@ class Source < ApplicationRecord
   private
 
   def create_project
+    return if project.present?
+
     project = Project.create!(title: name, user_id:, source_based: true)
     update!(project_id: project.id)
   end

@@ -2,14 +2,14 @@
 
 class ConversationsController < ApplicationController
   before_action :set_conversation,
-                only: %i[edit_frame update_from_frame show_in_frame
-                         new_user_message_from_frame clear_chat cancel_processing]
+                only: %i[settings update_settings chat
+                         new_message clear_chat cancel_processing]
 
-  def show_in_frame
-    # @conversation.user.conversations.where.not(id: @conversation.id).map(&:cancel_processing)
+  def chat
+    @conversation.user.conversations.where.not(id: @conversation.id).map(&:cancel_processing)
   end
 
-  def new_user_message_from_frame
+  def new_message
     @conversation.update!(status: 1)
     @conversation.messages.where(role: 'error').destroy_all
     @conversation.messages.create!(content: params[:content], role: 'user')
@@ -18,7 +18,7 @@ class ConversationsController < ApplicationController
     redirect_to root_path(project_id: @conversation.project_id), status: :see_other
   end
 
-  def delete_message_from_frame
+  def delete_message
     message = Message.find(params[:message_id])
     conversation = message.conversation
 
@@ -39,9 +39,9 @@ class ConversationsController < ApplicationController
     redirect_to root_path, status: :see_other
   end
 
-  def edit_frame; end
+  def settings; end
 
-  def update_from_frame
+  def update_settings
     @conversation.update(conversation_params)
     if params[:conversation][:voice_id].present?
       ConversationVoice.find_or_create_by!(conversation: @conversation, voice_id: params[:conversation][:voice_id])
@@ -60,6 +60,6 @@ class ConversationsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def conversation_params
-    params.require(:conversation).permit(:title, source_ids: [])
+    params.require(:conversation).permit(:title, project_ids: [])
   end
 end

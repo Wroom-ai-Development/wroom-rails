@@ -19,6 +19,11 @@
         <%= link_to "Voices", voices_path %>
       </div>
     <% end %>
+    <% if can? :manage, Project %>
+      <div class="link-wrapper">
+        <%= link_to "Documents", projects_path %>
+      </div>
+    <% end %>
     <% if current_user %>
       <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
     <% end %>

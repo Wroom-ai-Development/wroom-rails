@@ -3,7 +3,7 @@
     <% if source.errors.any? %>
       <div class='validation'>
         <div class='message'>
-          <%= pluralize(source.errors.count, "error") %> prohibited this source from being saved:
+          <%= pluralize(source.errors.count, "error") %> prohibited this document from being saved:
         </div>
         <div class='errors'>
           <% source.errors.each do |error| %>

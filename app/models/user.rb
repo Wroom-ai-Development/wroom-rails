@@ -7,9 +7,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable
 
   has_many :sources, dependent: :destroy
-  has_many :conversations, dependent: :destroy
   has_many :voices, dependent: :destroy
   has_many :projects, dependent: :destroy
+  has_many :conversations, through: :projects
   has_many :monitoring_events, as: :trackable, dependent: :nullify
   has_many :usage_records, dependent: :nullify
   has_one :current_project, class_name: 'Project', dependent: :nullify

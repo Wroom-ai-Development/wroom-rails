@@ -1,8 +1,8 @@
-<%= turbo_frame_tag "edit_conversation_frame" do %>
+<%= turbo_frame_tag "conversation_settings" do %>
   <div id='conversation-context'>
     <%= form_with(
       model: @conversation,
-      url: update_from_frame_conversation_url
+      url: update_settings_conversation_url
     ) do |form| %>
         <div class='header'>
           <%= form.label 'Documents', style: "display: block" %>
@@ -11,7 +11,7 @@
         </div>
         <% if @conversation.user&.projects.present? %>
           <div id='sources' class='list'>
-            <%= form.collection_check_boxes :source_ids, @conversation.user.projects.order(:title), :id, :title, { hide_label: true } do |item| %>
+            <%= form.collection_check_boxes :project_ids, @conversation.user.projects.order(:title), :id, :title, { hide_label: true } do |item| %>
               <%= link_to root_path(project_id: item.value) do %>
                 <div class='list-item'>
                   <%= item.check_box onchange: "this.form.submit();", class: 'checkbox' %>
@@ -22,8 +22,8 @@
           </div>
         <% end %>
         <div class='header'>
-          <%= form.label 'Voices', style: "display: block" %>
-          <%= link_to "✙", new_voice_path %>
+          <%= form.label 'Voice', style: "display: block" %>
+          <%= link_to "manage voices", voices_path %>
         </div>
         <% if @conversation.user.voices.present? %>
           <%= form.collection_select :voice_id, @conversation.user.voices.order(:name), :id, :name, include_blank: "None selected", selected: @conversation.voice.try(:id) %>

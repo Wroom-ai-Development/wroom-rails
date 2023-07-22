@@ -20,9 +20,10 @@ module Conversations
     CHARACTERS_PER_TOKEN = 4
     TOKEN_SPACE_FOR_ANSWER = 1000
 
-    def initialize(conversation) # rubocop:disable Metrics/AbcSize
+    def initialize(conversation) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       @conversation = conversation
       @user = conversation.user
+      @conversation.project.set_up_source unless @conversation.project.source_based
       @sources = conversation.sources
       @last_user_question = @conversation.messages.where(role: 'user').last.content
       @conversation_messages = @conversation.messages.order(:created_at).reject do |m|
@@ -70,6 +71,8 @@ module Conversations
     def get_answer_from_multiple_sources # rubocop:disable Metrics/MethodLength
       messages = []
       @sources.each do |source|
+        next unless source.document_chunks.any?
+
         chunk = source.document_chunks.first
         messages << { role: 'system', content: "#{chunk.content} #{chunk_context_prompt(chunk)}" }
       end
@@ -126,7 +129,7 @@ module Conversations
                elsif chunks.size > 1
                  get_answer_from_multiple_chunks(chunks)
                else
-                 rephrase_nicely("There was a problem processing #{source.name}, you may have to upload it again.")
+                 get_answer_without_sources
                end
       rephrase_with_voice(answer)
     end

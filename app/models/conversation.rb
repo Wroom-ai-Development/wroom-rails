@@ -3,7 +3,7 @@
 class Conversation < ApplicationRecord
   has_many :messages, dependent: :destroy
   has_many :context_references, dependent: :destroy
-  has_many :sources, through: :context_references, source: :project
+  has_many :projects, through: :context_references
   has_many :usage_records, dependent: :nullify
 
   belongs_to :project
@@ -14,6 +14,10 @@ class Conversation < ApplicationRecord
   after_update :broadcast_status_message
 
   enum role: { 'ready': 0, 'working': 1, 'idle': 2, 'error': 3, 'cancelled': 4 }
+
+  def sources
+    projects.map(&:source)
+  end
 
   def clear_status_message
     update!(status_message: nil)

@@ -45,7 +45,7 @@ class WroomController < ApplicationController
       name: "'Sympathy' by Emily Brontë",
       fileless: true,
       title: 'Sympathy',
-      author: 'by Emily Brontë',
+      author: 'Emily Brontë',
       year_published: '1846',
       text_category: 'poem',
       project: current_user.projects.first

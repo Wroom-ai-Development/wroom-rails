@@ -4,31 +4,23 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :projects, except: [:show] do
     member do
       patch 'autosave'
-      get 'edit_frame'
+      get 'editor'
     end
   end
-  resources :voices do
-    member do
-      delete 'delete_from_frame'
-    end
-  end
+  resources :voices
   mount ActionCable.server => '/cable'
   resources :conversations, only: [] do
     member do
-      post 'new_user_message_from_frame'
-      get 'show_in_frame'
-      delete 'delete_message_from_frame'
-      get 'edit_frame'
-      patch 'update_from_frame'
+      post 'new_message'
+      get 'chat'
+      delete 'delete_message'
+      get 'settings'
+      patch 'update_settings'
       delete 'clear_chat'
       get 'cancel_processing'
     end
   end
-  resources :sources do
-    member do
-      delete 'delete_from_frame'
-    end
-  end
+  resources :sources, except: [:index]
   devise_for :users, controllers: {
     confirmations: 'confirmations',
     registrations: 'registrations',

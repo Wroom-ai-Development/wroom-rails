@@ -2,24 +2,16 @@
 
 class ProjectsController < ApplicationController
   before_action :set_project,
-                only: %i[edit_frame update destroy autosave]
+                only: %i[editor destroy autosave]
   load_and_authorize_resource
 
-  def edit_frame
+  def editor
     @project = if params[:id].present?
                  Project.find(params[:id])
                else
                  current_user.projects.first
                end
     @conversation = @project.conversation
-  end
-
-  def create_unique_source_name(string)
-    if @project.user.sources.where(name: string).any?
-      create_unique_source_name("#{string} Copy")
-    else
-      string
-    end
   end
 
   def index
@@ -50,20 +42,10 @@ class ProjectsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /projects/1 or /projects/1.json
-  def update
-    respond_to do |format|
-      if @project.update(project_params)
-        format.html { redirect_to edit_project_url(@project), notice: 'Project was successfully updated.' }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # DELETE /projects/1 or /projects/1.json
   def destroy
-    @project.destroy
+    @project.source.destroy!
+    @project.destroy!
     current_user.update!(current_project_id: nil)
 
     redirect_to root_path, status: :see_other

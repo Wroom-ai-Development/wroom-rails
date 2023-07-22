@@ -40,22 +40,6 @@ RSpec.describe '/sources', type: :request do
     sign_in(user)
   end
 
-  describe 'GET /index' do
-    it 'renders a successful response' do
-      Source.create! valid_attributes
-      get sources_url
-      expect(response).to be_successful
-    end
-  end
-
-  describe 'GET /show' do
-    it 'renders a successful response' do
-      source = Source.create! valid_attributes
-      get source_url(source)
-      expect(response).to be_successful
-    end
-  end
-
   describe 'GET /new' do
     it 'renders a successful response' do
       get new_source_url

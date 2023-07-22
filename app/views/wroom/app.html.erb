@@ -5,7 +5,7 @@
     </div>
   </div>
     <% if @project %>
-      <%= turbo_frame_tag "edit_conversation_frame", src: edit_frame_conversation_path(@project.conversation) %>
+      <%= turbo_frame_tag "conversation_settings", src: settings_conversation_path(@project.conversation) %>
     <% end %>
   <div class='panel-element' id='navigation'>
     <%= button_to "Library", projects_path, class: 'library-link', method: :get %>
@@ -15,11 +15,11 @@
 </div>
 <% if @project %>
   <div id="project-panel" class="panel">
-      <%= turbo_frame_tag "edit_project_frame", src: edit_frame_project_path(@project) %>
+      <%= turbo_frame_tag "project_editor", src: editor_project_path(@project) %>
   </div>
   <div id="conversation-panel" class="panel">
     <% if @project.conversation %>
-      <%= turbo_frame_tag "conversation_frame", src: show_in_frame_conversation_path(@project.conversation) %>
+      <%= turbo_frame_tag "conversation_frame", src: chat_conversation_path(@project.conversation) %>
     <% end %>
   </div>
 

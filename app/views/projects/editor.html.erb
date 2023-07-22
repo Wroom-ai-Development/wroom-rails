@@ -1,6 +1,6 @@
-<%= turbo_frame_tag "edit_project_frame" do %>
+<%= turbo_frame_tag "project_editor" do %>
   <div id='edit-project'>
-    <%= button_to "␡", @project, class: 'delete-project', method: :delete %>
+    <%= button_to "␡", @project, method: :delete, class: 'delete-project', data: {turbo_method: :delete, turbo_confirm: "Please confirm you meant to delete #{@project.title}"} %>
 
     <%= form_with(
         model: @project,

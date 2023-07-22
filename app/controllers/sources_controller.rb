@@ -4,12 +4,6 @@ class SourcesController < ApplicationController
   before_action :set_source, only: %i[show edit update destroy]
   load_and_authorize_resource
 
-  # GET /sources or /sources.json
-  def index
-    @sources = Source.all
-    @users = User.where.not(id: current_user.id) if current_user.admin?
-  end
-
   # GET /sources/1 or /sources/1.json
   def show; end
 
@@ -77,12 +71,6 @@ class SourcesController < ApplicationController
       format.html { redirect_to sources_url, notice: 'Source was successfully destroyed.' }
       format.json { head :no_content }
     end
-  end
-
-  def delete_from_frame
-    @source.destroy
-
-    head :ok
   end
 
   private

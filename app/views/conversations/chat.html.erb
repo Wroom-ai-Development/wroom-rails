@@ -26,7 +26,7 @@
           <div class='message error'>
             <div class='content'>
               <div class='main-message'>
-                <%= button_to('␡', delete_message_from_frame_conversation_path(message_id: message.id), method: :delete) %>
+                <%= button_to('␡', delete_message_conversation_path(message_id: message.id), method: :delete) %>
                 <div class='main-message-content'>
                   You have exceeded the token limit in this conversation. If you would like to chat further,
                   you can remove some messages to make space. If you would like to keep some of the content,
@@ -49,7 +49,7 @@
                   <div class="button-wrapper">
                     <button class='copy' onClick=<%= "copyContent('main-answer-#{message.id}');" %>>⎘</button>
                   </div>
-                  <%= button_to('␡', delete_message_from_frame_conversation_path(message_id: message.id), method: :delete) %>
+                  <%= button_to('␡', delete_message_conversation_path(message_id: message.id), method: :delete) %>
                 </div>
                 <div class='main-message-content'>
                   <div id=<%= "main-answer-#{message.id}" %>><%= simple_format message.content %></div>
@@ -68,7 +68,7 @@
         <% end %>
       <% end %>
     </div>
-    <%= form_with url: new_user_message_from_frame_conversation_path(id: @conversation.id), id: 'new-message-form'  do |f| %>
+    <%= form_with url: new_message_conversation_path(id: @conversation.id), id: 'new-message-form'  do |f| %>
       <%= f.text_area :content, required: 'required', rows: 2, id: 'new-message-text-area' %>
       <%= f.submit '➥', id: 'submit' %>
     <% end %>
