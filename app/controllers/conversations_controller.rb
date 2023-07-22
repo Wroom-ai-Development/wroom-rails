@@ -15,7 +15,7 @@ class ConversationsController < ApplicationController
     @conversation.messages.create!(content: params[:content], role: 'user')
     sidekiq_job_id = AnswerFetchingWorker.perform_async(@conversation.id)
     @conversation.update!(sidekiq_job_id:)
-    redirect_to root_path(project_id: @conversation.project_id), status: :see_other
+    redirect_to root_path(document_id: @conversation.document_id), status: :see_other
   end
 
   def delete_message
@@ -48,7 +48,7 @@ class ConversationsController < ApplicationController
     else
       @conversation.conversation_voice&.destroy
     end
-    redirect_to root_path(project_id: @conversation.project_id), status: :see_other
+    redirect_to root_path(document_id: @conversation.document_id), status: :see_other
   end
 
   private
@@ -60,6 +60,6 @@ class ConversationsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def conversation_params
-    params.require(:conversation).permit(:title, project_ids: [])
+    params.require(:conversation).permit(:title, document_ids: [])
   end
 end

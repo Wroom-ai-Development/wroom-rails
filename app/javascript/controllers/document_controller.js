@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import debounce from 'lodash.debounce'
-// Connects to data-controller="project"
+// Connects to data-controller="document"
 export default class extends Controller {
   connect() {
     this.formData = new FormData(this.element)

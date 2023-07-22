@@ -6,25 +6,25 @@ class WroomController < ApplicationController
   def app # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     create_welcome_records unless current_user.onboarded?
 
-    @project = if params[:project_id].present?
-                 Project.find(params[:project_id])
-               elsif current_user.current_project_id.present?
-                 Project.find(current_user.current_project_id)
-               elsif current_user.projects.any?
-                 current_user.projects.first
-               end
-    if @project
-      current_user.update!(current_project_id: @project.id)
+    @document = if params[:document_id].present?
+                  Document.find(params[:document_id])
+                elsif current_user.current_document_id.present?
+                  Document.find(current_user.current_document_id)
+                elsif current_user.documents.any?
+                  current_user.documents.first
+                end
+    if @document
+      current_user.update!(current_document_id: @document.id)
     else
-      create_no_project_messages
+      create_no_documents_messages
     end
   end
 
   private
 
-  def create_no_project_messages
+  def create_no_documents_messages
     service = OpenaiService.new
-    @message = '☚ Have you created any projects yet?'
+    @message = '☚ Have you created any documents yet?'
 
     @haiku = service.chat_completion([{
                                        role: 'user',
@@ -48,7 +48,7 @@ class WroomController < ApplicationController
       author: 'Emily Brontë',
       year_published: '1846',
       text_category: 'poem',
-      project: current_user.projects.first
+      document: current_user.documents.first
     )
     poem = <<-POEM
       There should be no despair for you

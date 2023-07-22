@@ -23,7 +23,7 @@ module Conversations
     def initialize(conversation) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       @conversation = conversation
       @user = conversation.user
-      @conversation.project.set_up_source unless @conversation.project.source_based
+      @conversation.document.set_up_source unless @conversation.document.source_based
       @sources = conversation.sources
       @last_user_question = @conversation.messages.where(role: 'user').last.content
       @conversation_messages = @conversation.messages.order(:created_at).reject do |m|
@@ -95,7 +95,7 @@ module Conversations
 
     def refuse_answering_from_multiple_sources_that_are_too_big
       rephrase_nicely(
-        'The source material is too large for me to handle. If you have multiple small sources, try to split them across separate projects. If some of your sources are large (over one chunk), you may want to try putting them in one project each.' # rubocop:disable Layout/LineLength
+        'The source material is too large for me to handle. If you have multiple small sources, try to split them across separate documents. If some of your sources are large (over one chunk), you may want to try putting them in one document each.' # rubocop:disable Layout/LineLength
       )
     end
 

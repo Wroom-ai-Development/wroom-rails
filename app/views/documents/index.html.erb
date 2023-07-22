@@ -1,0 +1,19 @@
+<%= turbo_frame_tag "documents" do %>
+    <details>
+        <summary>New document</summary>
+        <%= link_to "blank", new_document_path %>
+        <%= link_to "from source", new_source_path %>
+    </details>
+
+    <ul id="documents-list">
+        <% @documents.each do |document| %>
+            <% if can? :manage, document %>
+                <li>
+                    <%= link_to root_path(document_id: document.id) do %>
+                        <span><%= document.title %></span>
+                    <% end %>
+                </li>
+            <% end %>
+        <% end %>
+    </ul>
+<% end %>

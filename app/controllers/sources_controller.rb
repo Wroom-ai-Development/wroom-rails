@@ -25,7 +25,7 @@ class SourcesController < ApplicationController
       elsif @source.source_url.present?
         @source.parse_document_chunks_from_source_url
       end
-      redirect_to root_path(project_id: @source.project_id)
+      redirect_to root_path(document_id: @source.document_id)
     else
       respond_to do |format|
         format.html { render :new, status: :unprocessable_entity }

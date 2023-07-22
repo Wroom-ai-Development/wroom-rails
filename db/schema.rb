@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_21_142125) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_22_132815) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -56,9 +56,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_21_142125) do
     t.bigint "conversation_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "project_id"
+    t.bigint "document_id"
     t.index ["conversation_id"], name: "index_context_references_on_conversation_id"
-    t.index ["project_id"], name: "index_context_references_on_project_id"
+    t.index ["document_id"], name: "index_context_references_on_document_id"
   end
 
   create_table "conversation_voices", force: :cascade do |t|
@@ -77,7 +77,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_21_142125) do
     t.integer "status"
     t.integer "total_requests", default: 0, null: false
     t.integer "last_query_requests", default: 0, null: false
-    t.bigint "project_id"
+    t.bigint "document_id"
     t.string "status_message"
     t.string "sidekiq_job_id"
   end
@@ -91,6 +91,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_21_142125) do
     t.datetime "updated_at", null: false
     t.bigint "token_length"
     t.index ["source_id"], name: "index_document_chunks_on_source_id"
+  end
+
+  create_table "documents", force: :cascade do |t|
+    t.string "title"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "source_based", default: false, null: false
+    t.index ["user_id"], name: "index_documents_on_user_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -113,15 +122,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_21_142125) do
     t.integer "event_type"
   end
 
-  create_table "projects", force: :cascade do |t|
-    t.string "title"
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "source_based", default: false, null: false
-    t.index ["user_id"], name: "index_projects_on_user_id"
-  end
-
   create_table "sources", force: :cascade do |t|
     t.string "title"
     t.string "author"
@@ -135,8 +135,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_21_142125) do
     t.boolean "truncated", default: false, null: false
     t.boolean "fileless", default: false, null: false
     t.string "source_url"
-    t.bigint "project_id"
-    t.index ["project_id"], name: "index_sources_on_project_id"
+    t.bigint "document_id"
+    t.index ["document_id"], name: "index_sources_on_document_id"
     t.index ["user_id"], name: "index_sources_on_user_id"
   end
 
@@ -170,9 +170,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_21_142125) do
     t.string "first_name"
     t.string "last_name"
     t.boolean "onboarded"
-    t.bigint "current_project_id"
+    t.bigint "current_document_id"
     t.bigint "tokens_used", default: 0
-    t.index ["current_project_id"], name: "index_users_on_current_project_id"
+    t.index ["current_document_id"], name: "index_users_on_current_document_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -189,13 +189,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_21_142125) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "context_references", "conversations"
-  add_foreign_key "context_references", "projects"
+  add_foreign_key "context_references", "documents"
   add_foreign_key "conversation_voices", "conversations"
   add_foreign_key "conversation_voices", "voices"
   add_foreign_key "document_chunks", "sources"
+  add_foreign_key "documents", "users"
   add_foreign_key "messages", "conversations"
-  add_foreign_key "projects", "users"
-  add_foreign_key "sources", "projects"
+  add_foreign_key "sources", "documents"
   add_foreign_key "sources", "users"
   add_foreign_key "voices", "users"
 end

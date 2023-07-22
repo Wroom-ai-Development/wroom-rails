@@ -6,11 +6,11 @@
     ) do |form| %>
         <details>
           <summary>
-            <%= form.label "Context (#{@conversation.projects.count})", style: "display: block" %>
+            <%= form.label "Context (#{@conversation.documents.count})", style: "display: block" %>
           </summary>
-          <% if @conversation.user&.projects.present? %>
+          <% if @conversation.user&.documents.present? %>
             <div id='sources' class='list'>
-              <%= form.collection_check_boxes :project_ids, @conversation.user.projects.order(:title), :id, :title, { hide_label: true } do |item| %>
+              <%= form.collection_check_boxes :document_ids, @conversation.user.documents.order(:title), :id, :title, { hide_label: true } do |item| %>
                 <div class='list-item'>
                   <%= item.check_box onchange: "this.form.submit();", class: 'checkbox' %>
                   <%= item.label %>

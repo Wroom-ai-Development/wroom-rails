@@ -3,11 +3,11 @@
 class Conversation < ApplicationRecord
   has_many :messages, dependent: :destroy
   has_many :context_references, dependent: :destroy
-  has_many :projects, through: :context_references
+  has_many :documents, through: :context_references
   has_many :usage_records, dependent: :nullify
 
-  belongs_to :project
-  has_one :user, through: :project
+  belongs_to :document
+  has_one :user, through: :document
   has_one :conversation_voice, dependent: :destroy
   has_one :voice, through: :conversation_voice
   validates :title, presence: true
@@ -16,7 +16,7 @@ class Conversation < ApplicationRecord
   enum role: { 'ready': 0, 'working': 1, 'idle': 2, 'error': 3, 'cancelled': 4 }
 
   def sources
-    projects.map(&:source)
+    documents.map(&:source)
   end
 
   def clear_status_message

@@ -65,7 +65,7 @@ body#wroom {
       display: flex;
       flex-direction: column;
     }
-    &#project-panel {
+    &#document-panel {
       width: 45%;
     }
     &#conversation-panel {
@@ -425,7 +425,7 @@ body#wroom {
       }
     }
 
-    div#edit-project {
+    div#edit-document {
       height: -webkit-fill-available;
       padding: 0;
 
@@ -456,11 +456,11 @@ body#wroom {
         padding: 3vw 3vw 3vw 1vw;
 
       }
-      form#edit-project {
+      form#edit-document {
         margin-top:3rem;
         padding: 0 3vw;
 
-        input#project_title {
+        input#document_title {
           width: -webkit-fill-available;
           margin-right: 1rem;
           font-family: 'Playfair Display', serif;
@@ -498,7 +498,7 @@ body#wroom {
       width: -webkit-fill-available;
       min-height: 1rem;
       background-color: white;
-      &#project {
+      &#document {
         display: flex;
         flex-direction: row;
         div#editor {
@@ -561,8 +561,8 @@ body#wroom {
           }
         }
 
-        &#new-project {
-          input#project_title {
+        &#new-document {
+          input#document_title {
             font-weight: 300;
             &::placeholder {
               font-weight: 100;
@@ -570,7 +570,7 @@ body#wroom {
           }
         }
 
-        &#edit-project-form {
+        &#edit-document-form {
           display: flex;
           flex-direction: column;
           
@@ -615,7 +615,7 @@ body#wroom {
     
         }
 
-        &#projects-list {
+        &#documents-list {
 
           li {
             min-height: 2rem;
@@ -631,11 +631,11 @@ body#wroom {
               form.button_to {
                 padding: 0;
               }
-              form.delete-project {
+              form.delete-document {
                 background-color: rgba(0,0,0,0) !important;
                 margin-left: 1rem;
               }
-              button.delete-project {
+              button.delete-document {
                 background-color: rgba(0,0,0,0) !important;
                 border: none;     
                 color: $wroom-red;

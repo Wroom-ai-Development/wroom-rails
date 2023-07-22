@@ -8,11 +8,11 @@ class User < ApplicationRecord
 
   has_many :sources, dependent: :destroy
   has_many :voices, dependent: :destroy
-  has_many :projects, dependent: :destroy
-  has_many :conversations, through: :projects
+  has_many :documents, dependent: :destroy
+  has_many :conversations, through: :documents
   has_many :monitoring_events, as: :trackable, dependent: :nullify
   has_many :usage_records, dependent: :nullify
-  has_one :current_project, class_name: 'Project', dependent: :nullify
+  has_one :current_document, class_name: 'Document', dependent: :nullify
   validates :email, uniqueness: true, presence: true
 
   enum role: { 'admin': 0, 'user': 1, 'supplicant': 2 }

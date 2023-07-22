@@ -2,7 +2,7 @@
 
 class Source < ApplicationRecord
   belongs_to :user
-  belongs_to :project, optional: true
+  belongs_to :document, optional: true
   has_one_attached :file
   has_many :document_chunks, dependent: :destroy
   has_many :monitoring_events, as: :trackable, dependent: :nullify
@@ -19,7 +19,7 @@ class Source < ApplicationRecord
   validate :file_or_source_url, if: -> { fileless == false }
 
   after_create_commit :log_event
-  after_create_commit :create_project
+  after_create_commit :create_document
 
   def parse_document_chunks_from_file # rubocop:disable Metrics/MethodLength
     raw_text = if file.content_type == 'application/pdf'
@@ -56,11 +56,11 @@ class Source < ApplicationRecord
 
   private
 
-  def create_project
-    return if project.present?
+  def create_document
+    return if document.present?
 
-    project = Project.create!(title: name, user_id:, source_based: true)
-    update!(project_id: project.id)
+    document = Document.create!(title: name, user_id:, source_based: true)
+    update!(document_id: document.id)
   end
 
   def file_or_source_url

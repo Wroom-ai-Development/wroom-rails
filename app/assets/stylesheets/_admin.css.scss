@@ -761,7 +761,7 @@ div.conversation-status {
   }
 }    
 
-div.view-content.edit-project {
+div.view-content.edit-document {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -775,7 +775,7 @@ div.view-content.edit-project {
       border: 1px solid $wroom-light-gray;
     }
 
-    &.project-form {
+    &.document-form {
       border: none;
       background-color: rgba(0, 0, 0, 0);
       padding: 0;

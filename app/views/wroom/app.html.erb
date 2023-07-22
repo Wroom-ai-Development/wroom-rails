@@ -5,18 +5,18 @@
     </div>
   </div>
   <div class='panel-element' id='navigation'>
-    <%= turbo_frame_tag "projects", src: projects_path %>
+    <%= turbo_frame_tag "documents", src: documents_path %>
     <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: 'sign-out' %>
     <p id='current-user'>Logged in as <%= current_user.email %></p>
   </div>
 </div>
-<% if @project %>
-  <div id="project-panel" class="panel">
-      <%= turbo_frame_tag "project_editor", src: editor_project_path(@project) %>
+<% if @document %>
+  <div id="document-panel" class="panel">
+      <%= turbo_frame_tag "document_editor", src: editor_document_path(@document) %>
   </div>
   <div id="conversation-panel" class="panel">
-    <% if @project.conversation %>
-      <%= turbo_frame_tag "conversation_frame", src: chat_conversation_path(@project.conversation) %>
+    <% if @document.conversation %>
+      <%= turbo_frame_tag "conversation_frame", src: chat_conversation_path(@document.conversation) %>
     <% end %>
   </div>
 

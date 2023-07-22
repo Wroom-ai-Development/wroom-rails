@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
   def show
     @sources = user.sources
-    @projects = user.projects
+    @documents = user.documents
   end
 
   def edit; end

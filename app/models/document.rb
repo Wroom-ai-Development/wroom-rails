@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Project < ApplicationRecord
+class Document < ApplicationRecord
   belongs_to :user
   has_one :source, dependent: :destroy
   has_one :conversation, dependent: :destroy
@@ -14,19 +14,19 @@ class Project < ApplicationRecord
   after_create_commit :create_conversation
 
   def set_up_source
-    source = Source.create!(name: title, user_id:, project_id: id, fileless: true)
+    source = Source.create!(name: title, user_id:, document_id: id, fileless: true)
     source.parse_document_chunks_from_text(content.to_plain_text)
   end
 
   private
 
   def log_event
-    monitoring_events.create!(user_id: user&.id, note: "#{user&.email} created project #{title}",
+    monitoring_events.create!(user_id: user&.id, note: "#{user&.email} created document #{title}",
                               event_type: 'create_record')
   end
 
   def create_conversation
-    Conversation.create!(title:, project_id: id)
-    ContextReference.create!(project_id: id, conversation_id: conversation.id)
+    Conversation.create!(title:, document_id: id)
+    ContextReference.create!(document_id: id, conversation_id: conversation.id)
   end
 end
