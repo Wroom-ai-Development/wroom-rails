@@ -69,7 +69,7 @@ class WroomController < ApplicationController
       Then, journey on, if not elate,
       Still, NEVER broken-hearted!
     POEM
-    source.parse_document_chunks_from_text(poem)
+    source.parse_source_chunks_from_text(poem)
   end
 
   def create_welcome_voices

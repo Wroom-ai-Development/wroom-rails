@@ -15,7 +15,7 @@ class Document < ApplicationRecord
 
   def set_up_source
     source = Source.create!(name: title, user_id:, document_id: id, fileless: true)
-    source.parse_document_chunks_from_text(content.to_plain_text)
+    source.parse_source_chunks_from_text(content.to_plain_text)
   end
 
   private

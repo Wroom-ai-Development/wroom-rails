@@ -57,7 +57,7 @@
 
   </div>
   <div class='show-record'>
-    <% if source.document_chunks.count > 1 %>
+    <% if source.source_chunks.count > 1 %>
       <% if source.truncated? %>
         <div class='truncation-notice'>
           This source exceeded our text volume limits, and has been truncated.
@@ -65,7 +65,7 @@
       <% end %>
       <div class='chunks'>
         <h3>Chunks</h3>
-        <% source.document_chunks.each do |chunk| %>
+        <% source.source_chunks.each do |chunk| %>
           <div class='chunk'>
             <details>
               <summary>
@@ -78,13 +78,13 @@
           </div>
         <% end %>
       </div>
-    <% elsif source.document_chunks.count == 1 %>
+    <% elsif source.source_chunks.count == 1 %>
     <div class='chunk'>
       <p>
-        <%= source.document_chunks.first.content %>
+        <%= source.source_chunks.first.content %>
       </p>
     </div>
-    <% elsif source.document_chunks.count == 0 %>
+    <% elsif source.source_chunks.count == 0 %>
       <%= turbo_frame_tag 'chunking_status' do %>
         <div class='chunking-status-notice'>
           <div class="lds-hourglass"></div>

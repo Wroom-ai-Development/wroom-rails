@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_22_132815) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_22_134116) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -82,17 +82,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_22_132815) do
     t.string "sidekiq_job_id"
   end
 
-  create_table "document_chunks", force: :cascade do |t|
-    t.text "section_header"
-    t.text "content", null: false
-    t.integer "ordinal_number", default: 0, null: false
-    t.bigint "source_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "token_length"
-    t.index ["source_id"], name: "index_document_chunks_on_source_id"
-  end
-
   create_table "documents", force: :cascade do |t|
     t.string "title"
     t.bigint "user_id", null: false
@@ -120,6 +109,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_22_132815) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "event_type"
+  end
+
+  create_table "source_chunks", force: :cascade do |t|
+    t.text "section_header"
+    t.text "content", null: false
+    t.integer "ordinal_number", default: 0, null: false
+    t.bigint "source_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "token_length"
+    t.index ["source_id"], name: "index_source_chunks_on_source_id"
   end
 
   create_table "sources", force: :cascade do |t|
@@ -192,9 +192,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_22_132815) do
   add_foreign_key "context_references", "documents"
   add_foreign_key "conversation_voices", "conversations"
   add_foreign_key "conversation_voices", "voices"
-  add_foreign_key "document_chunks", "sources"
   add_foreign_key "documents", "users"
   add_foreign_key "messages", "conversations"
+  add_foreign_key "source_chunks", "sources"
   add_foreign_key "sources", "documents"
   add_foreign_key "sources", "users"
   add_foreign_key "voices", "users"

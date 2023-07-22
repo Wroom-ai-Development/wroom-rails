@@ -4,7 +4,7 @@ class Source < ApplicationRecord
   belongs_to :user
   belongs_to :document, optional: true
   has_one_attached :file
-  has_many :document_chunks, dependent: :destroy
+  has_many :source_chunks, dependent: :destroy
   has_many :monitoring_events, as: :trackable, dependent: :nullify
 
   validates :name, presence: true
@@ -21,7 +21,7 @@ class Source < ApplicationRecord
   after_create_commit :log_event
   after_create_commit :create_document
 
-  def parse_document_chunks_from_file # rubocop:disable Metrics/MethodLength
+  def parse_source_chunks_from_file # rubocop:disable Metrics/MethodLength
     raw_text = if file.content_type == 'application/pdf'
                  Sources::PdfParser.new(file).parse_text
                elsif file.content_type == 'text/plain'
@@ -32,26 +32,26 @@ class Source < ApplicationRecord
                ]
                  Sources::WordParser.new(file).parse_text
                end
-    parse_document_chunks_from_text(raw_text)
+    parse_source_chunks_from_text(raw_text)
   end
 
   def clear_chunks
-    document_chunks.destroy_all
+    source_chunks.destroy_all
   end
 
-  def parse_document_chunks_from_source_url
+  def parse_source_chunks_from_source_url
     text = Sources::UrlParser.new(source_url).parse_text
-    parse_document_chunks_from_text(text)
+    parse_source_chunks_from_text(text)
   end
 
-  def parse_document_chunks_from_text(raw_text)
+  def parse_source_chunks_from_text(raw_text)
     SourceChunkingWorker.perform_async(id, raw_text)
   end
 
   def rechunk
     update!(truncated: false)
-    text = document_chunks.map(&:content).join(' ')
-    parse_document_chunks_from_text(text)
+    text = source_chunks.map(&:content).join(' ')
+    parse_source_chunks_from_text(text)
   end
 
   private

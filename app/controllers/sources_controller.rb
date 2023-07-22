@@ -21,9 +21,9 @@ class SourcesController < ApplicationController
     save_section_headers
     if @source.save
       if @source.file.attached?
-        @source.parse_document_chunks_from_file
+        @source.parse_source_chunks_from_file
       elsif @source.source_url.present?
-        @source.parse_document_chunks_from_source_url
+        @source.parse_source_chunks_from_source_url
       end
       redirect_to root_path(document_id: @source.document_id)
     else
@@ -46,11 +46,11 @@ class SourcesController < ApplicationController
         end
         if params[:source][:file].present?
           @source.clear_chunks
-          @source.parse_document_chunks_from_file
+          @source.parse_source_chunks_from_file
           @source.update!(fileless: false)
         elsif params[:source][:source_url].present?
           @source.clear_chunks
-          @source.parse_document_chunks_from_source_url
+          @source.parse_source_chunks_from_source_url
         end
 
         @source.rechunk if @source.section_headers != old_headers

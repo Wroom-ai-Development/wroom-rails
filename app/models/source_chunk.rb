@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class DocumentChunk < ApplicationRecord
+class SourceChunk < ApplicationRecord
   belongs_to :source
   validates :content, presence: true
   validates :ordinal_number, presence: true
