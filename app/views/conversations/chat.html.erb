@@ -1,8 +1,11 @@
 <%= turbo_frame_tag "conversation_frame" do %>
   <%= turbo_stream_from @conversation.id, 'conversation_status' %>
   <div id='conversation'>
-    <div id='clear-chat'>
-      <%= button_to('clear chat', clear_chat_conversation_path(conversation_id: @conversation.id), method: :delete) %>
+    <div id='settings'>
+      <%= turbo_frame_tag "conversation_settings", src: settings_conversation_path(@conversation) %>
+      <div id='clear-chat'>
+        <%= button_to('clear chat', clear_chat_conversation_path(conversation_id: @conversation.id), method: :delete) %>
+      </div>
     </div>
     <div id='messages'>
       <% if @conversation.status == 1 %>

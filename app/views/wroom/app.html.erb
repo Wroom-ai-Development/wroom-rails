@@ -1,14 +1,11 @@
-<div id="context-panel" class="panel">
+<div id="documents-panel" class="panel">
   <div class='panel-element' id='wroom-logo'>
     <div>
       <span id='wroom'>WROOM</span>
     </div>
   </div>
-    <% if @project %>
-      <%= turbo_frame_tag "conversation_settings", src: settings_conversation_path(@project.conversation) %>
-    <% end %>
   <div class='panel-element' id='navigation'>
-    <%= button_to "Library", projects_path, class: 'library-link', method: :get %>
+    <%= turbo_frame_tag "projects", src: projects_path %>
     <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: 'sign-out' %>
     <p id='current-user'>Logged in as <%= current_user.email %></p>
   </div>

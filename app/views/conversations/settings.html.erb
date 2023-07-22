@@ -4,30 +4,28 @@
       model: @conversation,
       url: update_settings_conversation_url
     ) do |form| %>
-        <div class='header'>
-          <%= form.label 'Documents', style: "display: block" %>
-          <%= link_to "New from source", new_source_path %>
-          <%= link_to "New document", new_project_path %>
-        </div>
-        <% if @conversation.user&.projects.present? %>
-          <div id='sources' class='list'>
-            <%= form.collection_check_boxes :project_ids, @conversation.user.projects.order(:title), :id, :title, { hide_label: true } do |item| %>
-              <%= link_to root_path(project_id: item.value) do %>
+        <details>
+          <summary>
+            <%= form.label "Context (#{@conversation.projects.count})", style: "display: block" %>
+          </summary>
+          <% if @conversation.user&.projects.present? %>
+            <div id='sources' class='list'>
+              <%= form.collection_check_boxes :project_ids, @conversation.user.projects.order(:title), :id, :title, { hide_label: true } do |item| %>
                 <div class='list-item'>
                   <%= item.check_box onchange: "this.form.submit();", class: 'checkbox' %>
                   <%= item.label %>
                 </div>
               <% end %>
-            <% end %>
-          </div>
-        <% end %>
+            </div>
+          <% end %>
+        </details>
         <div class='header'>
           <%= form.label 'Voice', style: "display: block" %>
+          <% if @conversation.user.voices.present? %>
+            <%= form.collection_select :voice_id, @conversation.user.voices.order(:name), :id, :name, include_blank: "None selected", selected: @conversation.voice.try(:id) %>
+          <% end %>
           <%= link_to "manage voices", voices_path %>
         </div>
-        <% if @conversation.user.voices.present? %>
-          <%= form.collection_select :voice_id, @conversation.user.voices.order(:name), :id, :name, include_blank: "None selected", selected: @conversation.voice.try(:id) %>
-        <% end %>
       </div>
       <%= form.submit style: 'display:none;' %>
     <% end %>
