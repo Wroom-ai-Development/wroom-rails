@@ -2,7 +2,7 @@
   <%= link_to root_path do %>
     <div id='left-aligned'>
       <span id='wroom'>WROOM</span>
-      <p id='current-user'><%= current_user.email %></p>
+      <p id='dashboard'>Dashboard</p>
     </div>
   <% end %>
   <nav>
@@ -14,5 +14,17 @@
         <%= link_to "Users", users_path %>
       </div>
     <% end %>
+    <% if can? :manage, Voice %>
+      <div class="link-wrapper">
+        <%= link_to "Voices", voices_path %>
+      </div>
+    <% end %>
+    <% if can? :manage, Voice %>
+      <div class="link-wrapper">
+        <%= link_to "Voices", voices_path %>
+      </div>
+    <% end %>
+    <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: 'sign-out' %>
+    <p id='current-user'><%= current_user.email %></p>
   </nav>
 </header>

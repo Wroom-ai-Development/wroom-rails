@@ -6,8 +6,8 @@
   </div>
   <div class='panel-element' id='navigation'>
     <%= turbo_frame_tag "documents", src: documents_path %>
-    <% library_path = @document ? @document.folder : root_folder_folders_path %>
-    <%= button_to "Library", library_path, class: 'library-link', method: :get %>
+    <% library_path = @document ? folder_path(@document.folder) : root_folder_folders_path %>
+    <%= button_to "Dashboard", library_path, class: 'library-link', method: :get %>
     <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: 'sign-out' %>
     <p id='current-user'>Logged in as <%= current_user.email %></p>
   </div>

@@ -1,41 +1,5 @@
-@import 'colors';
 
-html {
-  height: 100%;
-  width: 100%;
-}
 
-.turbo-progress-bar {
-  height: 2rem;
-  z-index: -500;
-  bottom: 0;
-  background-color: $wroom-baby-blue;
-}
-
-div#left-aligned {
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-
-  span#wroom {
-    font-family: 'MuseoModerno';
-    font-weight: 900;
-    font-size: 1.1rem;
-  }
-  
-  p#current-user {
-    font-size: 0.5rem;
-    padding-left: 0.5rem;
-  }
-
-  span#back {
-    color: $wroom-blue;
-    font-style: italic;
-    font-size: 0.6rem;
-    margin-right: 0.3rem;
-  }
-}
 
  body {
   font-family: 'Playfair Display', serif;
@@ -44,29 +8,6 @@ div#left-aligned {
   margin: 0;
   width: fit-content;
   min-width: 100%;
-  div#alerts {
-    position: absolute;
-    right: 1rem;
-    // background-color: $wroom-red;
-    p {
-      margin: 0;
-      padding: 0.5rem;
-      color: black;
-      font-size: 0.7rem;
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-weight: 300;
-      width: 15rem;
-      text-align: right;
-      &.notice {
-        text-decoration: underline 1px rgb(0, 212, 142);
-      }
-      &.alert {
-        text-decoration: underline 2px $wroom-red;
-      }
-
-    }
-  }
 }
 a {
   text-decoration: none;
@@ -76,264 +17,21 @@ button:hover {
   cursor: pointer;
 }
 
-header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid rgb(226, 226, 226);
-  height: 2rem;
 
-  nav {
-    display: flex;
-    font-size: 0.7rem;
-    margin-right: 1rem;
-    a {
-      margin-right: 1rem;
-      &:hover {
-        text-decoration: underline 1px $wroom-blue;
-      }
 
-      &#wroom {
-        height: 1rem;
-        width: 3.5rem;
-        // background-color: $wroom-blue;
-        border: 1px solid $wroom-blue;
-        font-weight: 900;
-        color: black;
-        padding: 0.5rem;
-        border-radius: 40px;
-        font-size: 0.7rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-    }
-    button {
-      color: $wroom-red;
-      background-color: rgba(0, 0, 0, 0);
-      font-family: 'Playfair Display', serif;
-      font-size: 0.7rem;
-      margin-right: 0.5rem;
-      border: none;
-      &:hover {
-        text-decoration: underline 1px $wroom-red;
-      }
-      padding: 0;
-    }
-  }
-}
+
+
+
+
+
 main {
   background: linear-gradient(0deg, #e3e4e6 0%, #fcfdff 40%);
   padding: 0;
   width: 100%;
   min-height: 100%;
   height: fit-content;
-  
-  div.view-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    h1 {
-      font-weight: 500;
-      font-size: 1rem;
-      margin: 0;
-      max-width: 29rem;
-      margin-top: 1rem;
-      text-align: center;
-    }
-  
-    a {
-      font-size: 0.7rem;
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      color: $wroom-blue;
-      font-weight: 300;
-      border-top: 1px solid $wroom-blue;
-      line-height: 0.7rem;
-      border-bottom: 1px solid $wroom-blue;
-      margin-top: 0.5rem;
-      padding: 0.2rem;
-    }
-  }
 
 
-
-  div.view-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 0.7rem;
-    div.index-separator {
-      font-size: 0.7rem;
-      margin-bottom: 0.5rem;
-      margin-top: 2rem;
-      font-style: italic;
-    }
-    ul.index-list {
-      width: 90vw;
-      columns: 2;
-      // display: flex;
-      // flex-direction: column;
-      // display: grid;
-      // grid-template-columns: repeat(auto-fill,minmax(20rem, 1fr));
-      // grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-      // grid-auto-rows: min-content;
-      // grid-gap: 5px;
-      margin-top: 1rem;
-      padding: 0 5vw 0 5vw;
-
-  
-      li.index-list-item {
-        padding: 0.5rem;
-        display: flex;
-        flex-direction: row;
-        // width: 25rem;
-        align-items: center;
-        justify-content: space-between;
-        border: 1px solid $wroom-light-gray;
-        font-size: 0.7rem;
-        margin-bottom: 0.5rem;
-        background-color: white;
-        height: fit-content;
-        
-        &:hover {
-          border: 1px solid $wroom-blue;
-        }
-
-        div.title {
-          width: -webkit-fill-available;
-        }
-
-        div.controls {
-          z-index: 999;
-          display: flex;
-          align-items: center;
-          a {
-            color: $wroom-blue;
-            margin-right: 0.4rem;
-          }
-        }
-  
-        button {
-          background-color: white;
-          border: none;     
-          color: $wroom-red;
-          font-size: 0.7rem;
-          font-family: 'Playfair Display', serif;
-          font-weight: 300;
-        }
-      }
-    }
-
-
-
-
-    div.chunking-status-notice {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      p {
-        margin: 0;
-        text-align: center;
-        color: $wroom-blue;
-        font-size: 0.8rem;
-      }
-    }
-
-    div.record-form {
-      width: 50rem;
-      background-color: white;
-      border: 1px solid $wroom-light-gray;
-      padding: 1rem;
-      margin-top: 1rem;
-      margin-bottom: 1rem;
-      div.validation {
-        margin-top: 1rem;
-        text-align: center;
-        font-size: 0.7rem;
-        font-style: italic;
-        div.message {
-          font-weight: 300;
-          text-decoration: underline 2px $wroom-red;
-
-        }
-        div.errors {
-          margin-top: 0.5rem;
-          div.error {
-            span.bullet {
-              color: $wroom-red;
-            }
-          }
-        }
-      }
-      div.field {
-        padding-top: 0.5rem;
-        input, select, textarea {
-          width: 100%;
-          box-sizing: border-box;
-          font-family: 'Playfair Display', serif;
-          font-size: 0.7rem;
-          padding: 0.5rem;
-        }
-        input#source_file {
-          input#file-upload-button {
-            margin-right: 1rem;
-          }
-        }
-        textarea {
-          height: 45vh;
-        }
-      }
-
-      div.lists {
-        display: flex;
-        div.checkbox-field {
-          margin-top: 1.4rem;
-          margin-right: 5rem;
-          label {
-            margin-bottom: 0.3rem;
-  
-          }
-          div.item {
-            display: flex;
-            align-items: center;
-            padding: 0.3rem;
-            input {
-              margin: 0 0.7rem 0 0;
-            }
-          }
-        }
-      }
-
-
-      label, em {
-        font-size: 0.7rem;
-        font-style: italic;
-      }
-    
-      div.actions {
-        padding: 0.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        input {
-          font-size: 0.7rem;
-          font-family: 'Playfair Display', serif;
-          font-style: italic;
-          color: $wroom-blue;
-          font-weight: 300;
-          border-top: 1px solid $wroom-blue;
-          // line-height: 0.rem;
-          border-bottom: 1px solid $wroom-blue;
-          border-left: none;
-          border-right: none;
-          background-color: rgba(0, 0, 0, 0);
-        }
-      }
-    }
-  }
 
   div#conversation-settings {
     max-width: 50rem;

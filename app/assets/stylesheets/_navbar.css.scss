@@ -1,0 +1,78 @@
+
+
+header {
+
+  font-family: 'Roboto Slab', serif;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgb(226, 226, 226);
+  height: 7vh;
+
+  div#left-aligned {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  
+    span#wroom {
+      font-family: 'MuseoModerno';
+
+      font-weight: 900;
+      font-size: 1.1rem;
+    }
+
+    p#dashboard {
+      font-family: 'MuseoModerno';
+      font-weight: 200;
+      font-size: 0.7rem;
+      padding-left: 0.5rem;
+    }
+  }
+
+  
+  nav {
+    display: flex;
+    align-items: baseline;
+    font-size: 0.7rem;
+    margin-right: 1rem;
+    a {
+      margin-right: 1rem;
+      &:hover {
+        text-decoration: underline 1px $wroom-blue;
+      }
+
+      &#wroom {
+        height: 1rem;
+        width: 3.5rem;
+        border: 1px solid $wroom-blue;
+        font-weight: 900;
+        color: black;
+        padding: 0.5rem;
+        border-radius: 40px;
+        font-size: 0.7rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    button {
+      color: $wroom-red;
+      background-color: rgba(0, 0, 0, 0);
+      font-family: 'Roboto Slab', serif;
+      font-size: 0.7rem;
+      margin-right: 0.5rem;
+      border: none;
+      &:hover {
+        text-decoration: underline 1px $wroom-red;
+      }
+      padding: 0;
+    }
+    
+    p#current-user {
+      font-size: 0.5rem;
+      font-weight: 200;
+    }
+  }
+}

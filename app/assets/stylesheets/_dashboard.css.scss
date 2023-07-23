@@ -1,0 +1,15 @@
+@import 'colors';
+@import 'navbar';
+
+html {
+  height: 100%;
+  width: 100%;
+}
+
+.turbo-progress-bar {
+  height: 2rem;
+  z-index: -500;
+  bottom: 0;
+  background-color: $wroom-baby-blue;
+}
+
