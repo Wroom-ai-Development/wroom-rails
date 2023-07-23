@@ -59,7 +59,7 @@ class Source < ApplicationRecord
   def create_document
     return if document.present?
 
-    document = Document.create!(title: name, user_id:, source_based: true)
+    document = Document.create!(title: name, user_id:, folder_id:, source_based: true)
     update!(document_id: document.id)
   end
 

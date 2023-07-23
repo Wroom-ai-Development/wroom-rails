@@ -1,8 +1,8 @@
 <header>
   <%= link_to root_path do %>
     <div id='left-aligned'>
-      <p id='current-user'>Back to</p>
       <span id='wroom'>WROOM</span>
+      <p id='current-user'><%= current_user.email %></p>
     </div>
   <% end %>
   <nav>

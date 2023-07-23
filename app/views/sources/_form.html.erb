@@ -48,7 +48,9 @@
       <%= form.label :file %>
       <%= form.file_field :file %>
     </div>
-
+    <div class='field' style='display: none;'>
+      <%= form.text_field :folder_id, value: folder_id, readonly: cannot?(:manage, User) %>
+    </div>
     <% if current_user.admin? %>
       <div class='field'>
         <%= form.label :user_id, style: "display: block" %>

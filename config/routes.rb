@@ -7,6 +7,11 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       get 'editor'
     end
   end
+  resources :folders do
+    collection do
+      get 'root_folder'
+    end
+  end
   resources :voices
   mount ActionCable.server => '/cable'
   resources :conversations, only: [] do
@@ -33,5 +38,5 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # root "articles#index"
   get '/monitoring', to: 'monitoring#index'
   get '/wroom', to: 'wroom#app'
-  root 'wroom#app'
+  root 'folders#root_folder'
 end

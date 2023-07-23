@@ -14,12 +14,18 @@ class User < ApplicationRecord
   has_many :usage_records, dependent: :nullify
   has_one :current_document, class_name: 'Document', dependent: :nullify
   validates :email, uniqueness: true, presence: true
+  has_many :folders, dependent: :destroy
+  has_one :root_folder, class_name: 'RootFolder', dependent: :destroy
 
   enum role: { 'admin': 0, 'user': 1, 'supplicant': 2 }
   after_initialize :set_default_role, if: :new_record?
 
   def set_default_role
     self.role ||= :user
+  end
+
+  def root_folder
+    folders.where(type: 'RootFolder').first_or_create!(name: 'Root')
   end
 
   after_create_commit :log_event

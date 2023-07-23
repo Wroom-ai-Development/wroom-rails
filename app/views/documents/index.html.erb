@@ -9,7 +9,7 @@
         <% @documents.each do |document| %>
             <% if can? :manage, document %>
                 <li>
-                    <%= link_to root_path(document_id: document.id) do %>
+                    <%= link_to wroom_path(document_id: document.id) do %>
                         <span><%= document.title %></span>
                     <% end %>
                 </li>

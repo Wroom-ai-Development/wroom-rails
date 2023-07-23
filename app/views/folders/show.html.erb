@@ -1,0 +1,24 @@
+<p style="color: green"><%= notice %></p>
+<h1><%= @folder.name %></h1>
+  <% unless @folder.type == 'RootFolder' %>
+    <%= link_to "Edit this folder", edit_folder_path(@folder) %>
+    <%= link_to "Back to parent", folder_path(@folder.parent) %>
+    <%= button_to "Destroy this folder", folder_path(@folder), method: :delete %>
+
+  <% end %>
+  <%#= button_to "Destroy this folder", @folder, method: :delete %>
+  <%= link_to "New folder", new_folder_path(parent_id: @folder.id) %>
+  <% @folder.children.each do |folder| %>
+    <p>
+      <%= link_to folder.name, folder %>
+    </p>
+  <% end %>
+  <%= link_to "blank", new_document_path(folder_id: @folder.id) %>
+  <%= link_to "from source", new_source_path(folder_id: @folder.id) %>
+  <% @folder.documents.each do |document| %>
+    <p>
+      <%= link_to document.title, wroom_path(document_id: document.id) %>
+    </p>
+  <% end %>
+
+</div>

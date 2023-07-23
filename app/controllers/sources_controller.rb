@@ -10,6 +10,7 @@ class SourcesController < ApplicationController
   # GET /sources/new
   def new
     @source = Source.new
+    @folder_id = params[:folder_id] || current_user.root_folder.id
   end
 
   # GET /sources/1/edit
@@ -25,7 +26,7 @@ class SourcesController < ApplicationController
       elsif @source.source_url.present?
         @source.parse_source_chunks_from_source_url
       end
-      redirect_to root_path(document_id: @source.document_id)
+      redirect_to wroom_path(document_id: @source.document_id)
     else
       respond_to do |format|
         format.html { render :new, status: :unprocessable_entity }
@@ -83,7 +84,7 @@ class SourcesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def source_params
     params.require(:source).permit(:name, :title, :author, :year_published, :user_id, :file, :text_category,
-                                   :source_url, :section_headers)
+                                   :source_url, :section_headers, :folder_id)
   end
 
   def save_section_headers

@@ -16,7 +16,7 @@
     <h4>Conversations</h4>
     <% @documents.each do |document| %>
       <p>
-        <%= link_to document.title, root_path(document_id: document.id) %>
+        <%= link_to document.title, wroom_path(document_id: document.id) %>
       </p>
     <% end %>
         <h4>Voices</h4>

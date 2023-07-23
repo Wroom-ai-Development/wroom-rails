@@ -35,10 +35,14 @@
           <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
         </div>
       <% end %>
+      <div class='field' style='display: none;'>
+        <%= form.text_field :folder_id, value: @folder_id, readonly: cannot?(:manage, User) %>
+      </div>
       <div class='field'>
         <%= form.submit %>
       </div>
 
     <% end %>
+
   </div>
 </div>

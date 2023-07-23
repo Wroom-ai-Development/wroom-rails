@@ -15,7 +15,7 @@ class ConversationsController < ApplicationController
     @conversation.messages.create!(content: params[:content], role: 'user')
     sidekiq_job_id = AnswerFetchingWorker.perform_async(@conversation.id)
     @conversation.update!(sidekiq_job_id:)
-    redirect_to root_path(document_id: @conversation.document_id), status: :see_other
+    redirect_to wroom_path(document_id: @conversation.document_id), status: :see_other
   end
 
   def delete_message
@@ -24,19 +24,19 @@ class ConversationsController < ApplicationController
 
     authorize! :edit, conversation
     message.destroy
-    redirect_to root_path, status: :see_other
+    redirect_to wroom_path, status: :see_other
   end
 
   def cancel_processing
     @conversation.messages.last.destroy!
     @conversation.cancel_processing
-    redirect_to root_path, status: :see_other
+    redirect_to wroom_path, status: :see_other
   end
 
   def clear_chat
     authorize! :edit, @conversation
     @conversation.messages.destroy_all
-    redirect_to root_path, status: :see_other
+    redirect_to wroom_path, status: :see_other
   end
 
   def settings; end
@@ -48,7 +48,7 @@ class ConversationsController < ApplicationController
     else
       @conversation.conversation_voice&.destroy
     end
-    redirect_to root_path(document_id: @conversation.document_id), status: :see_other
+    redirect_to wroom_path(document_id: @conversation.document_id), status: :see_other
   end
 
   private

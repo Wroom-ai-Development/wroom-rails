@@ -15,6 +15,8 @@ class Ability
 
     can(:manage, Voice, user:)
     can :manage, Conversation, user:
+    can(:manage, Folder, user:)
+    can(:manage, RootFolder, user:)
 
     # Define abilities for the user here. For example:
     #

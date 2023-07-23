@@ -2,6 +2,7 @@
 
 class Document < ApplicationRecord
   belongs_to :user
+  belongs_to :folder
   has_one :source, dependent: :destroy
   has_one :conversation, dependent: :destroy
   has_many :context_references, dependent: :destroy

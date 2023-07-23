@@ -22,6 +22,7 @@ class DocumentsController < ApplicationController
   # GET /documents/new
   def new
     @document = Document.new
+    @folder_id = params[:folder_id] || current_user.root_folder.id
   end
 
   def autosave
@@ -35,7 +36,7 @@ class DocumentsController < ApplicationController
     @document = Document.create!(document_params)
     respond_to do |format|
       if @document.save
-        format.html { redirect_to root_path(document_id: @document.id) }
+        format.html { redirect_to wroom_path(document_id: @document.id) }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -48,7 +49,7 @@ class DocumentsController < ApplicationController
     @document.destroy!
     current_user.update!(current_document_id: nil)
 
-    redirect_to root_path, status: :see_other
+    redirect_to wroom_path, status: :see_other
   end
 
   private
@@ -60,6 +61,6 @@ class DocumentsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def document_params
-    params.require(:document).permit(:title, :content, :user_id)
+    params.require(:document).permit(:title, :content, :user_id, :folder_id)
   end
 end
