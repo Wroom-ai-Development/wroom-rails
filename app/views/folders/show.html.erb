@@ -4,12 +4,12 @@
       const options = document.getElementsByClassName('options')[0];
       const button = document.getElementsByClassName('button')[0];
       const outside = document.getElementsByClassName('outside')[0];
-      options.style.display = 'block';
+      options.style.display = 'flex';
       outside.style.display = 'block';
       outside.addEventListener('click', (e) => {
         options.style.display = 'none';
         button.style.display = 'block';
-        outside.style.display = 'none';
+        outside.style.display = 'flex';
       })
     }
   </script>
@@ -17,16 +17,13 @@
     <div class="ui-column">
       <div class="new">
         <div class="button" onClick="toggleNewOptions();">
-          New
+          ✙
         </div>
       </div>
       <div class="options" style="display: none;">
         <%= link_to "New folder", new_folder_path(parent_id: @folder.id), data: { turbo_frame: '_top' } %>
-        <details>
-          <summary>New document</summary>
-          <%= link_to "blank", new_document_path(folder_id: @folder.id), data: { turbo_frame: '_top' } %>
-          <%= link_to "from source", new_source_path(folder_id: @folder.id), data: { turbo_frame: '_top' } %>
-        </details>
+        <%= link_to "New document", new_document_path(folder_id: @folder.id), data: { turbo_frame: '_top' } %>
+        <%= link_to "Upload document", new_source_path(folder_id: @folder.id), data: { turbo_frame: '_top' } %>
       </div>
     </div>
     <div class="content-column">

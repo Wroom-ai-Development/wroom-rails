@@ -1,8 +1,10 @@
-<div class='view-header'>
-  <h1>New document</h1>
-</div>
-<div class='view-content'>
-  <div class="record-form">
+<div id="record-form-view">
+  <div id="record-form-box">
+    <div id="header">
+      <h3>New document</h3>
+      <%= link_to "❌", root_path %>
+    </div>
+
     <%= form_with(
       model: @document
     ) do |form| %>
@@ -19,27 +21,15 @@
         </div>
       <% end %>
 
-      <div class='field'>
-        <%= form.label :title, style: "display: block" %>
-        <%= form.text_field :title, { onchange: action_name == 'new' ? '' : 'this.form.submit()' } %>
-      </div>
-
-      <% if current_user.admin? %>
-        <div class='field'>
-          <%= form.label :user_id, style: "display: block" %>
-          <%= form.collection_select :user_id, User.all, :id, :email, { selected: action_name == 'new' ? current_user.id : @document.user_id , readonly: true } %>
-        </div>
-      <% else %>
-        <div class='field' style='display: none;'>
-          <%= form.label :user_id, style: "display: block" %>
-          <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
-        </div>
-      <% end %>
       <div class='field' style='display: none;'>
         <%= form.text_field :folder_id, value: @folder_id, readonly: cannot?(:manage, User) %>
       </div>
-      <div class='field'>
-        <%= form.submit %>
+      <div class='field-with-submit'>
+        <%= form.text_field :title %>
+        <%= form.submit 'Confirm' %>
+      </div>
+      <div class='field' style='display: none;'>
+        <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
       </div>
 
     <% end %>

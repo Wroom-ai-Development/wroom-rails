@@ -95,7 +95,7 @@ div#folder-explorer {
 
             color: $wroom-blue;
             background-color: white;
-            padding: 1rem;
+            padding: 1rem 1.2rem;
             border-radius: 10px;
             text-align: center;
             &:hover {
@@ -119,29 +119,14 @@ div#folder-explorer {
         padding: 1rem;
         border-radius: 10px;
         border: 1px solid $wroom-gray;
+        display: flex;
         a {
           color: $wroom-blue;
           margin-top: 0.5rem;
+          white-space: nowrap;
+          display: flex;
           &:hover {
             text-decoration: underline 1px $wroom-blue;
-          }
-        }
-        details {
-          margin-top: 0.5rem;
-          display: flex;
-          flex-direction: column;
-          summary {
-            list-style: none;
-            white-space: nowrap;
-            color: $wroom-blue;
-
-            &:hover {
-              text-decoration: underline 1px $wroom-blue;
-              cursor: pointer;
-            }
-          }
-          a {
-            margin-left: 0.5rem;
           }
         }
       }
