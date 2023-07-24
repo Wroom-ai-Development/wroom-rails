@@ -31,7 +31,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     registrations: 'registrations',
     sessions: 'sessions'
   }
-  resources :users, except: %i[new create]
+  resources :users, except: %i[new create index]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

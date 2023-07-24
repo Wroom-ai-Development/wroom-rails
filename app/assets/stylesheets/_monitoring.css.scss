@@ -1,0 +1,62 @@
+@import 'colors';
+
+div.monitoring {
+  padding-right: 3rem;
+  align-items: flex-start;
+  width: 97vw;
+  overflow-x: scroll;
+
+  overflow-y: scroll;
+  
+  color: #ffd9d9;
+  background: #2d2a67;
+  height: -webkit-fill-available;
+  margin: 0;
+  div.lists {
+    display: flex;
+    // width: fit-content;
+    padding: 0 0 0 1rem;
+
+      h4, h5, h6 {
+        font-family: 'MuseoModerno';
+        color: #7d79c0;
+      }
+      
+      h4 {
+        margin: 2rem 0 0.5rem 0.1rem;
+      }
+
+      h6 {
+        font-family: 'Inconsolata', monospace;
+        font-size: 0.9rem;
+        margin: 0;
+      }
+      ul {
+        font-family: 'Inconsolata', monospace;
+        columns: 1;
+        width: 14rem;
+        margin: 0 2rem 0 0;
+        padding: 0;
+        li {
+          background-color: rgb(20, 23, 67);
+          width: 100%;
+          font-size: 0.8rem;
+          padding: 0.5rem;
+          margin-bottom: 0.4rem;
+          font-weight: 700;
+          line-height: 1rem;
+          border-radius: 5px;
+          list-style-type: none;
+
+          div.note {
+            color: #e97070;
+          }
+
+          div.timestamp {
+
+          }
+        }
+
+      }
+  }
+}

@@ -1,13 +1,10 @@
 @import 'colors';
 @import 'mixins';
 
-body {
-  -webkit-animation-delay: 0.1s;
-  -webkit-animation-name: fontfix;
-  -webkit-animation-duration: 0.1s;
-  -webkit-animation-iteration-count: 1;
-  -webkit-animation-timing-function: linear;
-}
+@import 'conversation_hourglass';
+
+@import 'actiontext.css';
+
 
 @-webkit-keyframes fontfix {
   from { opacity: 1; }
@@ -16,12 +13,12 @@ body {
 
 body#wroom {
   display: flex;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Roboto Slab', serif;
   overflow: hidden;
 
   button.library-link {
     border: none;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Roboto Slab', serif;
     padding: 0.2rem 0.1rem;
     align-self: flex-end;
     font-size: 0.7rem;
@@ -35,7 +32,7 @@ body#wroom {
   }
   button.sign-out {
     border: none;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Roboto Slab', serif;
     padding: 0.2rem 0.1rem;
     font-size: 0.7rem;
     background-color: rgba(0, 0, 0, 0);
@@ -128,7 +125,7 @@ body#wroom {
       button.link {
         padding: 0;
         border: none;
-        font-family: 'Playfair Display', serif;
+        font-family: 'Roboto Slab', serif;
         color: $wroom-blue;
         font-style: italic;
         background-color: rgba(0, 0, 0, 0);
@@ -149,7 +146,7 @@ body#wroom {
       select {
         width: -webkit-fill-available;
         height: 2rem;
-        font-family: 'Playfair Display', serif;
+        font-family: 'Roboto Slab', serif;
         font-size: 0.7rem;
         border: none;
         border-bottom: 1px solid $wroom-light-gray;
@@ -228,7 +225,7 @@ body#wroom {
           text-align: center;
           font-style: italic;
           color: $wroom-red;
-          font-family: 'Playfair Display', serif;
+          font-family: 'Roboto Slab', serif;
           background-color: rgba(0, 0, 0, 0);
           border: none;
           &:hover {
@@ -247,7 +244,7 @@ body#wroom {
           border: none;
           flex-grow: 1;
           padding: 0.5rem 0 0 0.5rem;
-          font-family: 'Playfair Display', serif;
+          font-family: 'Roboto Slab', serif;
           font-style: italic;
           font-size: 0.7rem;
           &::placeholder {
@@ -314,7 +311,7 @@ body#wroom {
               text-align: center;
               font-style: italic;
               color: $wroom-red;
-              font-family: 'Playfair Display', serif;
+              font-family: 'Roboto Slab', serif;
               background-color: rgba(0, 0, 0, 0);
               border: none;
               &:hover {
@@ -463,7 +460,7 @@ body#wroom {
         input#document_title {
           width: -webkit-fill-available;
           margin-right: 1rem;
-          font-family: 'Playfair Display', serif;
+          font-family: 'Roboto Slab', serif;
           font-size: 1rem;
           font-weight: 500;
           background-color: white;
@@ -481,7 +478,7 @@ body#wroom {
         // padding-right: 1rem;
         border: none;
 
-        font-family: 'Playfair Display', serif;
+        font-family: 'Roboto Slab', serif;
         color: $wroom-blue;
         font-style: italic;
         background-color: rgba(0, 0, 0, 0);
@@ -536,7 +533,7 @@ body#wroom {
         width: -webkit-fill-available;
         
         input {
-          font-family: 'Playfair Display', serif;
+          font-family: 'Roboto Slab', serif;
           font-style: italic;
           width: 60%;
           border: none;
@@ -640,7 +637,7 @@ body#wroom {
                 border: none;     
                 color: $wroom-red;
                 font-size: 1rem;
-                font-family: 'Playfair Display', serif;
+                font-family: 'Roboto Slab', serif;
                 font-weight: 300;
                 padding: 0;
               }

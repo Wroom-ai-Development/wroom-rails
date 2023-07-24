@@ -1,15 +1,18 @@
 @import 'colors';
 @import 'navbar';
-
-html {
-  height: 100%;
-  width: 100%;
-}
+@import 'monitoring';
 
 .turbo-progress-bar {
-  height: 2rem;
+  height: 6%;
   z-index: -500;
   bottom: 0;
   background-color: $wroom-baby-blue;
 }
 
+a {
+  text-decoration: none;
+  color: black;
+}
+button:hover {
+  cursor: pointer;
+}

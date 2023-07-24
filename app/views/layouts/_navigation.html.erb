@@ -10,14 +10,6 @@
       <div class="link-wrapper">
         <%= link_to "Monitoring", monitoring_path %>
       </div>
-      <div class="link-wrapper">
-        <%= link_to "Users", users_path %>
-      </div>
-    <% end %>
-    <% if can? :manage, Voice %>
-      <div class="link-wrapper">
-        <%= link_to "Voices", voices_path %>
-      </div>
     <% end %>
     <% if can? :manage, Voice %>
       <div class="link-wrapper">
