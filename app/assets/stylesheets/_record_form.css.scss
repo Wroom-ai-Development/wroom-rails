@@ -42,7 +42,7 @@ div#record-form-view {
 
     form {
       margin-top: 1rem;
-      input[type='text'], input[type='number'] {
+      input[type='text'], input[type='number'], textarea {
         width: 100%;
         border: 1px solid $wroom-gray;
         height: 2rem;
@@ -55,6 +55,10 @@ div#record-form-view {
           outline: none;
           border: 1px solid $wroom-blue;
         }
+      }
+
+      textarea {
+        height: 10rem;
       }
 
       input[type='submit'] {

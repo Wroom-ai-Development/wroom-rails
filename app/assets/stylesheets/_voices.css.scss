@@ -4,9 +4,15 @@ div.voices {
   align-items: center;
   
   h3 {
-    padding: 1rem 0 1rem 0;
+    padding: 1rem 0 0.5rem 0;
     margin: 0;
     font-size: 1rem;
+  }
+
+  a.new-voice {
+    font-size: 1.2rem;
+    color: $wroom-blue;
+    margin-bottom: 1rem;
   }
 
   div.voice {
@@ -25,7 +31,7 @@ div.voices {
       flex-direction: row;
       a, button {
         font-family: 'Roboto Slab', serif;
-        font-size: 0.7rem;
+        font-size: 1rem;
         background-color: white;
         color: $wroom-blue;
         margin: 0;

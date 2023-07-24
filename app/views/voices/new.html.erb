@@ -1,7 +1,9 @@
-<div class='view-header'>
-  <h1>New voice</h1>
+<div id="record-form-view">
+  <div id="record-form-box">
+    <div id="header">
+      <h3>New voice</h3>
+      <%= link_to "❌", voices_path %>
+    </div>
+    <%= render "form", voice: @voice %>
+  </div>
 </div>
-<div class='view-content'>
-  <%= render "form", voice: @voice %>
-</div>
-

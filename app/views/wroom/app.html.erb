@@ -1,3 +1,20 @@
+<script>
+  function toggleLeftPanel() {
+    console.log("yay")
+    const panel = document.getElementById('documents-panel')
+    const button = document.getElementById('collapse-button')
+    if (panel.style.display == 'none') {
+      panel.style.display = 'flex'
+      button.innerHTML = '⮨'
+    } else {
+      panel.style.display = 'none'
+      button.innerHTML = '⮩'
+    }
+  }
+</script>
+<div id="collapse-button" onClick=toggleLeftPanel()>
+  ⮨
+</div>
 <div id="documents-panel" class="panel">
   <div class='panel-element' id='wroom-logo'>
     <div>
@@ -5,11 +22,11 @@
     </div>
   </div>
   <div class='panel-element' id='navigation'>
-    <%= turbo_frame_tag "documents", src: documents_path %>
     <% library_path = @document ? folder_path(@document.folder) : root_folder_folders_path %>
     <%= button_to "Dashboard", explorer_folder_path(id: @document.folder.id), class: 'library-link', method: :get %>
-    <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: 'sign-out' %>
-    <p id='current-user'>Logged in as <%= current_user.email %></p>
+  </div>
+  <div id="documents">
+    <%= render 'tree_folder', folder: current_user.root_folder %>
   </div>
 </div>
 <% if @document %>

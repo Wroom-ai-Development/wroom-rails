@@ -1,5 +1,6 @@
 <div class='voices'>
   <h3>Voices</h3>
+  <%= link_to "✙", new_voice_path, class: 'new-voice' %>
   <% current_user.voices.order(:name).each do |voice| %>
     <div class='voice'>
       <%= link_to voice.name, edit_voice_path(voice) %>
