@@ -1,0 +1,69 @@
+@import 'colors';
+
+div#record-form-view {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  font-size: 0.7rem;
+
+  div#record-form-box {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin-top: 1rem;
+    width: 50vw;
+    padding: 1rem;
+    border: 1px solid $wroom-light-gray;
+
+    div#header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+
+      h3 {
+        margin: 0;
+        font-size: 0.8rem;
+      }
+      a {
+        color: $wroom-red;
+        font-size: 0.6rem;
+      }
+    }
+
+    form {
+      margin-top: 1rem;
+      input[type='text'] {
+        width: 100%;
+        border: 1px solid $wroom-gray;
+        height: 2rem;
+        padding: 0.5rem;
+        box-sizing: border-box;
+        border-radius: 5px;
+        font-family: 'Roboto Slab', serif;
+
+        &:focus {
+          outline: none;
+          border: 1px solid $wroom-blue;
+        }
+      }
+
+      input[type='submit'] {
+        font-family: 'Roboto Slab', serif;
+        background-color: white;
+        border: none;
+        color: $wroom-blue;
+        font-size: 0.7rem;
+      }
+
+      div.field-with-submit {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+  }
+}

@@ -41,19 +41,25 @@
       </div>
       <div class="content">
         <% unless @folder.type == 'RootFolder' %>
-          <div class="item">
-            <span class='icon'>📁 </span><%= link_to "..", folder_path(@folder.parent) %>
-          </div>
+          <%= link_to folder_path(@folder.parent) do %>
+            <div class="item">
+              <span class='icon'>📁 </span>..
+            </div>
+          <% end %>
         <% end %>
         <% @folder.children.each do |folder| %>
-          <div class="item">
-            <span class='icon'>📁 </span><%= link_to folder.name, folder %>
-          </div>
+          <%= link_to folder do %>
+            <div class="item">
+              <span class='icon'>📁 </span><%= folder.name %>
+            </div>
+          <% end %>
         <% end %>
         <% @folder.documents.each do |document| %>
-          <div class="item">
-            <span class='icon'>📄</span> <%= link_to document.title, wroom_path(document_id: document.id), data: { turbo_frame: '_top' } %>
-          </div>
+          <%= link_to wroom_path(document_id: document.id), data: { turbo_frame: '_top' } do %>
+            <div class="item">
+              <span class='icon'>📄</span><%= document.title %>
+            </div>
+          <% end %>
         <% end %>
       </div>
     </div>

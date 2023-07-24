@@ -23,16 +23,14 @@ class FoldersController < ApplicationController
   def edit; end
 
   # POST /folders or /folders.json
-  def create # rubocop:disable Metrics/MethodLength
+  def create
     @folder = Folder.new(folder_params)
     @folder.type = 'Folder'
     respond_to do |format|
       if @folder.save
-        format.html { redirect_to folder_url(@folder), notice: 'Folder was successfully created.' }
-        format.json { render :show, status: :created, location: @folder }
+        format.html { redirect_to explorer_folder_url(@folder) }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @folder.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -41,11 +39,9 @@ class FoldersController < ApplicationController
   def update
     respond_to do |format|
       if @folder.update(folder_params)
-        format.html { redirect_to folder_url(@folder), notice: 'Folder was successfully updated.' }
-        format.json { render :show, status: :ok, location: @folder }
+        format.html { redirect_to explorer_folder_url(@folder) }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @folder.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -58,7 +54,6 @@ class FoldersController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to folder_url(Folder.find(parent_id)) }
-      format.json { head :no_content }
     end
   end
 

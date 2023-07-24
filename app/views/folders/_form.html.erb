@@ -10,18 +10,12 @@
       </ul>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :name, style: "display: block" %>
+  <div class="field-with-submit">
     <%= form.text_field :name %>
+    <%= form.submit 'Confirm' %>
   </div>
-  <div class='field' style='display: none;'>
+  <div style='display: none;'>
     <%= form.text_field :parent_id, value: parent_id, readonly: cannot?(:manage, User) %>
-  </div>
-  <div class='field' style='display: none;'>
     <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
-  </div>
-  <div>
-    <%= form.submit %>
   </div>
 <% end %>
