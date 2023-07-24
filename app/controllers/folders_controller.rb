@@ -6,9 +6,9 @@ class FoldersController < ApplicationController
 
   # GET /folders/1 or /folders/1.json
 
-  def root_folder
-    @folder = current_user.root_folder
-    render :show
+  def explorer
+    @root_folder = current_user.root_folder
+    @current_folder = params[:id].present? ? Folder.find(params[:id]) : @root_folder
   end
 
   def show; end

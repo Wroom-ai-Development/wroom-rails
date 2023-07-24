@@ -1,6 +1,7 @@
 @import 'colors';
 @import 'navbar';
 @import 'monitoring';
+@import 'folder_explorer';
 
 .turbo-progress-bar {
   height: 6%;
@@ -15,4 +16,13 @@ a {
 }
 button:hover {
   cursor: pointer;
+}
+
+main {
+  height: 92.9vh;
+  font-family: 'Roboto Slab', serif;
+  font-weight: 300;
+  font-size: 0.9rem;
+  background-color: $wroom-lighter-gray;
+  color: $wroom-dark-gray;
 }

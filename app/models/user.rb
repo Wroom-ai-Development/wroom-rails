@@ -25,7 +25,7 @@ class User < ApplicationRecord
   end
 
   def root_folder
-    folders.where(type: 'RootFolder').first_or_create!(name: 'Root')
+    folders.where(type: 'RootFolder').first_or_create!(name: '/')
   end
 
   after_create_commit :log_event

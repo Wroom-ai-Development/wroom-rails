@@ -8,8 +8,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
   end
   resources :folders do
-    collection do
-      get 'root_folder'
+    member do
+      get 'explorer'
     end
   end
   resources :voices
@@ -38,5 +38,5 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # root "articles#index"
   get '/monitoring', to: 'monitoring#index'
   get '/wroom', to: 'wroom#app'
-  root 'folders#root_folder'
+  root 'folders#explorer'
 end

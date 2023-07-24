@@ -1,0 +1,19 @@
+<script>
+  function displayChildren(id) {
+    console.log("yay")
+    const children = document.getElementById(id).children[1]
+    if (children.style.display == 'flex')
+      children.style.display = 'none';
+    else
+    children.style.display = 'flex';
+  }
+</script>
+<div id='folder-explorer'>
+  <div id='folder-tree'>
+    <%= render 'tree_folder', folder: @root_folder %>
+  </div>
+
+  <div id='current-folder'>
+    <%= turbo_frame_tag "current_folder", src: folder_path(@current_folder) %>
+  </div>
+</div>
