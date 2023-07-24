@@ -1,6 +1,9 @@
-<div class='view-header'>
-  <h1>Document metadata</h1>
-</div>
-<div class='view-content'>
-  <%= render "form", source: @source, folder_id: @source.folder_id %>
+<div id="record-form-view">
+  <div id="record-form-box">
+    <div id="header">
+      <h3>Document metadata</h3>
+      <%= link_to "❌", wroom_path(@source.document) %>
+    </div>
+    <%= render "form", source: @source, folder_id: @source.document.folder_id %>
+  </div>
 </div>
