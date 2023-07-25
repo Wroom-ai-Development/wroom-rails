@@ -7,6 +7,7 @@
 
 @import 'documents';
 @import 'source';
+@import 'context';
 
 
 @-webkit-keyframes fontfix {
@@ -30,11 +31,11 @@ body#wroom {
     button.library-link {
       border: none;
       font-family: 'Roboto Slab', serif;
-      padding: 1rem;
+      width: 100%;
+      padding: 0.5rem 1rem;
       align-self: flex-end;
       font-size: 0.8rem;
       color: $wroom-blue;
-      margin: 0 0.5rem;
       background-color: white;
       border-radius: 10px;
       &:hover {
@@ -239,7 +240,7 @@ body#wroom {
     }
 
     div#chat {
-      height: 97%;
+      height: 98%;
       display: flex;
       flex-direction: column;
       border-radius: 10px;
@@ -582,7 +583,7 @@ body#wroom {
         font-family: 'MuseoModerno';
     
         font-weight: 900;
-        font-size: 1rem;
+        font-size: 1.5rem;
         color: black;
       }
     }

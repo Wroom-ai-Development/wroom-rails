@@ -16,7 +16,7 @@ class Conversation < ApplicationRecord
   enum role: { 'ready': 0, 'working': 1, 'idle': 2, 'error': 3, 'cancelled': 4 }
 
   def sources
-    documents.map(&:source)
+    documents.map(&:source).compact
   end
 
   def clear_status_message

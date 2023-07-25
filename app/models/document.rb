@@ -6,6 +6,7 @@ class Document < ApplicationRecord
   has_one :source, dependent: :destroy
   has_one :conversation, dependent: :destroy
   has_many :context_references, dependent: :destroy
+  has_many :documents, through: :context_references
 
   validates :title, presence: true
   has_rich_text :content
@@ -14,9 +15,12 @@ class Document < ApplicationRecord
   after_create_commit :log_event
   after_create_commit :create_conversation
 
-  def set_up_source
+  def refresh_source
+    return if content.body.blank?
+
+    Source.where(document_id: id).destroy_all
     source = Source.create!(name: title, user_id:, document_id: id, fileless: true)
-    source.parse_source_chunks_from_text(content.to_plain_text)
+    source.parse_source_chunks_from_text(content.body.to_plain_text)
   end
 
   private

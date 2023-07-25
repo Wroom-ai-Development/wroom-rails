@@ -2,11 +2,22 @@
 
 class ConversationsController < ApplicationController
   before_action :set_conversation,
-                only: %i[settings update_settings chat
+                only: %i[settings update_settings chat context toggle_context
                          new_message clear_chat cancel_processing]
 
   def chat
     @conversation.user.conversations.where.not(id: @conversation.id).map(&:cancel_processing)
+  end
+
+  def context; end
+
+  def toggle_context
+    @document = Document.find(params[:document_id])
+    if @conversation.documents.include?(@document)
+      @conversation.documents.delete(@document)
+    else
+      @conversation.documents << @document
+    end
   end
 
   def new_message
@@ -28,7 +39,7 @@ class ConversationsController < ApplicationController
   end
 
   def cancel_processing
-    @conversation.messages.last.destroy!
+    @conversation.messages.last.destroy! if @conversation.messages.any? && @conversation.messages.last.role == 'user'
     @conversation.cancel_processing
     redirect_to wroom_path, status: :see_other
   end

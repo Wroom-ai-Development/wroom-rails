@@ -1,4 +1,3 @@
-<%= turbo_stream_from source.id, 'chunking_status' %>
 
 <div id='source'>
   <h3><%= source.name || source.title || "Untitled" %></h3>
@@ -39,39 +38,22 @@
     <%= link_to "Edit metadata", edit_source_path(@document.source) %>
   </div>
   <div class='chunks'>
-    <% if source.source_chunks.count > 1 %>
       <% if source.truncated? %>
         <div class='truncation-notice'>
           This source exceeded our text volume limits, and has been truncated.
         </div>
       <% end %>
-        <% source.source_chunks.each do |chunk| %>
-          <div class='chunk'>
-            <details>
-              <summary>
-                <%= "Chunk #{chunk.ordinal_number + 1}: #{chunk.section_header.strip}" %>
-              </summary>
-              <p>
-                <%= chunk.content %>
-              </p>
-            </details>
-          </div>
-        <% end %>
-    <% elsif source.source_chunks.count == 1 %>
-    <div class='chunk'>
-      <p>
-        <%= source.source_chunks.first.content %>
-      </p>
-    </div>
-    <% elsif source.source_chunks.count == 0 %>
-      <%= turbo_frame_tag 'chunking_status' do %>
-        <div class='chunking-status-notice'>
-          <div class="lds-hourglass"></div>
-          <p><i>processing your source...</i></p>
-          <p><i>if you experience a delay of more than a few seconds, </i></p>
-          <p><i>try reloading the page<i></p>
+      <% source.source_chunks.each do |chunk| %>
+        <div class='chunk'>
+          <details>
+            <summary>
+              <%= "Chunk #{chunk.ordinal_number + 1}: #{chunk.section_header.strip}" %>
+            </summary>
+            <p>
+              <%= chunk.content %>
+            </p>
+          </details>
         </div>
       <% end %>
-    <% end %>
   </div>
 </div>

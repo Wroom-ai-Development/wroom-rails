@@ -23,7 +23,9 @@ module Conversations
     def initialize(conversation) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       @conversation = conversation
       @user = conversation.user
-      @conversation.document.set_up_source unless @conversation.document.source_based
+      @conversation.documents.each do |document|
+        document.refresh_source unless document.source_based
+      end
       @sources = conversation.sources
       @last_user_question = @conversation.messages.where(role: 'user').last.content
       @conversation_messages = @conversation.messages.order(:created_at).reject do |m|

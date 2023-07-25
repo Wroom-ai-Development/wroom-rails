@@ -104,7 +104,7 @@ RSpec.describe '/sources', type: :request do
         source = Source.create! valid_attributes
         patch source_url(source), params: { source: new_attributes }
         source.reload
-        expect(response).to redirect_to(source_url(source))
+        expect(response).to redirect_to(wroom_url(source.document))
       end
     end
 

@@ -18,11 +18,13 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     member do
       post 'new_message'
       get 'chat'
+      get 'context'
       delete 'delete_message'
       get 'settings'
       patch 'update_settings'
       delete 'clear_chat'
       get 'cancel_processing'
+      patch 'toggle_context'
     end
   end
   resources :sources, except: [:index]

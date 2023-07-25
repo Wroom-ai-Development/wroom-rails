@@ -45,7 +45,8 @@ class Source < ApplicationRecord
   end
 
   def parse_source_chunks_from_text(raw_text)
-    SourceChunkingWorker.perform_async(id, raw_text)
+    source_chunks.destroy_all
+    Sources::SemanticChunker.new(self, raw_text).create_chunks
   end
 
   def rechunk
