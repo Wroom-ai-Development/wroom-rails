@@ -30,6 +30,20 @@ class User < ApplicationRecord
 
   after_create_commit :log_event
 
+  def reonboard
+    documents.destroy_all
+    folders.destroy_all
+    voices.destroy_all
+    create_welcome_records
+  end
+
+  def create_welcome_records
+    create_welcome_document
+    create_welcome_source
+    create_welcome_voices
+    update!(onboarded: true)
+  end
+
   private
 
   def log_event
@@ -40,10 +54,8 @@ class User < ApplicationRecord
     )
   end
 
-  def create_welcome_records
-    create_welcome_source
-    create_welcome_voices
-    update!(onboarded: true)
+  def create_welcome_document
+    documents.create!(title: 'Welcome to Wroom', folder: root_folder)
   end
 
   def create_welcome_source # rubocop:disable Metrics/MethodLength
@@ -81,12 +93,12 @@ class User < ApplicationRecord
   end
 
   def create_welcome_voices
-    voices = [
+    new_voices = [
       ['Pirate', 'Speak like a pirate'],
       ['Worried mother', 'Speak like a mother who is constantly worried about her child.'],
       ['Hepcat', 'Speak like a hepcat']
     ]
-    voices.each do |voice|
+    new_voices.each do |voice|
       voices.create(name: voice[0], meta_prompt: voice[1])
     end
   end
