@@ -1,70 +1,50 @@
 <%= turbo_stream_from source.id, 'chunking_status' %>
-<div class='view-header'>
-  <h1><%= source.name || source.title || "Untitled" %></h1>
-  <%= link_to "Edit", edit_source_path(source) %>
-</div>
-<div class='view-content'>
-  <div class='show-record'>
-    <table>
-      <tr>
-        <td class='left'>Name:</td>
-        <td class='right'><%= source.name %></td>
-      </tr>
-      <tr>
-        <td class='left'>Title:</td>
-        <td class='right'><%= source.title %></td>
-      </tr>
-      <tr>
-        <td class='left'>Author:</td>
-        <td class='right'><%= source.author %></td>
-      </tr>
-      <tr>
-        <td class='left'>Text category:</td>
-        <td class='right'><%= source.text_category %></td>
-      </tr>
-      <tr>
-        <td class='left'>Year published:</td>
-        <td class='right'><%= source.year_published %></td>
-      </tr>
-      <tr>
-        <td class='left'>Section headers:</td>
-        <td class='right'><%= source.section_headers.join(', ') %></td>
-      </tr>
-      <tr>
-        <td class='left'>Source URL:</td>
-        <td class='right'><%= source.source_url %></td>
-      </tr>
-      <tr>
-        <td class='left'>File:</td>
-        <td class='right'>
-          <% if source.file.attached? %>
-            <%= link_to source.file.filename, rails_blob_path(source.file, disposition: 'attachment') %>
-          <% else %>
-            None attached
-          <% end %>
-        </td>
-      </tr>
-      <% if current_user.admin? %>
-        <tr>
-          <td class='left'>User:</td>
-          <td class='right'><%= source.user.email %></td>
-        </tr>
-      <% end %>
-    </table>
-    <div class='instructions'>
-      Providing the above metadata for the source makes it easier for our language model to give contextually relevant answers.
-    </div>
 
+<div id='source'>
+  <h3><%= source.name || source.title || "Untitled" %></h3>
+  <table>
+    <tr>
+      <td class='left'>Title:</td>
+      <td class='right'><%= source.title %></td>
+      <td class='left'>Author:</td>
+      <td class='right'><%= source.author %></td>
+    </tr>
+    <tr>
+      <td class='left'>Text category:</td>
+      <td class='right'><%= source.text_category %></td>
+      <td class='left'>Year published:</td>
+      <td class='right'><%= source.year_published %></td>
+    </tr>
+    <tr>
+      <td class='left'>Source URL:</td>
+      <td class='right'><%= source.source_url %></td>
+      <td class='left'>File:</td>
+      <td class='right'>
+        <% if source.file.attached? %>
+          <%= link_to source.file.filename, rails_blob_path(source.file, disposition: 'attachment') %>
+        <% else %>
+          None attached
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td class='left'>Section headers:</td>
+      <td class='right'><%= source.section_headers.join(', ') %></td>
+    </tr>
+  </table>
+  <div class='instructions'>
+    <p>
+      Providing the above metadata for the source makes it easier for our language model to give contextually relevant answers.
+    </p>
+    <%= link_to "Edit metadata", edit_source_path(@document.source) %>
   </div>
-  <div class='show-record'>
+  <div class='chunks'>
     <% if source.source_chunks.count > 1 %>
       <% if source.truncated? %>
         <div class='truncation-notice'>
           This source exceeded our text volume limits, and has been truncated.
         </div>
       <% end %>
-      <div class='chunks'>
-        <h3>Chunks</h3>
         <% source.source_chunks.each do |chunk| %>
           <div class='chunk'>
             <details>
@@ -77,7 +57,6 @@
             </details>
           </div>
         <% end %>
-      </div>
     <% elsif source.source_chunks.count == 1 %>
     <div class='chunk'>
       <p>

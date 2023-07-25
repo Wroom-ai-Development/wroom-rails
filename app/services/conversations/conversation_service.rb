@@ -150,9 +150,10 @@ module Conversations
       answers.each_with_index do |answer, index|
         @conversation.update!(status_message: "Reviewing answer based on chunk #{index + 1}")
         message_content = <<-CONTENT
-          #{answer[:text]}\nDoes this text contain the answer to the question: \"#{@last_user_question}\"? Answer YES or NO, and always in English, regardless of the language of the question.
+          Does this text contain the answer to the question: \"#{@last_user_question}\"? Answer YES or NO, and always in English, regardless of the language of the question.
         CONTENT
         messages = [
+          { role: 'system', content: answer[:text] },
           { role: 'user',
             content: message_content }
         ]

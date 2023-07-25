@@ -17,7 +17,7 @@ class SourcesController < ApplicationController
   def edit; end
 
   # POST /sources or /sources.json
-  def create # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  def create # rubocop:disable Metrics/MethodLength
     @source = Source.new(source_params)
     save_section_headers
     if @source.save
@@ -30,7 +30,6 @@ class SourcesController < ApplicationController
     else
       respond_to do |format|
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @source.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -55,11 +54,9 @@ class SourcesController < ApplicationController
         end
 
         @source.rechunk if @source.section_headers != old_headers
-        format.html { redirect_to source_url(@source), notice: 'Source was successfully updated.' }
-        format.json { render :show, status: :ok, location: @source }
+        format.html { redirect_to wroom_path(@source.document) }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @source.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -70,7 +67,6 @@ class SourcesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to sources_url, notice: 'Source was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 

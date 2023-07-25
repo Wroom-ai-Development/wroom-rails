@@ -15,26 +15,31 @@
 }
 
 body#wroom {
+  color: $wroom-dark-gray;
+  background-color: $wroom-light-gray;
+
+
   display: flex;
   font-family: 'Roboto Slab', serif;
   overflow: hidden;
 
   form.button_to {
     margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
     button.library-link {
       border: none;
       font-family: 'Roboto Slab', serif;
       padding: 1rem;
       align-self: flex-end;
-      font-size: 0.7\8rem;
+      font-size: 0.8rem;
       color: $wroom-blue;
       margin: 0 0.5rem;
-      background-color: rgba(0, 0, 0, 0);
+      background-color: white;
       border-radius: 10px;
       &:hover {
         background-color: $wroom-baby-blue;
         cursor: pointer;
-        text-decoration: underline 1px $wroom-blue;
       }
       animation: pulseShadow 4s infinite alternate;
     }
@@ -57,8 +62,6 @@ body#wroom {
 
   .panel {
     height: initial;
-    border-left: 1px solid $wroom-light-gray;
-    background-color: white;
     display: flex;
     flex-direction: column;
 
@@ -68,20 +71,22 @@ body#wroom {
       width: 10rem;
       min-width: min-content;
       height: min-content;
-
+      padding: 1rem 0 1rem 1rem;
     }
     &#document-panel {
-      width: 45%;
+      width: 100%;
+      padding: 1rem 1rem 0 1rem;
     }
     &#conversation-panel {
-      width: 40%;
+      height: 100%;
+      width: 50rem;
+      padding: 1rem 1rem 1rem 0;
     }
 
 
     &#no-docs-panel {
       width: -webkit-fill-available;
       height: auto;
-      border-left: 1px solid $wroom-light-gray;
       padding-left: 0.5rem;
 
       div.message {
@@ -144,23 +149,17 @@ body#wroom {
         font-family: 'Roboto Slab', serif;
         font-size: 0.7rem;
         border: none;
-        border-bottom: 1px solid $wroom-light-gray;
         background-color: white;
       }
     
       div.header {
         padding: 0.5rem;
-        border-bottom: 1px solid $wroom-light-gray;
         display: flex;
         align-items: center;
         justify-content: space-between;
         font-size: 0.7rem;
         font-weight: 500;
         text-align: center;
-        
-        &::not(:first-child) {
-          border-top: 1px solid $wroom-light-gray;
-        }
 
         a {
           color: $wroom-blue;
@@ -168,258 +167,286 @@ body#wroom {
           margin-right: 0.2rem;
         }
       }
-      div.list {
-        overflow-y: auto;
-        font-size: 0.7rem;
-        max-height: 35vh;
-        div.list-item {
+    }
+    div#settings {
+      display: flex;
+      align-items: center;
+      font-size: 0.8rem;
+      box-sizing: border-box;
+      padding: 1rem;
+
+      form {
+        display: flex;
+        align-items: center;
+        margin-left: 1rem;
+
+        select {
+          width: 15rem;
+          margin-left: 0.5rem;
+          font-family: 'Roboto Slab', serif;
+          font-size: 0.7rem;
           padding: 0.5rem;
-          display: flex;
-          align-items: center;
-          &:not(:last-child) {
-            border-bottom: 1px solid $wroom-light-gray;
-          }
-          .checkbox {
-            margin-right: 0.5rem;
-          }
-          a.delete {
-            color: $wroom-red;
-            font-size: 1rem;
-            margin-left: 0.5rem;
-            &:hover {
-              cursor: pointer;
-            }
-          }
+          border: 1px solid $wroom-light-gray;
+          background-color: white;
+          border-radius: 10px;
+          z-index: 997;
 
-          a.edit {
-            color: $wroom-blue;
-            font-size: 1rem;
-            margin-left: auto;
+          &:focus {
+            outline: none;
           }
+        }
+      }
 
+      form.button_to {
+        margin: 0;
+        margin-left: 1rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        justify-content: end;
+        button {
+          border: none;
+          font-family: 'Roboto Slab', serif;
+          padding: 0.5rem;
+          font-size: 0.7rem;
+          color: $wroom-red;
+          background-color: white;
+          border-radius: 10px;
+          white-space: nowrap;
           &:hover {
-            background-color: $wroom-light-gray;
+            background-color: $wroom-baby-blue;
+            cursor: pointer;
           }
+        }
+      }
+      
+      a {
+        color: $wroom-blue;
+        padding: 0.5rem;
+        background-color: white;
+        font-size: 0.7rem;
+
+        border-radius: 10px;
+        &:hover {
+          background-color: $wroom-baby-blue;
+          cursor: pointer;
         }
       }
     }
 
-    div#conversation {
-      height: min-content;
+    div#chat {
+      height: 97%;
+      display: flex;
+      flex-direction: column;
+      border-radius: 10px;
       background-color: white;
-      max-height: 90vh;
 
-      div#clear-chat {
+
+
+      div#conversation {
+        height: min-content;
+        
+        max-height: 90vh;
         display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 2rem;
-
-        button {
-          font-size: 0.7rem;
-          text-align: center;
-          font-style: italic;
-          color: $wroom-red;
-          font-family: 'Roboto Slab', serif;
-          background-color: rgba(0, 0, 0, 0);
-          border: none;
-          &:hover {
-            cursor: pointer;
-            text-decoration: underline 1px $wroom-red;
-          }
-        }
-      }
-      form#new-message-form {
-        margin: 0;
-        display: flex;
-
-        textarea {
-          width: -webkit-fill-available;
-
-          border: none;
-          flex-grow: 1;
-          padding: 0.5rem 0 0 0.5rem;
-          font-family: 'Roboto Slab', serif;
-          font-style: italic;
-          font-size: 0.7rem;
-          &::placeholder {
-            color: $wroom-blue;
-          }
-          &:focus {
-            outline: none !important;
-          }
-        }
-
-        input#content {
-        }
-
-        input#submit {
-          border: none;
-          color: $wroom-blue;
-          background-color: white;
-          font-size: 1rem;
-          width: 2rem;
-        }
-      }
-
-      div#messages {
-        border-bottom: 1px solid $wroom-light-gray;
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column-reverse;
-        align-items: center;
-        height: 90vh;
-        background-color: white;
-        overflow-x: clip;
-
-        div#initial-message {
-          font-size: 0.7rem;
-          text-decoration: underline 1px $wroom-blue;
-          width: 100%;
-          padding: 1rem;
-          text-align: left;
-          box-sizing: border-box;
-        }
-
-        div.conversation-status {
+        flex-direction: column;
+  
+        form#new-message-form {
+          margin: 0;
           display: flex;
-          flex-direction: column;
+          height: 5rem;
           align-items: center;
-          font-size: 0.7rem;
-          color: $wroom-blue;
-          padding: 1rem;
-          div.conversation-loading-label {
-            width: auto;
-            font-style: italic;
+          padding: 0.5rem;
+          margin-bottom: 1.5rem;
+  
+          textarea {
+            width: -webkit-fill-available;
+            border-radius: 10px;
+            border: none;
+            padding: 0.5rem 0 0 0.5rem;
+            font-family: 'Roboto Slab', serif;
             font-size: 0.7rem;
-            text-align: center;
+            height: min-content;
+            background-color: $wroom-lighter-gray;
+            &::placeholder {
+              color: $wroom-blue;
+            }
+            &:focus {
+              outline: none !important;
+            }
+          }
+  
+          input#content {
+          }
+  
+          input#submit {
+            border: none;
+            color: $wroom-blue;
+            background-color: white;
+            font-size: 1rem;
+            width: 2rem;
+          }
+        }
+  
+        div#messages {
+          overflow-y: auto;
+          display: flex;
+          flex-direction: column-reverse;
+          align-items: center;
+          height: 68vh;
+          overflow-x: clip;
+          padding-left: 1rem;
+  
+          div#initial-message {
+            font-size: 0.7rem;
+            text-decoration: underline 1px $wroom-blue;
+            width: 100%;
+            padding: 1rem;
+            text-align: left;
+            box-sizing: border-box;
+          }
+  
+          div.conversation-status {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            form.button_to {
-              text-align: center;
-            }
-            a {
-              margin-top: 0.5rem;
-              font-size: 0.6rem;
-              text-align: center;
+            font-size: 0.7rem;
+            color: $wroom-blue;
+            padding: 1rem;
+            div.conversation-loading-label {
+              width: auto;
               font-style: italic;
-              color: $wroom-red;
-              font-family: 'Roboto Slab', serif;
-              background-color: rgba(0, 0, 0, 0);
-              border: none;
-              &:hover {
-                cursor: pointer;
-                text-decoration: underline 1px $wroom-red;
+              font-size: 0.7rem;
+              text-align: center;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              form.button_to {
+                text-align: center;
               }
-            }
-          }
-        }    
-  
-        div.message {
-          padding: 0.5rem 2rem 0 1rem;
-          text-align: justify;
-          font-size: 0.6rem;
-          hyphens: auto;
-          line-height: 0.8rem;
-          width: 100%;
-  
-          div.main-message {
-            display: flex;
-            align-items: end;
-            flex-direction: row;
-            div.message-controls {
-              padding-bottom: 0.5rem;
-              form {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                padding-left: 0.5rem;
-                padding-right: 1rem;
-                
-              }
-              div.button-wrapper {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                padding-left: 0.5rem;
-                padding-right: 1rem;
-                padding-bottom: 0.5rem;
-              };
-
-              button {
-                height: 1rem;
-                width: 1rem;
-                font-size: 1rem;
-                background-color: white;
+              a {
+                margin-top: 0.5rem;
+                font-size: 0.6rem;
+                text-align: center;
+                font-style: italic;
                 color: $wroom-red;
+                font-family: 'Roboto Slab', serif;
+                background-color: rgba(0, 0, 0, 0);
                 border: none;
-                margin: 0;
-                content: 'asdasd';
-                &.copy {
-                  color: $wroom-blue;
+                &:hover {
+                  cursor: pointer;
+                  text-decoration: underline 1px $wroom-red;
                 }
               }
             }
-            div.main-message-content {
+          }    
+    
+          div.message {
+            padding: 0.5rem 2rem 0 1rem;
+            text-align: justify;
+            font-size: 0.6rem;
+            hyphens: auto;
+            line-height: 0.8rem;
+            width: 100%;
+    
+            div.main-message {
               display: flex;
-              align-items: center;
-              flex-direction: column;
-              p {
-                width: 100%;
+              align-items: end;
+              flex-direction: row;
+              div.message-controls {
+                padding-bottom: 0.5rem;
+                form {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  padding-left: 0.5rem;
+                  padding-right: 1rem;
+                  
+                }
+                div.button-wrapper {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  padding-left: 0.5rem;
+                  padding-right: 1rem;
+                  padding-bottom: 0.5rem;
+                };
+  
+                button {
+                  height: 1rem;
+                  width: 1rem;
+                  font-size: 1rem;
+                  background-color: white;
+                  color: $wroom-red;
+                  border: none;
+                  margin: 0;
+                  content: 'asdasd';
+                  &.copy {
+                    color: $wroom-blue;
+                  }
+                }
               }
-              details {
-                width: 100%;
-                summary {
+              div.main-message-content {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                p {
                   width: 100%;
                 }
+                details {
+                  width: 100%;
+                  summary {
+                    width: 100%;
+                  }
+                }
+              }
+              form {
+                margin: 0 0 0 0;
               }
             }
-            form {
-              margin: 0 0 0 0;
-            }
-          }
+    
+            &.user {
+              div.main-message {
+                text-align: right;
+                font-style: italic;
+                justify-content: space-between;
+                border-bottom: 1px solid rgb(220, 220, 220);
   
-          &.user {
-            div.main-message {
-              text-align: right;
-              font-style: italic;
-              justify-content: space-between;
-              border-bottom: 1px solid rgb(220, 220, 220);
-
-              &:last-child {
-                border-bottom: none;
+                &:last-child {
+                  border-bottom: none;
+                }
               }
             }
-          }
-          div.main-message {  
-            button {
-              margin-right: 0.5rem;
+            div.main-message {  
+              button {
+                margin-right: 0.5rem;
+              }
+              padding-right: 1rem;
             }
-            padding-right: 1rem;
-          }
-  
-          &.error {
-            text-decoration: underline 1px $wroom-red;
-            div.message-controls {
-              display: none;  
+    
+            &.error {
+              text-decoration: underline 1px $wroom-red;
+              div.message-controls {
+                display: none;  
+              }
+              div.main-message {
+                justify-content: center;
+              }
             }
-            div.main-message {
-              justify-content: center;
+    
+            .content {
+              width: 100%;
             }
-          }
-  
-          .content {
-            width: 100%;
           }
         }
       }
     }
 
     div#edit-document {
-      height: -webkit-fill-available;
       padding: 0;
+      background-color: white;
+      border-radius: 10px;
 
       form.button_to {
         display: flex;
@@ -431,7 +458,7 @@ body#wroom {
           background-color: rgba(0,0,0,0);
           border: none;
           color: red;
-          font-size: 1.4rem;
+          font-size: 1.2rem;
         }
       }
 
@@ -502,7 +529,7 @@ body#wroom {
     .panel-element {
       width: -webkit-fill-available;
       min-height: 1rem;
-      background-color: white;
+      
       &#document {
         display: flex;
         flex-direction: row;
@@ -526,147 +553,34 @@ body#wroom {
           padding-left: 0.5rem;
         }
       }
-      
-
-
-      form {
-        background-color: white;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        padding: 0.5rem;
-        width: -webkit-fill-available;
-        
-        input {
-          font-family: 'Roboto Slab', serif;
-          font-style: italic;
-          width: 60%;
-          border: none;
-          padding: 0;
-          height: -webkit-fill-available;
-          font-size: 0.7rem;
-          width: 100%;
-
-          &::placeholder {
-            color: $wroom-blue;
-          }
-          &:focus {
-            outline: none;
-          }
-
-          &[type='submit'] {
-            background-color: white;
-            color: $wroom-blue;
-            font-weight: 300;
-            font-size: 1rem;
-            width: min-content;
-          }
-        }
-
-        &#new-document {
-          input#document_title {
-            font-weight: 300;
-            &::placeholder {
-              font-weight: 100;
-            }
-          }
-        }
-
-        &#edit-document-form {
-          display: flex;
-          flex-direction: column;
-          
-        }
-      }
-
-
-      ul {
-        margin: 0;
-        padding-inline: 0;
-        background-color: white;
-        overflow-y: auto;
-        max-height: 72vh;
-
-        li {
-          list-style: none;
-          display: flex;
-          justify-content: space-between;
-          padding: 0.5rem 0.5rem 0.5rem 0.5rem;
-          width: -webkit-fill-available;
-          font-size: 0.9rem;
-          background-color: white;
-          height: fit-content;
-          border-bottom: 1px solid $wroom-light-gray;
-          &:first-child {
-            border-top: 1px solid $wroom-light-gray;
-          }
-          a {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 0.7rem;
-          }
-
-          &:hover {
-            background-color: $wroom-light-gray;
-          }
-          
-  
-
-    
-        }
-
-        &#documents-list {
-
-          li {
-            min-height: 2rem;
-            a {
-              display: flex;
-              justify-content: space-between;
-              width: -webkit-fill-available;
-            }
-            div.controls {
-              display: flex;
-              align-items: center;
-              
-              form.button_to {
-                padding: 0;
-              }
-              form.delete-document {
-                background-color: rgba(0,0,0,0) !important;
-                margin-left: 1rem;
-              }
-              button.delete-document {
-                background-color: rgba(0,0,0,0) !important;
-                border: none;     
-                color: $wroom-red;
-                font-size: 1rem;
-                font-family: 'Roboto Slab', serif;
-                font-weight: 300;
-                padding: 0;
-              }
-            }
-          }
-        }
-      }
     }
   }
 
   div#wroom-logo {
     @include flex-center-content;
-    display: flex;
-    background-color: white;
     min-height: 2rem;
-    border-bottom: 1px solid $wroom-light-gray;
-
+    height: 0;
+    margin-bottom: 1rem;
+    
     div {
+      animation: pulseAntiShadow 4s infinite alternate;
+      border-radius: 10px;
+      background: none;
+      width: 1px;
+      text-align: center;
+      margin-top: 1.6rem;
+      height: 1px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
       span#wroom {
         font-family: 'MuseoModerno';
+    
         font-weight: 900;
         font-size: 1rem;
+        color: black;
       }
     }
   }
