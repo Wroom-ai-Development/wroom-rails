@@ -48,7 +48,8 @@ class WroomController < ApplicationController
       author: 'Emily Brontë',
       year_published: '1846',
       text_category: 'poem',
-      document: current_user.documents.first
+      document: current_user.documents.first,
+      folder_id: current_user.root_folder.id
     )
     poem = <<-POEM
       There should be no despair for you
