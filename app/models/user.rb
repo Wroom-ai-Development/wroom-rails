@@ -67,7 +67,6 @@ class User < ApplicationRecord
       author: 'Emily Brontë',
       year_published: '1846',
       text_category: 'poem',
-      document: documents.first,
       folder_id: root_folder.id
     )
     poem = <<-POEM
