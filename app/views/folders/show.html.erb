@@ -2,14 +2,12 @@
   <script>
     function toggleNewOptions() {
       const options = document.getElementsByClassName('options')[0];
-      const button = document.getElementsByClassName('button')[0];
       const outside = document.getElementsByClassName('outside')[0];
       options.style.display = 'flex';
       outside.style.display = 'block';
       outside.addEventListener('click', (e) => {
         options.style.display = 'none';
-        button.style.display = 'block';
-        outside.style.display = 'flex';
+        outside.style.display = 'none';
       })
     }
   </script>

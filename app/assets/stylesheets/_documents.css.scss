@@ -1,7 +1,8 @@
 div#documents {
   box-sizing: border-box;
   padding: 1rem;
-  width: min-content;
+  width: 100%;
+  min-width: min-content;
   height: 100%;
   display: flex;
   z-index: 995;

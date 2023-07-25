@@ -1,9 +1,9 @@
 @keyframes pulseShadow {
   100% {
-    box-shadow: 0 1.3rem 2rem 1.4rem rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1.3rem 2rem 1.4rem rgba(0, 0, 0, 0.02);
   }
   0% {
-    box-shadow: 0 1.3rem 2rem 1.4rem rgba(0, 0, 0, 0.01);
+    box-shadow: 0 1.3rem 2rem 1.4rem rgba(0, 0, 0, 0.00);
     /* 
       In the final state (100%), we increase the blur-radius to make the shadow more diffuse
       and the spread-radius to spread the shadow over a larger area.

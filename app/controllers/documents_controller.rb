@@ -45,8 +45,8 @@ class DocumentsController < ApplicationController
 
   # DELETE /documents/1 or /documents/1.json
   def destroy
-    @document.source.destroy!
-    @document.destroy!
+    @document.source.destroy! if @document.source.present?
+    @document.destroy
     current_user.update!(current_document_id: nil)
 
     redirect_to wroom_path, status: :see_other

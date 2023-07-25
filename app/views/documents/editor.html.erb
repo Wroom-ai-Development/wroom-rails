@@ -1,20 +1,19 @@
 <%= turbo_frame_tag "document_editor" do %>
   <div id='edit-document'>
     <%= button_to "␡", @document, method: :delete, class: 'delete-document', data: {turbo_method: :delete, turbo_confirm: "Please confirm you meant to delete #{@document.title}"} %>
-
-    <%= form_with(
-        model: @document,
-        data: {controller: 'document', autosave_delay: '250'},
-        id: 'edit-document'
-    ) do |form| %>
-        <% if @document.source_based %>
-          <%= render 'sources/show', source: @document.source %>
-        <% else %>
+    <% if @document.source_based %>
+      <%= render 'sources/show', source: @document.source %>
+    <% else %>
+      <%= form_with(
+          model: @document,
+          data: {controller: 'document', autosave_delay: '250'},
+          id: 'edit-document'
+      ) do |form| %>
           <div class='top-pane'>
             <%= form.text_field :title, data: { action: "keyup->document#save blur->document#save" } %>
           </div>
           <%= form.rich_text_area :content, placeholder: 'Use this space to make notes and save useful fragments of your conversation.', data: { action: "keyup->document#save blur->document#save" } %>
-        <% end %>
+      <% end %>
     <% end %>
   </div>
 <% end %>
