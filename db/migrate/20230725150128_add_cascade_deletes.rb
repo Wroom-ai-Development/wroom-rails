@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddCascadeDeletes < ActiveRecord::Migration[7.0]
   def change
     remove_foreign_key :context_references, :documents

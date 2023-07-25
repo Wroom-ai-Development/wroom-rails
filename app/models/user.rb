@@ -39,4 +39,55 @@ class User < ApplicationRecord
       note: "#{email} registered for wroom"
     )
   end
+
+  def create_welcome_records
+    create_welcome_source
+    create_welcome_voices
+    update!(onboarded: true)
+  end
+
+  def create_welcome_source # rubocop:disable Metrics/MethodLength
+    source = Source.create!(
+      user_id: id,
+      name: "'Sympathy' by Emily Brontë",
+      fileless: true,
+      title: 'Sympathy',
+      author: 'Emily Brontë',
+      year_published: '1846',
+      text_category: 'poem',
+      document: documents.first,
+      folder_id: root_folder.id
+    )
+    poem = <<-POEM
+      There should be no despair for you
+      While nightly stars are burning;
+      While evening pours its silent dew,
+      And sunshine gilds the morning.
+      There should be no despair—though tears
+      May flow down like a river:
+      Are not the best beloved of years
+      Around your heart for ever?
+
+      They weep, you weep, it must be so;
+      Winds sigh as you are sighing,
+      And winter sheds its grief in snow
+      Where Autumn’s leaves are lying:
+      Yet, these revive, and from their fate
+      Your fate cannot be parted:
+      Then, journey on, if not elate,
+      Still, NEVER broken-hearted!
+    POEM
+    source.parse_source_chunks_from_text(poem)
+  end
+
+  def create_welcome_voices
+    voices = [
+      ['Pirate', 'Speak like a pirate'],
+      ['Worried mother', 'Speak like a mother who is constantly worried about her child.'],
+      ['Hepcat', 'Speak like a hepcat']
+    ]
+    voices.each do |voice|
+      voices.create(name: voice[0], meta_prompt: voice[1])
+    end
+  end
 end

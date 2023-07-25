@@ -4,7 +4,6 @@ require 'rails_helper'
 
 RSpec.describe DocumentsController, type: :routing do
   describe 'routing' do
-
     it 'routes to #new' do
       expect(get: '/documents/new').to route_to('documents#new')
     end
