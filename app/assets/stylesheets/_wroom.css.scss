@@ -180,6 +180,9 @@ body#wroom {
         align-items: center;
         margin-left: 1rem;
 
+        label {
+          font-size: 0.6rem;
+        }
         select {
           width: 15rem;
           margin-left: 0.5rem;
