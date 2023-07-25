@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
   protected
 
   def onboard_if_necessary
+    return if !current_user
+    
     current_user.create_welcome_records unless current_user.onboarded?
   end
 
