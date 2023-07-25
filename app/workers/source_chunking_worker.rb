@@ -6,7 +6,7 @@ class SourceChunkingWorker
 
   def perform(source_id, raw_text)
     @source = Source.find(source_id)
-    @source.document_chunks.destroy_all
+    @source.source_chunks.destroy_all
     Sources::SemanticChunker.new(@source, raw_text).create_chunks
   end
 end

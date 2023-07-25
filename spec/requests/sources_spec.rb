@@ -22,6 +22,7 @@ RSpec.describe '/sources', type: :request do
   let(:valid_attributes) do
     { name: 'Source name',
       user_id: user.id,
+      folder_id: user.root_folder.id,
       file: ActiveStorage::Blob.create_and_upload!(
         io: File.open(Rails.root.join('spec/factories/files/file.pdf'), 'rb'),
         filename: 'file.pdf',
@@ -38,22 +39,6 @@ RSpec.describe '/sources', type: :request do
 
   before do
     sign_in(user)
-  end
-
-  describe 'GET /index' do
-    it 'renders a successful response' do
-      Source.create! valid_attributes
-      get sources_url
-      expect(response).to be_successful
-    end
-  end
-
-  describe 'GET /show' do
-    it 'renders a successful response' do
-      source = Source.create! valid_attributes
-      get source_url(source)
-      expect(response).to be_successful
-    end
   end
 
   describe 'GET /new' do
@@ -119,7 +104,7 @@ RSpec.describe '/sources', type: :request do
         source = Source.create! valid_attributes
         patch source_url(source), params: { source: new_attributes }
         source.reload
-        expect(response).to redirect_to(source_url(source))
+        expect(response).to redirect_to(wroom_url(source.document))
       end
     end
 

@@ -2,5 +2,5 @@
 
 class ContextReference < ApplicationRecord
   belongs_to :conversation
-  belongs_to :source
+  belongs_to :document
 end

@@ -13,6 +13,16 @@
  *= require_self
  */
 
-@import 'fonts'; 
-@import 'admin';
+@import 'fonts';
+@import 'dashboard';
+@import 'devise';
 @import 'wroom';
+
+body {
+  margin: 0;
+  -webkit-animation-delay: 0.1s;
+  -webkit-animation-name: fontfix;
+  -webkit-animation-duration: 0.1s;
+  -webkit-animation-iteration-count: 1;
+  -webkit-animation-timing-function: linear;
+}

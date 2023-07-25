@@ -14,9 +14,9 @@
     <% end %>
 
     <h4>Conversations</h4>
-    <% @projects.each do |project| %>
+    <% @documents.each do |document| %>
       <p>
-        <%= link_to project.title, root_path(project_id: project.id) %>
+        <%= link_to document.title, wroom_path(document_id: document.id) %>
       </p>
     <% end %>
         <h4>Voices</h4>

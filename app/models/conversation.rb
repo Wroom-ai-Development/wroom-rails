@@ -1,19 +1,23 @@
 # frozen_string_literal: true
 
 class Conversation < ApplicationRecord
-  belongs_to :user
   has_many :messages, dependent: :destroy
   has_many :context_references, dependent: :destroy
-  has_many :sources, through: :context_references
+  has_many :documents, through: :context_references
   has_many :usage_records, dependent: :nullify
 
-  belongs_to :project
+  belongs_to :document
+  has_one :user, through: :document
   has_one :conversation_voice, dependent: :destroy
   has_one :voice, through: :conversation_voice
   validates :title, presence: true
   after_update :broadcast_status_message
 
   enum role: { 'ready': 0, 'working': 1, 'idle': 2, 'error': 3, 'cancelled': 4 }
+
+  def sources
+    documents.map(&:source).compact
+  end
 
   def clear_status_message
     update!(status_message: nil)

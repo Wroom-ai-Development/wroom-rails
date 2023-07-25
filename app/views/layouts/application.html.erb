@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="<%= I18n.locale %>">
   <head>
-    <title><%= t('.site_title')%></title>
+    <title><%= t('.site_title') %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -12,15 +12,9 @@
   </head>
 
   <body>
+    <div class="outside" style="display: none;"></div>
     <% if current_user %>
       <%= render "layouts/navigation" %>
-    <% else %>
-      <div id='alerts'>
-        <% if flash.any? %>
-          <p class="notice"><%= notice %></p>
-          <p class="alert"><%= alert %></p>
-        <% end %>
-      </div>
     <% end %>
     <main>
       <%= yield %>

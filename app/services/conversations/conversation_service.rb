@@ -20,9 +20,12 @@ module Conversations
     CHARACTERS_PER_TOKEN = 4
     TOKEN_SPACE_FOR_ANSWER = 1000
 
-    def initialize(conversation) # rubocop:disable Metrics/AbcSize
+    def initialize(conversation) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       @conversation = conversation
       @user = conversation.user
+      @conversation.documents.each do |document|
+        document.refresh_source unless document.source_based
+      end
       @sources = conversation.sources
       @last_user_question = @conversation.messages.where(role: 'user').last.content
       @conversation_messages = @conversation.messages.order(:created_at).reject do |m|
@@ -70,7 +73,9 @@ module Conversations
     def get_answer_from_multiple_sources # rubocop:disable Metrics/MethodLength
       messages = []
       @sources.each do |source|
-        chunk = source.document_chunks.first
+        next unless source.source_chunks.any?
+
+        chunk = source.source_chunks.first
         messages << { role: 'system', content: "#{chunk.content} #{chunk_context_prompt(chunk)}" }
       end
       messages += @conversation_messages
@@ -86,13 +91,13 @@ module Conversations
     end
 
     def all_sources_fit_in_multi_limit?
-      total_tokens = @sources.map { |source| source.document_chunks.map(&:token_length).compact.sum }.sum
+      total_tokens = @sources.map { |source| source.source_chunks.map(&:token_length).compact.sum }.sum
       total_tokens <= REQUEST_MAX_TOKEN_SIZES['gpt-3.5-turbo-16k'] - TOKEN_SPACE_FOR_ANSWER
     end
 
     def refuse_answering_from_multiple_sources_that_are_too_big
       rephrase_nicely(
-        'The source material is too large for me to handle. If you have multiple small sources, try to split them across separate projects. If some of your sources are large (over one chunk), you may want to try putting them in one project each.' # rubocop:disable Layout/LineLength
+        'The source material is too large for me to handle. If you have multiple small sources, try to split them across separate documents. If some of your sources are large (over one chunk), you may want to try putting them in one document each.' # rubocop:disable Layout/LineLength
       )
     end
 
@@ -120,13 +125,13 @@ module Conversations
 
     def get_answer_from_source(source)
       @conversation.update!(status_message: "Processing #{source.name}")
-      chunks = source.document_chunks
+      chunks = source.source_chunks
       answer = if chunks.size == 1
                  get_answer_from_chunk(chunks.first)
                elsif chunks.size > 1
                  get_answer_from_multiple_chunks(chunks)
                else
-                 rephrase_nicely("There was a problem processing #{source.name}, you may have to upload it again.")
+                 get_answer_without_sources
                end
       rephrase_with_voice(answer)
     end
@@ -147,9 +152,10 @@ module Conversations
       answers.each_with_index do |answer, index|
         @conversation.update!(status_message: "Reviewing answer based on chunk #{index + 1}")
         message_content = <<-CONTENT
-          #{answer[:text]}\nDoes this text contain the answer to the question: \"#{@last_user_question}\"? Answer YES or NO, and always in English, regardless of the language of the question.
+          Does this text contain the answer to the question: \"#{@last_user_question}\"? Answer YES or NO, and always in English, regardless of the language of the question.
         CONTENT
         messages = [
+          { role: 'system', content: answer[:text] },
           { role: 'user',
             content: message_content }
         ]
@@ -202,7 +208,7 @@ module Conversations
                 raise ContextExceeded
               end
       answer = response_from_messages(messages, model:)
-      if chunk.section_header.present? && chunk.source.document_chunks.size > 1
+      if chunk.section_header.present? && chunk.source.source_chunks.size > 1
         answer << "(based on #{chunk.section_header})"
       end
       answer
@@ -220,7 +226,7 @@ module Conversations
     def chunk_context_prompt(chunk) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       chunk_source = chunk.source
       prompt = ['The following question concerns']
-      if chunk_source.document_chunks.count > 1
+      if chunk_source.source_chunks.count > 1
         prompt << (chunk.section_header.present? ? chunk.section_header.to_s : 'an excerpt')
         prompt << 'from the provided'
       else

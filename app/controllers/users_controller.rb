@@ -4,13 +4,9 @@ class UsersController < ApplicationController
   before_action :user, only: %i[show edit update destroy]
   load_and_authorize_resource
 
-  def index
-    @users = User.all
-  end
-
   def show
     @sources = user.sources
-    @projects = user.projects
+    @documents = user.documents
   end
 
   def edit; end
@@ -31,7 +27,7 @@ class UsersController < ApplicationController
     @user.destroy
 
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+      format.html { redirect_to monitoring_url }
       format.json { head :no_content }
     end
   end

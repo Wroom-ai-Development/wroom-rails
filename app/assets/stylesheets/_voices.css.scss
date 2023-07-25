@@ -1,0 +1,54 @@
+@import 'colors';
+
+div.voices {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  h3 {
+    padding: 1rem 0 0.5rem 0;
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  a.new-voice {
+    font-size: 1.2rem;
+    color: $wroom-blue;
+    margin-bottom: 1rem;
+  }
+
+  div.voice {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    width: 50vw;
+    background-color: white;
+    margin-bottom: 0.7rem;
+    border: 1px solid $wroom-light-gray;
+
+    div.controls {
+      display: flex;
+      flex-direction: row;
+      a, button {
+        font-family: 'Roboto Slab', serif;
+        font-size: 1rem;
+        background-color: white;
+        color: $wroom-blue;
+        margin: 0;
+        margin-left: 1rem;
+        padding: 0;
+        border: none;
+        font-weight: 300;
+        &:hover {
+          text-decoration: underline 1px $wroom-blue;
+        }
+      }
+
+      button {
+        color: $wroom-red;
+      }
+    }
+  }
+}

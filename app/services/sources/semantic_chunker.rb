@@ -98,10 +98,10 @@ module Sources
       @current_section_header = section[:section_header]
       chunks = section[:content].chars.each_slice(CHUNK_MAX_TOKEN_SIZE * CHARACTERS_PER_TOKEN).map(&:join)
       chunks.each_with_index do |chunk, _index|
-        break if @source.document_chunks.count >= MAX_CHUNKS
+        break if @source.source_chunks.count >= MAX_CHUNKS
 
         chunk_token_length = Tiktoken.encoding_for_model('gpt-4').encode(chunk).length
-        DocumentChunk.create!(
+        SourceChunk.create!(
           source_id: @source.id,
           section_header: section[:section_header].strip,
           ordinal_number: @current_chunk_ordinal_number,
@@ -110,7 +110,7 @@ module Sources
         )
         @current_chunk_ordinal_number += 1
       end
-      @source.update(truncated: true) if @source.document_chunks.count >= MAX_CHUNKS
+      @source.update(truncated: true) if @source.source_chunks.count >= MAX_CHUNKS
     end
 
     def prepare_text

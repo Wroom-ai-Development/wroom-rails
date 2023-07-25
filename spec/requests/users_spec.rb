@@ -38,14 +38,6 @@ RSpec.describe '/users', type: :request do
     sign_in(admin)
   end
 
-  describe 'GET /index' do
-    it 'renders a successful response' do
-      User.create! valid_attributes
-      get users_url
-      expect(response).to be_successful
-    end
-  end
-
   describe 'GET /show' do
     it 'renders a successful response' do
       user = User.create! valid_attributes
@@ -102,10 +94,10 @@ RSpec.describe '/users', type: :request do
       end.to change(User, :count).by(-1)
     end
 
-    it 'redirects to the users list' do
+    it 'redirects to the monitoring view' do
       user = User.create! valid_attributes
       delete user_url(user)
-      expect(response).to redirect_to(users_url)
+      expect(response).to redirect_to(monitoring_url)
     end
   end
 end

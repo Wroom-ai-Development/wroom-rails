@@ -1,40 +1,13 @@
-<div class='view-header'>
-  <h1>Voices</h1>
-    <%= link_to "+", new_voice_path %>
-</div>
-<div class='view-content'>
-  <% if current_user.admin? %>
-    <div class='index-separator'>My voices</div class='index-separator'>
-  <% end %>
-  <ul class="index-list">
-    <% current_user.voices.order(:name).each do |voice| %>
-      <% if can? :manage, voice %>
-
-          <li class='index-list-item'>
-            <%= link_to voice.name, edit_voice_path(voice) %>
-            <div class="controls">
-              <%= link_to "✍︎", edit_voice_path(voice) %>
-              <%= button_to "␡", voice, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Please confirm you meant to delete #{voice.name}"} %>
-            </div>
-          </li>
-      <% end %>
-    <% end %>
-  </ul>
-  <% if current_user.admin? %>
-
-      <% @users.each do |user| %>
-        <div class='index-separator'><%= user.email %></div class='index-separator'>
-        <ul class="index-list">
-          <% user.voices.order(:name).each do |voice| %>
-            <li class='index-list-item'>
-              <%= link_to voice.name, edit_voice_path(voice) %>
-              <div class="controls">
-                <%= link_to "✍︎", edit_voice_path(voice) %>
-                <%= button_to "␡", voice, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Please confirm you meant to delete #{voice.name}"} %>
-              </div>
-            </li>
-          <% end %>
-        </ul>
-      <% end %>
+<div class='voices'>
+  <h3>Voices</h3>
+  <%= link_to "✙", new_voice_path, class: 'new-voice' %>
+  <% current_user.voices.order(:name).each do |voice| %>
+    <div class='voice'>
+      <%= link_to voice.name, edit_voice_path(voice) %>
+      <div class="controls">
+        <%= link_to "✍︎", edit_voice_path(voice) %>
+        <%= button_to "␡", voice, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Please confirm you meant to delete #{voice.name}"} %>
+      </div>
+    </div>
   <% end %>
 </div>

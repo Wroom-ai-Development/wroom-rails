@@ -1,0 +1,62 @@
+<%= turbo_frame_tag 'current_folder' do %>
+  <script>
+    function toggleNewOptions() {
+      const options = document.getElementsByClassName('options')[0];
+      const outside = document.getElementsByClassName('outside')[0];
+      options.style.display = 'flex';
+      outside.style.display = 'block';
+      outside.addEventListener('click', (e) => {
+        options.style.display = 'none';
+        outside.style.display = 'none';
+      })
+    }
+  </script>
+  <div class="columns">
+    <div class="ui-column">
+      <div class="new">
+        <div class="button" onClick="toggleNewOptions();">
+          ✙
+        </div>
+      </div>
+      <div class="options" style="display: none;">
+        <%= link_to "New folder", new_folder_path(parent_id: @folder.id), data: { turbo_frame: '_top' } %>
+        <%= link_to "New document", new_document_path(folder_id: @folder.id), data: { turbo_frame: '_top' } %>
+        <%= link_to "Upload document", new_source_path(folder_id: @folder.id), data: { turbo_frame: '_top' } %>
+      </div>
+    </div>
+    <div class="content-column">
+      <div class="header">
+        <% unless @folder.type == 'RootFolder' %>
+          <span><%= @folder.name %></span>
+          <div class="controls">
+            <%= link_to "Rename", edit_folder_path(@folder), data: { turbo_frame: '_top' } %>
+            <%= button_to "Delete", folder_path(@folder), method: :delete, style: 'color: red;' %>
+          </div>
+        <% end %>
+      </div>
+      <div class="content">
+        <% unless @folder.type == 'RootFolder' %>
+          <%= link_to folder_path(@folder.parent) do %>
+            <div class="item">
+              <span class='icon'>📁 </span>..
+            </div>
+          <% end %>
+        <% end %>
+        <% @folder.children.each do |folder| %>
+          <%= link_to folder do %>
+            <div class="item">
+              <span class='icon'>📁 </span><%= folder.name %>
+            </div>
+          <% end %>
+        <% end %>
+        <% @folder.documents.each do |document| %>
+          <%= link_to wroom_path(document_id: document.id), data: { turbo_frame: '_top' } do %>
+            <div class="item">
+              <span class='icon'>📄</span><%= document.title %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

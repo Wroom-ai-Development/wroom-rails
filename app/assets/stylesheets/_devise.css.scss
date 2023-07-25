@@ -1,0 +1,110 @@
+@import 'colors';
+
+
+div#devise {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  div.ui-box {
+    width: 15rem;
+
+    form {
+      div#error_explanation {
+        margin-top: 0.5rem;
+        h2 {
+          text-decoration: underline 1px $wroom-red;
+          font-size: 0.7rem;
+        }
+        ul {
+          padding: 0;
+          li {
+            font-size: 0.8rem;
+            &::marker {
+              color: $wroom-red;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  div.field {
+    padding-top: 0.5rem;
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.7rem;
+      padding: 0.5rem;
+    }
+  }
+  label, em {
+    font-size: 0.7rem;
+    font-style: italic;
+  }
+
+  div.actions {
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    input {
+      font-size: 0.7rem;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: $wroom-blue;
+      font-weight: 300;
+      border-top: 1px solid $wroom-blue;
+      border-bottom: 1px solid $wroom-blue;
+      border-left: none;
+      border-right: none;
+      background-color: rgba(0, 0, 0, 0);
+    }
+  }
+
+  div.shared-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    a {
+      font-size: 0.7rem;
+      margin-top: 0.5rem;
+      &:hover {
+        text-decoration: underline 1px $wroom-blue;
+      }
+    }
+  }
+
+  div.remember-me-field {
+    display: flex;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    input { 
+      margin: 0 0.3rem 0 0;
+    }
+    label {
+      font-style: normal;
+      font-size: 0.7rem;
+    }
+  }
+
+  div#logo {
+    text-align: center;
+    font-family: 'MuseoModerno', sans-serif;
+    font-weight: 900;
+    padding: 0;
+    color: black;
+    span#wroom {
+      font-size: 2rem;
+    }
+  }
+
+  &.reset-password {
+
+  }
+}

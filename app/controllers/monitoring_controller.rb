@@ -8,8 +8,8 @@ class MonitoringController < ApplicationController
     @message_events = MonitoringEvent.where(event_type: 1).order(:created_at).reverse
     @registration_events = MonitoringEvent.where(event_type: [2, 4]).order(:created_at).reverse
     @sign_in_events = MonitoringEvent.where(event_type: 3).order(:created_at).reverse
-    users = User.all.order(:tokens_used).includes(:conversations).reverse
-    @users_data = users.map do |user| # rubocop:disable Metrics/BlockLength
+    @users = User.all.order(:tokens_used).reverse
+    @users_data = @users.map do |user| # rubocop:disable Metrics/BlockLength
       {
         email: user.email,
         gpt_4_input_tokens: user.usage_records.pluck(:gpt_4_input_tokens)

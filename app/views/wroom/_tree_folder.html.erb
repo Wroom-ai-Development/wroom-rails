@@ -1,0 +1,22 @@
+<script>
+  function displayChildren(id) {
+    const children = document.getElementById(id).children[1]
+    if (children.style.display == 'flex')
+      children.style.display = 'none';
+    else
+    children.style.display = 'flex';
+  }
+</script>
+<div class='tree-folder' id="<%= "tree-folder-#{folder.id}" %>">
+  <div class="parent" onClick=<%= "displayChildren('tree-folder-#{folder.id}')" %>>
+    <span class='icon'>📁 </span><%= folder.name %>
+  </div>
+  <div class="children" style="<%= folder.type == 'RootFolder' ? "" : "display: none;" %>">
+    <% folder.children.each do |folder| %>
+      <%= render 'tree_folder', folder: folder %>
+    <% end %>
+    <% folder.documents.each do |document| %>
+      <%= render 'folders/tree_document', document: document %>
+    <% end %>
+  </div>
+</div>

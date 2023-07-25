@@ -1,0 +1,15 @@
+<div class='tree-folder' id="<%= "tree-folder-#{folder.id}" %>">
+  <%= link_to folder_path(folder), data: { turbo_frame: 'current_folder' } do %>
+    <div class="parent" onClick=<%= "displayChildren('tree-folder-#{folder.id}')" %>>
+      <span class='icon'>📁 </span><%= folder.name %>
+    </div>
+  <% end %>
+  <div class="children" style="<%= folder.type == 'RootFolder' ? "" : "display: none;" %>">
+    <% folder.children.each do |folder| %>
+      <%= render 'tree_folder', folder: folder %>
+    <% end %>
+    <% folder.documents.each do |document| %>
+      <%= render 'tree_document', document: document %>
+    <% end %>
+  </div>
+</div>

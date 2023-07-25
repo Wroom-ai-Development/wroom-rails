@@ -1,0 +1,59 @@
+
+<div id='source'>
+  <h3><%= source.name || source.title || "Untitled" %></h3>
+  <table>
+    <tr>
+      <td class='left'>Title:</td>
+      <td class='right'><%= source.title %></td>
+      <td class='left'>Author:</td>
+      <td class='right'><%= source.author %></td>
+    </tr>
+    <tr>
+      <td class='left'>Text category:</td>
+      <td class='right'><%= source.text_category %></td>
+      <td class='left'>Year published:</td>
+      <td class='right'><%= source.year_published %></td>
+    </tr>
+    <tr>
+      <td class='left'>Source URL:</td>
+      <td class='right'><%= source.source_url %></td>
+      <td class='left'>File:</td>
+      <td class='right'>
+        <% if source.file.attached? %>
+          <%= link_to source.file.filename, rails_blob_path(source.file, disposition: 'attachment') %>
+        <% else %>
+          None attached
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td class='left'>Section headers:</td>
+      <td class='right'><%= source.section_headers.join(', ') %></td>
+    </tr>
+  </table>
+  <div class='instructions'>
+    <p>
+      Providing the above metadata for the source makes it easier for our language model to give contextually relevant answers.
+    </p>
+    <%= link_to "Edit metadata", edit_source_path(@document.source) %>
+  </div>
+  <div class='chunks'>
+      <% if source.truncated? %>
+        <div class='truncation-notice'>
+          This source exceeded our text volume limits, and has been truncated.
+        </div>
+      <% end %>
+      <% source.source_chunks.each do |chunk| %>
+        <div class='chunk'>
+          <details>
+            <summary>
+              <%= "Chunk #{chunk.ordinal_number + 1}: #{chunk.section_header.strip}" %>
+            </summary>
+            <p>
+              <%= chunk.content %>
+            </p>
+          </details>
+        </div>
+      <% end %>
+  </div>
+</div>

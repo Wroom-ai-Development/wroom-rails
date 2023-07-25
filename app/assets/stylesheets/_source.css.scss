@@ -1,0 +1,56 @@
+@import 'colors';
+
+div#source {
+  padding: 0 3vw 1rem 3vw;
+  color: $wroom-dark-gray;
+  font-size: 0.7rem;
+  table {
+    font-size: 0.6rem;
+    width: 100%;
+    td.left {
+      font-weight: 200;
+    }
+    td.right {
+      padding: 0 0.4rem;
+      font-weight: 600;
+    }
+  }
+
+  h3 {
+    margin: 0;
+    color: $wroom-dark-gray;
+    font-size: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  div.instructions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+      text-align: center;
+      font-size: 0.6rem;
+    }
+    a {
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+      border: none;
+      font-family: 'Roboto Slab', serif;
+      font-size: 0.7rem;
+      color: $wroom-blue;
+      border-radius: 10px;
+      &:hover {
+        background-color: $wroom-baby-blue;
+        cursor: pointer;
+      }
+    }
+  }
+
+  div.chunks {
+    text-align: justify;
+    max-height: 37vh;
+    overflow-y: auto;
+    font-size: 0.6rem;
+  }
+}
