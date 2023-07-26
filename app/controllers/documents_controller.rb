@@ -21,26 +21,19 @@ class DocumentsController < ApplicationController
 
   # GET /documents/new
   def new
-    @document = Document.new
-    @folder_id = params[:folder_id] || current_user.root_folder.id
+    @document = Document.create!(
+      title: 'Untitled',
+      content: '',
+      user_id: current_user.id,
+      folder_id: params[:folder_id]
+    )
+    redirect_to wroom_path(document_id: @document.id)
   end
 
   def autosave
     @document.assign_attributes(document_params)
     @document.save!
     head :ok
-  end
-
-  # POST /documents or /documents.json
-  def create
-    @document = Document.create!(document_params)
-    respond_to do |format|
-      if @document.save
-        format.html { redirect_to wroom_path(document_id: @document.id) }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-      end
-    end
   end
 
   # DELETE /documents/1 or /documents/1.json

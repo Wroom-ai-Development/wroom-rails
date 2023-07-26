@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
-  resources :documents, except: %i[show index] do
+  resources :documents, except: %i[show index create] do
     member do
       patch 'autosave'
       get 'editor'
