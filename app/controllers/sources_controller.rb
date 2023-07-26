@@ -19,6 +19,7 @@ class SourcesController < ApplicationController
   # POST /sources or /sources.json
   def create # rubocop:disable Metrics/MethodLength
     @source = Source.new(source_params)
+
     save_section_headers
     if @source.save
       if @source.file.attached?
