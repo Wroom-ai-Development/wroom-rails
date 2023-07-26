@@ -14,16 +14,7 @@ class WroomController < ApplicationController
     if @document
       current_user.update!(current_document_id: @document.id)
     else
-      create_no_documents_messages
+      redirect_to explorer_folder_path(current_user.root_folder)
     end
-  end
-
-  private
-
-  def create_no_documents_messages
-    service = OpenaiService.new
-    @message = '☚ Have you created any documents yet?'
-
-    @haiku = service.haiku_about_new_venture
   end
 end
