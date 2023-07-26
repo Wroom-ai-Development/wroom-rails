@@ -14,7 +14,7 @@ class Ability
     can(:manage, Document, user:)
 
     can(:manage, Voice, user:)
-    can :manage, Conversation, user:
+    can :manage, Conversation, document: { user: }
     can(:manage, Folder, user:)
     can(:manage, RootFolder, user:)
 
