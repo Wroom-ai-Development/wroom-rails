@@ -175,6 +175,11 @@ div#folder-explorer {
           div.item {
             padding: 0.2rem 0;
             height: 1.5rem;
+            display: flex;
+            align-items: center;
+            span.icon {
+              font-size: 1rem;
+            }
             &:hover {
               background-color: $wroom-light-gray;
               cursor: pointer;

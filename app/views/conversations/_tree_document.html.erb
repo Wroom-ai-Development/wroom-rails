@@ -2,6 +2,6 @@
 <%= button_to toggle_context_conversation_path(id: conversation.id, document_id: document.id), method: :patch, onclick: "refreshFrame(#{document.id});" do %>
   <% linked = conversation.documents.include?(document) %>
   <div class='tree-document <%= linked ? 'linked' : '' %>' id='tree-document-<%= document.id %>'>
-    <span class='icon'>📄</span><%= document.title %>
+    <span class='icon'><%= document.icon %></span><%= document.title %>
   </div>
 <% end %>

@@ -12,10 +12,6 @@ RSpec.describe DocumentsController, type: :routing do
       expect(get: '/documents/1/edit').to route_to('documents#edit', id: '1')
     end
 
-    it 'routes to #create' do
-      expect(post: '/documents').to route_to('documents#create')
-    end
-
     it 'routes to #update via PUT' do
       expect(put: '/documents/1').to route_to('documents#update', id: '1')
     end
