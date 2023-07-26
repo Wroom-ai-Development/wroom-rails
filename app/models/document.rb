@@ -23,6 +23,10 @@ class Document < ApplicationRecord
     source.parse_source_chunks_from_text(content.body.to_plain_text)
   end
 
+  def icon
+    source_based ? '📔' : '📄'
+  end
+
   private
 
   def log_event

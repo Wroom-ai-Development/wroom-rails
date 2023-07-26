@@ -61,7 +61,7 @@
         <% @folder.documents.each do |document| %>
           <%= link_to wroom_path(document_id: document.id), data: { turbo_frame: '_top' } do %>
             <div class="item">
-              <span class='icon'>📄</span><%= document.title %>
+              <span class='icon'><%= document.icon %></span><%= document.title %>
             </div>
           <% end %>
         <% end %>
