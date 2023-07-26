@@ -2,7 +2,7 @@
   <div id="record-form-box">
     <div id="header">
       <h3>Upload document</h3>
-      <%= link_to "❌", explorer_folder_path(@folder_id) %>
+      <%= link_to "❌", explorer_folder_path(@folder_id || @source.folder_id) %>
     </div>
     <%= render "form", source: @source, folder_id: @folder_id %>
   </div>
