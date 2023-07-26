@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_25_150128) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_26_115048) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -207,14 +207,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_150128) do
   add_foreign_key "context_references", "documents", on_delete: :cascade
   add_foreign_key "conversation_voices", "conversations", on_delete: :cascade
   add_foreign_key "conversation_voices", "voices"
-  add_foreign_key "documents", "folders"
-  add_foreign_key "documents", "users"
-  add_foreign_key "folders", "folders", column: "parent_id"
-  add_foreign_key "folders", "users"
+  add_foreign_key "documents", "folders", on_delete: :cascade
+  add_foreign_key "documents", "users", on_delete: :cascade
+  add_foreign_key "folders", "folders", column: "parent_id", on_delete: :cascade
+  add_foreign_key "folders", "users", on_delete: :cascade
   add_foreign_key "messages", "conversations"
   add_foreign_key "source_chunks", "sources"
   add_foreign_key "sources", "documents", on_delete: :cascade
-  add_foreign_key "sources", "folders"
-  add_foreign_key "sources", "users"
-  add_foreign_key "voices", "users"
+  add_foreign_key "sources", "folders", on_delete: :cascade
+  add_foreign_key "sources", "users", on_delete: :cascade
+  add_foreign_key "voices", "users", on_delete: :cascade
 end

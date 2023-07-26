@@ -14,6 +14,14 @@ class OpenaiService
     @client = OpenAI::Client.new(access_token: ENV['OPENAI_ACCESS_KEY'])
   end
 
+  def haiku_about_new_venture
+    chat_completion([{
+                      role: 'user',
+                      content: 'Write a haiku about starting a new venture.'
+                    }],
+                    'gpt-3.5-turbo', 1000)
+  end
+
   def chat_completion(messages, model, max_tokens) # rubocop:disable Metrics/MethodLength
     retries = 0
     response = @client.chat(

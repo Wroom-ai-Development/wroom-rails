@@ -42,6 +42,15 @@
             </div>
           <% end %>
         <% end %>
+        <% if @folder.type == 'RootFolder' && @folder.empty? %>
+          <div class="no-content">
+            <h3>Welcome to WROOM</h3>
+            <p>Click the <span>✙</span> button to create a new folder or document.</p>
+            <div class="haiku">
+              <%= simple_format(@haiku) %>
+            </div>
+          </div>
+        <% end %>
         <% @folder.children.each do |folder| %>
           <%= link_to folder do %>
             <div class="item">

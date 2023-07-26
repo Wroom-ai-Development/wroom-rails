@@ -180,6 +180,25 @@ div#folder-explorer {
               cursor: pointer;
             }
           }
+          div.no-content {
+            h3 {
+              font-size: 1rem;
+            }
+            p {
+              span {
+                color: $wroom-blue;
+              }
+            }
+
+            div.haiku {
+              margin-left: 37vw;
+              margin-top: 37vh;
+              padding-right: 0.5rem;
+              border-right: 7px solid $wroom-gray;
+              font-weight: 100;
+              text-align: right;
+            }
+          }
         }
       }
     }

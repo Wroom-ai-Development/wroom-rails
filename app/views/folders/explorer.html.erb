@@ -14,5 +14,8 @@
 
   <div id='current-folder'>
     <%= turbo_frame_tag "current_folder", src: folder_path(@current_folder) %>
+    <% if !@root_folder.empty? %>
+    <% else %>
+    <% end %>
   </div>
 </div>

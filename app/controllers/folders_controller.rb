@@ -11,7 +11,11 @@ class FoldersController < ApplicationController
     @current_folder = params[:id].present? ? Folder.find(params[:id]) : @root_folder
   end
 
-  def show; end
+  def show
+    return unless @folder.type == 'RootFolder' && @folder.empty?
+
+    @haiku = OpenaiService.new.haiku_about_new_venture
+  end
 
   # GET /folders/new
   def new

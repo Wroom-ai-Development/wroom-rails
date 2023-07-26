@@ -22,28 +22,18 @@
     </div>
   </div>
   <div class='panel-element' id='navigation'>
-    <% library_path = @document ? folder_path(@document.folder) : root_folder_folders_path %>
-    <%= button_to "Dashboard", explorer_folder_path(id: @document.folder.id), class: 'library-link', method: :get %>
+    <% library_path = @document ? explorer_folder_path(@document.folder) : explorer_folder_path(current_user.root_folder) %>
+    <%= button_to "Dashboard", library_path, class: 'library-link', method: :get %>
   </div>
   <div id="documents">
     <%= render 'tree_folder', folder: current_user.root_folder %>
   </div>
 </div>
-<% if @document %>
-  <div id="document-panel" class="panel">
-      <%= turbo_frame_tag "document_editor", src: editor_document_path(@document) %>
-  </div>
-  <div id="conversation-panel" class="panel">
-    <% if @document.conversation %>
-      <%= turbo_frame_tag "conversation_frame", src: chat_conversation_path(@document.conversation) %>
-    <% end %>
-  </div>
-
-<% else %>
-  <div id='no-docs-panel' class='panel'>
-    <div class='message'>
-      <%= @message %>
-    </div>
-    <%= simple_format(@haiku) %>
-  </div>
-<% end %>
+<div id="document-panel" class="panel">
+    <%= turbo_frame_tag "document_editor", src: editor_document_path(@document) %>
+</div>
+<div id="conversation-panel" class="panel">
+  <% if @document.conversation %>
+    <%= turbo_frame_tag "conversation_frame", src: chat_conversation_path(@document.conversation) %>
+  <% end %>
+</div>
