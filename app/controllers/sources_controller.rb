@@ -30,6 +30,7 @@ class SourcesController < ApplicationController
       redirect_to wroom_path(document_id: @source.document_id)
     else
       respond_to do |format|
+        @folder_id = @source.folder_id
         format.html { render :new, status: :unprocessable_entity }
       end
     end
