@@ -7,6 +7,13 @@ div#devise {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  div.alert {
+    font-size: 0.7rem;
+    margin-top: 1rem;
+    font-weight: 500;
+    color: $wroom-green
+  }
   
   div.ui-box {
     width: 15rem;
