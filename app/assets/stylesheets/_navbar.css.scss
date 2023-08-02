@@ -78,8 +78,20 @@ header {
     }
     
     p#current-user {
-      font-size: 0.5rem;
+      font-size: 0.6rem;
       font-weight: 200;
+    }
+
+    a.settings-link {
+      margin-left: 0.7rem;
+      font-size: 0.8rem;
+      color: transparent;
+      align-self: center;
+      text-shadow: 0 0 0 $wroom-dark-gray;
+      &:hover {
+        text-decoration: none;
+        text-shadow: 0 0 0 $wroom-blue;
+      }
     }
   }
 }

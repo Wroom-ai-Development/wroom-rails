@@ -377,12 +377,13 @@ body#wroom {
                   width: 1rem;
                   font-size: 1rem;
                   background-color: white;
-                  color: $wroom-red;
+                  color: transparent;
+                  text-shadow: 0 0 0 $wroom-red;
                   border: none;
                   margin: 0;
                   content: 'asdasd';
                   &.copy {
-                    color: $wroom-blue;
+                    text-shadow: 0 0 0 $wroom-blue;
                   }
                 }
               }

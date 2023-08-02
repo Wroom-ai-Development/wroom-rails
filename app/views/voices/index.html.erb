@@ -5,8 +5,8 @@
     <div class='voice'>
       <%= link_to voice.name, edit_voice_path(voice) %>
       <div class="controls">
-        <%= link_to "✍︎", edit_voice_path(voice) %>
-        <%= button_to "␡", voice, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Please confirm you meant to delete #{voice.name}"} %>
+        <%= link_to "🔎", edit_voice_path(voice) %>
+        <%= button_to "❌", voice, method: :delete, data: {turbo_method: :delete, confirm: "Please confirm you meant to delete #{voice.name}", turbo_confirm: "Please confirm you meant to delete #{voice.name}"} %>
       </div>
     </div>
   <% end %>
