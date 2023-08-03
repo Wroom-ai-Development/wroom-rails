@@ -381,6 +381,7 @@ body#wroom {
                   text-shadow: 0 0 0 $wroom-red;
                   border: none;
                   margin: 0;
+                  font-size: 0.7rem;
                   content: 'asdasd';
                   &.copy {
                     text-shadow: 0 0 0 $wroom-blue;
@@ -456,8 +457,9 @@ body#wroom {
         .delete-document {
           background-color: rgba(0,0,0,0);
           border: none;
-          color: red;
-          font-size: 1.2rem;
+          color: transparent;
+          text-shadow: 0 0 0 $wroom-red;
+          font-size: 1rem;
         }
       }
 

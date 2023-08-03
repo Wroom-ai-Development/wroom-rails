@@ -166,6 +166,11 @@ div#folder-explorer {
                 text-decoration: underline 1px $wroom-blue;
               }
             }
+
+            button {
+              color: transparent;
+              text-shadow: 0 0 0 $wroom-red;
+            }
           }
         }
 

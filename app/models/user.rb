@@ -52,8 +52,7 @@ class User < ApplicationRecord
     create_welcome_document
     create_welcome_source
     create_welcome_voices
-    self.security_updated = true
-    save(validate: false)
+    update(onboarded: true)
   end
 
   private

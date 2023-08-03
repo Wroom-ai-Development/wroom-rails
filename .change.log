@@ -1,4 +1,4 @@
-August 2nd 2003
+WROOM 0.2.0 Relase notes
 
 - Switched out all icons to emojis, put emojis in color
 - Added cog wheel link to dashboard navbar
@@ -6,3 +6,8 @@ August 2nd 2003
 - Styled sign-in, sign-up, and forgot password pages
 - Added stricter password requirements
 - Added redirect to user settings page if user does not have a valid password
+- Added delete confirmation to folders
+- Added delete confirmation to documents
+
+
+1234!@#$qwerQWER
