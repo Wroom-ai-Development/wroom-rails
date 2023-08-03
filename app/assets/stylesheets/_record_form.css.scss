@@ -35,7 +35,8 @@ div#record-form-view {
         font-size: 0.8rem;
       }
       a {
-        color: $wroom-red;
+        color: transparent;
+        text-shadow: 0 0 0 $wroom-dark-gray;
         font-size: 0.6rem;
       }
     }
@@ -99,6 +100,23 @@ div#record-form-view {
         input[type='submit'] {
           padding-left: 0.5rem;
         }
+      }
+      div.actions {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        margin-top: 0.5rem;
+        padding-right: 0.2rem;
+        input {
+          padding: 0.5rem;
+          border-radius: 5px;
+          border: 1px solid $wroom-gray;
+          font-size: 0.8rem;
+          &:hover {
+            background-color: $wroom-baby-blue;
+          }
+        }
+
       }
     }
   }

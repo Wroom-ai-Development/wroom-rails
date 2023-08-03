@@ -1,3 +1,8 @@
 August 2nd 2003
 
 - Switched out all icons to emojis, put emojis in color
+- Added cog wheel link to dashboard navbar
+- Created user settings page
+- Styled sign-in, sign-up, and forgot password pages
+- Added stricter password requirements
+- Added redirect to user settings page if user does not have a valid password

@@ -1,1 +1,157 @@
 @import 'colors';
+
+div.settings-view {
+  margin: 0;
+  div.settings-panel {
+    width: 50vw;
+    background-color: $wroom-gray;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid $wroom-light-gray;
+
+    div.action-needed {
+      margin-bottom: 2rem;
+      font-size: 0.8rem;
+      padding: 3rem 5rem;
+      text-align: justify;
+      color: black;
+      h3 {
+        margin: 0 0 1rem 0;
+        color: $wroom-red;
+        font-size: 1rem;
+      }
+
+    }
+
+    div#error_explanation {
+      margin-top: 0.5rem;
+      h2 {
+        text-decoration: underline 1px $wroom-red;
+        font-size: 0.7rem;
+      }
+      ul {
+        padding: 0;
+        list-style: none;
+        font-size: 0.7rem;
+      }
+    }
+    
+    div.validation {
+      color: $wroom-red;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    div#header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      color: $wroom-halfway-dark-gray;
+
+      h3 {
+        margin: 0;
+        font-size: 0.8rem;
+      }
+      a {
+        color: transparent;
+        text-shadow: 0 0 0 $wroom-dark-gray;
+        font-size: 0.6rem;
+      }
+    }
+
+    form {
+      margin-top: 1rem;
+      input[type='text'], input[type='number'], input[type='email'], input[type='password'], textarea {
+        width: 100%;
+        border: 1px solid $wroom-gray;
+        height: 2rem;
+        padding: 0.5rem;
+        box-sizing: border-box;
+        border-radius: 5px;
+        font-family: 'Roboto Slab', serif;
+
+        &:focus {
+          outline: none;
+          border: 1px solid $wroom-blue;
+        }
+      }
+
+      textarea {
+        height: 10rem;
+      }
+
+      input[type='submit'] {
+        font-family: 'Roboto Slab', serif;
+        background-color: white;
+        border: none;
+        color: $wroom-blue;
+        font-size: 0.7rem;
+        margin: 0;
+        padding: 0;
+      }
+      
+      
+      input[type='file'] {
+        font-family: 'Roboto Slab', serif;
+        background-color: white;
+        border: none;
+        font-size: 0.7rem;
+        margin: 0;
+        padding: 0;
+      }
+      div.field {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 0.5rem;
+
+        label {
+          margin-bottom: 0.1rem;
+          font-size: 0.7rem;
+        }
+        
+        i {
+          font-size: 0.7rem;
+        }
+      }
+
+      div.field-with-submit {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        input[type='submit'] {
+          padding-left: 0.5rem;
+        }
+      }
+
+      div.password-instructions {
+        font-size: 0.7rem;
+        margin-bottom: 0.5rem;
+      }
+
+      div.actions {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        margin-top: 0.5rem;
+        padding-right: 0.2rem;
+        input {
+          padding: 0.5rem;
+          border-radius: 5px;
+          border: 1px solid $wroom-gray;
+          font-size: 0.8rem;
+          &:hover {
+            background-color: $wroom-baby-blue;
+          }
+        }
+
+      }
+    }
+
+  }
+}
