@@ -75,8 +75,9 @@ module Conversations
       @sources.each do |source|
         next unless source.source_chunks.any?
 
-        chunk = source.source_chunks.first
-        messages << { role: 'system', content: "#{chunk.content} #{chunk_context_prompt(chunk)}" }
+        source.source_chunks.each do |chunk|
+          messages << { role: 'system', content: "#{chunk.content} #{chunk_context_prompt(chunk)}" }
+        end
       end
       messages += @conversation_messages
       messages << {
@@ -87,18 +88,17 @@ module Conversations
           All the sources that are the context of this query are: #{@sources.map(&:name).join(' ')}
         CONTENT
       }
-      response_from_messages(messages, model: 'gpt-4')
+      response_from_messages(messages, model: @conversation.user.gpt_4_enabled ? 'gpt-4' : 'gpt-3.5-turbo-16k')
     end
 
     def all_sources_fit_in_multi_limit?
       total_tokens = @sources.map { |source| source.source_chunks.map(&:token_length).compact.sum }.sum
-      total_tokens <= REQUEST_MAX_TOKEN_SIZES['gpt-3.5-turbo-16k'] - TOKEN_SPACE_FOR_ANSWER
+      total_limit = @conversation.user.gpt_4_enabled ? REQUEST_MAX_TOKEN_SIZES['gpt-4'] : REQUEST_MAX_TOKEN_SIZES['gpt-3.5-turbo-16k'] # rubocop:disable Layout/LineLength
+      total_tokens <= total_limit - TOKEN_SPACE_FOR_ANSWER
     end
 
     def refuse_answering_from_multiple_sources_that_are_too_big
-      rephrase_nicely(
-        'The source material is too large for me to handle. If you have multiple small sources, try to split them across separate documents. If some of your sources are large (over one chunk), you may want to try putting them in one document each.' # rubocop:disable Layout/LineLength
-      )
+      'The source material is too large for me to handle. If you have multiple small sources, try to split them across separate documents. If some of your sources are large (over one chunk), you may want to try putting them in one document each.' # rubocop:disable Layout/LineLength
     end
 
     def rephrase_nicely(text)
@@ -174,7 +174,8 @@ module Conversations
       ]
       messages << { role: 'system', content: summary_prompt }
       @conversation.update!(status_message: 'Summarizing obtained information')
-      rephrase_with_voice(response_from_messages(messages, model: 'gpt-4'))
+      rephrase_with_voice(response_from_messages(messages,
+                                                 model: @conversation.user.gpt_4_enabled ? 'gpt-4' : 'gpt-3.5-turbo'))
     end
 
     def rephrase_with_voice(string) # rubocop:disable Metrics/MethodLength

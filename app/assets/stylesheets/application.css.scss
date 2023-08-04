@@ -26,4 +26,8 @@ body {
   -webkit-animation-iteration-count: 1;
   -webkit-animation-timing-function: linear;
   background-color: $wroom-lighter-gray;
+
+  a, button, span#wroom {
+    user-select: none;
+  }
 }
