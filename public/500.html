@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>The page you were looking for doesn't exist (404)</title>
+  <title>Oops, something went wrong!</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=MuseoModerno:wght@900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
   <style>
     
     html, body, .main {
@@ -17,12 +22,52 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      background-color: rgb(240,240,240);
+      font-family: 'Roboto Slab', serif;
     }
 
     .notice {
-      color: rgb(0, 102, 255);
+      color: rgb(62, 58, 58);
+      font-size: 0.6rem;
       max-width: 15rem;
       text-align: center;
+      background-color: white;
+      padding: 2rem;
+      border-radius: 10px;
+      border: 1px solid rgb(230, 230, 230);
+
+    }
+    a, a:visited, a:hover, a:active {
+      color: inherit;
+    }
+    
+    .notice h1 {
+      color: rgb(0, 102, 255);
+    }
+    .notice p {
+      text-align: justify;
+    }
+    .notice a {
+      display: block;
+      margin-top: 1rem;
+      /* color: rgb(0, 102, 255); */
+      text-decoration: none;
+      padding: 1rem;
+      border: 1px solid rgb(230, 230, 230);
+      border-radius: 10px;
+      font-size: 0.7rem;
+
+    }
+
+    .notice a:hover {
+      background-color: rgb(212, 229, 255);
+      cursor: pointer;
+    }
+
+    div#wroom {
+        font-family: 'MuseoModerno', sans-serif;
+        font-size: 2rem;
+        color: black;
     }
   </style>
 </head>
@@ -30,7 +75,15 @@
 <body class="rails-default-error-page">
   <div class="main">
     <div class="notice">
-      <i>Many thanks for finding a bug in WROOM, we have been notified and will soon issue a fix.</i>
+      <div id="wroom">WROOM</div>
+      <h1>
+        Oops, something went wrong!
+      </h1>
+      <p>
+        Many thanks for finding a bug in WROOM, we have been notified and will soon issue a fix.
+      </p>
+      <a onClick="window.history.back();">Go back</a>
+      <a href="/">Go to homepage</a>
     </div>
   </div>
 </body>
