@@ -62,6 +62,8 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
 
   # Suppress logger output for asset requests.
   config.assets.quiet = true
+  config.assets.check_precompiled_asset = false
+
   logger           = ActiveSupport::Logger.new($stdout)
   logger.formatter = config.log_formatter
   config.logger    = ActiveSupport::TaggedLogging.new(logger)
