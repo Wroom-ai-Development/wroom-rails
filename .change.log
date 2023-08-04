@@ -13,5 +13,6 @@ WROOM 0.2.0 Relase notes
 - Changed "None selected" to "Default" in chat voice select
 - Made buttons non-selectable
 - Improved message selection flow
+- Made adjustments to assets precompilation config in production
 
 1234!@#$qwerQWER
