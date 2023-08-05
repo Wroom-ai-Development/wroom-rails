@@ -15,5 +15,8 @@ WROOM 0.2.0 Relase notes
 - Improved message selection flow
 - Updated styling of selected context documents
 - Made adjustments to assets precompilation config in production
+- Adjusted non-answer filter to leverage max tokens parameter
+- Did not solve horizontal scroll in chat -- failure to reproduce
+- Did not solve copy button not working -- failure to reproduce
 
 1234!@#$qwerQWER
