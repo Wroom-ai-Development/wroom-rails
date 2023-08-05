@@ -54,8 +54,7 @@ body#wroom {
     position: absolute;
     bottom: 0;
     padding: 0.5rem;
-    color: $wroom-blue;
-    border-radius: 10px;
+    opacity: 50%;
     &:hover {
       cursor: pointer;
     }

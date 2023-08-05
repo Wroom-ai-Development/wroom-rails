@@ -152,14 +152,14 @@ module Conversations
       answers.each_with_index do |answer, index|
         @conversation.update!(status_message: "Reviewing answer based on chunk #{index + 1}")
         message_content = <<-CONTENT
-          Does this text contain the answer to the question: \"#{@last_user_question}\"? Answer YES or NO, and always in English, regardless of the language of the question.
+          Does this text contain the information sought in this question: \"#{@last_user_question}\"? Answer YES or NO, and always in English, regardless of the language of the question.
         CONTENT
         messages = [
           { role: 'system', content: answer[:text] },
           { role: 'user',
             content: message_content }
         ]
-        decision = response_from_messages(messages, model: 'gpt-3.5-turbo')
+        decision = response_from_messages(messages, model: 'gpt-3.5-turbo', max_tokens: 1)
         filtered_answers << answer[:text] unless decision.include?('NO')
       end
       filtered_answers
@@ -262,7 +262,7 @@ module Conversations
       TokenCounter.new('gpt-4').count_tokens(full_text)
     end
 
-    def response_from_messages(messages, model: 'gpt-3.5-turbo') # rubocop:disable Metrics/AbcSize
+    def response_from_messages(messages, model: 'gpt-3.5-turbo', max_tokens: nil) # rubocop:disable Metrics/AbcSize
       interrupt_if_warranted
       token_count = count_tokens_in_messages(messages)
       raise ContextExceeded if token_count > REQUEST_MAX_TOKEN_SIZES[model]
@@ -270,7 +270,7 @@ module Conversations
       @user.update!(tokens_used: @user.tokens_used + token_count)
 
       tokens_left_for_answer = REQUEST_MAX_TOKEN_SIZES[model] - token_count
-      response = @openai_service.chat_completion(messages, model, tokens_left_for_answer)
+      response = @openai_service.chat_completion(messages, model, max_tokens || tokens_left_for_answer)
 
       @requests_made += 1
 
