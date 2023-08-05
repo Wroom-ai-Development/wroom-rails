@@ -181,10 +181,18 @@ div#folder-explorer {
           table.folder-contents-table {
             width: 100%;
             margin-top: 1rem;
-
             th {
-              text-align: left;
               color: $wroom-halfway-dark-gray;
+            }
+
+            th, td {
+              &:first-child {
+                text-align: left;
+              }
+              text-align: right;
+            }
+            tr { 
+              padding: 0.5rem 0;
             }
           }
           div.item {
