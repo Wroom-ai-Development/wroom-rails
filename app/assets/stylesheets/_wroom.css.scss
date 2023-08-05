@@ -269,6 +269,7 @@ body#wroom {
             font-size: 0.7rem;
             height: min-content;
             background-color: $wroom-lighter-gray;
+            resize: none;
             &::placeholder {
               color: $wroom-blue;
             }
