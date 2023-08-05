@@ -16,7 +16,7 @@
       ) do |form| %>
         <% if @conversation.user.voices.present? %>
           <%= form.label 'Voice', style: "display: block" %>
-          <%= form.collection_select :voice_id, @conversation.user.voices.order(:name), :id, :name, {include_blank: "None selected", selected: @conversation.voice.try(:id)}, onchange: "this.form.submit();" %>
+          <%= form.collection_select :voice_id, @conversation.user.voices.order(:name), :id, :name, {include_blank: "Default", selected: @conversation.voice.try(:id)}, onchange: "this.form.submit();" %>
         <% end %>
         <%= form.submit style: 'display:none;' %>
       <% end %>
@@ -45,7 +45,7 @@
             <div class='message error'>
               <div class='content'>
                 <div class='main-message'>
-                  <%= button_to('␡', delete_message_conversation_path(message_id: message.id), method: :delete) %>
+                  <%= button_to('❌', delete_message_conversation_path(message_id: message.id), method: :delete) %>
                   <div class='main-message-content'>
                     You have exceeded the token limit in this conversation. If you would like to chat further,
                     you can remove some messages to make space. If you would like to keep some of the content,
@@ -58,7 +58,7 @@
           <% else %>
             <div class='message <%= message.role %>'>
               <div class='content'>
-                <div class='main-message'>
+                <div tabindex="0" class='main-message'>
                   <script>
                     function copyContent(id) {
                       const text = document.getElementById(id).innerHTML.replace(/<br>/g, "\n").replace("<p>", "").replace("</p>", "")
@@ -67,22 +67,24 @@
                   </script>
                   <div class='message-controls' id=<%= "message-controls" %>>
                     <div class="button-wrapper">
-                      <button class='copy' onClick=<%= "copyContent('main-answer-#{message.id}');" %>>⎘</button>
+                      <button class='copy' onClick=<%= "copyContent('main-answer-#{message.id}');" %>>✂️</button>
                     </div>
-                    <%= button_to('␡', delete_message_conversation_path(message_id: message.id), method: :delete) %>
+                    <%= button_to('❌', delete_message_conversation_path(message_id: message.id), method: :delete) %>
                   </div>
                   <div class='main-message-content'>
                     <div id=<%= "main-answer-#{message.id}" %>><%= simple_format message.content.gsub("\n", "<br>"), {}, {sanitize: false} %></div>
-                    <% if message.partial_answers.present? %>
-                      <details>
-                        <summary>Alternative answers:</summary>
-                        <% message.partial_answers.each do |answer| %>
-                          <%= simple_format answer %>
-                        <% end %>
-                      </details>
-                    <% end %>
                   </div>
                 </div>
+                <% if message.partial_answers.present? %>
+                  <details class='partial-answers'>
+                    <summary>Alternative answers:</summary>
+                    <% message.partial_answers.each do |answer| %>
+                      <div tabindex="0" class="message partial-answer">
+                        <%= simple_format answer %>
+                      </div>
+                    <% end %>
+                  </details>
+                <% end %>
               </div>
             </div>
           <% end %>

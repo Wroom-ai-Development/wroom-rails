@@ -54,8 +54,7 @@ body#wroom {
     position: absolute;
     bottom: 0;
     padding: 0.5rem;
-    color: $wroom-blue;
-    border-radius: 10px;
+    opacity: 50%;
     &:hover {
       cursor: pointer;
     }
@@ -269,6 +268,7 @@ body#wroom {
             font-size: 0.7rem;
             height: min-content;
             background-color: $wroom-lighter-gray;
+            resize: none;
             &::placeholder {
               color: $wroom-blue;
             }
@@ -340,6 +340,10 @@ body#wroom {
               }
             }
           }    
+
+          details.partial-answers {
+            margin: 0.5rem 0 0 1rem;
+          }
     
           div.message {
             padding: 0.5rem 2rem 0 1rem;
@@ -348,11 +352,35 @@ body#wroom {
             hyphens: auto;
             line-height: 0.8rem;
             width: 100%;
+            display: flex;
+            flex-direction: column;
+
+            p::selection {
+              background-color: $wroom-baby-blue;
+            }
+
+            &.partial-answer {
+              margin: 0;
+              padding: 0;
+
+              -webkit-user-select: all; /* for Safari */
+              user-select: all;
+            }
+
+            &:focus {
+              animation: select 100ms step-end forwards;
+            }
     
             div.main-message {
               display: flex;
               align-items: end;
               flex-direction: row;
+
+              -webkit-user-select: all; /* for Safari */
+              user-select: all;
+              &:focus {
+                animation: select 100ms step-end forwards;
+              }
               div.message-controls {
                 padding-bottom: 0.5rem;
                 form {
@@ -377,12 +405,14 @@ body#wroom {
                   width: 1rem;
                   font-size: 1rem;
                   background-color: white;
-                  color: $wroom-red;
+                  color: transparent;
+                  text-shadow: 0 0 0 $wroom-red;
                   border: none;
                   margin: 0;
+                  font-size: 0.7rem;
                   content: 'asdasd';
                   &.copy {
-                    color: $wroom-blue;
+                    text-shadow: 0 0 0 $wroom-blue;
                   }
                 }
               }
@@ -455,8 +485,9 @@ body#wroom {
         .delete-document {
           background-color: rgba(0,0,0,0);
           border: none;
-          color: red;
-          font-size: 1.2rem;
+          color: transparent;
+          text-shadow: 0 0 0 $wroom-red;
+          font-size: 1rem;
         }
       }
 
@@ -583,3 +614,12 @@ body#wroom {
   }
 }
 
+
+
+
+@keyframes select {
+  to {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+}

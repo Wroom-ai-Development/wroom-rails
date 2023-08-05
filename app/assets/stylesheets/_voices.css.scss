@@ -21,6 +21,7 @@ div.voices {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: baseline;
     padding: 0.5rem;
     font-size: 0.8rem;
     width: 50vw;
@@ -32,22 +33,21 @@ div.voices {
       display: flex;
       flex-direction: row;
       a, button {
-        font-family: 'Roboto Slab', serif;
-        font-size: 1rem;
+        font-size: 0.7rem;
         background-color: white;
-        color: $wroom-blue;
         margin: 0;
         margin-left: 1rem;
         padding: 0;
         border: none;
-        font-weight: 300;
-        &:hover {
-          text-decoration: underline 1px $wroom-blue;
-        }
+        color: transparent;
+        text-shadow: 0 0 0 $wroom-blue;
       }
 
       button {
-        color: $wroom-red;
+        color: transparent;
+        text-shadow: 0 0 0 $wroom-red;
+
+        transform: translate(0, -0.1rem);
       }
     }
   }

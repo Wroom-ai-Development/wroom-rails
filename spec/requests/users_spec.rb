@@ -23,7 +23,7 @@ RSpec.describe '/users', type: :request do
   let(:valid_attributes) do
     {
       email: 'em@ail.com',
-      password: 'password'
+      password: '1234!@#$qwerQWER'
     }
   end
 

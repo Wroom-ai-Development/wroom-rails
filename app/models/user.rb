@@ -4,7 +4,10 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :confirmable
+         :recoverable, :rememberable, :confirmable, :validatable, password_length: 11..128
+
+  VALID_PASSWORD_REGEX = /\A(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{11,}\z/
+  validate :password_complexity
 
   has_many :sources, dependent: :destroy
   has_many :voices, dependent: :destroy
@@ -19,6 +22,14 @@ class User < ApplicationRecord
 
   enum role: { 'admin': 0, 'user': 1, 'supplicant': 2 }
   after_initialize :set_default_role, if: :new_record?
+
+  def password_complexity
+    # Regexp extracted from https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a
+    return if password.blank? || password =~ VALID_PASSWORD_REGEX
+
+    errors.add(:password,
+               'must be at least 11 characters long and include at least one letter, one digit, and one special character (@ $ ! % * # ? &)') # rubocop:disable Layout/LineLength
+  end
 
   def set_default_role
     self.role ||= :user
@@ -41,7 +52,7 @@ class User < ApplicationRecord
     create_welcome_document
     create_welcome_source
     create_welcome_voices
-    update!(onboarded: true)
+    update(onboarded: true)
   end
 
   private

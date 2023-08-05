@@ -33,7 +33,11 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     registrations: 'registrations',
     sessions: 'sessions'
   }
-  resources :users, except: %i[new create index]
+  resources :users, except: %i[new create index] do
+    member do
+      get 'toggle_gpt_4'
+    end
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

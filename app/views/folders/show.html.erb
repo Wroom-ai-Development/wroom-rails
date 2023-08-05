@@ -30,7 +30,15 @@
           <span><%= @folder.name %></span>
           <div class="controls">
             <%= link_to "Rename", edit_folder_path(@folder), data: { turbo_frame: '_top' } %>
-            <%= button_to "Delete", folder_path(@folder), method: :delete, style: 'color: red;' %>
+            <%= button_to "❌", folder_path(@folder), method: :delete, class: 'delete-folder',
+              form: {
+                data: {
+                    turbo: false,
+                    controller: "confirmation",
+                    action: 'submit->confirmation#confirm',
+                    confirmation_message_value: "Please confirm you meant to delete #{@folder.name}",
+                }
+              } %>
           </div>
         <% end %>
       </div>

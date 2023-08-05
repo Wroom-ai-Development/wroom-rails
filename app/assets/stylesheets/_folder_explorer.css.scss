@@ -162,9 +162,14 @@ div#folder-explorer {
               padding: 0;
               border: none;
               font-weight: 300;
-              &:hover {
-                text-decoration: underline 1px $wroom-blue;
-              }
+            }
+            a:hover {
+              text-decoration: underline 1px $wroom-blue;
+            }
+
+            button {
+              color: transparent;
+              text-shadow: 0 0 0 $wroom-red;
             }
           }
         }

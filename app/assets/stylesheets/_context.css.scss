@@ -18,17 +18,16 @@ div.context {
   form.button_to {
     width: 100%;
     margin: 0 !important;
-
+    margin-bottom: 0.3rem !important;
     button {
       font-family: 'Roboto Slab', serif;
       width: 100%;
       background: rgba(0, 0, 0, 0);
       border: none;
       text-align: left;
-      padding: 0;
+      padding-left: 0.3rem;
       font-size: 0.7rem;
       height: 1.5rem;
-      padding-left: 0.1rem;
     }
   }
 
@@ -59,16 +58,13 @@ div.context {
       display: flex;
       align-items: center;
       font-weight: 400;
-      &.loading {
-        animation: load 500ms;
-      }
+      padding-left: 0.1rem;
 
-      &.unloading {
-        animation: unload 500ms;
-      }
 
       &.linked {
-        color: $wroom-green;
+        color: white;
+        background-color: $wroom-blue;
+        border-radius: 5px;
       }
     }
   }

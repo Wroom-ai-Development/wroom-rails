@@ -75,8 +75,9 @@ module Conversations
       @sources.each do |source|
         next unless source.source_chunks.any?
 
-        chunk = source.source_chunks.first
-        messages << { role: 'system', content: "#{chunk.content} #{chunk_context_prompt(chunk)}" }
+        source.source_chunks.each do |chunk|
+          messages << { role: 'system', content: "#{chunk.content} #{chunk_context_prompt(chunk)}" }
+        end
       end
       messages += @conversation_messages
       messages << {
@@ -87,18 +88,17 @@ module Conversations
           All the sources that are the context of this query are: #{@sources.map(&:name).join(' ')}
         CONTENT
       }
-      response_from_messages(messages, model: 'gpt-4')
+      response_from_messages(messages, model: @conversation.user.gpt_4_enabled ? 'gpt-4' : 'gpt-3.5-turbo-16k')
     end
 
     def all_sources_fit_in_multi_limit?
       total_tokens = @sources.map { |source| source.source_chunks.map(&:token_length).compact.sum }.sum
-      total_tokens <= REQUEST_MAX_TOKEN_SIZES['gpt-3.5-turbo-16k'] - TOKEN_SPACE_FOR_ANSWER
+      total_limit = @conversation.user.gpt_4_enabled ? REQUEST_MAX_TOKEN_SIZES['gpt-4'] : REQUEST_MAX_TOKEN_SIZES['gpt-3.5-turbo-16k'] # rubocop:disable Layout/LineLength
+      total_tokens <= total_limit - TOKEN_SPACE_FOR_ANSWER
     end
 
     def refuse_answering_from_multiple_sources_that_are_too_big
-      rephrase_nicely(
-        'The source material is too large for me to handle. If you have multiple small sources, try to split them across separate documents. If some of your sources are large (over one chunk), you may want to try putting them in one document each.' # rubocop:disable Layout/LineLength
-      )
+      'The source material is too large for me to handle. If you have multiple small sources, try to split them across separate documents. If some of your sources are large (over one chunk), you may want to try putting them in one document each.' # rubocop:disable Layout/LineLength
     end
 
     def rephrase_nicely(text)
@@ -152,14 +152,14 @@ module Conversations
       answers.each_with_index do |answer, index|
         @conversation.update!(status_message: "Reviewing answer based on chunk #{index + 1}")
         message_content = <<-CONTENT
-          Does this text contain the answer to the question: \"#{@last_user_question}\"? Answer YES or NO, and always in English, regardless of the language of the question.
+          Does this text contain the information sought in this question: \"#{@last_user_question}\"? Answer YES or NO, and always in English, regardless of the language of the question.
         CONTENT
         messages = [
           { role: 'system', content: answer[:text] },
           { role: 'user',
             content: message_content }
         ]
-        decision = response_from_messages(messages, model: 'gpt-3.5-turbo')
+        decision = response_from_messages(messages, model: 'gpt-3.5-turbo', max_tokens: 1)
         filtered_answers << answer[:text] unless decision.include?('NO')
       end
       filtered_answers
@@ -174,7 +174,8 @@ module Conversations
       ]
       messages << { role: 'system', content: summary_prompt }
       @conversation.update!(status_message: 'Summarizing obtained information')
-      rephrase_with_voice(response_from_messages(messages, model: 'gpt-4'))
+      rephrase_with_voice(response_from_messages(messages,
+                                                 model: @conversation.user.gpt_4_enabled ? 'gpt-4' : 'gpt-3.5-turbo'))
     end
 
     def rephrase_with_voice(string) # rubocop:disable Metrics/MethodLength
@@ -261,7 +262,7 @@ module Conversations
       TokenCounter.new('gpt-4').count_tokens(full_text)
     end
 
-    def response_from_messages(messages, model: 'gpt-3.5-turbo') # rubocop:disable Metrics/AbcSize
+    def response_from_messages(messages, model: 'gpt-3.5-turbo', max_tokens: nil) # rubocop:disable Metrics/AbcSize
       interrupt_if_warranted
       token_count = count_tokens_in_messages(messages)
       raise ContextExceeded if token_count > REQUEST_MAX_TOKEN_SIZES[model]
@@ -269,7 +270,7 @@ module Conversations
       @user.update!(tokens_used: @user.tokens_used + token_count)
 
       tokens_left_for_answer = REQUEST_MAX_TOKEN_SIZES[model] - token_count
-      response = @openai_service.chat_completion(messages, model, tokens_left_for_answer)
+      response = @openai_service.chat_completion(messages, model, max_tokens || tokens_left_for_answer)
 
       @requests_made += 1
 

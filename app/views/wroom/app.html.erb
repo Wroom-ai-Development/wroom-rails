@@ -5,15 +5,15 @@
     const button = document.getElementById('collapse-button')
     if (panel.style.display == 'none') {
       panel.style.display = 'flex'
-      button.innerHTML = '⮨'
+      button.innerHTML = '⬅️'
     } else {
       panel.style.display = 'none'
-      button.innerHTML = '⮩'
+      button.innerHTML = '➡️'
     }
   }
 </script>
 <div id="collapse-button" onClick=toggleLeftPanel()>
-  ⮨
+  ⬅️
 </div>
 <div id="documents-panel" class="panel">
   <div class='panel-element' id='wroom-logo'>

@@ -3,8 +3,8 @@
     <div id='logo'>
       <span id='wroom'>WROOM</span>
     </div>
+    <%= render "devise/shared/error_messages", resource: resource %>
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-      <%= render "devise/shared/error_messages", resource: resource %>
 
       <div class="field">
         <%= f.label :email %><br>
@@ -23,15 +23,23 @@
 
       <div class="field">
         <%= f.label :password %>
-        <% if @minimum_password_length %>
-        <em>(<%= @minimum_password_length %> characters minimum)</em>
-        <% end %><br>
         <%= f.password_field :password, autocomplete: "new-password" %>
       </div>
 
       <div class="field">
         <%= f.label :password_confirmation %><br>
         <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+      </div>
+
+      <div class="password-instructions">
+        Please make sure that your password matches the following criteria:
+        <ul>
+          <li>At least 11 characters long</li>
+          <li>Contains at least one letter (A-Za-z)</li>
+          <li>Contains at least one digit</li>
+          <li>Contains at least one special character from @ $ ! % * # ? &</li>
+        </ul>
+        We recommend using a password manager to generate and store your passwords.
       </div>
 
       <div class="actions">

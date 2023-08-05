@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :user, only: %i[show edit update destroy]
+  before_action :user, only: %i[show edit update destroy toggle_gpt_4]
   load_and_authorize_resource
 
   def show
@@ -10,6 +10,12 @@ class UsersController < ApplicationController
   end
 
   def edit; end
+
+  def toggle_gpt_4
+    @user.toggle!(:gpt_4_enabled) # rubocop:disable Rails/SkipsModelValidations
+    @user.save!
+    redirect_to root_path
+  end
 
   def update
     respond_to do |format|

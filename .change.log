@@ -1,0 +1,19 @@
+WROOM 0.2.0 Relase notes
+
+- Switched out all icons to emojis, put emojis in color
+- Added cog wheel link to dashboard navbar
+- Created user settings page
+- Styled sign-in, sign-up, and forgot password pages
+- Added stricter password requirements
+- Added redirect to user settings page if user does not have a valid password
+- Added delete confirmation to folders
+- Added delete confirmation to documents
+- Added GPT-4 toggle for admins
+- Relaxed multi source size limits
+- Changed "None selected" to "Default" in chat voice select
+- Made buttons non-selectable
+- Improved message selection flow
+- Updated styling of selected context documents
+- Made adjustments to assets precompilation config in production
+
+1234!@#$qwerQWER

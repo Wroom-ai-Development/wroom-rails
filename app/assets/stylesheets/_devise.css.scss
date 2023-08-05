@@ -16,9 +16,40 @@ div#devise {
   }
   
   div.ui-box {
-    width: 15rem;
+    width: 40rem;
+    background-color: white;
+    border: 1px solid $wroom-gray;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    align-items: center;
+    padding: 2rem;
 
     form {
+      width: 80%;
+
+      input[type='text'], input[type='number'], input[type='email'], input[type='password'], textarea {
+        width: 100%;
+        border: 1px solid $wroom-gray;
+        height: 2rem;
+        padding: 0.5rem;
+        box-sizing: border-box;
+        border-radius: 5px;
+        font-family: 'Roboto Slab', serif;
+
+        &:focus {
+          outline: none;
+          border: 1px solid $wroom-blue;
+        }
+      }
+
+      div.password-instructions {
+        margin-top: 0.5rem;
+        font-size: 0.7rem;
+        margin-bottom: 0.5rem;
+      }
+
       div#error_explanation {
         margin-top: 0.5rem;
         h2 {

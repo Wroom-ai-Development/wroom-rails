@@ -1,22 +1,44 @@
 @import 'colors';
 
-div#record-form-view {
-  height: 100%;
-  width: 100%;
+div.settings-view {
   margin: 0;
-  display: flex;
-  align-items: start;
-  justify-content: center;
-  font-size: 0.7rem;
-
-  div#record-form-box {
+  div.settings-panel {
+    width: 50vw;
+    background-color: $wroom-gray;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     background-color: white;
     margin-top: 1rem;
-    width: 50vw;
     padding: 1rem;
     border: 1px solid $wroom-light-gray;
+
+    div.action-needed {
+      margin-bottom: 2rem;
+      font-size: 0.8rem;
+      padding: 3rem 5rem;
+      text-align: justify;
+      color: black;
+      h3 {
+        margin: 0 0 1rem 0;
+        color: $wroom-red;
+        font-size: 1rem;
+      }
+
+    }
+
+    div#error_explanation {
+      margin-top: 0.5rem;
+      h2 {
+        text-decoration: underline 1px $wroom-red;
+        font-size: 0.7rem;
+      }
+      ul {
+        padding: 0;
+        list-style: none;
+        font-size: 0.7rem;
+      }
+    }
     
     div.validation {
       color: $wroom-red;
@@ -29,6 +51,7 @@ div#record-form-view {
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
+      color: $wroom-halfway-dark-gray;
 
       h3 {
         margin: 0;
@@ -43,7 +66,7 @@ div#record-form-view {
 
     form {
       margin-top: 1rem;
-      input[type='text'], input[type='number'], textarea {
+      input[type='text'], input[type='number'], input[type='email'], input[type='password'], textarea {
         width: 100%;
         border: 1px solid $wroom-gray;
         height: 2rem;
@@ -90,6 +113,10 @@ div#record-form-view {
           margin-bottom: 0.1rem;
           font-size: 0.7rem;
         }
+        
+        i {
+          font-size: 0.7rem;
+        }
       }
 
       div.field-with-submit {
@@ -101,6 +128,12 @@ div#record-form-view {
           padding-left: 0.5rem;
         }
       }
+
+      div.password-instructions {
+        font-size: 0.7rem;
+        margin-bottom: 0.5rem;
+      }
+
       div.actions {
         display: flex;
         flex-direction: row;
@@ -119,5 +152,6 @@ div#record-form-view {
 
       }
     }
+
   }
 }
