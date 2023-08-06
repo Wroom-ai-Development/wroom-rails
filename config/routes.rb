@@ -5,16 +5,24 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     member do
       patch 'autosave'
       get 'editor'
+      get 'undiscard'
     end
   end
   resources :folders do
     member do
       get 'explorer'
+      get 'undiscard'
+    end
+    collection do
+      get 'recycle_bin'
     end
   end
   resources :voices, except: :show do
     collection do
       get 'manager'
+    end
+    member do
+      get 'undiscard'
     end
   end
   mount ActionCable.server => '/cable'

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Message < ApplicationRecord
+  include Discard::Model
+
   belongs_to :conversation
 
   validates :content, presence: true

@@ -72,7 +72,7 @@
                 </td>
               </tr>
             <% end %>
-            <% @folder.children.each do |folder| %>
+            <% @folder.children.kept.each do |folder| %>
               <tr>
                 <td><%= link_to folder do %>
                   <span class='icon'>📁 </span><%= folder.name %>
@@ -84,7 +84,7 @@
                 </td>
               </tr>
             <% end %>
-            <% @folder.documents.each do |document| %>
+            <% @folder.documents.kept.each do |document| %>
               <tr>
                 <td><%= link_to wroom_path(document_id: document.id), data: { turbo_frame: '_top' } do %>
                   <span class='icon'><%= document.icon %></span><%= document.title %>

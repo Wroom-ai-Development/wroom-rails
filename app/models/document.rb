@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Document < ApplicationRecord
+  include Discard::Model
   belongs_to :user
   belongs_to :folder
   has_one :source, dependent: :destroy

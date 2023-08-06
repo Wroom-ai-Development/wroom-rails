@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_03_160219) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_06_173521) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -89,6 +89,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_03_160219) do
     t.datetime "updated_at", null: false
     t.boolean "source_based", default: false, null: false
     t.bigint "folder_id"
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_documents_on_discarded_at"
     t.index ["folder_id"], name: "index_documents_on_folder_id"
     t.index ["user_id"], name: "index_documents_on_user_id"
   end
@@ -100,6 +102,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_03_160219) do
     t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_folders_on_discarded_at"
     t.index ["parent_id"], name: "index_folders_on_parent_id"
     t.index ["user_id"], name: "index_folders_on_user_id"
   end
@@ -111,7 +115,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_03_160219) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "partial_answers", array: true
+    t.datetime "discarded_at"
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+    t.index ["discarded_at"], name: "index_messages_on_discarded_at"
   end
 
   create_table "monitoring_events", force: :cascade do |t|
@@ -200,6 +206,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_03_160219) do
     t.text "meta_prompt"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_voices_on_discarded_at"
     t.index ["user_id"], name: "index_voices_on_user_id"
   end
 

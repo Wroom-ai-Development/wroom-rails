@@ -2,7 +2,7 @@
 
 class DocumentsController < ApplicationController
   before_action :set_document,
-                only: %i[editor destroy autosave]
+                only: %i[editor destroy autosave undiscard]
   load_and_authorize_resource
 
   def editor
@@ -15,8 +15,13 @@ class DocumentsController < ApplicationController
   end
 
   def index
-    @documents = Document.all
+    @documents = Document.kept
     @users = User.where.not(id: current_user.id) if current_user.admin?
+  end
+
+  def undiscard
+    @document.undiscard
+    redirect_to wroom_path(document_id: @document.id)
   end
 
   # GET /documents/new
@@ -38,8 +43,7 @@ class DocumentsController < ApplicationController
 
   # DELETE /documents/1 or /documents/1.json
   def destroy
-    @document.source.destroy! if @document.source.present?
-    @document.destroy
+    @document.discard
     current_user.update!(current_document_id: nil)
 
     redirect_to wroom_path, status: :see_other

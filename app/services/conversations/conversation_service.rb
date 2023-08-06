@@ -27,8 +27,8 @@ module Conversations
         document.refresh_source unless document.source_based
       end
       @sources = conversation.sources
-      @last_user_question = @conversation.messages.where(role: 'user').last.content
-      @conversation_messages = @conversation.messages.order(:created_at).reject do |m|
+      @last_user_question = @conversation.messages.kept.where(role: 'user').last.content
+      @conversation_messages = @conversation.messages.kept.order(:created_at).reject do |m|
         m.role == 'error'
       end
       @conversation_messages = @conversation_messages.map { |message| { role: message.role, content: message.content } }

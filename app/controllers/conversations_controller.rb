@@ -34,7 +34,7 @@ class ConversationsController < ApplicationController
     conversation = message.conversation
 
     authorize! :edit, conversation
-    message.destroy
+    message.discard
     redirect_to wroom_path, status: :see_other
   end
 

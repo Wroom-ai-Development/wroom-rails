@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Voice < ApplicationRecord
+  include Discard::Model
   belongs_to :user
   has_many :conversation_voices, dependent: :destroy
   has_many :conversations, through: :conversation_voices
@@ -9,7 +10,7 @@ class Voice < ApplicationRecord
 
   after_create_commit :announce_create
   after_update_commit :announce_update
-  after_destroy_commit :announce_destroy
+  after_discard :announce_destroy
 
   private
 

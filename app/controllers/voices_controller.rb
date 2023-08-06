@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class VoicesController < ApplicationController
-  before_action :set_voice, only: %i[edit update destroy delete_from_frame]
+  before_action :set_voice, only: %i[edit update destroy delete_from_frame undiscard]
   load_and_authorize_resource
 
   def delete_from_frame
@@ -16,6 +16,11 @@ class VoicesController < ApplicationController
   # GET /voices/new
   def new
     @voice = Voice.new
+  end
+
+  def undiscard
+    @voice.undiscard
+    redirect_to manager_voices_path(@voice)
   end
 
   def manager
@@ -52,7 +57,7 @@ class VoicesController < ApplicationController
 
   # DELETE /voices/1 or /voices/1.json
   def destroy
-    @voice.destroy
+    @voice.discard
 
     head :no_content
   end
