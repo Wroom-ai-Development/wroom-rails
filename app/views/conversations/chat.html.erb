@@ -20,6 +20,7 @@
         <% end %>
         <%= form.submit style: 'display:none;' %>
       <% end %>
+      <%= link_to "Voices", manager_voices_path, style: 'margin-left: 0.5rem' %>
       <%= button_to('clear chat', clear_chat_conversation_path(conversation_id: @conversation.id), method: :delete) %>
     </div>
     <div id='conversation'>
