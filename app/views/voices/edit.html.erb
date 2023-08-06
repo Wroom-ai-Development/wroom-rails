@@ -1,9 +1,21 @@
-<div id="record-form-view">
-  <div id="record-form-box">
-    <div id="header">
-      <h3>Edit voice</h3>
-      <%= link_to "❌", voices_path %>
+<%= turbo_frame_tag "voice_editor" do %>
+  <%= turbo_stream_from 'voices' %>
+  <div class="voice-editor" id="editor-<%= @voice.id %>">
+    <div id="record-form-view">
+      <div id="record-form-box">
+        <div id="header">
+          <%= button_to "❌", @voice, method: :delete, class: 'delete-voice',
+            form: {
+              data: {
+                  turbo: false,
+                  controller: "confirmation",
+                  action: 'submit->confirmation#confirm',
+                  confirmation_message_value: "Please confirm you meant to delete #{@voice.name}",
+              }
+            } %>
+        </div>
+        <%= render "form", voice: @voice %>
+      </div>
     </div>
-    <%= render "form", voice: @voice %>
   </div>
-</div>
+<% end %>

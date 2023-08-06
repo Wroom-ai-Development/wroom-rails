@@ -12,7 +12,11 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       get 'explorer'
     end
   end
-  resources :voices
+  resources :voices, except: :show do
+    collection do
+      get 'manager'
+    end
+  end
   mount ActionCable.server => '/cable'
   resources :conversations, only: [] do
     member do

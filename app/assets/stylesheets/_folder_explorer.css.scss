@@ -177,6 +177,24 @@ div#folder-explorer {
         div.content {
           height: 100%;
           overflow-y: auto;
+
+          table.folder-contents-table {
+            width: 100%;
+            margin-top: 1rem;
+            th {
+              color: $wroom-halfway-dark-gray;
+            }
+
+            th, td {
+              &:first-child {
+                text-align: left;
+              }
+              text-align: right;
+            }
+            tr { 
+              padding: 0.5rem 0;
+            }
+          }
           div.item {
             padding: 0.2rem 0;
             height: 1.5rem;

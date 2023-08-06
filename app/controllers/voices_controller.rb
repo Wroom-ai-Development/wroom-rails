@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class VoicesController < ApplicationController
-  before_action :set_voice, only: %i[show edit update destroy delete_from_frame]
+  before_action :set_voice, only: %i[edit update destroy delete_from_frame]
   load_and_authorize_resource
 
   def delete_from_frame
@@ -11,17 +11,16 @@ class VoicesController < ApplicationController
   end
 
   # GET /voices or /voices.json
-  def index
-    @voices = Voice.all
-    @users = User.where.not(id: current_user.id) if current_user.admin?
-  end
-
-  # GET /voices/1 or /voices/1.json
-  def show; end
+  def index; end
 
   # GET /voices/new
   def new
     @voice = Voice.new
+  end
+
+  def manager
+    set_voice if params[:id].present?
+    @manager ||= current_user.voices.first
   end
 
   # GET /voices/1/edit
@@ -33,7 +32,7 @@ class VoicesController < ApplicationController
 
     respond_to do |format|
       if @voice.save
-        format.html { redirect_to voices_url, notice: 'Voice was successfully created.' }
+        format.html { redirect_to edit_voice_path(@voice), status: :see_other }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -44,7 +43,7 @@ class VoicesController < ApplicationController
   def update
     respond_to do |format|
       if @voice.update(voice_params)
-        format.html { redirect_to voices_url, notice: 'Voice was successfully updated.' }
+        format.html { redirect_to edit_voice_path(@voice), notice: 'Voice was successfully updated.' }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -55,9 +54,7 @@ class VoicesController < ApplicationController
   def destroy
     @voice.destroy
 
-    respond_to do |format|
-      format.html { redirect_to voices_url, notice: 'Voice was successfully destroyed.' }
-    end
+    head :no_content
   end
 
   private
