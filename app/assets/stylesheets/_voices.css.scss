@@ -2,7 +2,8 @@
 div#voices-manager {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: start;
+  padding-left: 1rem;
   div.voices {
     width: 30vw;
     padding: 1rem;
@@ -13,13 +14,15 @@ div#voices-manager {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: left;
+
+    h3 {
+      width: 100%;
+      text-align: center;
+    }
 
     a { 
       width: 100%;
-
-      &.new-voice {
-        text-align: center;
-      }
     }
     div.voice {
       width: 100%;
@@ -64,9 +67,21 @@ div.voices {
   }
 
   a.new-voice {
-    font-size: 1.2rem;
+    font-size: 0.8em;
     color: $wroom-blue;
     margin-bottom: 1rem;
+    color: #0066ff;
+    background-color: white;
+    padding: 1rem 1.2rem;
+    border-radius: 10px;
+    text-align: center;
+    width: min-content;
+    box-sizing: border-box;
+
+    &:hover {
+      cursor: pointer;
+      background-color: #d4e5ff;
+    }
   }
 
   div.voice {
