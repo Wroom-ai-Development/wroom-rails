@@ -13,7 +13,7 @@
     <% end %>
     <% if can? :manage, Voice %>
       <div class="link-wrapper">
-        <%= link_to "Voices", voices_path %>
+        <%= link_to "Voices", manager_voices_path %>
       </div>
     <% end %>
     <% if can? :manage, User %>

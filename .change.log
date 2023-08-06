@@ -1,4 +1,5 @@
-WROOM 0.2.0 Relase notes
+WROOM 0.2.0
+Relase notes
 
 - Switched out all icons to emojis, put emojis in color
 - Added cog wheel link to dashboard navbar
@@ -16,7 +17,6 @@ WROOM 0.2.0 Relase notes
 - Updated styling of selected context documents
 - Made adjustments to assets precompilation config in production
 - Adjusted non-answer filter to leverage max tokens parameter
-- Did not solve horizontal scroll in chat -- failure to reproduce
-- Did not solve copy button not working -- failure to reproduce
+- Reworked Voices UI with turbo frames
 
 1234!@#$qwerQWER

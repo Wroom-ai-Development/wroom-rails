@@ -1,9 +1,13 @@
-<div id="record-form-view">
-  <div id="record-form-box">
-    <div id="header">
-      <h3>New voice</h3>
-      <%= link_to "❌", voices_path %>
+<%= turbo_frame_tag "voice_editor" do %>
+  <div class="voice-editor">
+    <div id="record-form-view">
+      <div id="record-form-box">
+        <div id="header">
+          <h3>New voice</h3>
+          <%= link_to "❌", voices_path %>
+        </div>
+        <%= render "form", voice: @voice %>
+      </div>
     </div>
-    <%= render "form", voice: @voice %>
   </div>
-</div>
+<% end %>

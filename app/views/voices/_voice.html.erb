@@ -1,19 +1,5 @@
-<div id="<%= dom_id voice %>">
-  <p>
-    <strong>Name:</strong>
+<%= link_to edit_voice_path(voice), data: { turbo_frame: 'voice_editor' } do %>
+  <div class='voice' id="voice-<%= voice.id %>">
     <%= voice.name %>
-  </p>
-
-  <% if current_user.admin? %>
-    <p>
-      <strong>User:</strong>
-      <%= voice.user.email %>
-    </p>
-  <% end %>
-
-  <p>
-    <strong>Meta prompt:</strong>
-    <%= simple_format voice.meta_prompt %>
-  </p>
-
-</div>
+  </div>
+<% end %>

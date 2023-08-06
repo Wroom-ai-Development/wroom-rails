@@ -1,13 +1,10 @@
-<div class='voices'>
-  <h3>Voices</h3>
-  <%= link_to "✙", new_voice_path, class: 'new-voice' %>
-  <% current_user.voices.order(:name).each do |voice| %>
-    <div class='voice'>
-      <%= link_to voice.name, edit_voice_path(voice) %>
-      <div class="controls">
-        <%= link_to "🔎", edit_voice_path(voice) %>
-        <%= button_to "❌", voice, method: :delete, data: {turbo_method: :delete, confirm: "Please confirm you meant to delete #{voice.name}", turbo_confirm: "Please confirm you meant to delete #{voice.name}"} %>
-      </div>
-    </div>
-  <% end %>
-</div>
+<%= turbo_frame_tag "voices" do %>
+  <div class='voices'>
+    <h3>Voices</h3>
+    <%= link_to "✙", new_voice_path, class: 'new-voice', data: { turbo_frame: 'voice_editor' } %>
+    <% current_user.voices.order(:name).each do |voice| %>
+      <%= render 'voice', voice: voice %>
+    <% end %>
+    <div id="new-voices-marker">
+  </div>
+<% end %>

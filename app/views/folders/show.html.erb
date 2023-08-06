@@ -59,6 +59,7 @@
               <th>Name</th>
               <th>Created</th>
               <th>Last accessed</th>
+              <th>Entity</th>
             </tr>
           </thead>
           <tbody>
@@ -78,6 +79,9 @@
                 <% end %></td>
                 <td><%= folder.created_at.strftime("%b %d, %Y %H:%M") %></td>
                 <td><%= folder.updated_at.strftime("%b %d, %Y %H:%M") %></td>
+                <td>
+                  directory
+                </td>
               </tr>
             <% end %>
             <% @folder.documents.each do |document| %>
@@ -87,6 +91,9 @@
                 <% end %></td>
                 <td><%= document.created_at.strftime("%b %d, %Y %H:%M") %></td>
                 <td><%= document.updated_at.strftime("%b %d, %Y %H:%M") %></td>
+                <td>
+                  <%= document.source_based ? "source" : "editable" %>
+                </td>
               </tr>
             <% end %>
         </table>
