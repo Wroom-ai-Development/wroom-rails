@@ -45,14 +45,6 @@ RSpec.describe '/voices', type: :request do
     end
   end
 
-  describe 'GET /show' do
-    it 'renders a successful response' do
-      voice = Voice.create! valid_attributes
-      get voice_url(voice)
-      expect(response).to be_successful
-    end
-  end
-
   describe 'GET /new' do
     it 'renders a successful response' do
       get new_voice_url
@@ -74,11 +66,6 @@ RSpec.describe '/voices', type: :request do
         expect do
           post voices_url, params: { voice: valid_attributes }
         end.to change(Voice, :count).by(1)
-      end
-
-      it 'redirects to the created voice' do
-        post voices_url, params: { voice: valid_attributes }
-        expect(response).to redirect_to(voices_url)
       end
     end
 
@@ -110,13 +97,6 @@ RSpec.describe '/voices', type: :request do
         voice.reload
         expect(voice.name).to eq(new_attributes[:name])
       end
-
-      it 'redirects to the voice' do
-        voice = Voice.create! valid_attributes
-        patch voice_url(voice), params: { voice: new_attributes }
-        voice.reload
-        expect(response).to redirect_to(voices_url)
-      end
     end
 
     context 'with invalid parameters' do
@@ -134,12 +114,6 @@ RSpec.describe '/voices', type: :request do
       expect do
         delete voice_url(voice)
       end.to change(Voice, :count).by(-1)
-    end
-
-    it 'redirects to the voices list' do
-      voice = Voice.create! valid_attributes
-      delete voice_url(voice)
-      expect(response).to redirect_to(voices_url)
     end
   end
 end

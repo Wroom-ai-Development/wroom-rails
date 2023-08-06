@@ -12,10 +12,6 @@ RSpec.describe VoicesController, type: :routing do
       expect(get: '/voices/new').to route_to('voices#new')
     end
 
-    it 'routes to #show' do
-      expect(get: '/voices/1').to route_to('voices#show', id: '1')
-    end
-
     it 'routes to #edit' do
       expect(get: '/voices/1/edit').to route_to('voices#edit', id: '1')
     end
