@@ -36,12 +36,12 @@
             </div>
           <% end %>
         <% end %>
-        <% if @conversation.messages.count == 0 %>
+        <% if @conversation.messages.kept.count == 0 %>
           <div id='initial-message'>
             Hello, may I be of any help?
           </div>
         <% end %>
-        <% @conversation.messages.order(:created_at).reverse.each do |message| %>
+        <% @conversation.messages.kept.order(:created_at).reverse.each do |message| %>
           <% if message.role == 'error' && message.content.include?("maximum context length") %>
             <div class='message error'>
               <div class='content'>

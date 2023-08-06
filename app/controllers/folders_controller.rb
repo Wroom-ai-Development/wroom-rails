@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class FoldersController < ApplicationController
-  before_action :set_folder, only: %i[show edit update destroy]
+  before_action :set_folder, only: %i[show edit update destroy undiscard]
   load_and_authorize_resource
 
   # GET /folders/1 or /folders/1.json
@@ -9,6 +9,12 @@ class FoldersController < ApplicationController
   def explorer
     @root_folder = current_user.root_folder
     @current_folder = params[:id].present? ? Folder.find(params[:id]) : @root_folder
+  end
+
+  def recycle_bin
+    @folders = current_user.folders.discarded
+    @documents = current_user.documents.discarded
+    @voices = current_user.voices.discarded
   end
 
   def show
@@ -52,12 +58,19 @@ class FoldersController < ApplicationController
 
   # DELETE /folders/1 or /folders/1.json
   def destroy
-    parent_id = @folder.parent_id
+    @folder.parent_id
 
-    @folder.destroy
+    @folder.discard
 
     respond_to do |format|
-      format.html { redirect_to folder_url(Folder.find(parent_id)) }
+      format.html { redirect_to explorer_folder_path(@folder.parent) }
+    end
+  end
+
+  def undiscard
+    @folder.undiscard
+    respond_to do |format|
+      format.html { redirect_to explorer_folder_path(@folder) }
     end
   end
 

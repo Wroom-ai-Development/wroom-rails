@@ -35,6 +35,10 @@ class User < ApplicationRecord
     self.role ||= :user
   end
 
+  def anything_in_recycle_bin?
+    documents.discarded.any? || voices.discarded.any? || folders.discarded.any?
+  end
+
   def root_folder
     folders.where(type: 'RootFolder').first_or_create!(name: '/')
   end

@@ -8,6 +8,22 @@ div.outside {
   height: 100%;
 }
 
+div.recycle-bin {
+  width: 50rem;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    table {
+      width: 100%;
+      td, th {
+        text-align: left;
+        &:not(:first-child) {
+          text-align: right;
+        }
+      }
+    }
+}
 span.icon {
   margin-right: 0.5rem;
 }
@@ -34,6 +50,10 @@ div#folder-explorer {
     overflow-y: auto;
     border-radius: 10px;
     font-size: 0.7rem;
+
+    a.trash-link {
+      margin-top: 1rem;
+    }
     div.tree-folder {
       div.parent {
         width: 100%;

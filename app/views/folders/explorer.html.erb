@@ -10,12 +10,14 @@
 <div id='folder-explorer'>
   <div id='folder-tree'>
     <%= render 'tree_folder', folder: @root_folder %>
+    <% if current_user.anything_in_recycle_bin? %>
+      <%= link_to recycle_bin_folders_path, data: { turbo_frame: 'current_folder' }, class: 'trash-link'  do %>
+        <span class='icon'>🗑️ </span>Recycling bin
+      <% end %>
+    <% end %>
   </div>
 
   <div id='current-folder'>
     <%= turbo_frame_tag "current_folder", src: folder_path(@current_folder) %>
-    <% if !@root_folder.empty? %>
-    <% else %>
-    <% end %>
   </div>
 </div>

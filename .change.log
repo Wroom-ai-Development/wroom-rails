@@ -18,5 +18,11 @@ Relase notes
 - Made adjustments to assets precompilation config in production
 - Adjusted non-answer filter to leverage max tokens parameter
 - Reworked Voices UI with turbo frames
+- Added link to voices above chat
+- Added soft delete to voices
+- Added soft delete to documents
+- Added soft delete to messages
+- Added soft delete to folders
+- Created recycling bin in dashboard
 
 1234!@#$qwerQWER

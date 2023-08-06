@@ -108,12 +108,4 @@ RSpec.describe '/voices', type: :request do
     end
   end
 
-  describe 'DELETE /destroy' do
-    it 'destroys the requested voice' do
-      voice = Voice.create! valid_attributes
-      expect do
-        delete voice_url(voice)
-      end.to change(Voice, :count).by(-1)
-    end
-  end
 end

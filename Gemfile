@@ -126,3 +126,5 @@ gem 'tiktoken_ruby', '~> 0.0.5'
 gem 'httparty', '~> 0.21.0'
 
 gem 'sidekiq-status', '~> 3.0'
+
+gem 'discard', '~> 1.2'
