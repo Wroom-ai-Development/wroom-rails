@@ -77,6 +77,7 @@ div.voices {
     text-align: center;
     width: min-content;
     box-sizing: border-box;
+    border: 1px solid $wroom-light-gray;
 
     &:hover {
       cursor: pointer;
