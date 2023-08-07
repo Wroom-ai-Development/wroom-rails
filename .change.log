@@ -1,5 +1,11 @@
-WROOM 0.2.0
-Relase notes
+## Relase notes
+
+### Version 0.3.0
+
+
+
+### Version 0.2.0
+Out August 6th 2023
 
 - Switched out all icons to emojis, put emojis in color
 - Added cog wheel link to dashboard navbar
@@ -25,5 +31,3 @@ Relase notes
 - Added soft delete to folders
 - Created recycling bin in dashboard
 - Allowed restoring records from recycling bin
-
-1234!@#$qwerQWER

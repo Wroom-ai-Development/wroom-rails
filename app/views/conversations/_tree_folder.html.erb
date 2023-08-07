@@ -12,10 +12,10 @@
     <span class='icon'>📁 </span><%= folder.name %>
   </div>
   <div class="children" style="<%= folder.type == 'RootFolder' ? "" : "display: none;" %>">
-    <% folder.children.each do |folder| %>
+    <% folder.children.kept.each do |folder| %>
       <%= render 'tree_folder', folder: folder %>
     <% end %>
-    <% folder.documents.each do |document| %>
+    <% folder.documents.kept.each do |document| %>
       <%= render 'tree_document', document: document, conversation: @conversation %>
     <% end %>
   </div>

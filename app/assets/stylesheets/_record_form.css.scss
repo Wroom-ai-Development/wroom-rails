@@ -19,6 +19,10 @@ div#record-form-view {
     padding: 1rem;
     border: 1px solid $wroom-light-gray;
     
+    &.new-source {
+      width: 30vw;
+    }
+
     div.validation {
       color: $wroom-red;
       margin-top: 1rem;

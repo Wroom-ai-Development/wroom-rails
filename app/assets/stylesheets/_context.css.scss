@@ -69,21 +69,3 @@ div.context {
     }
   }
 }
-
-@keyframes load {
-  0% {
-    color: $wroom-dark-gray;
-  }
-  100% {
-    color: $wroom-green;
-  }
-}
-
-@keyframes unload {
-  100% {
-    color: $wroom-dark-gray;
-  }
-  0% {
-    color: $wroom-green;
-  }
-}

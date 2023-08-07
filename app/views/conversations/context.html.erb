@@ -5,11 +5,6 @@
       function refreshFrame(document_id) {
         console.log('refreshing frame');
         const conversationFrame = document.getElementById('conversation_frame');
-        if (document.getElementById(`tree-document-${document_id}`).classList.contains('linked')) {
-          document.getElementById(`tree-document-${document_id}`).classList.add('unloading');
-        } else {
-          document.getElementById(`tree-document-${document_id}`).classList.add('loading');
-        }
         setTimeout(() => {
           conversationFrame.src = '/conversations/<%= @conversation.id %>/context'
         }, 500)
