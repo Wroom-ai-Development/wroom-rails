@@ -1,15 +1,9 @@
 <%= turbo_frame_tag "conversation_settings", src: settings_conversation_path(@conversation) %>
 <%= turbo_frame_tag "conversation_frame" do %>
-  <script>
-    function showContext() {
-      const conversationFrame = document.getElementById('conversation_frame')
-      conversationFrame.src = '/conversations/<%= @conversation.id %>/context'
-    }
-  </script>
   <%= turbo_stream_from @conversation.id, 'conversation_status' %>
   <div id="chat">
     <div id='settings'>
-      <a href="#" onClick=showContext()>Context</a>
+      <%= link_to 'Context', context_conversation_path(@conversation) %>
       <%= form_with(
         model: @conversation,
         url: update_settings_conversation_url

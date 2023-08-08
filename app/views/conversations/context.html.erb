@@ -1,17 +1,7 @@
 
 <%= turbo_frame_tag "conversation_frame" do %>
   <div class="context">
-    <script>
-      function refreshFrame(document_id) {
-        console.log('refreshing frame');
-        const conversationFrame = document.getElementById('conversation_frame');
-        setTimeout(() => {
-          conversationFrame.src = '/conversations/<%= @conversation.id %>/context'
-        }, 500)
-      }
-    </script>
-    <% @conversation.reload %>
-    <%= link_to "❌", wroom_path(@conversation.document) %>
+    <%= link_to "❌", chat_conversation_path(@conversation) %>
     <%= render 'tree_folder', folder: current_user.root_folder %>
   </div>
 <% end %>

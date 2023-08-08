@@ -16,7 +16,7 @@
       <%= render 'tree_folder', folder: folder %>
     <% end %>
     <% folder.documents.kept.each do |document| %>
-      <%= render 'folders/tree_document', document: document %>
+      <%= render 'tree_document', document: document %>
     <% end %>
   </div>
 </div>
