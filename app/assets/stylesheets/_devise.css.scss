@@ -36,11 +36,11 @@ div#devise {
         padding: 0.5rem;
         box-sizing: border-box;
         border-radius: 5px;
-        font-family: 'Roboto Slab', serif;
+        font-family: $body-font;
 
         &:focus {
           outline: none;
-          border: 1px solid $wroom-blue;
+          border: 1px solid $wroom-primary;
         }
       }
 
@@ -93,10 +93,10 @@ div#devise {
       font-size: 0.7rem;
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      color: $wroom-blue;
+      color: $wroom-primary;
       font-weight: 300;
-      border-top: 1px solid $wroom-blue;
-      border-bottom: 1px solid $wroom-blue;
+      border-top: 1px solid $wroom-primary;
+      border-bottom: 1px solid $wroom-primary;
       border-left: none;
       border-right: none;
       background-color: rgba(0, 0, 0, 0);
@@ -113,7 +113,7 @@ div#devise {
       font-size: 0.7rem;
       margin-top: 0.5rem;
       &:hover {
-        text-decoration: underline 1px $wroom-blue;
+        text-decoration: underline 1px $wroom-primary;
       }
     }
   }
@@ -133,7 +133,7 @@ div#devise {
 
   div#logo {
     text-align: center;
-    font-family: 'MuseoModerno', sans-serif;
+    font-family: $logo-font;
     font-weight: 900;
     padding: 0;
     color: black;

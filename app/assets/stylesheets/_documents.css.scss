@@ -16,7 +16,7 @@ div#documents {
   border-radius: 10px;
   font-size: 0.7rem;
   flex-grow: 1;
-  border-bottom: 3rem solid $wroom-baby-blue;
+  border-bottom: 3rem solid $wroom-primary-light;
 
     form.button_to {
     margin-bottom: 1rem;
@@ -24,18 +24,18 @@ div#documents {
     justify-content: center;
     button.library-link {
       border: none;
-      font-family: 'Roboto Slab', serif;
+      font-family: $body-font;
       width: 100%;
       padding: 0.5rem 1rem;
       align-self: flex-end;
       font-size: 1rem;
-      color: $wroom-blue;
-      background-color: $wroom-blue;
+      color: $wroom-primary;
+      background-color: $wroom-primary;
       border-radius: 5px;
       color: white;
       font-weight: 700;
       &:hover {
-        opacity: 90%;
+        opacity: 80%;
         cursor: pointer;
       }
     }

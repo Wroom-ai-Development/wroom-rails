@@ -36,12 +36,12 @@ div#source {
       margin-bottom: 1rem;
       padding: 0.5rem;
       border: none;
-      font-family: 'Roboto Slab', serif;
+      font-family: $body-font;
       font-size: 0.7rem;
-      color: $wroom-blue;
+      color: $wroom-primary;
       border-radius: 10px;
       &:hover {
-        background-color: $wroom-baby-blue;
+        background-color: $wroom-primary-light;
         cursor: pointer;
       }
     }

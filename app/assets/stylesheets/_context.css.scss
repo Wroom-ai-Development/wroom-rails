@@ -4,7 +4,7 @@ div.context {
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-  background-color: $wroom-baby-blue;
+  background-color: $wroom-primary-light;
   font-size: 0.7rem;
   box-sizing: border-box;
   height: 90vh;
@@ -46,7 +46,7 @@ div.context {
     margin: 0 !important;
     margin-bottom: 0.3rem !important;
     button {
-      font-family: 'Roboto Slab', serif;
+      font-family: $body-font;
       width: 100%;
       background: rgba(0, 0, 0, 0);
       border: none;
@@ -93,7 +93,7 @@ div.context {
 
       &.linked {
         color: white;
-        background-color: $wroom-blue;
+        background-color: $wroom-primary;
         border-radius: 5px;
       }
     }

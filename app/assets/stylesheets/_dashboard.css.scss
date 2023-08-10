@@ -16,7 +16,7 @@ button:hover {
 
 main {
   height: 92.9vh;
-  font-family: 'Roboto Slab', serif;
+  font-family: $body-font;
   font-weight: 300;
   font-size: 0.9rem;
   background-color: $wroom-lighter-gray;

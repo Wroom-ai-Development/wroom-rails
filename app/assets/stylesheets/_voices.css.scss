@@ -28,7 +28,7 @@ div#voices-manager {
       width: 100%;
       box-sizing: border-box;
       &:hover {
-        background-color: $wroom-baby-blue;
+        background-color: $wroom-primary-light;
         cursor: pointer;
       }
     }
@@ -68,7 +68,7 @@ div.voices {
 
   a.new-voice {
     font-size: 0.8em;
-    color: $wroom-blue;
+    color: $wroom-primary;
     margin-bottom: 1rem;
     color: #0066ff;
     background-color: white;
@@ -108,7 +108,7 @@ div.voices {
         padding: 0;
         border: none;
         color: transparent;
-        text-shadow: 0 0 0 $wroom-blue;
+        text-shadow: 0 0 0 $wroom-primary;
       }
 
       button {

@@ -283,7 +283,7 @@ module Conversations
 
     def interrupt_if_warranted
       if @conversation.reload.status == 4
-        @conversation.update!(status_message: 'Conversation was interrupted')
+        @conversation.update!(status_message: 'Conversation was interrupted', status: 0)
         raise InterruptSignal
       elsif @conversation.reload.status != 1
         raise ConversationStatusIsNotWorking

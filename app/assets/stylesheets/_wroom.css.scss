@@ -21,7 +21,7 @@ body#wroom {
   padding: 1rem;
 
   display: flex;
-  font-family: 'Roboto Slab', serif;
+  font-family: $body-font;
   overflow: hidden;
 
 
@@ -90,7 +90,7 @@ body#wroom {
         font-size: 2.4rem;
         color: black;
         span.oo {
-          color: $wroom-blue;
+          color: $wroom-primary;
         }
       }
     }

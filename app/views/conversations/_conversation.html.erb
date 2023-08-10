@@ -38,7 +38,7 @@
     <% end %>
   </div>
   <%= form_with url: new_message_conversation_path(id: conversation.id), id: 'new-message-form'  do |f| %>
-    <div id="conversation_status"></div>
+    <%= render 'conversation_status', conversation: conversation %>
     <%= f.text_area :content, required: 'required', rows: 5, id: 'new-message-text-area' %>
     <%= f.submit '➳', id: 'submit', style: 'display: none;' %>
   <% end %>

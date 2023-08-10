@@ -9,7 +9,7 @@ div#edit-document {
   height: 90vh;
   flex-flow: column;
   display: flex;
-  background-color: $wroom-baby-blue;
+  background-color: $wroom-primary-light;
 
   form.button_to {
     display: flex;
@@ -36,7 +36,7 @@ div#edit-document {
     margin-top: 0.5rem;
     padding: 1rem;
     flex: none;
-    background-color: $wroom-baby-blue;
+    background-color: $wroom-primary-light;
 
     .tool-button-row {
       height: fit-content;
@@ -87,7 +87,7 @@ div#edit-document {
       width: -webkit-fill-available;
       margin-right: 1rem;
       margin-left: 1rem;
-      font-family: 'Roboto Slab', serif;
+      font-family: $body-font;
       font-size: 0.8rem;
       padding: 0.5rem;
       border-radius: 5px;
@@ -107,8 +107,8 @@ div#edit-document {
     // padding-right: 1rem;
     border: none;
 
-    font-family: 'Roboto Slab', serif;
-    color: $wroom-blue;
+    font-family: $body-font;
+    color: $wroom-primary;
     background-color: rgba(0, 0, 0, 0);
     font-size: 0.7rem;
     width: 100%;

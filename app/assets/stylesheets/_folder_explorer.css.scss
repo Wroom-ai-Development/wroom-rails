@@ -116,14 +116,14 @@ div#folder-explorer {
           div.button {
             animation: pulseShadow 4s infinite alternate;
 
-            color: $wroom-blue;
+            color: $wroom-primary;
             background-color: white;
             padding: 1rem 1.2rem;
             border-radius: 10px;
             text-align: center;
             &:hover {
               cursor: pointer;
-              background-color: $wroom-baby-blue;
+              background-color: $wroom-primary-light;
             }
           }
           
@@ -137,19 +137,19 @@ div#folder-explorer {
         position: relative;
         box-sizing: border-box;
         top: -0.5rem;
-        color: $wroom-blue;
+        color: $wroom-primary;
         background-color: white;
         padding: 1rem;
         border-radius: 10px;
         border: 1px solid $wroom-gray;
         display: flex;
         a {
-          color: $wroom-blue;
+          color: $wroom-primary;
           margin-top: 0.5rem;
           white-space: nowrap;
           display: flex;
           &:hover {
-            text-decoration: underline 1px $wroom-blue;
+            text-decoration: underline 1px $wroom-primary;
           }
         }
       }
@@ -176,10 +176,10 @@ div#folder-explorer {
             flex-direction: row;
             align-items: baseline;
             a, button {
-              font-family: 'Roboto Slab', serif;
+              font-family: $body-font;
               font-size: 0.7rem;
               background-color: white;
-              color: $wroom-blue;
+              color: $wroom-primary;
               margin: 0;
               margin-left: 1rem;
               padding: 0;
@@ -187,7 +187,7 @@ div#folder-explorer {
               font-weight: 300;
             }
             a:hover {
-              text-decoration: underline 1px $wroom-blue;
+              text-decoration: underline 1px $wroom-primary;
             }
 
             button {
@@ -237,7 +237,7 @@ div#folder-explorer {
             }
             p {
               span {
-                color: $wroom-blue;
+                color: $wroom-primary;
               }
             }
 

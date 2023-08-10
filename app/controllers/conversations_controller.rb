@@ -46,7 +46,7 @@ class ConversationsController < ApplicationController
   end
 
   def cancel_processing
-    @conversation.messages.last.destroy! if @conversation.messages.any? && @conversation.messages.last.role == 'user'
+    @conversation.messages.last.discard if @conversation.messages.any? && @conversation.messages.last.role == 'user'
     @conversation.cancel_processing
     head :no_content
   end
@@ -66,7 +66,7 @@ class ConversationsController < ApplicationController
     else
       @conversation.conversation_voice&.destroy
     end
-    redirect_to wroom_path(document_id: @conversation.document_id), status: :see_other
+    head :no_content
   end
 
   private

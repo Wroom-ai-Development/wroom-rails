@@ -8,7 +8,7 @@ div#chat {
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-  background-color: $wroom-baby-blue;
+  background-color: $wroom-primary-light;
 
   div#settings {
     display: flex;
@@ -31,7 +31,7 @@ div#chat {
       select {
         width: auto;
         margin-left: 0.5rem;
-        font-family: 'Roboto Slab', serif;
+        font-family: $body-font;
         font-size: 0.7rem;
         padding: 0.5rem;
         border: 1px solid $wroom-light-gray;
@@ -53,7 +53,7 @@ div#chat {
       justify-content: end;
       button {
         border: none;
-        font-family: 'Roboto Slab', serif;
+        font-family: $body-font;
         padding: 0.5rem;
         font-size: 0.7rem;
         color: $wroom-red;
@@ -69,7 +69,7 @@ div#chat {
     }
     
     a {
-      color: $wroom-blue;
+      color: $wroom-primary;
       padding: 0.5rem;
       background-color: white;
       font-size: 0.7rem;
@@ -77,7 +77,7 @@ div#chat {
       border-radius: 10px;
       border: 1px solid white;
       &:hover {
-        border: 1px solid $wroom-blue;
+        border: 1px solid $wroom-primary;
         cursor: pointer;
       }
     }
@@ -110,15 +110,15 @@ div#chat {
         border: none;
         padding: 1rem;
         box-sizing: border-box;
-        font-family: 'Roboto Slab', serif;
+        font-family: $body-font;
         font-size: 0.7rem;
         font-weight: 600;
         height: min-content;
-        background-color: $wroom-blue;
+        background-color: $wroom-primary;
         color: white;
         resize: none;
         &:hover {
-          opacity: 90%;
+          opacity: 80%;
           cursor: pointer;
         }
         &:focus {
@@ -131,7 +131,7 @@ div#chat {
 
       input#submit {
         border: none;
-        color: $wroom-blue;
+        color: $wroom-primary;
         background-color: white;
         font-size: 1rem;
         width: 2rem;
@@ -151,7 +151,7 @@ div#chat {
       @include custom-scrollbar;
       div#initial-message {
         font-size: 0.7rem;
-        text-decoration: underline 1px $wroom-blue;
+        text-decoration: underline 1px $wroom-primary;
         width: 100%;
         padding: 1rem;
         text-align: left;
@@ -172,8 +172,12 @@ div#chat {
         display: flex;
         flex-direction: column;
 
+        &:first-child {
+          padding-bottom: 1rem;
+        }
+
         p::selection {
-          background-color: $wroom-baby-blue;
+          background-color: $wroom-primary-light;
         }
 
         &.partial-answer {
@@ -228,7 +232,7 @@ div#chat {
               font-size: 0.7rem;
               content: 'asdasd';
               &.copy {
-                text-shadow: 0 0 0 $wroom-blue;
+                text-shadow: 0 0 0 $wroom-primary;
               }
             }
           }
@@ -294,7 +298,7 @@ form#new-message-form {
     flex-direction: column;
     align-items: center;
     font-size: 0.7rem;
-    color: $wroom-baby-blue;
+    color: $wroom-primary-light;
     padding: 1rem;
     position: absolute;
     z-index: 999;
@@ -315,7 +319,7 @@ form#new-message-form {
         font-size: 0.6rem;
         text-align: center;
         color: $wroom-red;
-        font-family: 'Roboto Slab', serif;
+        font-family: $body-font;
         background-color: white;
         padding: 0.2rem 0.5rem;
         border-radius: 10px;
