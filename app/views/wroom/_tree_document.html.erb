@@ -1,5 +1,5 @@
-<%= link_to editor_document_path(document), data: {turbo_frame: 'document_editor'} do %>
-  <div class='tree-document'>
+<%= link_to editor_document_path(document), data: { turbo_frame: 'document_editor' } do %>
+  <div class='tree-document' id="tree-document<%= document.id %>">
     <span class='icon'><%= document.icon %></span><%= document.title %>
   </div>
 <% end %>

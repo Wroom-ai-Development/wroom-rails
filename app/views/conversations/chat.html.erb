@@ -3,19 +3,19 @@
   <%= turbo_stream_from @conversation.id, 'conversation_status' %>
   <div id="chat">
     <div id='settings'>
-      <%= link_to 'Context', context_conversation_path(@conversation) %>
+      <%= link_to 'context', context_conversation_path(@conversation) %>
+      <%= link_to "voices", manager_voices_path %>
+      <%= button_to('clear chat', clear_chat_conversation_path(conversation_id: @conversation.id), method: :delete) %>
       <%= form_with(
         model: @conversation,
         url: update_settings_conversation_url
       ) do |form| %>
         <% if @conversation.user.voices.present? %>
-          <%= form.label 'Voice', style: "display: block" %>
+          <%= form.label 'voice', style: "display: block" %>
           <%= form.collection_select :voice_id, @conversation.user.voices.order(:name), :id, :name, {include_blank: "Default", selected: @conversation.voice.try(:id)}, onchange: "this.form.submit();" %>
         <% end %>
         <%= form.submit style: 'display:none;' %>
       <% end %>
-      <%= link_to "Voices", manager_voices_path, style: 'margin-left: 0.5rem' %>
-      <%= button_to('clear chat', clear_chat_conversation_path(conversation_id: @conversation.id), method: :delete) %>
     </div>
     <div id='conversation'>
       <div id='messages'>
@@ -94,13 +94,13 @@
       function handleEnter(e) {
         const newMessageForm = document.getElementById('new-message-form')
         const submitButton = document.getElementById('submit')
+        console.log("yay")
         if (e.which === 13 && !e.shiftKey) {
           e.preventDefault();
           submitButton.click();
         }
       }
-      const newMessageTextArea = document.getElementById('new-message-text-area')
-      newMessageTextArea.addEventListener('keypress', handleEnter)
+      document.getElementById('new-message-text-area').addEventListener('keypress', handleEnter)
     </script>
   </div>
 <% end %>

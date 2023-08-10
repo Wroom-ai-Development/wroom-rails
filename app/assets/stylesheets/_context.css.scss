@@ -1,18 +1,21 @@
 @import 'colors';
 
 div.context {
-  height: 86vh;
   display: flex;
   flex-direction: column;
   border-radius: 10px;
   background-color: white;
-  padding: 1rem;
-  width: 26.8rem;
   font-size: 0.7rem;
+  box-sizing: border-box;
+  height: 90vh;
 
-  a {
-    margin-left: auto;
-    margin-bottom: 1rem;
+  div.header {
+    height: 4rem;
+    background-color: $wroom-baby-blue;
+    a {
+      margin-left: auto;
+      margin-bottom: 1rem;
+    }
   }
 
   form.button_to {
@@ -48,18 +51,22 @@ div.context {
       display: flex;
       flex-direction: column;
       padding-left: 1rem;
-      width: fit-content;
+      width: 100%;
       white-space: nowrap;
+      box-sizing: border-box;
     }
 
     div.tree-document {
-      width: 24rem;
+      width: 100%;
       height: 1.5rem;
       display: flex;
       align-items: center;
       font-weight: 400;
-      padding-left: 0.1rem;
-
+      padding: 0;
+      box-sizing: border-box;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
 
       &.linked {
         color: white;

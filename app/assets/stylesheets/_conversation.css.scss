@@ -1,0 +1,322 @@
+@import 'colors';
+@import 'scrollbars';
+div#conversation-panel {
+  width: 35vw;
+}
+div#chat {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  background-color: $wroom-baby-blue;
+
+  div#settings {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    box-sizing: border-box;
+    padding: 1rem;
+    flex: none;
+    flex-wrap: wrap;
+    height: 4rem;
+
+    form {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+  
+      label {
+        font-size: 0.6rem;
+      }
+      select {
+        width: auto;
+        margin-left: 0.5rem;
+        font-family: 'Roboto Slab', serif;
+        font-size: 0.7rem;
+        padding: 0.5rem;
+        border: 1px solid $wroom-light-gray;
+        background-color: white;
+        border-radius: 10px;
+        z-index: 997;
+  
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  
+    form.button_to {
+      margin: 0;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: end;
+      button {
+        border: none;
+        font-family: 'Roboto Slab', serif;
+        padding: 0.5rem;
+        font-size: 0.7rem;
+        color: $wroom-red;
+        background-color: white;
+        border-radius: 10px;
+        white-space: nowrap;
+        border: 1px solid white;
+        &:hover {
+          border: 1px solid $wroom-red;
+          cursor: pointer;
+        }
+      }
+    }
+    
+    a {
+      color: $wroom-blue;
+      padding: 0.5rem;
+      background-color: white;
+      font-size: 0.7rem;
+      margin-right: 0.5rem;
+      border-radius: 10px;
+      border: 1px solid white;
+      &:hover {
+        border: 1px solid $wroom-blue;
+        cursor: pointer;
+      }
+    }
+  }
+
+  div#conversation {
+    height: min-content;
+    display: flex;
+    flex-flow: column;
+    flex: 1;
+    height: 10px;
+
+
+    form#new-message-form {
+      margin: 0;
+      display: flex;
+      height: 5rem;
+      align-items: center;
+      padding: 0;
+      flex: none;
+      justify-content: center;
+      box-sizing: border-box;
+      margin-bottom: 0.7rem;
+
+      textarea {
+        width: 100%;
+        border-radius: 10px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border: none;
+        padding: 1rem;
+        box-sizing: border-box;
+        font-family: 'Roboto Slab', serif;
+        font-size: 0.7rem;
+        font-weight: 600;
+        height: min-content;
+        background-color: $wroom-blue;
+        color: white;
+        resize: none;
+        &:hover {
+          opacity: 90%;
+          cursor: pointer;
+        }
+        &:focus {
+          outline: none !important;
+        }
+      }
+
+      input#content {
+      }
+
+      input#submit {
+        border: none;
+        color: $wroom-blue;
+        background-color: white;
+        font-size: 1rem;
+        width: 2rem;
+      }
+    }
+
+    div#messages {
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      overflow-x: clip;
+      padding-left: 1rem;
+      flex: auto;
+      margin-bottom: 0.8rem;
+      background-color: white;
+      @include custom-scrollbar;
+      div#initial-message {
+        font-size: 0.7rem;
+        text-decoration: underline 1px $wroom-blue;
+        width: 100%;
+        padding: 1rem;
+        text-align: left;
+        box-sizing: border-box;
+      }
+
+      div.conversation-status {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 0.7rem;
+        color: $wroom-blue;
+        padding: 1rem;
+        div.conversation-loading-label {
+          width: auto;
+          font-size: 0.7rem;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          form.button_to {
+            text-align: center;
+          }
+          a {
+            margin-top: 0.5rem;
+            font-size: 0.6rem;
+            text-align: center;
+            color: $wroom-red;
+            font-family: 'Roboto Slab', serif;
+            background-color: rgba(0, 0, 0, 0);
+            border: none;
+            &:hover {
+              cursor: pointer;
+              text-decoration: underline 1px $wroom-red;
+            }
+          }
+        }
+      }    
+
+      details.partial-answers {
+        margin: 0.5rem 0 0 1rem;
+      }
+
+      div.message {
+        padding: 0.5rem 2rem 0 1rem;
+        text-align: justify;
+        font-size: 0.6rem;
+        hyphens: auto;
+        line-height: 0.8rem;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        p::selection {
+          background-color: $wroom-baby-blue;
+        }
+
+        &.partial-answer {
+          margin: 0;
+          padding: 0;
+
+          -webkit-user-select: all; /* for Safari */
+          user-select: all;
+        }
+
+        &:focus {
+          animation: select 100ms step-end forwards;
+        }
+
+        div.main-message {
+          display: flex;
+          align-items: end;
+          flex-direction: row;
+
+          -webkit-user-select: all; /* for Safari */
+          user-select: all;
+          &:focus {
+            animation: select 100ms step-end forwards;
+          }
+          div.message-controls {
+            padding-bottom: 0.5rem;
+            form {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              padding-left: 0.5rem;
+              padding-right: 1rem;
+              
+            }
+            div.button-wrapper {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              padding-left: 0.5rem;
+              padding-right: 1rem;
+              padding-bottom: 0.5rem;
+            };
+
+            button {
+              font-size: 0.6rem !important;
+              background-color: white;
+              padding: 0;
+              color: transparent;
+              text-shadow: 0 0 0 $wroom-red;
+              border: none;
+              margin: 0;
+              font-size: 0.7rem;
+              content: 'asdasd';
+              &.copy {
+                text-shadow: 0 0 0 $wroom-blue;
+              }
+            }
+          }
+          div.main-message-content {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            p {
+              width: 100%;
+            }
+            details {
+              width: 100%;
+              summary {
+                width: 100%;
+              }
+            }
+          }
+          form {
+            margin: 0 0 0 0;
+          }
+        }
+
+        &.user {
+          div.main-message {
+            text-align: right;
+            justify-content: space-between;
+            border-bottom: 1px solid rgb(220, 220, 220);
+
+            &:last-child {
+              border-bottom: none;
+            }
+          }
+        }
+        div.main-message {  
+          button {
+            margin-right: 0.5rem;
+          }
+          padding-right: 1rem;
+        }
+
+        &.error {
+          text-decoration: underline 1px $wroom-red;
+          div.message-controls {
+            display: none;  
+          }
+          div.main-message {
+            justify-content: center;
+          }
+        }
+
+        .content {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 <%= link_to wroom_path(document_id: document.id), data: { turbo_frame: '_top' } do %>
-  <div class='tree-document'>
+  <div class='tree-document' id="tree-document<%= document.id %>">
     <span class='icon'><%= document.icon %></span><%= document.title %>
   </div>
 <% end %>

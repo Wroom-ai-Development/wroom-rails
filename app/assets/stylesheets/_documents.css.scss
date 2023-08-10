@@ -1,33 +1,56 @@
 @import 'colors';
 
+div#documents-panel {
+  width: 20vw;
+  margin-right: 1rem;
+}
 div#documents {
-  box-sizing: border-box;
   padding: 1rem;
-  width: 100%;
-  min-width: min-content;
-  height: 100%;
   display: flex;
   z-index: 995;
-  max-height: 70vh;
   overflow-y: auto;
   box-sizing: border-box;
   flex-direction: column;
   background-color: white;
-  height: 100%;
   overflow-y: auto;
   border-radius: 10px;
   font-size: 0.7rem;
   flex-grow: 1;
-  div.tree-folder {
+  border-bottom: 3rem solid $wroom-baby-blue;
 
-
-    div.parent {
+    form.button_to {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    button.library-link {
+      border: none;
+      font-family: 'Roboto Slab', serif;
       width: 100%;
+      padding: 0.5rem 1rem;
+      align-self: flex-end;
+      font-size: 1rem;
+      color: $wroom-blue;
+      background-color: $wroom-blue;
+      border-radius: 5px;
+      color: white;
+      font-weight: 700;
+      &:hover {
+        opacity: 90%;
+        cursor: pointer;
+      }
+    }
+  }
+
+  div.tree-folder {
+    div.parent {
       height: 1.5rem;
       white-space: nowrap;
       display: flex;
       align-items: center;
       padding: 0.1rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
       &:hover {
         background-color: $wroom-light-gray;
         cursor: pointer;
@@ -37,16 +60,17 @@ div#documents {
       display: flex;
       flex-direction: column;
       padding-left: 1rem;
-      width: fit-content;
       white-space: nowrap;
     }
   }
 
   div.tree-document {
-    width: 100%;
     height: 1.5rem;
     display: flex;
     align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     &:hover {
       background-color: $wroom-light-gray;
       cursor: pointer;

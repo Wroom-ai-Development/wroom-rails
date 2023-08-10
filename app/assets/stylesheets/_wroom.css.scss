@@ -2,11 +2,11 @@
 @import 'mixins';
 
 @import 'conversation_hourglass';
-
 @import 'actiontext.css';
-
 @import 'documents';
+@import 'conversation';
 @import 'source';
+@import 'document_editor';
 @import 'context';
 
 
@@ -18,33 +18,13 @@
 body#wroom {
   color: $wroom-dark-gray;
   background-color: $wroom-light-gray;
-
+  padding: 1rem;
 
   display: flex;
   font-family: 'Roboto Slab', serif;
   overflow: hidden;
 
-  form.button_to {
-    margin-bottom: 1rem;
-    display: flex;
-    justify-content: center;
-    button.library-link {
-      border: none;
-      font-family: 'Roboto Slab', serif;
-      width: 100%;
-      padding: 0.5rem 1rem;
-      align-self: flex-end;
-      font-size: 0.8rem;
-      color: $wroom-blue;
-      background-color: white;
-      border-radius: 10px;
-      &:hover {
-        background-color: $wroom-baby-blue;
-        cursor: pointer;
-      }
-      animation: pulseShadow 4s infinite alternate;
-    }
-  }
+
 
 
   div#no-docs-message {
@@ -54,544 +34,44 @@ body#wroom {
     position: absolute;
     bottom: 0;
     padding: 0.5rem;
-    opacity: 50%;
+    padding-left: 0;
     &:hover {
       cursor: pointer;
     }
   }
 
-  .panel {
-    height: initial;
+  div#document-editor {
     display: flex;
-    flex-direction: column;
-
-    &#documents-panel {
-      display: flex;
-      flex-direction: column;
-      width: 10rem;
-      min-width: min-content;
-      height: min-content;
-      padding: 1rem 0 1rem 1rem;
+    height: 90vh;
+    .panel:not(:first-child) {
+      margin-left: 1rem;
     }
     &#document-panel {
-      width: 100%;
+      width: 30vw;
       padding: 1rem 1rem 0 1rem;
+      height: 50rem;
     }
     &#conversation-panel {
-      height: 100%;
-      width: 50rem;
+      // height: 100%;
+      width: 30vw;
       padding: 1rem 1rem 1rem 0;
+      height: 50rem;
     }
+  }
 
-
-    &#no-docs-panel {
-      width: -webkit-fill-available;
-      height: auto;
-      padding-left: 0.5rem;
-
-      div.message {
-        margin-top: 5.5rem;
-        font-size: 0.9rem;
-      }
-      p {
-        margin-left: 47vw;
-        margin-top: 37vh;
-        padding-left: 0.5rem;
-        border-left: 7px solid $wroom-gray;
-        font-weight: 100;
-      }
-    }
-
-    div.top-pane {
-      height: 2rem;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-
-
-      form.button_to {
-        margin: 0;
-        padding: 0;
-      }
-
-      form {
-        display: flex;
-        padding-left: 1rem;
-      }
-
-      button.link {
-        padding: 0;
-        border: none;
-        font-family: 'Roboto Slab', serif;
-        color: $wroom-blue;
-        background-color: rgba(0, 0, 0, 0);
-        font-size: 0.7rem;
-        width: 100%;
-        text-align: end;
-        &:hover {
-          cursor: pointer;
-        }
-      }
-    }
-
-    div#conversation-context {
-      font-size: 0.7rem;
-      height: 100%;
-      height: min-content;
-
-      select {
-        width: -webkit-fill-available;
-        height: 2rem;
-        font-family: 'Roboto Slab', serif;
-        font-size: 0.7rem;
-        border: none;
-        background-color: white;
-      }
-    
-      div.header {
-        padding: 0.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-size: 0.7rem;
-        font-weight: 500;
-        text-align: center;
-
-        a {
-          color: $wroom-blue;
-          font-size: 1rem;
-          margin-right: 0.2rem;
-        }
-      }
-    }
-    div#settings {
-      display: flex;
-      align-items: center;
-      font-size: 0.8rem;
-      box-sizing: border-box;
-      padding: 1rem;
-
-      form {
-        display: flex;
-        align-items: center;
-        margin-left: 1rem;
-
-        label {
-          font-size: 0.6rem;
-        }
-        select {
-          width: 15rem;
-          margin-left: 0.5rem;
-          font-family: 'Roboto Slab', serif;
-          font-size: 0.7rem;
-          padding: 0.5rem;
-          border: 1px solid $wroom-light-gray;
-          background-color: white;
-          border-radius: 10px;
-          z-index: 997;
-
-          &:focus {
-            outline: none;
-          }
-        }
-      }
-
-      form.button_to {
-        margin: 0;
-        margin-left: 1rem;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        width: 100%;
-        justify-content: end;
-        button {
-          border: none;
-          font-family: 'Roboto Slab', serif;
-          padding: 0.5rem;
-          font-size: 0.7rem;
-          color: $wroom-red;
-          background-color: white;
-          border-radius: 10px;
-          white-space: nowrap;
-          &:hover {
-            background-color: $wroom-baby-blue;
-            cursor: pointer;
-          }
-        }
-      }
-      
-      a {
-        color: $wroom-blue;
-        padding: 0.5rem;
-        background-color: white;
-        font-size: 0.7rem;
-
-        border-radius: 10px;
-        &:hover {
-          background-color: $wroom-baby-blue;
-          cursor: pointer;
-        }
-      }
-    }
-
-    div#chat {
-      height: 98%;
-      display: flex;
-      flex-direction: column;
-      border-radius: 10px;
-      background-color: white;
-
-
-
-      div#conversation {
-        height: min-content;
-        
-        max-height: 90vh;
-        display: flex;
-        flex-direction: column;
-  
-        form#new-message-form {
-          margin: 0;
-          display: flex;
-          height: 5rem;
-          align-items: center;
-          padding: 0.5rem;
-          margin-bottom: 1.5rem;
-  
-          textarea {
-            width: -webkit-fill-available;
-            border-radius: 10px;
-            border: none;
-            padding: 0.5rem 0 0 0.5rem;
-            font-family: 'Roboto Slab', serif;
-            font-size: 0.7rem;
-            height: min-content;
-            background-color: $wroom-lighter-gray;
-            resize: none;
-            &::placeholder {
-              color: $wroom-blue;
-            }
-            &:focus {
-              outline: none !important;
-            }
-          }
-  
-          input#content {
-          }
-  
-          input#submit {
-            border: none;
-            color: $wroom-blue;
-            background-color: white;
-            font-size: 1rem;
-            width: 2rem;
-          }
-        }
-  
-        div#messages {
-          overflow-y: auto;
-          display: flex;
-          flex-direction: column-reverse;
-          align-items: center;
-          height: 68vh;
-          overflow-x: clip;
-          padding-left: 1rem;
-  
-          div#initial-message {
-            font-size: 0.7rem;
-            text-decoration: underline 1px $wroom-blue;
-            width: 100%;
-            padding: 1rem;
-            text-align: left;
-            box-sizing: border-box;
-          }
-  
-          div.conversation-status {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 0.7rem;
-            color: $wroom-blue;
-            padding: 1rem;
-            div.conversation-loading-label {
-              width: auto;
-              font-size: 0.7rem;
-              text-align: center;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              justify-content: center;
-              form.button_to {
-                text-align: center;
-              }
-              a {
-                margin-top: 0.5rem;
-                font-size: 0.6rem;
-                text-align: center;
-                color: $wroom-red;
-                font-family: 'Roboto Slab', serif;
-                background-color: rgba(0, 0, 0, 0);
-                border: none;
-                &:hover {
-                  cursor: pointer;
-                  text-decoration: underline 1px $wroom-red;
-                }
-              }
-            }
-          }    
-
-          details.partial-answers {
-            margin: 0.5rem 0 0 1rem;
-          }
-    
-          div.message {
-            padding: 0.5rem 2rem 0 1rem;
-            text-align: justify;
-            font-size: 0.6rem;
-            hyphens: auto;
-            line-height: 0.8rem;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-
-            p::selection {
-              background-color: $wroom-baby-blue;
-            }
-
-            &.partial-answer {
-              margin: 0;
-              padding: 0;
-
-              -webkit-user-select: all; /* for Safari */
-              user-select: all;
-            }
-
-            &:focus {
-              animation: select 100ms step-end forwards;
-            }
-    
-            div.main-message {
-              display: flex;
-              align-items: end;
-              flex-direction: row;
-
-              -webkit-user-select: all; /* for Safari */
-              user-select: all;
-              &:focus {
-                animation: select 100ms step-end forwards;
-              }
-              div.message-controls {
-                padding-bottom: 0.5rem;
-                form {
-                  display: flex;
-                  flex-direction: column;
-                  align-items: center;
-                  padding-left: 0.5rem;
-                  padding-right: 1rem;
-                  
-                }
-                div.button-wrapper {
-                  display: flex;
-                  flex-direction: column;
-                  align-items: center;
-                  padding-left: 0.5rem;
-                  padding-right: 1rem;
-                  padding-bottom: 0.5rem;
-                };
-  
-                button {
-                  height: 1rem;
-                  width: 1rem;
-                  font-size: 1rem;
-                  background-color: white;
-                  color: transparent;
-                  text-shadow: 0 0 0 $wroom-red;
-                  border: none;
-                  margin: 0;
-                  font-size: 0.7rem;
-                  content: 'asdasd';
-                  &.copy {
-                    text-shadow: 0 0 0 $wroom-blue;
-                  }
-                }
-              }
-              div.main-message-content {
-                display: flex;
-                align-items: center;
-                flex-direction: column;
-                p {
-                  width: 100%;
-                }
-                details {
-                  width: 100%;
-                  summary {
-                    width: 100%;
-                  }
-                }
-              }
-              form {
-                margin: 0 0 0 0;
-              }
-            }
-    
-            &.user {
-              div.main-message {
-                text-align: right;
-                justify-content: space-between;
-                border-bottom: 1px solid rgb(220, 220, 220);
-  
-                &:last-child {
-                  border-bottom: none;
-                }
-              }
-            }
-            div.main-message {  
-              button {
-                margin-right: 0.5rem;
-              }
-              padding-right: 1rem;
-            }
-    
-            &.error {
-              text-decoration: underline 1px $wroom-red;
-              div.message-controls {
-                display: none;  
-              }
-              div.main-message {
-                justify-content: center;
-              }
-            }
-    
-            .content {
-              width: 100%;
-            }
-          }
-        }
-      }
-    }
-
-    div#edit-document {
-      padding: 0;
-      background-color: white;
-      border-radius: 10px;
-
-      form.button_to {
-        display: flex;
-        flex-direction: row;
-        justify-content: end;
-        padding-right: 3vw;
-        padding-top: 3vw;
-        .delete-document {
-          background-color: rgba(0,0,0,0);
-          border: none;
-          color: transparent;
-          text-shadow: 0 0 0 $wroom-red;
-          font-size: 0.7rem;
-        }
-      }
-
-
-      trix-toolbar {
-        margin-top: 0.5rem;
-        padding: 0;
-
-        .tool-button-row {
-          height: fit-content;
-        }
-
-        .trix-button--icon {
-          width: 1.4rem !important;
-          height: 1rem !important;
-        }
-      }
-
-      trix-editor {
-        height: 60vh;
-        font-size: 0.7rem;
-        overflow-y: auto;
-        background-color: white;
-        padding-right: 1rem;
-        border: none;
-        text-align: justify;
-        line-height: 1.4rem;
-        padding: 3vw 3vw 3vw 1vw;
-
-      }
-      form#edit-document {
-        padding: 0 3vw;
-
-        input#document_title {
-          width: -webkit-fill-available;
-          margin-right: 1rem;
-          font-family: 'Roboto Slab', serif;
-          font-size: 1rem;
-          font-weight: 500;
-          background-color: white;
-          border: none;
-          box-sizing: content-box;
-          &:focus {
-            outline: none;
-          }
-        }
-
-      }
-
-      button.link {
-        padding: 1.4rem;
-        // padding-right: 1rem;
-        border: none;
-
-        font-family: 'Roboto Slab', serif;
-        color: $wroom-blue;
-        background-color: rgba(0, 0, 0, 0);
-        font-size: 0.7rem;
-        width: 100%;
-        text-align: end;
-        &:hover {
-          cursor: pointer;
-        }
-      }
-    }
-
-    .panel-element {
-      width: -webkit-fill-available;
-      min-height: 1rem;
-      
-      &#document {
-        display: flex;
-        flex-direction: row;
-        div#editor {
-          width: 44rem;
-          display: flex;
-          flex-direction: column;
-
-        }
-      }
-
-      &#navigation {
-        padding: 1rem 0 0 0;
-
-        form.button_to {
-          padding: 0;
-        }
-
-        p#current-user {
-          font-size: 0.5rem;
-          padding-left: 0.5rem;
-        }
-      }
-    }
+  .panel {
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
   }
 
   div#wroom-logo {
     @include flex-center-content;
     min-height: 2rem;
     height: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     
     div {
-      animation: pulseAntiShadow 4s infinite alternate;
       border-radius: 10px;
       background: none;
       width: 1px;
@@ -607,8 +87,11 @@ body#wroom {
         font-family: 'MuseoModerno';
     
         font-weight: 900;
-        font-size: 1.5rem;
+        font-size: 2.4rem;
         color: black;
+        span.oo {
+          color: $wroom-blue;
+        }
       }
     }
   }

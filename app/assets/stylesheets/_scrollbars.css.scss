@@ -1,0 +1,14 @@
+@import 'colors';
+
+@mixin custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 10px; /* Mostly for vertical scrollbars */
+    height: 10px; /* Mostly for horizontal scrollbars */
+  }
+  &::-webkit-scrollbar-thumb { /* Foreground */
+    background: $wroom-dark-gray;
+  }
+  &::-webkit-scrollbar-track { /* Background */
+    background: $wroom-lighter-gray;
+  }
+}

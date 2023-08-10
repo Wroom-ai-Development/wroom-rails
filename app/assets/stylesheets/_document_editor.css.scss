@@ -1,0 +1,119 @@
+@import 'colors';
+@import 'scrollbars';
+
+div#edit-document {
+  padding: 0;
+  background-color: white;
+  border-radius: 10px;
+  width: 35vw;
+  height: 90vh;
+  flex-flow: column;
+  display: flex;
+  background-color: $wroom-baby-blue;
+
+  form.button_to {
+    display: flex;
+    flex-direction: row;
+    flex: none;
+    justify-content: end !important;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 1rem;
+    padding-top: 1.2rem;
+
+    .delete-document {
+      background-color: rgba(0,0,0,0);
+      border: none;
+      color: transparent;
+      text-shadow: 0 0 0 $wroom-red;
+      font-size: 0.5rem;
+    }
+  }
+
+
+  trix-toolbar {
+    margin-top: 0.5rem;
+    padding: 1rem;
+    flex: none;
+    background-color: $wroom-baby-blue;
+
+    .tool-button-row {
+      height: fit-content;
+
+    }
+
+    .trix-button-group {
+      margin-bottom: 0;
+      border: none;
+      overflow: hidden;
+    }
+
+    .trix-button {
+      
+    }
+
+    .trix-button--icon {
+      width: 1.8rem !important;
+      height: 1.4rem !important;
+      background-color: white;
+      border: none;
+      margin-right: 0.5rem;
+      padding: 0.5rem;
+      border-radius: 10px;
+    }
+  }
+
+  trix-editor {
+    font-size: 0.7rem;
+    overflow-y: auto;
+    background-color: white;
+    padding-right: 1rem;
+    border: none;
+    text-align: justify;
+    line-height: 1.4rem;
+    padding: 3vw 3vw 3vw 1vw;
+    flex: auto;
+    height: 10px;
+    margin-bottom: 3rem;
+    @include custom-scrollbar;
+  }
+  form#edit-document {
+    flex: auto;
+    display: flex;
+    flex-flow: column;
+
+    input#document_title {
+      width: -webkit-fill-available;
+      margin-right: 1rem;
+      margin-left: 1rem;
+      font-family: 'Roboto Slab', serif;
+      font-size: 1rem;
+      padding: 1rem;
+      border-radius: 10px;
+      font-weight: 500;
+      background-color: white;
+      border: none;
+      box-sizing: content-box;
+      &:focus {
+        outline: none;
+      }
+    }
+
+  }
+
+  button.link {
+    padding: 1.4rem;
+    // padding-right: 1rem;
+    border: none;
+
+    font-family: 'Roboto Slab', serif;
+    color: $wroom-blue;
+    background-color: rgba(0, 0, 0, 0);
+    font-size: 0.7rem;
+    width: 100%;
+    text-align: end;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
