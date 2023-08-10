@@ -158,40 +158,6 @@ div#chat {
         box-sizing: border-box;
       }
 
-      div.conversation-status {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        font-size: 0.7rem;
-        color: $wroom-blue;
-        padding: 1rem;
-        div.conversation-loading-label {
-          width: auto;
-          font-size: 0.7rem;
-          text-align: center;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          form.button_to {
-            text-align: center;
-          }
-          a {
-            margin-top: 0.5rem;
-            font-size: 0.6rem;
-            text-align: center;
-            color: $wroom-red;
-            font-family: 'Roboto Slab', serif;
-            background-color: rgba(0, 0, 0, 0);
-            border: none;
-            &:hover {
-              cursor: pointer;
-              text-decoration: underline 1px $wroom-red;
-            }
-          }
-        }
-      }    
-
       details.partial-answers {
         margin: 0.5rem 0 0 1rem;
       }
@@ -319,4 +285,46 @@ div#chat {
       }
     }
   }
+}
+
+form#new-message-form {
+
+  div#conversation_status.present {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.7rem;
+    color: $wroom-baby-blue;
+    padding: 1rem;
+    position: absolute;
+    z-index: 999;
+    user-select: none;
+    div.conversation-loading-label {
+      width: auto;
+      font-size: 0.7rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      form.button_to {
+        text-align: center;
+      }
+      a {
+        margin-top: 0.5rem;
+        font-size: 0.6rem;
+        text-align: center;
+        color: $wroom-red;
+        font-family: 'Roboto Slab', serif;
+        background-color: white;
+        padding: 0.2rem 0.5rem;
+        border-radius: 10px;
+        border: 1px solid white;
+        &:hover {
+          cursor: pointer;
+          border: 1px solid $wroom-red;
+        }
+      }
+    }
+  }    
 }

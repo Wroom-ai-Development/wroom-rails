@@ -13,9 +13,9 @@
   height: 0;
   margin: 8px;
   box-sizing: border-box;
-  border: 10px solid $wroom-baby-blue;
+  border: 10px solid white;
   border-radius: 10px;
-  border-color: $wroom-baby-blue transparent $wroom-baby-blue transparent;
+  border-color: white transparent white transparent;
   animation: conversation-hourglass 1.2s infinite;
 }
 @keyframes conversation-hourglass {

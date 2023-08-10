@@ -1,10 +1,9 @@
-<%= turbo_frame_tag "conversation_settings", src: settings_conversation_path(@conversation) %>
 <%= turbo_frame_tag "conversation_frame" do %>
   <%= turbo_stream_from @conversation.id, 'conversation_status' %>
   <div id="chat">
     <div id='settings'>
       <%= link_to 'context', context_conversation_path(@conversation) %>
-      <%= link_to "voices", manager_voices_path %>
+      <%= link_to "voices", manager_voices_path, data: { turbo_frame: "_top" } %>
       <%= button_to('clear chat', clear_chat_conversation_path(conversation_id: @conversation.id), method: :delete) %>
       <%= form_with(
         model: @conversation,
@@ -17,90 +16,6 @@
         <%= form.submit style: 'display:none;' %>
       <% end %>
     </div>
-    <div id='conversation'>
-      <div id='messages'>
-        <% if @conversation.status == 1 %>
-          <%= turbo_frame_tag 'conversation_status' do %>
-            <div class='conversation-status'>
-              <div class="conversation-hourglass"></div>
-              <div class="conversation-loading-label">
-                  churning...
-              <%= link_to('cancel request', cancel_processing_conversation_path(id: @conversation.id)) %>
-              </div>
-            </div>
-          <% end %>
-        <% end %>
-        <% if @conversation.messages.kept.count == 0 %>
-          <div id='initial-message'>
-            Hello, may I be of any help?
-          </div>
-        <% end %>
-        <% @conversation.messages.kept.order(:created_at).reverse.each do |message| %>
-          <% if message.role == 'error' && message.content.include?("maximum context length") %>
-            <div class='message error'>
-              <div class='content'>
-                <div class='main-message'>
-                  <%= button_to('❌', delete_message_conversation_path(message_id: message.id), method: :delete) %>
-                  <div class='main-message-content'>
-                    You have exceeded the token limit in this conversation. If you would like to chat further,
-                    you can remove some messages to make space. If you would like to keep some of the content,
-                    copy it to your document.
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          <% else %>
-            <div class='message <%= message.role %>'>
-              <div class='content'>
-                <div tabindex="0" class='main-message'>
-                  <script>
-                    function copyContent(id) {
-                      const text = document.getElementById(id).innerHTML.replace(/<br>/g, "\n").replace("<p>", "").replace("</p>", "")
-                      navigator.clipboard.writeText(text)
-                    }
-                  </script>
-                  <div class='message-controls' id=<%= "message-controls" %>>
-                    <div class="button-wrapper">
-                      <button class='copy' onClick=<%= "copyContent('main-answer-#{message.id}');" %>>✂️</button>
-                    </div>
-                    <%= button_to('❌', delete_message_conversation_path(message_id: message.id), method: :delete) %>
-                  </div>
-                  <div class='main-message-content'>
-                    <div id=<%= "main-answer-#{message.id}" %>><%= simple_format message.content.gsub("\n", "<br>"), {}, {sanitize: false} %></div>
-                  </div>
-                </div>
-                <% if message.partial_answers.present? %>
-                  <details class='partial-answers'>
-                    <summary>Alternative answers:</summary>
-                    <% message.partial_answers.each do |answer| %>
-                      <div tabindex="0" class="message partial-answer">
-                        <%= simple_format answer %>
-                      </div>
-                    <% end %>
-                  </details>
-                <% end %>
-              </div>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
-      <%= form_with url: new_message_conversation_path(id: @conversation.id), id: 'new-message-form'  do |f| %>
-        <%= f.text_area :content, required: 'required', rows: 5, id: 'new-message-text-area' %>
-        <%= f.submit '➳', id: 'submit', style: 'display: none;' %>
-      <% end %>
-    </div>
-    <script>
-      function handleEnter(e) {
-        const newMessageForm = document.getElementById('new-message-form')
-        const submitButton = document.getElementById('submit')
-        console.log("yay")
-        if (e.which === 13 && !e.shiftKey) {
-          e.preventDefault();
-          submitButton.click();
-        }
-      }
-      document.getElementById('new-message-text-area').addEventListener('keypress', handleEnter)
-    </script>
+    <%= render 'conversation', conversation: @conversation %>
   </div>
 <% end %>

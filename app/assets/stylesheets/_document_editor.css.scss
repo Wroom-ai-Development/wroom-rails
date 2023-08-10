@@ -27,6 +27,7 @@ div#edit-document {
       color: transparent;
       text-shadow: 0 0 0 $wroom-red;
       font-size: 0.5rem;
+      padding: 0;
     }
   }
 
@@ -87,9 +88,9 @@ div#edit-document {
       margin-right: 1rem;
       margin-left: 1rem;
       font-family: 'Roboto Slab', serif;
-      font-size: 1rem;
-      padding: 1rem;
-      border-radius: 10px;
+      font-size: 0.8rem;
+      padding: 0.5rem;
+      border-radius: 5px;
       font-weight: 500;
       background-color: white;
       border: none;
