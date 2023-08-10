@@ -1,7 +1,13 @@
 
 <%= turbo_frame_tag "conversation_frame" do %>
+  <%= turbo_stream_from @conversation.id, "conversation_context" %>
   <div class="context">
-    <%= link_to "❌", chat_conversation_path(@conversation) %>
-    <%= render 'tree_folder', folder: current_user.root_folder %>
+    <div class='header'>
+      <h3>Context</h3>
+      <%= link_to "❌", chat_conversation_path(@conversation), class: 'quit-context-dialog' %>
+    </div>
+    <div class='folders'>
+      <%= render 'tree_folder', folder: current_user.root_folder %>
+    </div>
   </div>
 <% end %>

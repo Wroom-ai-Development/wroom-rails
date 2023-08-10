@@ -4,19 +4,42 @@ div.context {
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-  background-color: white;
+  background-color: $wroom-baby-blue;
   font-size: 0.7rem;
   box-sizing: border-box;
   height: 90vh;
 
   div.header {
-    height: 4rem;
-    background-color: $wroom-baby-blue;
-    a {
-      margin-left: auto;
-      margin-bottom: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    h3 {
+      font-size: 0.7rem;
+      font-weight: 500;
+      margin: 0;
+      user-select: none;
+    }
+    a.quit-context-dialog {
+      background-color: rgba(0,0,0,0);
+      border: none;
+      color: transparent;
+      text-shadow: 0 0 0 $wroom-dark-gray;
+      font-size: 0.5rem;
+      display: flex;
+      justify-content: flex-end;
     }
   }
+
+  div.folders {
+    background-color: white;
+    flex: auto;
+    height: 10px;
+    margin-bottom: 3rem;
+    padding: 1rem;
+  }
+
 
   form.button_to {
     width: 100%;

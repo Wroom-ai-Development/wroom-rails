@@ -25,6 +25,7 @@ div.recycle-bin {
     }
 }
 span.icon {
+  margin-left: 0.5rem;
   margin-right: 0.5rem;
 }
 
@@ -48,7 +49,7 @@ div#folder-explorer {
     background-color: white;
     height: 100%;
     overflow-y: auto;
-    border-radius: 10px;
+    border-radius: 5px;
     font-size: 0.7rem;
 
     a.trash-link {
@@ -62,6 +63,7 @@ div#folder-explorer {
         display: flex;
         align-items: center;
         padding: 0.1rem;
+        border-radius: 5px;
         &:hover {
           background-color: $wroom-light-gray;
           cursor: pointer;
@@ -81,6 +83,7 @@ div#folder-explorer {
       height: 1.5rem;
       display: flex;
       align-items: center;
+      border-radius: 5px;
       &:hover {
         background-color: $wroom-light-gray;
         cursor: pointer;

@@ -11,13 +11,20 @@ class ConversationsController < ApplicationController
 
   def context; end
 
-  def toggle_context
+  def toggle_context # rubocop:disable Metrics/MethodLength
     @document = Document.find(params[:document_id])
     if @conversation.documents.include?(@document)
-      @conversation.documents.delete(@document)
+      ContextReference.where(
+        conversation: @conversation,
+        document: @document
+      ).destroy_all
     else
-      @conversation.documents << @document
+      ContextReference.create!(
+        conversation: @conversation,
+        document: @document
+      )
     end
+    head :no_content
   end
 
   def new_message
