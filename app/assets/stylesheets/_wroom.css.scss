@@ -1,4 +1,5 @@
 @import 'colors';
+@import 'fonts';
 @import 'mixins';
 
 @import 'conversation_hourglass';
@@ -84,13 +85,13 @@ body#wroom {
       justify-content: center;
 
       span#wroom {
-        font-family: 'MuseoModerno';
+        font-family: $logo-font;
     
-        font-weight: 900;
-        font-size: 2.4rem;
-        color: black;
+        font-weight: $app-logo-weight;
+        font-size: $app-logo-size;
+        color: $wroom-logo-primary;
         span.oo {
-          color: $wroom-primary;
+          color: $wroom-logo-secondary;
         }
       }
     }

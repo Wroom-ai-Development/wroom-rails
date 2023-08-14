@@ -114,8 +114,9 @@ div#chat {
         font-size: 0.7rem;
         font-weight: 600;
         height: min-content;
-        background-color: $wroom-primary;
-        color: white;
+        border-top: 1px solid $wroom-gray;
+        background-color: white;
+        color: $wroom-dark-gray;
         resize: none;
         &:hover {
           opacity: 80%;
@@ -298,7 +299,7 @@ form#new-message-form {
     flex-direction: column;
     align-items: center;
     font-size: 0.7rem;
-    color: $wroom-primary-light;
+    color: $wroom-primary;
     padding: 1rem;
     position: absolute;
     z-index: 999;

@@ -60,7 +60,12 @@ div#edit-document {
       border: none;
       margin-right: 0.5rem;
       padding: 0.5rem;
-      border-radius: 10px;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: $wroom-light-gray;
+        cursor: pointer;
+      }
     }
   }
 

@@ -13,9 +13,9 @@
   height: 0;
   margin: 8px;
   box-sizing: border-box;
-  border: 10px solid white;
+  border: 10px solid $wroom-primary;
   border-radius: 10px;
-  border-color: white transparent white transparent;
+  border-color: $wroom-primary transparent $wroom-primary transparent;
   animation: conversation-hourglass 1.2s infinite;
 }
 @keyframes conversation-hourglass {
@@ -40,5 +40,6 @@ div.conversation-status {
   div.conversation-loading-label {
     width: min-content;
     font-style: italic;
+    color: $wroom-primary;
   }
 }    

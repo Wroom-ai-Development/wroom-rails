@@ -6,9 +6,9 @@
     height: 10px; /* Mostly for horizontal scrollbars */
   }
   &::-webkit-scrollbar-thumb { /* Foreground */
-    background: $wroom-dark-gray;
+    background: $scrollbar-foreground;
   }
   &::-webkit-scrollbar-track { /* Background */
-    background: $wroom-lighter-gray;
+    background: $scrollbar-background;
   }
 }

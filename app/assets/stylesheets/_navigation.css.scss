@@ -19,14 +19,14 @@ header {
     justify-content: flex-start;
     margin-left: 1rem;
     span#wroom {
-      font-family: 'MuseoModerno';
+      font-family: $logo-font;
       color: black;
       font-weight: 900;
       font-size: 1.1rem;
     }
 
     p#dashboard {
-      font-family: 'MuseoModerno';
+      font-family: $logo-font;
       font-weight: 100;
       font-size: 0.9rem;
       padding-left: 0.5rem;
