@@ -26,8 +26,8 @@
     </div>
     <div class="content-column">
       <div class="header">
+        <span><%= @folder.type == 'RootFolder' ? 'My Documents' : @folder.name %></span>
         <% unless @folder.type == 'RootFolder' %>
-          <span><%= @folder.name %></span>
           <div class="controls">
             <%= link_to "Rename", edit_folder_path(@folder), data: { turbo_frame: '_top' } %>
             <%= button_to "❌", folder_path(@folder), method: :delete, class: 'delete-folder',

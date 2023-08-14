@@ -40,7 +40,6 @@ div#folder-explorer {
     box-sizing: border-box;
     padding: 1rem;
     width: 15rem;
-    min-width: min-content;
     height: 100%;
     display: flex;
     z-index: 995;
@@ -73,7 +72,6 @@ div#folder-explorer {
         display: flex;
         flex-direction: column;
         padding-left: 1rem;
-        width: fit-content;
         white-space: nowrap;
       }
     }
@@ -84,6 +82,9 @@ div#folder-explorer {
       display: flex;
       align-items: center;
       border-radius: 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
       &:hover {
         background-color: $wroom-light-gray;
         cursor: pointer;
@@ -167,7 +168,7 @@ div#folder-explorer {
           justify-content: space-between;
           span {
             font-size: 1rem;
-            font-weight: 500;
+            font-weight: 700;
             color: $wroom-dark-gray;
             margin-right: 1rem;
           }
@@ -211,6 +212,10 @@ div#folder-explorer {
             th, td {
               &:first-child {
                 text-align: left;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 20rem;
               }
               text-align: right;
             }
