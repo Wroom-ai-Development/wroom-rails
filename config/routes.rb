@@ -56,5 +56,6 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # root "articles#index"
   get '/monitoring', to: 'monitoring#index'
   get '/wroom', to: 'wroom#app'
-  root 'folders#explorer'
+  get '/dashboard', to: 'wroom#dashboard'
+  root 'wroom#dashboard'
 end

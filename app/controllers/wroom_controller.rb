@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class WroomController < ApplicationController
-  layout 'wroom'
+  def dashboard
+    @root_folder = current_user.root_folder
+    @current_folder = params[:current_folder_id].present? ? Folder.find(params[:current_folder_id]) : @root_folder
+    render layout: 'dashboard'
+  end
 
   def app # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     @document = if params[:document_id].present?
@@ -16,5 +20,6 @@ class WroomController < ApplicationController
     else
       redirect_to explorer_folder_path(current_user.root_folder)
     end
+    render layout: 'wroom'
   end
 end

@@ -18,13 +18,13 @@
 <div id="documents-panel" class="panel">
   <div id='wroom-logo'>
     <div>
-      <span id='wroom'>WR<span class='oo'>OO</span>M</span>
+      <span id='wroom'>WROOM</span>
     </div>
   </div>
   <div id="documents">
     <div id='navigation'>
-      <% library_path = @document ? explorer_folder_path(@document.folder) : explorer_folder_path(current_user.root_folder) %>
-      <%= button_to "Dashboard", library_path, class: 'library-link', method: :get %>
+      <% folder_id = @document ? @document.folder.id : current_user.root_folder.id %>
+      <%= button_to "Dashboard", dashboard_path, params: { current_folder_id: folder_id }, class: 'library-link', method: :get %>
     </div>
     <%= render 'tree_folder', folder: current_user.root_folder %>
   </div>

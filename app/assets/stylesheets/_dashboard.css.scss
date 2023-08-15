@@ -5,6 +5,7 @@
 @import 'record_form';
 @import 'voices';
 @import 'user_settings';
+@import 'sidebar';
 
 a {
   text-decoration: none;
@@ -13,13 +14,83 @@ a {
 button:hover {
   cursor: pointer;
 }
-
-main {
+body#dashboard {
   height: 100vh;
   width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+div#content-background {
+  background-color: $wroom-primary;
+  flex-grow: 1;
+  width: 1px;
+  display: flex;
+  overflow: hidden;
+  
+  box-sizing: border-box;
+}
+div#content {
+  flex: 1;
+  width: 1px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 1rem;
+  border-top-left-radius: 30px;
+  font-size: 0.7rem;
+  z-index: 995;
+  padding-top: 11vh;
+  padding-left: 4vw;
+  div.header {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    span {
+      font-size: 1rem;
+      font-weight: 700;
+      color: $wroom-dark-gray;
+      margin-right: 1rem;
+    }
+    div.controls {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      a, button {
+        font-family: $body-font;
+        font-size: 0.7rem;
+        background-color: white;
+        color: $wroom-primary;
+        margin: 0;
+        margin-left: 1rem;
+        padding: 0;
+        border: none;
+        font-weight: 300;
+      }
+      a:hover {
+        text-decoration: underline 1px $wroom-primary;
+      }
+
+      button {
+        color: transparent;
+        text-shadow: 0 0 0 $wroom-red;
+      }
+    }
+  }
+
+}
+
+main {
+  height: 100%;
+  width: 100%;
   font-family: $body-font;
   font-weight: 300;
   font-size: 0.9rem;
-  background-color: $wroom-light-gray;
-  color: $wroom-dark-gray;
+  display: flex;
+}
+
+div.outside {
+  z-index: 998;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }

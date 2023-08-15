@@ -1,0 +1,15 @@
+<script>
+  function displayChildren(id) {
+    const children = document.getElementById(id).children[1]
+    if (children.style.display == 'flex')
+      children.style.display = 'none';
+    else
+    children.style.display = 'flex';
+  }
+</script>
+<%= render 'layouts/sidebar', root_folder: @root_folder %>
+<div id='content-background'>
+  <div id='content'>
+    <%= turbo_frame_tag "content", src: folder_path(@current_folder) %>
+  </div>
+</div>

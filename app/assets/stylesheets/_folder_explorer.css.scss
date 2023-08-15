@@ -1,12 +1,7 @@
 @import 'colors';
 @import 'pulse_shadow';
 
-div.outside {
-  z-index: 998;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
+
 
 div.recycle-bin {
   width: 50rem;
@@ -28,199 +23,82 @@ span.icon {
   margin-right: 0.5rem;
 }
 
-div#folder-explorer {
-  height: 100%;
-  width: 100%;
+div#folder-tree-background {
+  background-color: white;
+}
+
+
+div#current-folder-background {
+  background-color: $wroom-primary;
+  flex-grow: 1;
+  width: 1px;
   display: flex;
   overflow: hidden;
   
   box-sizing: border-box;
-  div#folder-tree-background {
-    background-color: white;
-  }
-  div#folder-tree {
-    box-sizing: border-box;
-    padding: 1rem;
-    width: 19vw;
-    height: 100%;
-    display: flex;
-    z-index: 995;
+}
 
-    flex-direction: column;
-    background-color: $wroom-primary;
-    height: 100%;
-    overflow-y: auto;
-    border-bottom-right-radius: 30px;
-    font-size: 0.7rem;
 
-    a.trash-link {
-      margin-top: 1rem;
-    }
-    div.tree-folder {
-      div.parent {
-        width: 100%;
-        height: 1.5rem;
-        white-space: nowrap;
-        display: flex;
-        align-items: center;
-        padding: 0.1rem;
-        border-radius: 5px;
-        &:hover {
-          background-color: $wroom-light-gray;
-          cursor: pointer;
-        }
-      }
-      div.children {
-        display: flex;
-        flex-direction: column;
-        padding-left: 1rem;
-        white-space: nowrap;
-      }
+div.folder-content {
+  height: 100%;
+  overflow-y: auto;
+
+  table.folder-contents-table {
+    width: 100%;
+    margin-top: 1rem;
+    th {
+      color: $wroom-halfway-dark-gray;
     }
 
-    div.tree-document {
-      width: 100%;
-      height: 1.5rem;
-      display: flex;
-      align-items: center;
-      border-radius: 5px;
+    th, td {
+      &:first-child {
+        text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 20rem;
+      }
+      text-align: right;
       white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      &:hover {
-        background-color: $wroom-light-gray;
-        cursor: pointer;
+      &:not(:first-child):not(:last-child) {
+        padding: 0 1rem;
       }
     }
+    tr { 
+      padding: 0.5rem 0;
+    }
   }
-
-  div#current-folder-background {
-    background-color: $wroom-primary;
-    flex-grow: 1;
-    width: 1px;
+  div.item {
+    padding: 0.2rem 0;
+    height: 1.5rem;
     display: flex;
+    align-items: center;
+    span.icon {
+      font-size: 1rem;
+    }
+    &:hover {
+      background-color: $wroom-light-gray;
+      cursor: pointer;
+    }
   }
-  turbo-frame#current_folder {
-    display: flex;
-    width: 1px;
-    flex: 1;
-  }
-  div#current-folder {
-    width: 1rem;
-    flex-grow: 1;
-    height: 100%;
-    display: flex;
-
-    div.content {
-      background-color: white;
-      padding: 1rem;
-      border-top-left-radius: 30px;
-      font-size: 0.7rem;
-      z-index: 995;
-      flex: 1;
-      width: 1px;
-      padding-top: 11vh;
-      padding-left: 4vw;
-      div.header {
-        display: flex;
-        align-items: start;
-        justify-content: space-between;
-        span {
-          font-size: 1rem;
-          font-weight: 700;
-          color: $wroom-dark-gray;
-          margin-right: 1rem;
-        }
-        div.controls {
-          display: flex;
-          flex-direction: row;
-          align-items: baseline;
-          a, button {
-            font-family: $body-font;
-            font-size: 0.7rem;
-            background-color: white;
-            color: $wroom-primary;
-            margin: 0;
-            margin-left: 1rem;
-            padding: 0;
-            border: none;
-            font-weight: 300;
-          }
-          a:hover {
-            text-decoration: underline 1px $wroom-primary;
-          }
-  
-          button {
-            color: transparent;
-            text-shadow: 0 0 0 $wroom-red;
-          }
-        }
-      }
-  
-      div.folder-content {
-        height: 100%;
-        overflow-y: auto;
-  
-        table.folder-contents-table {
-          width: 100%;
-          margin-top: 1rem;
-          th {
-            color: $wroom-halfway-dark-gray;
-          }
-  
-          th, td {
-            &:first-child {
-              text-align: left;
-              white-space: nowrap;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              max-width: 20rem;
-            }
-            text-align: right;
-            white-space: nowrap;
-            &:not(:first-child):not(:last-child) {
-              padding: 0 1rem;
-            }
-          }
-          tr { 
-            padding: 0.5rem 0;
-          }
-        }
-        div.item {
-          padding: 0.2rem 0;
-          height: 1.5rem;
-          display: flex;
-          align-items: center;
-          span.icon {
-            font-size: 1rem;
-          }
-          &:hover {
-            background-color: $wroom-light-gray;
-            cursor: pointer;
-          }
-        }
-        div.no-content {
-          h3 {
-            font-size: 1rem;
-          }
-          p {
-            span {
-              color: $wroom-primary;
-            }
-          }
-  
-          div.haiku {
-            margin-left: 37vw;
-            margin-top: 37vh;
-            padding-right: 0.5rem;
-            border-right: 7px solid $wroom-gray;
-            font-weight: 100;
-            text-align: right;
-          }
-        }
+  div.no-content {
+    h3 {
+      font-size: 1rem;
+    }
+    p {
+      span {
+        color: $wroom-primary;
       }
     }
 
+    div.haiku {
+      margin-left: 37vw;
+      margin-top: 37vh;
+      padding-right: 0.5rem;
+      border-right: 7px solid $wroom-gray;
+      font-weight: 100;
+      text-align: right;
+    }
   }
 }
 

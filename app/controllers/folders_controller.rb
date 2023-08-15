@@ -3,7 +3,7 @@
 class FoldersController < ApplicationController
   before_action :set_folder, only: %i[show edit update destroy undiscard]
   load_and_authorize_resource
-
+  layout 'dashboard'
   # GET /folders/1 or /folders/1.json
 
   def explorer

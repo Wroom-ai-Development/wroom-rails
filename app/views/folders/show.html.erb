@@ -1,4 +1,4 @@
-<%= turbo_frame_tag 'current_folder' do %>
+<%= turbo_frame_tag 'content' do %>
   <script>
     function toggleNewOptions() {
       const options = document.getElementsByClassName('options')[0];
@@ -11,94 +11,91 @@
       })
     }
   </script>
-    <% if false %>
-    <div class="ui-column">
-      <div class="new">
-        <div class="button" onClick="toggleNewOptions();">
-          ✙
+  <% if false %>
+  <div class="ui-column">
+    <div class="new">
+      <div class="button" onClick="toggleNewOptions();">
+        ✙
+      </div>
+    </div>
+    <div class="options" style="display: none;">
+      <%= link_to "New folder", new_folder_path(parent_id: @folder.id), data: { turbo_frame: '_top' } %>
+      <%= link_to "New document", new_document_path(folder_id: @folder.id), data: { turbo_frame: '_top' } %>
+      <%= link_to "Upload document", new_source_path(folder_id: @folder.id), data: { turbo_frame: '_top' } %>
+    </div>
+  </div>
+  <% end %>
+  <div class="header">
+    <span><%= @folder.type == 'RootFolder' ? 'My Documents' : @folder.name %></span>
+    <% unless @folder.type == 'RootFolder' %>
+      <div class="controls">
+        <%= link_to "Rename", edit_folder_path(@folder), data: { turbo_frame: '_top' } %>
+        <%= button_to "❌", folder_path(@folder), method: :delete, class: 'delete-folder',
+          form: {
+            data: {
+                turbo: false,
+                controller: "confirmation",
+                action: 'submit->confirmation#confirm',
+                confirmation_message_value: "Please confirm you meant to delete #{@folder.name}",
+            }
+          } %>
+      </div>
+    <% end %>
+  </div>
+  <div class="folder-content">
+    <% if @folder.type == 'RootFolder' && @folder.empty? %>
+      <div class="no-content">
+        <h3>Welcome to WROOM</h3>
+        <p>Click the <span>✙</span> button to create a new folder or document.</p>
+        <div class="haiku">
+          <%= simple_format(@haiku) %>
         </div>
       </div>
-      <div class="options" style="display: none;">
-        <%= link_to "New folder", new_folder_path(parent_id: @folder.id), data: { turbo_frame: '_top' } %>
-        <%= link_to "New document", new_document_path(folder_id: @folder.id), data: { turbo_frame: '_top' } %>
-        <%= link_to "Upload document", new_source_path(folder_id: @folder.id), data: { turbo_frame: '_top' } %>
-      </div>
-    </div>
     <% end %>
-    <div class="content">
-      <div class="header">
-        <span><%= @folder.type == 'RootFolder' ? 'My Documents' : @folder.name %></span>
+    <table class="folder-contents-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Created</th>
+          <th>Last accessed</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
         <% unless @folder.type == 'RootFolder' %>
-          <div class="controls">
-            <%= link_to "Rename", edit_folder_path(@folder), data: { turbo_frame: '_top' } %>
-            <%= button_to "❌", folder_path(@folder), method: :delete, class: 'delete-folder',
-              form: {
-                data: {
-                    turbo: false,
-                    controller: "confirmation",
-                    action: 'submit->confirmation#confirm',
-                    confirmation_message_value: "Please confirm you meant to delete #{@folder.name}",
-                }
-              } %>
-          </div>
+          <tr>
+            <td>
+              <%= link_to folder_path(@folder.parent) do %>
+              <span class='icon'>📁 </span>..
+              <% end %>
+            </td>
+          </tr>
         <% end %>
-      </div>
-      <div class="folder-content">
-
-        <% if @folder.type == 'RootFolder' && @folder.empty? %>
-          <div class="no-content">
-            <h3>Welcome to WROOM</h3>
-            <p>Click the <span>✙</span> button to create a new folder or document.</p>
-            <div class="haiku">
-              <%= simple_format(@haiku) %>
-            </div>
-          </div>
+        <% @folder.children.kept.each do |folder| %>
+          <tr>
+            <td><%= link_to folder do %>
+              <span class='icon'>📁 </span><%= folder.name %>
+            <% end %></td>
+            <td><%= folder.created_at.strftime("%b %d, %Y %H:%M") %></td>
+            <td><%= folder.updated_at.strftime("%b %d, %Y %H:%M") %></td>
+            <td>
+              directory
+            </td>
+          </tr>
         <% end %>
-        <table class="folder-contents-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Created</th>
-              <th>Last accessed</th>
-              <th>Type</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% unless @folder.type == 'RootFolder' %>
-              <tr>
-                <td>
-                  <%= link_to folder_path(@folder.parent) do %>
-                  <span class='icon'>📁 </span>..
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
-            <% @folder.children.kept.each do |folder| %>
-              <tr>
-                <td><%= link_to folder do %>
-                  <span class='icon'>📁 </span><%= folder.name %>
-                <% end %></td>
-                <td><%= folder.created_at.strftime("%b %d, %Y %H:%M") %></td>
-                <td><%= folder.updated_at.strftime("%b %d, %Y %H:%M") %></td>
-                <td>
-                  directory
-                </td>
-              </tr>
-            <% end %>
-            <% @folder.documents.kept.each do |document| %>
-              <tr>
-                <td><%= link_to wroom_path(document_id: document.id), data: { turbo_frame: '_top' } do %>
-                  <span class='icon'><%= document.icon %></span><%= document.title %>
-                <% end %></td>
-                <td><%= document.created_at.strftime("%b %d, %Y %H:%M") %></td>
-                <td><%= document.updated_at.strftime("%b %d, %Y %H:%M") %></td>
-                <td>
-                  <%= document.source_based ? "source" : "editable" %>
-                </td>
-              </tr>
-            <% end %>
-        </table>
+        <% @folder.documents.kept.each do |document| %>
+          <tr>
+            <td><%= link_to wroom_path(document_id: document.id), data: { turbo_frame: '_top' } do %>
+              <span class='icon'><%= document.icon %></span><%= document.title %>
+            <% end %></td>
+            <td><%= document.created_at.strftime("%b %d, %Y %H:%M") %></td>
+            <td><%= document.updated_at.strftime("%b %d, %Y %H:%M") %></td>
+            <td>
+              <%= document.source_based ? "source" : "editable" %>
+            </td>
+          </tr>
+        <% end %>
+    </table>
 
-      </div>
-    </div>
+  </div>
 <% end %>

@@ -24,25 +24,20 @@ body#wroom {
   font-family: $body-font;
   overflow: hidden;
 
-  form.button_to {
+  a.library-link {
     margin-bottom: 1rem;
-    display: flex;
-    justify-content: center;
-    button.library-link {
-      border: none;
-      font-family: $body-font;
-      width: 100%;
-      padding: 0.5rem 1rem;
-      align-self: flex-end;
-      font-size: 0.8rem;
-      color: $wroom-primary;
-      background-color: white;
-      border-radius: 10px;
-      &:hover {
-        background-color: $wroom-primary-light;
-        cursor: pointer;
-      }
-      animation: pulseShadow 4s infinite alternate;
+    border: none;
+    font-family: $body-font;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    align-self: center;
+    font-size: 0.8rem;
+    color: $wroom-primary;
+    background-color: white;
+    border-radius: 10px;
+    &:hover {
+      background-color: $wroom-primary-light;
+      cursor: pointer;
     }
   }
 
