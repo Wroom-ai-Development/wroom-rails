@@ -30,7 +30,7 @@ class DocumentsController < ApplicationController
       title: 'Untitled',
       content: '',
       user_id: current_user.id,
-      folder_id: params[:folder_id]
+      folder_id: current_user.current_folder_id || current_user.root_folder.id
     )
     redirect_to wroom_path(document_id: @document.id)
   end

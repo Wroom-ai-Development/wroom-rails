@@ -9,7 +9,7 @@
 </script>
 <div class='tree-folder' id="<%= "tree-folder-#{folder.id}" %>">
   <div class="parent" onClick=<%= "displayChildren('tree-folder-#{folder.id}')" %>>
-    <span class='icon'>📁 </span><%= folder.type == 'RootFolder' ? 'My Files' : folder.name %>
+    <i class="fa-regular fa-folder fa-fw"></i><%= folder.type == 'RootFolder' ? 'My Files' : folder.name %>
   </div>
   <div class="children" style="<%= folder.type == 'RootFolder' ? "" : "display: none;" %>">
     <% folder.children.kept.each do |folder| %>

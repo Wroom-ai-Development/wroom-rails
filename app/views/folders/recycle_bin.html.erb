@@ -1,6 +1,6 @@
 <%= turbo_frame_tag "view_content" do %>
   <div class="header">
-    <span>Recycling bin</span>
+    <span>Trash</span>
   </div>
   <div class="recycle-bin">
     <table class="folder-contents-table">
@@ -17,12 +17,12 @@
         <% @folders.each do |folder| %>
           <tr>
             <td>
-              <span class='icon'>📁 </span><%= folder.name %>
+              <i class="fa fa-folder fa-fw" style='margin-right: 0.2rem'></i><%= folder.name %>
             </td>
             <td><%= folder.created_at.strftime("%b %d, %Y %H:%M") %></td>
             <td><%= folder.updated_at.strftime("%b %d, %Y %H:%M") %></td>
             <td>
-              directory
+              Folder
             </td>
             <td>
               <%= link_to "Restore", undiscard_folder_path(folder), data: { turbo_frame: '_top' } %>
@@ -32,12 +32,17 @@
         <% @documents.each do |document| %>
           <tr>
             <td>
-              <span class='icon'><%= document.icon %></span><%= document.title %>
+              <% if document.source_based %>
+                <i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>
+              <% else %>
+                <i class="fa fa-book fa-fw" aria-hidden="true"></i>
+              <% end %>
+              <%= document.title %>
             </td>
             <td><%= document.created_at.strftime("%b %d, %Y %H:%M") %></td>
             <td><%= document.updated_at.strftime("%b %d, %Y %H:%M") %></td>
             <td>
-              <%= document.source_based ? "source" : "editable" %>
+              <%= document.source_based ? "Source" : "Document" %>
             </td>
             <td>
               <%= link_to "Restore", undiscard_document_path(document), data: { turbo_frame: '_top' } %>

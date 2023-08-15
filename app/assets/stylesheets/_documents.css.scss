@@ -18,7 +18,7 @@ div#documents {
   flex-grow: 1;
   border-bottom: 3rem solid $wroom-primary-light;
 
-    form.button_to {
+  form.button_to {
     margin-bottom: 1rem;
     display: flex;
     justify-content: center;
@@ -45,14 +45,16 @@ div#documents {
     div.parent {
       height: 1.5rem;
       white-space: nowrap;
-      display: flex;
-      align-items: center;
       padding: 0.1rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      i {
+        margin-right: 0.2rem;
+      }
       &:hover {
-        background-color: $wroom-light-gray;
+        color: $wroom-primary;
+
         cursor: pointer;
       }
     }
@@ -66,13 +68,15 @@ div#documents {
 
   div.tree-document {
     height: 1.5rem;
-    display: flex;
-    align-items: center;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    i {
+      font-size: 0.8rem;
+      margin-right: -0.1rem;
+    }
     &:hover {
-      background-color: $wroom-light-gray;
+      color: $wroom-primary;
       cursor: pointer;
     }
   }

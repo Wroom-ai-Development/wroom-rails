@@ -3,18 +3,15 @@ div#voices-manager {
   display: flex;
   flex-direction: row;
   justify-content: start;
-  padding-left: 1rem;
   div.voices {
     width: 30vw;
-    padding: 1rem;
     background-color: white;
-    border: 1px solid $wroom-light-gray;
     border-radius: 10px;
-    margin-top: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: left;
+    margin-right: 1rem;
 
     h3 {
       width: 100%;
@@ -36,7 +33,6 @@ div#voices-manager {
 
   div.voice-editor {
     width: 30vw;
-    padding: 1rem;
 
     form.button_to {
       margin: 0;
@@ -77,7 +73,6 @@ div.voices {
     text-align: center;
     width: min-content;
     box-sizing: border-box;
-    border: 1px solid $wroom-light-gray;
 
     &:hover {
       cursor: pointer;

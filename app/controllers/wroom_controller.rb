@@ -2,7 +2,6 @@
 
 class WroomController < ApplicationController
   def dashboard
-    @root_folder = current_user.root_folder
     @current_folder = params[:current_folder_id].present? ? Folder.find(params[:current_folder_id]) : @root_folder
     render layout: 'dashboard'
   end

@@ -1,38 +1,40 @@
-<div id="record-form-view">
-  <div id="record-form-box">
-    <div id="header">
-      <h3>New document</h3>
-      <%= link_to "❌", root_path %>
-    </div>
+<%= turbo_frame_tag 'view_content' do %>
+  <div id="record-form-view">
+    <div id="record-form-box">
+      <div id="header">
+        <h3>New document</h3>
+        <%= link_to "❌", root_path %>
+      </div>
 
-    <%= form_with(
-      model: @document
-    ) do |form| %>
-      <% if @document.errors.any? %>
-        <div class='validation'>
-          <div class='message'>
-            <%= pluralize(@document.errors.count, "error") %> prohibited this document from being saved:
+      <%= form_with(
+        model: @document
+      ) do |form| %>
+        <% if @document.errors.any? %>
+          <div class='validation'>
+            <div class='message'>
+              <%= pluralize(@document.errors.count, "error") %> prohibited this document from being saved:
+            </div>
+            <div class='errors'>
+              <% @document.errors.each do |error| %>
+                <div class='error'><span class='bullet'>• </span><%= error.full_message %></div>
+              <% end %>
+            </div>
           </div>
-          <div class='errors'>
-            <% @document.errors.each do |error| %>
-              <div class='error'><span class='bullet'>• </span><%= error.full_message %></div>
-            <% end %>
-          </div>
+        <% end %>
+
+        <div class='field' style='display: none;'>
+          <%= form.text_field :folder_id, value: @folder_id, readonly: cannot?(:manage, User) %>
         </div>
+        <div class='field-with-submit'>
+          <%= form.text_field :title %>
+          <%= form.submit 'Confirm' %>
+        </div>
+        <div class='field' style='display: none;'>
+          <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
+        </div>
+
       <% end %>
 
-      <div class='field' style='display: none;'>
-        <%= form.text_field :folder_id, value: @folder_id, readonly: cannot?(:manage, User) %>
-      </div>
-      <div class='field-with-submit'>
-        <%= form.text_field :title %>
-        <%= form.submit 'Confirm' %>
-      </div>
-      <div class='field' style='display: none;'>
-        <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
-      </div>
-
-    <% end %>
-
+    </div>
   </div>
-</div>
+<% end %>

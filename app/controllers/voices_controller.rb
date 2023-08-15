@@ -26,6 +26,7 @@ class VoicesController < ApplicationController
   def manager
     set_voice if params[:id].present?
     @manager ||= current_user.voices.first
+    render layout: 'dashboard'
   end
 
   # GET /voices/1/edit

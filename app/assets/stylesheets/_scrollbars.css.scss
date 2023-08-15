@@ -2,11 +2,12 @@
 
 @mixin custom-scrollbar {
   &::-webkit-scrollbar {
-    width: 10px; /* Mostly for vertical scrollbars */
+    width: 5px; /* Mostly for vertical scrollbars */
     height: 10px; /* Mostly for horizontal scrollbars */
   }
   &::-webkit-scrollbar-thumb { /* Foreground */
     background: $scrollbar-foreground;
+    border-radius: 10px;
   }
   &::-webkit-scrollbar-track { /* Background */
     background: $scrollbar-background;

@@ -1,30 +1,4 @@
 <%= turbo_frame_tag 'view_content' do %>
-  <script>
-    function toggleNewOptions() {
-      const options = document.getElementsByClassName('options')[0];
-      const outside = document.getElementsByClassName('outside')[0];
-      options.style.display = 'flex';
-      outside.style.display = 'block';
-      outside.addEventListener('click', (e) => {
-        options.style.display = 'none';
-        outside.style.display = 'none';
-      })
-    }
-  </script>
-  <% if false %>
-  <div class="ui-column">
-    <div class="new">
-      <div class="button" onClick="toggleNewOptions();">
-        ✙
-      </div>
-    </div>
-    <div class="options" style="display: none;">
-      <%= link_to "New folder", new_folder_path(parent_id: @folder.id), data: { turbo_frame: '_top' } %>
-      <%= link_to "New document", new_document_path(folder_id: @folder.id), data: { turbo_frame: '_top' } %>
-      <%= link_to "Upload document", new_source_path(folder_id: @folder.id), data: { turbo_frame: '_top' } %>
-    </div>
-  </div>
-  <% end %>
   <div class="header">
     <span><%= @folder.type == 'RootFolder' ? 'My Files' : @folder.name %></span>
     <% unless @folder.type == 'RootFolder' %>
@@ -46,7 +20,7 @@
     <% if @folder.type == 'RootFolder' && @folder.empty? %>
       <div class="no-content">
         <h3>Welcome to WROOM</h3>
-        <p>Click the <span>✙</span> button to create a new folder or document.</p>
+        <p>Click the "New" button to create a new folder or document.</p>
         <div class="haiku">
           <%= simple_format(@haiku) %>
         </div>

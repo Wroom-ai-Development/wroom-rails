@@ -1,5 +1,10 @@
 <%= link_to editor_document_path(document), data: { turbo_frame: 'document_editor' } do %>
   <div class='tree-document' id="tree-document<%= document.id %>">
-    <span class='icon'><%= document.icon %></span><%= document.title %>
+      <% if document.source_based %>
+        <i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>
+      <% else %>
+        <i class="fa fa-book fa-fw" aria-hidden="true"></i>
+      <% end %>
+    <%= document.title %>
   </div>
 <% end %>

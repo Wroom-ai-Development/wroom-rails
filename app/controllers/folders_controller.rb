@@ -18,15 +18,16 @@ class FoldersController < ApplicationController
   end
 
   def show
-    return unless @folder.type == 'RootFolder' && @folder.empty?
-
-    @haiku = OpenaiService.new.haiku_about_new_venture
+    current_user.update!(current_folder_id: @folder.id)
+    if @folder.type == 'RootFolder' && @folder.empty?
+      @haiku = OpenaiService.new.haiku_about_new_venture
+    end
   end
 
   # GET /folders/new
   def new
     @folder = Folder.new
-    @parent_id = (params[:parent_id].presence || current_user.root_folder.id)
+    @parent_id = current_user.current_folder_id || current_user.root_folder.id
   end
 
   # GET /folders/1/edit
@@ -34,14 +35,14 @@ class FoldersController < ApplicationController
 
   # POST /folders or /folders.json
   def create
+    # binding.pry
     @folder = Folder.new(folder_params)
     @folder.type = 'Folder'
-    respond_to do |format|
-      if @folder.save
-        format.html { redirect_to explorer_folder_url(@folder) }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-      end
+    if @folder.save
+      current_user.update!(current_folder_id: @folder.id)
+      render :show, status: :ok
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 

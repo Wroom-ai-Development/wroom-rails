@@ -6,6 +6,7 @@
 @import 'voices';
 @import 'user_settings';
 @import 'sidebar';
+@import 'scrollbars';
 
 a {
   text-decoration: none;
@@ -41,6 +42,9 @@ div#content {
   z-index: 995;
   padding-top: 11vh;
   padding-left: 4vw;
+  padding-right: 4vw;
+  overflow-y: auto;
+  @include custom-scrollbar;
   div.header {
     display: flex;
     align-items: start;
