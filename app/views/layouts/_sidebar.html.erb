@@ -1,10 +1,15 @@
 <div id='sidebar-background'>
   <div id='sidebar'>
+    <div id='wroom-logo'>
+      <div>
+        <span id='wroom'>WROOM</span>
+      </div>
+    </div>
     <div id='folder-tree'>
       <%= render 'folders/tree_folder', folder: root_folder %>
       <% if current_user.anything_in_recycle_bin? %>
         <%= link_to recycle_bin_folders_path, data: { turbo_frame: 'view_content' }, class: 'trash-link'  do %>
-          <span class='icon'>🗑️ </span>Recycling bin
+          <span class='icon'>🗑️ </span>Trash
         <% end %>
       <% end %>
     </div>

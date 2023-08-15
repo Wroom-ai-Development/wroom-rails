@@ -4,48 +4,13 @@
 
 
 div.recycle-bin {
-  width: 50rem;
-    background-color: white;
-    padding: 1rem;
-    border-radius: 10px;
-    font-size: 0.7rem;
-    table {
-      width: 100%;
-      td, th {
-        text-align: left;
-        &:not(:first-child) {
-          text-align: right;
-        }
-      }
-    }
-}
-span.icon {
-  margin-right: 0.5rem;
-}
-
-div#folder-tree-background {
-  background-color: white;
-}
-
-
-div#current-folder-background {
-  background-color: $wroom-primary;
-  flex-grow: 1;
-  width: 1px;
   display: flex;
-  overflow: hidden;
-  
-  box-sizing: border-box;
-}
-
-
-div.folder-content {
-  height: 100%;
-  overflow-y: auto;
-
-  table.folder-contents-table {
+  flex-direction: row;
+  background-color: white;
+  border-radius: 10px;
+  table {
     width: 100%;
-    margin-top: 1rem;
+    border-spacing: 0;
     th {
       color: $wroom-halfway-dark-gray;
     }
@@ -68,6 +33,72 @@ div.folder-content {
       padding: 0.5rem 0;
     }
   }
+}
+
+
+div#folder-tree-background {
+  background-color: white;
+}
+
+
+div#current-folder-background {
+  background-color: $wroom-primary;
+  flex-grow: 1;
+  width: 1px;
+  display: flex;
+  overflow: hidden;
+  
+  box-sizing: border-box;
+}
+table.folder-contents-table {
+  width: 100%;
+  border-spacing: 0;
+  span.icon {
+    margin-right: 0.5rem;
+  }
+  th {
+    color: $wroom-halfway-dark-gray;
+    border-bottom: 1px solid $wroom-light-gray;
+  }
+  tr {
+    border-radius: 5px;
+    padding: 0.5rem 0;
+    color: $wroom-dark-gray;
+    &:hover {
+      color: $wroom-primary;
+      cursor: pointer;
+      a {
+        color: $wroom-primary;
+      }
+    }
+  }
+
+  th, td {
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid $wroom-light-gray;
+    &:first-child {
+      max-width: 20rem;
+    }
+
+    &:not(:first-child):not(:last-child) {
+      padding-left: 1rem;
+      padding-right: 1rem;
+
+    }
+
+  }
+}
+
+div.folder-content {
+  height: 100%;
+  overflow-y: auto;
+
+
   div.item {
     padding: 0.2rem 0;
     height: 1.5rem;

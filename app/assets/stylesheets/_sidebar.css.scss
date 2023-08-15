@@ -1,5 +1,6 @@
 @import 'colors';
 @import 'fonts';
+@import 'mixins';
 
 div#sidebar-background {
   width: 19vw;
@@ -11,6 +12,7 @@ div#sidebar {
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   z-index: 995;
   background-color: $wroom-primary;
   height: 100%;
@@ -19,18 +21,68 @@ div#sidebar {
   font-size: 0.7rem;
   overflow: hidden;
 
+  div#wroom-logo {
+    @include flex-center-content;
+    min-height: 2rem;
+    height: 0;
+    margin-bottom: 2rem;
+    
+    div {
+      border-radius: 10px;
+      background: none;
+      width: 1px;
+      text-align: center;
+      margin-top: 1.6rem;
+      height: 1px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      span#wroom {
+        font-family: $logo-font;
+        font-weight: $app-logo-weight;
+        font-size: $dashboard-logo-size;
+        color: white;
+      }
+    }
+  }
+
   div#folder-tree {
     flex-direction: column;
-    width: 1px;
+    width: 100%;
     flex: 1;
+    display: flex;
+    font-weight: 600;
+    span.icon {
+      margin-right: 0.5rem;
+      margin-left: 0.5rem;
+    }
+    span.folder-name {
+      display: block;
+
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
     a.trash-link {
-      margin-top: 1rem;
+      display: flex;
+      white-space: nowrap;
+      width: calc(100% - 1px);
+      height: 1.5rem;
+      display: flex;
+      align-items: center;
+      padding: 0.1rem;
+      border-radius: 5px;
+      &:hover {
+        background-color: $wroom-light-gray;
+        cursor: pointer;
+      }
     }
     div.tree-folder {
-      div.parent {
-        width: 100%;
+      div.folder {
+        width: calc(100% - 1px);
         height: 1.5rem;
-        white-space: nowrap;
         display: flex;
         align-items: center;
         padding: 0.1rem;
@@ -43,8 +95,11 @@ div#sidebar {
       div.children {
         display: flex;
         flex-direction: column;
-        padding-left: 1rem;
         white-space: nowrap;
+        div.folder {
+          padding-left: 0.5rem;
+          box-sizing: border-box;
+        }
       }
     }
   

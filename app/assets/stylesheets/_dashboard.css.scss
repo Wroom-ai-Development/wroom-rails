@@ -9,7 +9,7 @@
 
 a {
   text-decoration: none;
-  color: black;
+  color: $wroom-dark-gray;
 }
 button:hover {
   cursor: pointer;
@@ -37,7 +37,7 @@ div#content {
   background-color: white;
   padding: 1rem;
   border-top-left-radius: 30px;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   z-index: 995;
   padding-top: 11vh;
   padding-left: 4vw;
@@ -46,8 +46,8 @@ div#content {
     align-items: start;
     justify-content: space-between;
     span {
-      font-size: 1rem;
-      font-weight: 700;
+      font-size: 1.1rem;
+      font-weight: 100;
       color: $wroom-dark-gray;
       margin-right: 1rem;
     }
