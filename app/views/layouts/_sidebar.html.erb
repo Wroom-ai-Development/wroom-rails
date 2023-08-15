@@ -13,5 +13,25 @@
         <% end %>
       <% end %>
     </div>
+    <% if can? :manage, User %>
+      <div class="link-wrapper">
+        <%= link_to "Monitoring", monitoring_path %>
+      </div>
+    <% end %>
+    <% if can? :manage, Voice %>
+      <div class="link-wrapper">
+        <%= link_to "Voices", manager_voices_path %>
+      </div>
+    <% end %>
+    <% if can? :manage, User %>
+      <div class="link-wrapper">
+        <%= link_to "GPT-4", toggle_gpt_4_user_path(current_user), class: "gpt-4-toggle #{current_user.gpt_4_enabled ? "on" : "off"}" %>
+      </div>
+    <% end %>
+    <div id='account-links'>
+      <p id='current-user'><%= current_user.email %></p>
+      <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: 'sign-out' %>
+      <%= link_to "⚙️", edit_user_registration_path(current_user), class: 'settings-link' %>
+    </div>
   </div>
 </div>

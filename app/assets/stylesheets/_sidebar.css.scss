@@ -20,6 +20,75 @@ div#sidebar {
   border-bottom-right-radius: 30px;
   font-size: 0.7rem;
   overflow: hidden;
+  padding-bottom: 0.4rem;
+
+  div.link-wrapper {
+    width: 100%;
+    font-weight: 600;
+    a {
+      height: 1.5rem;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      padding: 0.1rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border-radius: 5px;
+      padding-left: 0.5rem;
+      &:hover {
+        background-color: $wroom-light-gray;
+        cursor: pointer;
+      }
+    }
+    a.gpt-4-toggle {
+      &.on {
+        color: $wroom-green;
+        background-color: $wroom-primary-dark;
+      }
+
+      &.off {
+        color: $wroom-dark-gray;
+      }
+    }
+  }
+  div#account-links {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.6rem;
+    padding-left: 0.5rem;
+
+    button {
+      background-color: rgba(0,0,0,0);
+      border: none;
+      outline: none;
+      font-size: 0.6rem;
+
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    p#current-user {
+      font-weight: 200;
+      width: 5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    a.settings-link {
+      margin-left: 0.7rem;
+      font-size: 0.8rem;
+      color: transparent;
+      align-self: center;
+      text-shadow: 0 0 0 $wroom-dark-gray;
+      &:hover {
+        text-decoration: none;
+        text-shadow: 0 0 0 $wroom-primary;
+      }
+    }
+  }
 
   div#wroom-logo {
     @include flex-center-content;
