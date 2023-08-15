@@ -1,9 +1,9 @@
 <div id='sidebar-background'>
   <div id='sidebar'>
     <div id='folder-tree'>
-      <%= render 'tree_folder', folder: root_folder %>
+      <%= render 'folders/tree_folder', folder: root_folder %>
       <% if current_user.anything_in_recycle_bin? %>
-        <%= link_to recycle_bin_folders_path, data: { turbo_frame: 'content' }, class: 'trash-link'  do %>
+        <%= link_to recycle_bin_folders_path, data: { turbo_frame: 'view_content' }, class: 'trash-link'  do %>
           <span class='icon'>🗑️ </span>Recycling bin
         <% end %>
       <% end %>
