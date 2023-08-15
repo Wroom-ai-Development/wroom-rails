@@ -25,7 +25,6 @@ div.recycle-bin {
     }
 }
 span.icon {
-  margin-left: 0.5rem;
   margin-right: 0.5rem;
 }
 
@@ -33,22 +32,25 @@ div#folder-explorer {
   height: 100%;
   width: 100%;
   display: flex;
-  padding: 1rem;
+  overflow: hidden;
   
   box-sizing: border-box;
+  div#folder-tree-background {
+    background-color: white;
+  }
   div#folder-tree {
     box-sizing: border-box;
     padding: 1rem;
-    width: 15rem;
+    width: 19vw;
     height: 100%;
     display: flex;
     z-index: 995;
 
     flex-direction: column;
-    background-color: white;
+    background-color: $wroom-primary;
     height: 100%;
     overflow-y: auto;
-    border-radius: 5px;
+    border-bottom-right-radius: 30px;
     font-size: 0.7rem;
 
     a.trash-link {
@@ -92,168 +94,128 @@ div#folder-explorer {
     }
   }
 
+  div#current-folder-background {
+    background-color: $wroom-primary;
+    flex-grow: 1;
+    width: 1px;
+    display: flex;
+  }
+  turbo-frame#current_folder {
+    display: flex;
+    width: 1px;
+    flex: 1;
+  }
   div#current-folder {
     width: 1rem;
     flex-grow: 1;
     height: 100%;
-    padding-left: 1rem;
+    display: flex;
 
-    div.columns {
-      display: flex;
-      flex-direction: row;
-      height: 100%;
-      div.ui-column {
+    div.content {
+      background-color: white;
+      padding: 1rem;
+      border-top-left-radius: 30px;
+      font-size: 0.7rem;
+      z-index: 995;
+      flex: 1;
+      width: 1px;
+      padding-top: 11vh;
+      padding-left: 4vw;
+      div.header {
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 4rem;
-        box-sizing: border-box;
-        padding-right: 1rem;
-        div.new {
-          font-size: 0.7rem;
-          font-weight: 400;
-          box-sizing: border-box;
-          
-          div.button {
-            animation: pulseShadow 4s infinite alternate;
-
-            color: $wroom-primary;
-            background-color: white;
-            padding: 1rem 1.2rem;
-            border-radius: 10px;
-            text-align: center;
-            &:hover {
-              cursor: pointer;
-              background-color: $wroom-primary-light;
-            }
-          }
-          
+        align-items: start;
+        justify-content: space-between;
+        span {
+          font-size: 1rem;
+          font-weight: 700;
+          color: $wroom-dark-gray;
+          margin-right: 1rem;
         }
-      div.options {
-        z-index: 999;
-        text-align: left;
-        flex-direction: column;
-        font-size: 0.6rem;
-        font-weight: 300;
-        position: relative;
-        box-sizing: border-box;
-        top: -0.5rem;
-        color: $wroom-primary;
-        background-color: white;
-        padding: 1rem;
-        border-radius: 10px;
-        border: 1px solid $wroom-gray;
-        display: flex;
-        a {
-          color: $wroom-primary;
-          margin-top: 0.5rem;
-          white-space: nowrap;
+        div.controls {
           display: flex;
-          &:hover {
+          flex-direction: row;
+          align-items: baseline;
+          a, button {
+            font-family: $body-font;
+            font-size: 0.7rem;
+            background-color: white;
+            color: $wroom-primary;
+            margin: 0;
+            margin-left: 1rem;
+            padding: 0;
+            border: none;
+            font-weight: 300;
+          }
+          a:hover {
             text-decoration: underline 1px $wroom-primary;
           }
+  
+          button {
+            color: transparent;
+            text-shadow: 0 0 0 $wroom-red;
+          }
         }
       }
-      }
-      div.content-column {
-        width: 50rem;
-        background-color: white;
-        padding: 1rem;
-        border-radius: 10px;
-        font-size: 0.7rem;
-        z-index: 995;
-        div.header {
+  
+      div.folder-content {
+        height: 100%;
+        overflow-y: auto;
+  
+        table.folder-contents-table {
+          width: 100%;
+          margin-top: 1rem;
+          th {
+            color: $wroom-halfway-dark-gray;
+          }
+  
+          th, td {
+            &:first-child {
+              text-align: left;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              max-width: 20rem;
+            }
+            text-align: right;
+            white-space: nowrap;
+            &:not(:first-child):not(:last-child) {
+              padding: 0 1rem;
+            }
+          }
+          tr { 
+            padding: 0.5rem 0;
+          }
+        }
+        div.item {
+          padding: 0.2rem 0;
+          height: 1.5rem;
           display: flex;
-          align-items: start;
-          justify-content: space-between;
-          span {
+          align-items: center;
+          span.icon {
             font-size: 1rem;
-            font-weight: 700;
-            color: $wroom-dark-gray;
-            margin-right: 1rem;
           }
-          div.controls {
-            display: flex;
-            flex-direction: row;
-            align-items: baseline;
-            a, button {
-              font-family: $body-font;
-              font-size: 0.7rem;
-              background-color: white;
-              color: $wroom-primary;
-              margin: 0;
-              margin-left: 1rem;
-              padding: 0;
-              border: none;
-              font-weight: 300;
-            }
-            a:hover {
-              text-decoration: underline 1px $wroom-primary;
-            }
-
-            button {
-              color: transparent;
-              text-shadow: 0 0 0 $wroom-red;
-            }
+          &:hover {
+            background-color: $wroom-light-gray;
+            cursor: pointer;
           }
         }
-
-        div.content {
-          height: 100%;
-          overflow-y: auto;
-
-          table.folder-contents-table {
-            width: 100%;
-            margin-top: 1rem;
-            th {
-              color: $wroom-halfway-dark-gray;
-            }
-
-            th, td {
-              &:first-child {
-                text-align: left;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                max-width: 20rem;
-              }
-              text-align: right;
-            }
-            tr { 
-              padding: 0.5rem 0;
+        div.no-content {
+          h3 {
+            font-size: 1rem;
+          }
+          p {
+            span {
+              color: $wroom-primary;
             }
           }
-          div.item {
-            padding: 0.2rem 0;
-            height: 1.5rem;
-            display: flex;
-            align-items: center;
-            span.icon {
-              font-size: 1rem;
-            }
-            &:hover {
-              background-color: $wroom-light-gray;
-              cursor: pointer;
-            }
-          }
-          div.no-content {
-            h3 {
-              font-size: 1rem;
-            }
-            p {
-              span {
-                color: $wroom-primary;
-              }
-            }
-
-            div.haiku {
-              margin-left: 37vw;
-              margin-top: 37vh;
-              padding-right: 0.5rem;
-              border-right: 7px solid $wroom-gray;
-              font-weight: 100;
-              text-align: right;
-            }
+  
+          div.haiku {
+            margin-left: 37vw;
+            margin-top: 37vh;
+            padding-right: 0.5rem;
+            border-right: 7px solid $wroom-gray;
+            font-weight: 100;
+            text-align: right;
           }
         }
       }
@@ -261,3 +223,4 @@ div#folder-explorer {
 
   }
 }
+

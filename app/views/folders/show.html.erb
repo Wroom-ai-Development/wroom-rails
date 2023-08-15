@@ -11,7 +11,7 @@
       })
     }
   </script>
-  <div class="columns">
+    <% if false %>
     <div class="ui-column">
       <div class="new">
         <div class="button" onClick="toggleNewOptions();">
@@ -24,7 +24,8 @@
         <%= link_to "Upload document", new_source_path(folder_id: @folder.id), data: { turbo_frame: '_top' } %>
       </div>
     </div>
-    <div class="content-column">
+    <% end %>
+    <div class="content">
       <div class="header">
         <span><%= @folder.type == 'RootFolder' ? 'My Documents' : @folder.name %></span>
         <% unless @folder.type == 'RootFolder' %>
@@ -42,7 +43,7 @@
           </div>
         <% end %>
       </div>
-      <div class="content">
+      <div class="folder-content">
 
         <% if @folder.type == 'RootFolder' && @folder.empty? %>
           <div class="no-content">
@@ -100,5 +101,4 @@
 
       </div>
     </div>
-  </div>
 <% end %>
