@@ -1,7 +1,10 @@
 ## Relase notes
 
 ### Version 0.3.0
-
+- Fixed flickers in editor app
+- Reworked editor styling
+- Changed app colors
+- Changed app fonts
 
 
 ### Version 0.2.0
