@@ -2,6 +2,17 @@
   <div class="header">
     <span>Trash</span>
   </div>
+  <%= button_to "Empty the trash folder", empty_recycle_bin_folders_path, method: :delete, id: 'delete-button',
+    class: 'empty-trash-button',
+    form: {
+      id: 'empty-trash-form',
+      data: {
+          turbo: false,
+          controller: "confirmation",
+          action: 'submit->confirmation#confirm',
+          confirmation_message_value: "Please confirm you meant to permanently remove everything from trash.",
+      }
+    } %>
   <div class="recycle-bin">
     <table class="folder-contents-table">
       <thead>
@@ -25,7 +36,9 @@
               Folder
             </td>
             <td>
-              <%= link_to "Restore", undiscard_folder_path(folder), data: { turbo_frame: '_top' } %>
+              <%= link_to undiscard_folder_path(folder), data: { turbo_frame: '_top' } do %>
+                <i class="fa-solid fa-trash-can-arrow-up"></i>
+              <% end %>
             </td>
           </tr>
         <% end %>
@@ -45,14 +58,16 @@
               <%= document.source_based ? "Source" : "Document" %>
             </td>
             <td>
-              <%= link_to "Restore", undiscard_document_path(document), data: { turbo_frame: '_top' } %>
+              <%= link_to undiscard_document_path(document), data: { turbo_frame: '_top' } do %>
+                <i class="fa-solid fa-trash-can-arrow-up"></i>
+              <% end %>
             </td>
           </tr>
         <% end %>
         <% @voices.each do |voice| %>
           <tr>
             <td>
-              <span class='icon'>👤 </span><%= voice.name %>
+              <i class="fa-solid fa-robot" style='margin-right: 0.5rem'></i><%= voice.name %>
             </td>
             <td><%= voice.created_at.strftime("%b %d, %Y %H:%M") %></td>
             <td><%= voice.updated_at.strftime("%b %d, %Y %H:%M") %></td>

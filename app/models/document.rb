@@ -15,6 +15,7 @@ class Document < ApplicationRecord
 
   after_create_commit :log_event
   after_create_commit :create_conversation
+  after_discard :announce_discard
 
   def refresh_source
     return if content.body.blank?
@@ -22,6 +23,14 @@ class Document < ApplicationRecord
     Source.where(document_id: id).destroy_all
     source = Source.create!(name: title, user_id:, document_id: id, fileless: true)
     source.parse_source_chunks_from_text(content.body.to_plain_text)
+  end
+
+  def announce_discard
+    broadcast_remove_to(
+      folder.id,
+      'folder_documents',
+      target: "document-row-#{id}"
+    )
   end
 
   def icon

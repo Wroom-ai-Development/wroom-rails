@@ -1,6 +1,25 @@
 @import 'colors';
 @import 'pulse_shadow';
 
+form#empty-trash-form {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 1rem;
+  button.empty-trash-button {
+    background-color: $wroom-primary;
+    color: white;
+    border-radius: 5px;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 900;
+    border: none;
+    margin-left: auto;
+    &:hover {
+      cursor: pointer;
+      background-color: $wroom-red;
+    }
+  }
+}
 
 
 div.recycle-bin {

@@ -17,6 +17,15 @@ class FoldersController < ApplicationController
     @voices = current_user.voices.discarded
   end
 
+  def empty_recycle_bin
+    @folders = current_user.folders.discarded
+    @documents = current_user.documents.discarded
+    @voices = current_user.voices.discarded
+    @folders.destroy_all
+    @documents.destroy_all
+    @voices.destroy_all
+  end
+
   def show
     current_user.update!(current_folder_id: @folder.id)
     return unless @folder.type == 'RootFolder' && @folder.empty?
@@ -48,31 +57,23 @@ class FoldersController < ApplicationController
 
   # PATCH/PUT /folders/1 or /folders/1.json
   def update
-    respond_to do |format|
-      if @folder.update(folder_params)
-        format.html { redirect_to explorer_folder_url(@folder) }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-      end
+    if @folder.update(folder_params)
+      redirect_to @folder
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /folders/1 or /folders/1.json
   def destroy
-    @folder.parent_id
-
     @folder.discard
-
-    respond_to do |format|
-      format.html { redirect_to explorer_folder_path(@folder.parent) }
-    end
+    @folder = @folder.parent
+    head :no_content
   end
 
   def undiscard
     @folder.undiscard
-    respond_to do |format|
-      format.html { redirect_to explorer_folder_path(@folder) }
-    end
+    redirect_to @folder
   end
 
   private

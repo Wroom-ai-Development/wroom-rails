@@ -15,6 +15,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
     collection do
       get 'recycle_bin'
+      delete 'empty_recycle_bin'
     end
   end
   resources :voices, except: :show do

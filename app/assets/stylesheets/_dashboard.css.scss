@@ -69,6 +69,9 @@ div#content {
         padding: 0;
         border: none;
         font-weight: 300;
+        &:not(:last-child) {
+          margin-right: 1rem;
+        }
       }
       a:hover {
         text-decoration: underline 1px $wroom-primary;

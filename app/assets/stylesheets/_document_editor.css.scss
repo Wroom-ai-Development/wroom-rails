@@ -9,8 +9,6 @@ div#edit-document {
   height: 90vh;
   flex-flow: column;
   display: flex;
-  background-color: $wroom-primary-light;
-
   form.button_to {
     display: flex;
     flex-direction: row;
@@ -36,7 +34,6 @@ div#edit-document {
     margin-top: 0.5rem;
     padding: 1rem;
     flex: none;
-    background-color: $wroom-primary-light;
 
     .tool-button-row {
       height: fit-content;

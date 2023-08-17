@@ -33,10 +33,10 @@ div#voices-manager {
           i {
             margin-right: 0.5rem;
           }
-        }
-        &:hover {
-          color: $wroom-primary;
-          cursor: pointer;
+          &:hover {
+            color: $wroom-primary;
+            cursor: pointer;
+          }
         }
       }
     }
@@ -109,7 +109,7 @@ div.voices {
   }
 }
 
-i.delete-voice {
+i.delete-icon {
   margin-left: auto;
 
   &:hover {

@@ -233,12 +233,12 @@ div#sidebar {
         flex-direction: column;
         white-space: nowrap;
         padding-left: 0.7rem;
-        i {
-          margin-right: 0.3rem;
-          margin-left: 0.4rem;
-        }
         div.folder {
           box-sizing: border-box;
+        }
+        div.document i {
+          margin-right: 0.4rem;
+          margin-left: 0.2rem;
         }
       }
     }
