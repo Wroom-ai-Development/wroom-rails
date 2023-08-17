@@ -8,5 +8,8 @@
     <% folder.children.kept.each do |child_folder| %>
       <%= render 'folders/tree_folder', folder: child_folder %>
     <% end %>
+    <% folder.documents.kept.each do |document| %>
+      <%= render 'folders/tree_document', document: document %>
+    <% end %>
   </div>
 </div>
