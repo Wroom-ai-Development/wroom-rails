@@ -27,7 +27,7 @@ div#sidebar {
     font-weight: 400;
     box-sizing: border-box;
     margin-bottom: 0.5rem;
-    
+    display: block;
     div.button {
       animation: pulseShadow 4s infinite alternate;
       height: 1.5rem;
@@ -61,7 +61,7 @@ div#sidebar {
       padding: 0.2rem;
       border-bottom-right-radius: 5px;
       border-bottom-left-radius: 5px;
-      display: flex;
+      display: inline-block;
       a {
         color: $wroom-dark-gray;
         white-space: nowrap;

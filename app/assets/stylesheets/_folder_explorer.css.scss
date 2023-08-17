@@ -66,6 +66,7 @@ table.folder-contents-table {
     color: $wroom-dark-gray;
     &:hover {
       color: $wroom-primary;
+      // background-color: $wroom-gray;
       cursor: pointer;
       a {
         color: $wroom-primary;

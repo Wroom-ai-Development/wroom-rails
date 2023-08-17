@@ -37,10 +37,10 @@
       </thead>
       <tbody>
         <% unless @folder.type == 'RootFolder' %>
-          <tr>
+          <tr onclick='document.getElementById("<%= "dot-dot" %>").click();'>
             <td>
-              <%= link_to folder_path(@folder.parent) do %>
-              <span class='icon'>📁 </span>..
+              <%= link_to folder_path(@folder.parent), id: 'dot-dot' do %>
+              <i class="fa fa-folder fa-fw" style="margin-right: 0.3rem;"></i>..
               <% end %>
             </td>
             <td></td>
@@ -49,9 +49,9 @@
           </tr>
         <% end %>
         <% @folder.children.kept.each do |folder| %>
-          <tr>
-            <td><%= link_to folder do %>
-              <span class='icon'>📁 </span><%= folder.name %>
+          <tr onclick='document.getElementById("<%= "folder-#{folder.id}" %>").click();'>
+            <td><%= link_to folder, id: "folder-#{folder.id}" do %>
+              <i class="fa fa-folder fa-fw" style="margin-right: 0.3rem;"></i><%= folder.name %>
             <% end %></td>
             <td><%= folder.created_at.strftime("%b %d, %Y %H:%M") %></td>
             <td><%= folder.updated_at.strftime("%b %d, %Y %H:%M") %></td>
@@ -61,9 +61,14 @@
           </tr>
         <% end %>
         <% @folder.documents.kept.each do |document| %>
-          <tr>
-            <td><%= link_to wroom_path(document_id: document.id), data: { turbo_frame: '_top' } do %>
-              <span class='icon'><%= document.icon %></span><%= document.title %>
+          <tr onclick='document.getElementById("<%= "document-#{document.id}" %>").click();'>
+            <td><%= link_to wroom_path(document_id: document.id), id: "document-#{document.id}", data: { turbo_frame: '_top' } do %>
+              <% if document.source_based %>
+                <i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>
+              <% else %>
+                <i class="fa fa-book fa-fw" aria-hidden="true"></i>
+              <% end %>
+              <%= document.title %>
             <% end %></td>
             <td><%= document.created_at.strftime("%b %d, %Y %H:%M") %></td>
             <td><%= document.updated_at.strftime("%b %d, %Y %H:%M") %></td>

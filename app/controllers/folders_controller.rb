@@ -19,9 +19,9 @@ class FoldersController < ApplicationController
 
   def show
     current_user.update!(current_folder_id: @folder.id)
-    if @folder.type == 'RootFolder' && @folder.empty?
-      @haiku = OpenaiService.new.haiku_about_new_venture
-    end
+    return unless @folder.type == 'RootFolder' && @folder.empty?
+
+    @haiku = OpenaiService.new.haiku_about_new_venture
   end
 
   # GET /folders/new
