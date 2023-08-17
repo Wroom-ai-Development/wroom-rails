@@ -29,7 +29,7 @@ div#chat {
         font-size: 0.6rem;
       }
       select {
-        max-width: 19rem;
+        max-width: 10rem;
         margin-left: 0.5rem;
         font-family: $body-font;
         font-size: 0.7rem;
@@ -220,7 +220,15 @@ div#chat {
               padding-left: 0.5rem;
               padding-right: 1rem;
               padding-bottom: 0.5rem;
+              font-size: 0.8rem;
             };
+
+            i.copy-icon {
+              &:hover {
+                cursor: pointer;
+                color: $wroom-primary;
+              }
+            }
 
             button {
               font-size: 0.6rem !important;

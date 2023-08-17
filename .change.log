@@ -5,6 +5,9 @@
 - Reworked editor styling
 - Changed app colors
 - Changed app fonts
+- Reworked dashboard to use turbo frames and fit new design
+- Reworked voices UI
+- Added trash button to table rows for documents and folders
 
 
 ### Version 0.2.0

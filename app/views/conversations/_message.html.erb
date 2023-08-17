@@ -9,9 +9,13 @@
       </script>
       <div class='message-controls' id=<%= "message-controls" %>>
         <div class="button-wrapper">
-          <button class='copy' onClick=<%= "copyContent('main-answer-#{message.id}');" %>>✂️</button>
+          <i class="fa-regular fa-copy copy-icon fa-fw" onClick=<%= "copyContent('main-answer-#{message.id}');" %>></i>
         </div>
-        <%= button_to('❌', delete_message_conversation_path(message.conversation, message_id: message.id), method: :delete) %>
+        <div class='button-wrapper'>
+          <i class="fa-solid fa-trash fa-fw delete-icon delete-document-from-editor" onClick="document.getElementById('delete-message-button-<%= message.id %>').click();"></i>
+        </div>
+        <%= button_to "❌", delete_message_conversation_path(message.conversation, message_id: message.id), method: :delete, id: "delete-message-button-#{message.id}",
+        form: { style: 'display:none;' } %>
       </div>
       <div class='main-message-content'>
         <div id=<%= "main-answer-#{message.id}" %>><%= simple_format message.content.gsub("\n", "<br>"), {}, {sanitize: false} %></div>

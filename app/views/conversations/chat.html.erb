@@ -11,7 +11,11 @@
       ) do |form| %>
         <% if @conversation.user.voices.present? %>
           <%= form.label 'voice', style: "display: block" %>
-          <%= form.collection_select :voice_id, @conversation.user.voices.order(:name), :id, :name, {include_blank: "Default", selected: @conversation.voice.try(:id)}, onchange: "this.form.submit();" %>
+          <%= form.collection_select :voice_id, @conversation.user.voices.order(:name), :id, :name, { include_blank: "Default", selected: @conversation.voice.try(:id) }, onchange: "this.form.submit();" do |voice| %>
+            <option value="<%= voice.id %>">
+              <%= voice.name.length > 15 ? voice.name.slice(0, 15) + '...' : voice.name %>
+            </option>
+          <% end %>        
         <% end %>
         <%= form.submit style: 'display:none;' %>
       <% end %>

@@ -5,15 +5,15 @@
     const button = document.getElementById('collapse-button')
     if (panel.style.display == 'none') {
       panel.style.display = 'flex'
-      button.innerHTML = '⬅️'
+      button.innerHTML = '<i class="fa-solid fa-circle-chevron-up fa-rotate-270"></i>'
     } else {
       panel.style.display = 'none'
-      button.innerHTML = '➡️'
+      button.innerHTML = '<i class="fa-solid fa-circle-chevron-up fa-rotate-90"></i>'
     }
   }
 </script>
 <div id="collapse-button" onClick=toggleLeftPanel()>
-  ⬅️
+  <i class="fa-solid fa-circle-chevron-up fa-rotate-270"></i>
 </div>
 <div id="documents-panel" class="panel">
   <div id='wroom-logo'>
@@ -26,7 +26,9 @@
       <% folder_id = @document ? @document.folder.id : current_user.root_folder.id %>
       <%= button_to "Dashboard", dashboard_path, params: { current_folder_id: folder_id }, class: 'library-link', method: :get %>
     </div>
-    <%= render 'tree_folder', folder: current_user.root_folder %>
+    <div class='documents-wrapper'>
+      <%= render 'tree_folder', folder: current_user.root_folder %>
+    </div>
   </div>
 </div>
 <%= turbo_frame_tag "document_editor", src: editor_document_path(@document) %>

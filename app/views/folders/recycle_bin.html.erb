@@ -72,10 +72,12 @@
             <td><%= voice.created_at.strftime("%b %d, %Y %H:%M") %></td>
             <td><%= voice.updated_at.strftime("%b %d, %Y %H:%M") %></td>
             <td>
-              voice
+              Voice
             </td>
             <td>
-              <%= link_to "Restore", undiscard_voice_path(voice), data: { turbo_frame: '_top' } %>
+              <%= link_to undiscard_voice_path(voice), data: { turbo_frame: '_top' } do %>
+                <i class="fa-solid fa-trash-can-arrow-up"></i>
+              <% end %>
             </td>
           </tr>
         <% end %>
