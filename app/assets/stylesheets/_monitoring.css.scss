@@ -1,25 +1,23 @@
 @import 'colors';
-
+@import 'scrollbars';
 div.monitoring {
-  padding-right: 3rem;
+  font-family: 'Inconsolata', monospace;
+  margin-top: 1rem;
   align-items: flex-start;
-  width: 97vw;
-  overflow-x: scroll;
-
+  overflow: hidden;
+  background-color: rgb(11, 9, 21);
+  border-radius: 10px;
+  padding: 1rem;
+  height: 72vh;
   overflow-y: scroll;
-  
-  color: #ffd9d9;
-  background: #2d2a67;
-  height: -webkit-fill-available;
-  margin: 0;
+  @include custom-scrollbar;
   div.lists {
     display: flex;
     // width: fit-content;
     padding: 0 0 0 1rem;
 
       h4, h5, h6 {
-        font-family: 'MuseoModerno';
-        color: #7d79c0;
+        color: white;
       }
       
       h4 {
@@ -27,18 +25,18 @@ div.monitoring {
       }
 
       h6 {
-        font-family: 'Inconsolata', monospace;
         font-size: 0.9rem;
         margin: 0;
       }
       ul {
-        font-family: 'Inconsolata', monospace;
+        // font-family: 'Inconsolata', monospace;
         columns: 1;
         width: 14rem;
         margin: 0 2rem 0 0;
         padding: 0;
         li {
-          background-color: rgb(20, 23, 67);
+          background-color: rgb(19, 21, 24);
+          color: rgb(21, 218, 40);
           width: 100%;
           font-size: 0.8rem;
           padding: 0.5rem;
@@ -47,13 +45,12 @@ div.monitoring {
           line-height: 1rem;
           border-radius: 5px;
           list-style-type: none;
-
-          div.note {
-            color: #e97070;
+          h6 {
+            color: rgb(21, 218, 40);
           }
-
-          div.timestamp {
-
+          p {
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
           }
         }
 

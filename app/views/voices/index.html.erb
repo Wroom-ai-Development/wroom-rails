@@ -1,6 +1,5 @@
 <%= turbo_frame_tag "voices" do %>
   <div class='voices'>
-    <%= link_to "Add a voice", new_voice_path, class: 'new-voice', data: { turbo_frame: 'voice_editor' } %>
     <div class='table-wrapper'>
       <table>
         <% current_user.voices.kept.order(:name).each do |voice| %>

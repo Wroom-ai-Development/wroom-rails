@@ -14,6 +14,8 @@ export default class extends Controller {
   connect() {
   }
   drag_start(event) {
+    dragged_item = null;
+    drop_target = null;
     resource_id = event.target.dataset.resourceId; 
     resource_type = event.target.dataset.draggableType;
     event.dataTransfer.effectAllowed = 'move';
@@ -23,33 +25,26 @@ export default class extends Controller {
   }
   drop(event) {
     event.preventDefault();
-    console.log('drop');
     let parent_id = 'draggables';
+    drop_target = this.findDropTarget(event.target, parent_id);
+    dragged_item = document.querySelector(`[data-resource-id="${resource_id}"]`);
+    console.log('drop');
     console.log('resource id');
     console.log(resource_id);
     console.log(event.target);
     console.log(parent_id);
-    drop_target = this.findDropTarget(event.target, parent_id);
-    dragged_item = document.querySelector(`[data-resource-id="${resource_id}"]`);
     console.log('drop target')
     console.log(drop_target);
     console.log(dragged_item);
 
-    if (dragged_item == null || drop_target == null) {
-      return;
-    }
-    console.log(drop_target.id)
-    if (drop_target.id.includes("folder-row")) {
-      console.log('folder drop');
-      console.log(drop_target);
-      console.log(dragged_item);
-      
-    }
   }
   drag_end(event) {
     event.preventDefault();
     console.log('drag end');
     if (drop_target == null || dragged_item == null) {
+      return;
+    }
+    if (drop_target == dragged_item) {
       return;
     }
     // if (drop_target == dragged_item) {
@@ -83,7 +78,7 @@ export default class extends Controller {
   drag_over(event) {
     console.log('drag over');
     event.preventDefault();
-    return true;
+    return false;
   }
 
   drag_enter(event) {

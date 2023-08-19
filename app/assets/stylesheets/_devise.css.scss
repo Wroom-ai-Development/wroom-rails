@@ -74,14 +74,12 @@ div#devise {
     input {
       width: 100%;
       box-sizing: border-box;
-      font-family: 'Playfair Display', serif;
       font-size: 0.7rem;
       padding: 0.5rem;
     }
   }
   label, em {
     font-size: 0.7rem;
-    font-style: italic;
   }
 
   div.actions {
@@ -91,8 +89,6 @@ div#devise {
     justify-content: center;
     input {
       font-size: 0.7rem;
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
       color: $wroom-primary;
       font-weight: 300;
       border-top: 1px solid $wroom-primary;
@@ -100,6 +96,10 @@ div#devise {
       border-left: none;
       border-right: none;
       background-color: rgba(0, 0, 0, 0);
+      &:hover {
+        cursor: pointer;
+        color: blue;
+      }
     }
   }
 

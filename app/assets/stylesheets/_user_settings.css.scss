@@ -3,15 +3,12 @@
 div.settings-view {
   margin: 0;
   div.settings-panel {
-    width: 50vw;
     background-color: $wroom-gray;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     background-color: white;
     margin-top: 1rem;
-    padding: 1rem;
-    border: 1px solid $wroom-light-gray;
 
     div.action-needed {
       margin-bottom: 2rem;

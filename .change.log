@@ -8,7 +8,8 @@
 - Reworked dashboard to use turbo frames and fit new design
 - Reworked voices UI
 - Added trash button to table rows for documents and folders
-
+- Improved admin UI
+- Allowed drag and drop of documents and folders
 
 ### Version 0.2.0
 Out August 6th 2023

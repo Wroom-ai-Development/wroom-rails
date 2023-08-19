@@ -43,6 +43,14 @@ div#record-form-view {
         text-shadow: 0 0 0 $wroom-dark-gray;
         font-size: 0.6rem;
       }
+
+      i {
+        margin-left: auto;
+        &:hover {
+          cursor: pointer;
+          color: $wroom-red;
+        }
+      }
     }
 
     form {

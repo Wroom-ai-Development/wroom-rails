@@ -34,14 +34,13 @@
         <%= link_to "New folder", new_folder_path, data: { turbo_action: 'replace', turbo_frame: 'view_content' } %>
         <%= link_to "New document", new_document_path, data: { turbo_action: 'replace', turbo_frame: '_top' } %>
         <%= link_to "Upload document", new_source_path, data: { turbo_action: 'replace', turbo_frame: 'view_content' } %>
+        <%= link_to "New voice", manager_voices_path %>
       </div>
     </div>
     <div id='folder-tree'>
       <%= render 'folders/tree_folder', folder: root_folder %>
-      <% if current_user.anything_in_recycle_bin? %>
-        <%= link_to recycle_bin_folders_path, data: { turbo_action: 'replace', turbo_frame: 'view_content' }, class: 'trash-link'  do %>
-          <i class="fa-solid fa-trash fa-fw"></i>Trash
-        <% end %>
+      <%= link_to recycle_bin_folders_path, data: { turbo_action: 'replace', turbo_frame: 'view_content' }, class: 'trash-link'  do %>
+        <i class="fa-solid fa-trash fa-fw"></i>Trash
       <% end %>
       <% if can? :manage, Voice %>
         <div class="link-wrapper">
@@ -53,7 +52,7 @@
     </div>
     <% if can? :manage, User %>
       <div class="link-wrapper">
-        <%= link_to "Monitoring", monitoring_path %>
+        <%= link_to "Monitoring", monitoring_path, data: { turbo_action: 'replace', turbo_frame: 'view_content' } %>
       </div>
     <% end %>
     <% if can? :manage, User %>
@@ -64,7 +63,7 @@
     <div id='account-links'>
       <p id='current-user'><%= current_user.email %></p>
       <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: 'sign-out' %>
-      <%= link_to "⚙️", edit_user_registration_path(current_user), class: 'settings-link' %>
+      <%= link_to "⚙️", edit_user_registration_path, data: { turbo_action: 'replace', turbo_frame: 'view_content' }, class: 'settings-link' %>
     </div>
   </div>
 </div>

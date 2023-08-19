@@ -30,7 +30,7 @@
           <%= simple_format(@haiku) %>
         </div>
       </div>
-    <% end %>
+    <% else %>
     <table class="folder-contents-table">
       <thead>
         <tr>
@@ -55,10 +55,12 @@
             url: drag_folder_path
           } do %>
             <td>
-              <%= link_to folder_path(@folder.parent), id: 'parent_link' do %>
+              <%= link_to folder_path(@folder.parent), id: 'parent_link', data: { turbo_action: 'replace' } do %>
               <i class="fa fa-folder fa-fw" style="margin-right: 0.3rem;"></i>..
               <% end %>
             </td>
+            <td></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -72,9 +74,11 @@
             draggable_type: 'folder',
             url: drag_folder_path
           } do %>
-            <td onclick='document.getElementById("<%= "folder-#{folder.id}" %>").click();'><%= link_to folder, id: "folder-#{folder.id}" do %>
-              <i class="fa fa-folder fa-fw" style="margin-right: 0.3rem;"></i><%= folder.name %>
-            <% end %></td>
+            <td onclick='document.getElementById("<%= "folder-#{folder.id}" %>").click();'>
+              <%= link_to folder, id: "folder-#{folder.id}", data: { turbo_action: 'replace' } do %>
+                <i class="fa fa-folder fa-fw" style="margin-right: 0.3rem;"></i><%= folder.name %>
+              <% end %>
+            </td>
             <td onclick='document.getElementById("<%= "folder-#{folder.id}" %>").click();'><%= folder.created_at.strftime("%b %d, %Y %H:%M") %></td>
             <td onclick='document.getElementById("<%= "folder-#{folder.id}" %>").click();'><%= folder.updated_at.strftime("%b %d, %Y %H:%M") %></td>
             <td onclick='document.getElementById("<%= "folder-#{folder.id}" %>").click();'>
@@ -137,7 +141,9 @@
             </td>
           <% end %>
         <% end %>
-    </table>
+      </table>
+    <% end %>
+
 
   </div>
 <% end %>
