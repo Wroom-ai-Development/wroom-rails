@@ -15,7 +15,8 @@ class Document < ApplicationRecord
 
   after_create_commit :log_event
   after_create_commit :create_conversation
-  after_discard :announce_discard
+  after_discard :remove_document_row
+  after_save :remove_document_row, if: :saved_change_to_folder_id?
 
   def refresh_source
     return if content.body.blank?
@@ -25,9 +26,9 @@ class Document < ApplicationRecord
     source.parse_source_chunks_from_text(content.body.to_plain_text)
   end
 
-  def announce_discard
+  def remove_document_row
     broadcast_remove_to(
-      folder.id,
+      user.id,
       'folder_documents',
       target: "document-row-#{id}"
     )

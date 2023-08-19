@@ -10,6 +10,7 @@
 User.create!(
   email: 'admin@example.com',
   role: 'admin',
-  password: 'password',
-  confirmed_at: Time.zone.now
+  password: '1234!@#$qwerQWER',
+  confirmed_at: Time.zone.now,
+  security_updated: true
 )

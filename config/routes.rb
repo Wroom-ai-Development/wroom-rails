@@ -55,6 +55,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   # Defines the root path route ("/")
   # root "articles#index"
+  patch '/drag/folder', to: 'drag#folder'
+  patch '/drag/document', to: 'drag#document'
   get '/monitoring', to: 'monitoring#index'
   get '/wroom', to: 'wroom#app'
   get '/dashboard', to: 'wroom#dashboard'

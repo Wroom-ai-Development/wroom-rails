@@ -1,6 +1,7 @@
 <%= turbo_frame_tag 'view_content' do %>
   <%= turbo_stream_from current_user.id, 'folders' %>
-  <%= turbo_stream_from @folder.id, 'folder_documents' %>
+  <%= turbo_stream_from current_user.id, 'folder_documents' %>
+  <% drag_actions = "dragstart->drag#drag_start dragover->drag#drag_over dragenter->drag_enter drop->drag#drop dragend->drag#drag_end" %>
   <div class="header">
     <span><%= @folder.type == 'RootFolder' ? 'My Files' : @folder.name %></span>
     <% unless @folder.type == 'RootFolder' %>
@@ -38,23 +39,39 @@
           <th>Last accessed</th>
           <th>Type</th>
           <th></th>
+          <th></th>
         </tr>
       </thead>
-      <tbody>
+      <tbody id='draggables'>
         <% unless @folder.type == 'RootFolder' %>
-          <tr onclick='document.getElementById("<%= "dot-dot" %>").click();'>
+          <%= content_tag :tr, id: "folder-row-parent",
+           class: 'draggable',
+           onclick: 'document.getElementById("parent_link").click();',
+           data: {
+            controller: 'drag',
+            action: drag_actions,
+            resource_id: @folder.parent.id,
+            draggable_type: 'folder',
+            url: drag_folder_path
+          } do %>
             <td>
-              <%= link_to folder_path(@folder.parent), id: 'dot-dot' do %>
+              <%= link_to folder_path(@folder.parent), id: 'parent_link' do %>
               <i class="fa fa-folder fa-fw" style="margin-right: 0.3rem;"></i>..
               <% end %>
             </td>
             <td></td>
             <td></td>
             <td></td>
-          </tr>
+          <% end %>
         <% end %>
         <% @folder.children.kept.each do |folder| %>
-          <tr id='folder-row-<%= folder.id %>'>
+          <%= content_tag :tr, id: "folder-row-#{folder.id}", class: 'draggable', draggable: true, data: {
+            controller: 'drag',
+            action: drag_actions,
+            resource_id: folder.id,
+            draggable_type: 'folder',
+            url: drag_folder_path
+          } do %>
             <td onclick='document.getElementById("<%= "folder-#{folder.id}" %>").click();'><%= link_to folder, id: "folder-#{folder.id}" do %>
               <i class="fa fa-folder fa-fw" style="margin-right: 0.3rem;"></i><%= folder.name %>
             <% end %></td>
@@ -76,10 +93,19 @@
               } %>
               <i class="fa-solid fa-trash fa-fw delete-icon" onClick="document.getElementById('delete-folder-button-<%= folder.id %>').click();"></i>
             </td>
-          </tr>
+            <td>
+              <i class="fa-solid fa-grip-vertical"></i>
+            </td>
+          <% end %>
         <% end %>
         <% @folder.documents.kept.each do |document| %>
-          <tr id='document-row-<%= document.id %>'>
+          <%= content_tag :tr, id: "document-row-#{document.id}", class: 'draggable', draggable: true, data: {
+            controller: 'drag',
+            action: drag_actions,
+            resource_id: document.id,
+            draggable_type: 'document',
+            url: drag_document_path
+          } do %>
             <td onclick='document.getElementById("<%= "document-#{document.id}" %>").click();'><%= link_to wroom_path(document_id: document.id), id: "document-#{document.id}", data: { turbo_frame: '_top' } do %>
               <% if document.source_based %>
                 <i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>
@@ -106,7 +132,10 @@
               } %>
               <i class="fa-solid fa-trash fa-fw delete-icon" onClick="document.getElementById('delete-document-button-<%= document.id %>').click();"></i>
             </td>
-          </tr>
+            <td>
+              <i class="fa-solid fa-grip-vertical"></i>
+            </td>
+          <% end %>
         <% end %>
     </table>
 
