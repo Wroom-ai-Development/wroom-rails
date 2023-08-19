@@ -24,6 +24,7 @@ class FoldersController < ApplicationController
     @folders.destroy_all
     @documents.destroy_all
     @voices.destroy_all
+    redirect_to dashboard_path
   end
 
   def show

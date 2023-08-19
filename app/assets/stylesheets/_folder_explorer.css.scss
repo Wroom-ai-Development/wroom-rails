@@ -104,6 +104,9 @@ table.folder-contents-table {
     &:first-child {
       max-width: 20rem;
     }
+    &:last-child {
+      color: $wroom-gray;
+    }
 
     &:not(:first-child):not(:last-child) {
       padding-left: 1rem;
