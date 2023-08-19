@@ -1,7 +1,7 @@
 ## Relase notes
 
 ### Version 0.3.0
-- Fixed flickers in editor app
+- Eliminated most flickers in the UI
 - Reworked editor styling
 - Changed app colors
 - Changed app fonts
@@ -10,6 +10,8 @@
 - Added trash button to table rows for documents and folders
 - Improved admin UI
 - Allowed drag and drop of documents and folders
+- Implemented FontAwesome icons
+- Adjusted dashboard form styling
 
 ### Version 0.2.0
 Out August 6th 2023

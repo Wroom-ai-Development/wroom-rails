@@ -1,4 +1,7 @@
 @import 'colors';
+@import 'scrollbars';
+@import 'fonts';
+
 @import 'navigation';
 @import 'monitoring';
 @import 'folder_explorer';
@@ -6,8 +9,7 @@
 @import 'voices';
 @import 'user_settings';
 @import 'sidebar';
-@import 'scrollbars';
-@import 'fonts';
+@import 'new_folder';
 
 a {
   text-decoration: none;

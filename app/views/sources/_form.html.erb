@@ -1,5 +1,11 @@
 <div class='record-form'>
-  <%= form_with(model: source) do |form| %>
+  <%= form_with(
+    model: source,
+    data: {
+      controller: 'form-redirect',
+      action: 'turbo:submit-end->form-redirect#next'
+    }
+  ) do |form| %>
     <% if source.errors.any? %>
       <div class='validation'>
         <div class='message'>

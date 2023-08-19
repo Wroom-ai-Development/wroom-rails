@@ -1,12 +1,8 @@
 <%= turbo_frame_tag 'view_content' do %>
-  <div id="record-form-view">
-    <div id="record-form-box">
-      <div id="header">
-        <h3>New folder</h3>
-      </div>
-
-      <%= render "form", folder: @folder, parent_id: @parent_id %>
-
-    </div>
+  <div class="header">
+    <span>New folder</span>
+  </div>
+  <div class='new-folder'>
+    <%= render "form", folder: @folder, parent_id: @parent_id %>
   </div>
 <% end %>

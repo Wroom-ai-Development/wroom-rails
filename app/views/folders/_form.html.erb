@@ -11,7 +11,7 @@
     </div>
   <% end %>
   <div class="field-with-submit">
-    <%= form.text_field :name %>
+    <%= form.text_field :name, placeholder: 'Name your folder', required: true %>
     <%= form.submit 'Confirm' %>
   </div>
   <div style='display: none;'>

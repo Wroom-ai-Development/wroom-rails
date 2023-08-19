@@ -1,9 +1,9 @@
 <%= link_to wroom_path(document_id: document.id), data: { turbo_frame: '_top' } do %>
   <div class='tree-document folder document' id="tree-document<%= document.id %>">
       <% if document.source_based %>
-        <i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>
-      <% else %>
         <i class="fa fa-book fa-fw" aria-hidden="true"></i>
+      <% else %>
+        <i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>
       <% end %>
     <span class='folder-name'><%= document.title %></span>
   </div>

@@ -3,9 +3,9 @@
   <% linked = conversation.documents.include?(document) %>
   <div class='tree-document <%= linked ? 'linked' : '' %>'>
     <% if document.source_based %>
-      <i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>
-    <% else %>
       <i class="fa fa-book fa-fw" aria-hidden="true"></i>
+    <% else %>
+      <i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>
     <% end %>
     <%= document.title %>
   </div>

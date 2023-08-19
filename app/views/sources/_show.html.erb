@@ -35,7 +35,7 @@
     <p>
       Providing the above metadata for the source makes it easier for our language model to give contextually relevant answers.
     </p>
-    <%= link_to "Edit metadata", edit_source_path(@document.source) %>
+    <%= link_to "Edit metadata", edit_source_path(@document.source), data: { turbo_frame: '_top' } %>
   </div>
   <div class='chunks'>
       <% if source.truncated? %>

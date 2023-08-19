@@ -4,6 +4,8 @@ class SourcesController < ApplicationController
   before_action :set_source, only: %i[show edit update destroy]
   load_and_authorize_resource
 
+  layout 'dashboard', only: %i[new edit]
+
   # GET /sources/1 or /sources/1.json
   def show; end
 

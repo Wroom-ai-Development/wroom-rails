@@ -1,0 +1,32 @@
+@import 'fonts';
+@import 'colors';
+@import 'scrollbars';
+
+div.new-folder {
+  form {
+    margin-top: 1rem;
+    input {
+      font-family: $body-font;
+      font-size: 0.7rem;
+      padding: 0.5rem;
+      &:focus {
+        background-color: $wroom-lighter-gray;
+        border: 1px solid white;
+        outline: none;
+      }
+      &[type="text"] {
+        width: 50vw;
+      }
+      &[type="file"] {
+        border: none;
+      }
+      &[type="text"] {
+        width: 50vw;
+      }
+      border: 1px solid $wroom-light-gray;
+      border-radius: 5px;
+      box-sizing: border-box;
+      margin-bottom: 0.5rem;
+    }
+  }
+}
