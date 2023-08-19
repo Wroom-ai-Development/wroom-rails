@@ -1,5 +1,6 @@
 @import 'colors';
 @import 'fonts';
+@import 'scrollbars';
 
 div#documents-panel {
   width: 17vw;
@@ -9,7 +10,7 @@ div#documents {
   padding: 1rem;
   display: flex;
   z-index: 995;
-  overflow-y: auto;
+  overflow-y: hidden;
   box-sizing: border-box;
   flex-direction: column;
   background-color: white;
@@ -17,7 +18,13 @@ div#documents {
   border-radius: 10px;
   font-size: 0.7rem;
   flex-grow: 1;
-
+  div.documents-wrapper {
+    @include custom-scrollbar;
+    max-height: 60vh;
+    overflow-y: auto;
+    @include custom-scrollbar;
+    margin-top: 1rem;
+  }
   form.button_to {
     margin-bottom: 1rem;
     display: flex;

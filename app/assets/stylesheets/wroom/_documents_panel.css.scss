@@ -5,8 +5,3 @@ div#documents-panel {
   height: 100%;
 }
 
-div.documents-wrapper {
-  max-height: 60vh;
-  overflow-y: auto;
-  @include custom-scrollbar;
-}
