@@ -1,5 +1,6 @@
 @import 'colors';
-
+@import 'fonts';
+@import 'scrollbars';
 div#source {
   padding: 0 3vw 1rem 3vw;
   color: $wroom-dark-gray;
@@ -36,12 +37,12 @@ div#source {
       margin-bottom: 1rem;
       padding: 0.5rem;
       border: none;
-      font-family: 'Roboto Slab', serif;
+      font-family: $body-font;
       font-size: 0.7rem;
-      color: $wroom-blue;
+      color: $wroom-primary;
       border-radius: 10px;
       &:hover {
-        background-color: $wroom-baby-blue;
+        background-color: $wroom-primary-light;
         cursor: pointer;
       }
     }
@@ -52,5 +53,6 @@ div#source {
     max-height: 37vh;
     overflow-y: auto;
     font-size: 0.6rem;
+    @include custom-scrollbar;
   }
 }

@@ -11,13 +11,20 @@ class ConversationsController < ApplicationController
 
   def context; end
 
-  def toggle_context
+  def toggle_context # rubocop:disable Metrics/MethodLength
     @document = Document.find(params[:document_id])
     if @conversation.documents.include?(@document)
-      @conversation.documents.delete(@document)
+      ContextReference.where(
+        conversation: @conversation,
+        document: @document
+      ).destroy_all
     else
-      @conversation.documents << @document
+      ContextReference.create!(
+        conversation: @conversation,
+        document: @document
+      )
     end
+    head :no_content
   end
 
   def new_message
@@ -26,7 +33,7 @@ class ConversationsController < ApplicationController
     @conversation.messages.create!(content: params[:content], role: 'user')
     sidekiq_job_id = AnswerFetchingWorker.perform_async(@conversation.id)
     @conversation.update!(sidekiq_job_id:)
-    redirect_to wroom_path(document_id: @conversation.document_id), status: :see_other
+    head :no_content
   end
 
   def delete_message
@@ -35,19 +42,19 @@ class ConversationsController < ApplicationController
 
     authorize! :edit, conversation
     message.discard
-    redirect_to wroom_path, status: :see_other
+    head :no_content
   end
 
   def cancel_processing
-    @conversation.messages.last.destroy! if @conversation.messages.any? && @conversation.messages.last.role == 'user'
+    @conversation.messages.last.discard if @conversation.messages.any? && @conversation.messages.last.role == 'user'
     @conversation.cancel_processing
-    redirect_to wroom_path, status: :see_other
+    head :no_content
   end
 
   def clear_chat
     authorize! :edit, @conversation
-    @conversation.messages.destroy_all
-    redirect_to wroom_path, status: :see_other
+    @conversation.messages.each(&:discard)
+    head :no_content
   end
 
   def settings; end
@@ -59,7 +66,7 @@ class ConversationsController < ApplicationController
     else
       @conversation.conversation_voice&.destroy
     end
-    redirect_to wroom_path(document_id: @conversation.document_id), status: :see_other
+    head :no_content
   end
 
   private

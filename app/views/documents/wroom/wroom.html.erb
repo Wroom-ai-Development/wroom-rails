@@ -1,0 +1,4 @@
+<div class='wroom-container'>
+  <%= turbo_frame_tag 'documents', src: documents_path %>
+  <%= turbo_frame_tag 'wroom_editor', src: editor_document_path(@document) %>
+</div>

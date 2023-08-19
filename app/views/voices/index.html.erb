@@ -1,10 +1,12 @@
 <%= turbo_frame_tag "voices" do %>
   <div class='voices'>
-    <h3>Voices</h3>
-    <%= link_to "Create new voice", new_voice_path, class: 'new-voice', data: { turbo_frame: 'voice_editor' } %>
-    <% current_user.voices.kept.order(:name).each do |voice| %>
-      <%= render 'voice', voice: voice %>
-    <% end %>
-    <div id="new-voices-marker">
+    <div class='table-wrapper'>
+      <table>
+        <% current_user.voices.kept.order(:name).each do |voice| %>
+          <%= render 'voice', voice: voice %>
+        <% end %>
+        <tr id="new-voices-marker" style="display: none;">
+      </table>
+    </div>
   </div>
 <% end %>

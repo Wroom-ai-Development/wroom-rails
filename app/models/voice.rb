@@ -15,12 +15,12 @@ class Voice < ApplicationRecord
   private
 
   def announce_destroy
-    broadcast_remove_to 'voices', target: "voice-#{id}"
+    broadcast_remove_to 'voices', target: "voice-row-#{id}"
     broadcast_remove_to 'voices', target: "editor-#{id}"
   end
 
   def announce_update
-    broadcast_replace_to 'voices', partial: 'voices/voice', locals: { voice: self }, target: "voice-#{id}"
+    broadcast_replace_to 'voices', partial: 'voices/voice', locals: { voice: self }, target: "voice-row-#{id}"
   end
 
   def announce_create

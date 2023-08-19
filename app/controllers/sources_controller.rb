@@ -4,13 +4,15 @@ class SourcesController < ApplicationController
   before_action :set_source, only: %i[show edit update destroy]
   load_and_authorize_resource
 
+  layout 'dashboard', only: %i[new edit]
+
   # GET /sources/1 or /sources/1.json
   def show; end
 
   # GET /sources/new
   def new
     @source = Source.new
-    @folder_id = params[:folder_id] || current_user.root_folder.id
+    @folder_id = current_user.current_folder_id || current_user.root_folder.id
   end
 
   # GET /sources/1/edit

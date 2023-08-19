@@ -15,6 +15,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
     collection do
       get 'recycle_bin'
+      delete 'empty_recycle_bin'
     end
   end
   resources :voices, except: :show do
@@ -54,7 +55,10 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   # Defines the root path route ("/")
   # root "articles#index"
+  patch '/drag/folder', to: 'drag#folder'
+  patch '/drag/document', to: 'drag#document'
   get '/monitoring', to: 'monitoring#index'
   get '/wroom', to: 'wroom#app'
-  root 'folders#explorer'
+  get '/dashboard', to: 'wroom#dashboard'
+  root 'wroom#dashboard'
 end

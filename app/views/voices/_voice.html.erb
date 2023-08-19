@@ -1,5 +1,7 @@
-<%= link_to edit_voice_path(voice), data: { turbo_frame: 'voice_editor' } do %>
-  <div class='voice' id="voice-<%= voice.id %>">
-    <%= voice.name %>
-  </div>
-<% end %>
+<tr class='voice' id="voice-row-<%= voice.id %>" onclick='document.getElementById("<%= "voice-#{voice.id}" %>").click();'>
+  <td>
+    <%= link_to edit_voice_path(voice), id: "voice-#{voice.id}", data: { turbo_frame: 'voice_editor' } do %>
+      <i class="fa-solid fa-robot"></i><%= voice.name %>
+    <% end %>
+  </td>
+</tr>

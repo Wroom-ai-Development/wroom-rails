@@ -1,33 +1,61 @@
 @import 'colors';
+@import 'fonts';
 
 div.context {
-  height: 86vh;
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-  background-color: white;
-  padding: 1rem;
-  width: 26.8rem;
   font-size: 0.7rem;
+  box-sizing: border-box;
+  height: 90vh;
+  background-color: white;
 
-  a {
-    margin-left: auto;
-    margin-bottom: 1rem;
+  div.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    h3 {
+      font-size: 0.7rem;
+      font-weight: 500;
+      margin: 0;
+      user-select: none;
+    }
+    a.quit-context-dialog {
+      background-color: rgba(0,0,0,0);
+      border: none;
+      color: transparent;
+      text-shadow: 0 0 0 $wroom-dark-gray;
+      font-size: 0.5rem;
+      display: flex;
+      justify-content: flex-end;
+    }
   }
+
+  div.folders {
+    background-color: white;
+    flex: auto;
+    height: 10px;
+    margin-bottom: 3rem;
+    padding: 1rem;
+  }
+
 
   form.button_to {
     width: 100%;
     margin: 0 !important;
     margin-bottom: 0.3rem !important;
     button {
-      font-family: 'Roboto Slab', serif;
+      font-family: $body-font;
       width: 100%;
       background: rgba(0, 0, 0, 0);
       border: none;
       text-align: left;
-      padding-left: 0.3rem;
+      padding-left: 0;
       font-size: 0.7rem;
       height: 1.5rem;
+      margin: 0;
     }
   }
 
@@ -39,6 +67,12 @@ div.context {
       display: flex;
       align-items: center;
       padding: 0.1rem;
+      border-radius: 5px;
+      i {
+        margin-left: 0.3rem;
+        margin-right: 0.5rem;
+        color: $wroom-dark-gray;
+      }
       &:hover {
         background-color: $wroom-light-gray;
         cursor: pointer;
@@ -48,42 +82,35 @@ div.context {
       display: flex;
       flex-direction: column;
       padding-left: 1rem;
-      width: fit-content;
+      width: 100%;
       white-space: nowrap;
+      box-sizing: border-box;
     }
 
     div.tree-document {
-      width: 24rem;
+      width: 100%;
       height: 1.5rem;
       display: flex;
       align-items: center;
       font-weight: 400;
-      padding-left: 0.1rem;
-
-
+      padding: 0;
+      box-sizing: border-box;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      i {
+        margin-left: 0.4rem;
+        margin-right: 0.5rem;
+        color: $wroom-dark-gray;
+      }
       &.linked {
         color: white;
-        background-color: $wroom-blue;
+        i {
+          color: white;
+        }
+        background-color: $linked-source-color;
         border-radius: 5px;
       }
     }
-  }
-}
-
-@keyframes load {
-  0% {
-    color: $wroom-dark-gray;
-  }
-  100% {
-    color: $wroom-green;
-  }
-}
-
-@keyframes unload {
-  100% {
-    color: $wroom-dark-gray;
-  }
-  0% {
-    color: $wroom-green;
   }
 }

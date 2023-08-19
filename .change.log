@@ -1,5 +1,20 @@
-WROOM 0.2.0
-Relase notes
+## Relase notes
+
+### Version 0.3.0
+- Eliminated most flickers in the UI
+- Reworked editor styling
+- Changed app colors
+- Changed app fonts
+- Reworked dashboard to use turbo frames and fit new design
+- Reworked voices UI
+- Added trash button to table rows for documents and folders
+- Improved admin UI
+- Allowed drag and drop of documents and folders
+- Implemented FontAwesome icons
+- Adjusted dashboard form styling
+
+### Version 0.2.0
+Out August 6th 2023
 
 - Switched out all icons to emojis, put emojis in color
 - Added cog wheel link to dashboard navbar
@@ -25,5 +40,3 @@ Relase notes
 - Added soft delete to folders
 - Created recycling bin in dashboard
 - Allowed restoring records from recycling bin
-
-1234!@#$qwerQWER

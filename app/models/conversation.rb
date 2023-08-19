@@ -33,7 +33,7 @@ class Conversation < ApplicationRecord
   private
 
   def broadcast_status_message
-    return if status_message.blank?
+    return unless status_message.present? || saved_change_to_status?
 
     broadcast_replace_to(
       id,

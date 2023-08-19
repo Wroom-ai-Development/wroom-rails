@@ -30,7 +30,7 @@ class DocumentsController < ApplicationController
       title: 'Untitled',
       content: '',
       user_id: current_user.id,
-      folder_id: params[:folder_id]
+      folder_id: current_user.current_folder_id || current_user.root_folder.id
     )
     redirect_to wroom_path(document_id: @document.id)
   end
@@ -44,9 +44,8 @@ class DocumentsController < ApplicationController
   # DELETE /documents/1 or /documents/1.json
   def destroy
     @document.discard
-    current_user.update!(current_document_id: nil)
-
-    redirect_to wroom_path, status: :see_other
+    current_user.update!(current_document_id: nil) if current_user.current_document_id == @document.id
+    head :no_content
   end
 
   private

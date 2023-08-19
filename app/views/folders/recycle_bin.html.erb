@@ -1,4 +1,21 @@
-<%= turbo_frame_tag "current_folder" do %>
+<%= turbo_frame_tag "view_content" do %>
+  <div class="header">
+    <span>Trash</span>
+  </div>
+  <% if current_user.anything_in_recycle_bin? %>
+    <%= button_to "Empty the trash folder", empty_recycle_bin_folders_path, method: :delete, id: 'delete-button',
+      class: 'empty-trash-button',
+      form: {
+        id: 'empty-trash-form',
+        data: {
+            turbo: false,
+            controller: "confirmation",
+            action: 'submit->confirmation#confirm',
+            confirmation_message_value: "Please confirm you meant to permanently remove everything from trash.",
+        }
+      } 
+    %>
+  <% end %>
   <div class="recycle-bin">
     <table class="folder-contents-table">
       <thead>
@@ -6,7 +23,7 @@
           <th>Name</th>
           <th>Created</th>
           <th>Last accessed</th>
-          <th>Entity</th>
+          <th>Type</th>
           <th></th>
         </tr>
       </thead>
@@ -14,45 +31,56 @@
         <% @folders.each do |folder| %>
           <tr>
             <td>
-              <span class='icon'>📁 </span><%= folder.name %>
+              <i class="fa fa-folder fa-fw" style='margin-right: 0.2rem'></i><%= folder.name %>
             </td>
             <td><%= folder.created_at.strftime("%b %d, %Y %H:%M") %></td>
             <td><%= folder.updated_at.strftime("%b %d, %Y %H:%M") %></td>
             <td>
-              directory
+              Folder
             </td>
             <td>
-              <%= link_to "Restore", undiscard_folder_path(folder), data: { turbo_frame: '_top' } %>
+              <%= link_to undiscard_folder_path(folder), data: { turbo_frame: '_top' } do %>
+                <i class="fa-solid fa-trash-can-arrow-up"></i>
+              <% end %>
             </td>
           </tr>
         <% end %>
         <% @documents.each do |document| %>
           <tr>
             <td>
-              <span class='icon'><%= document.icon %></span><%= document.title %>
+              <% if document.source_based %>
+                <i class="fa fa-book fa-fw" aria-hidden="true"></i>
+              <% else %>
+                <i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>
+              <% end %>
+              <%= document.title %>
             </td>
             <td><%= document.created_at.strftime("%b %d, %Y %H:%M") %></td>
             <td><%= document.updated_at.strftime("%b %d, %Y %H:%M") %></td>
             <td>
-              <%= document.source_based ? "source" : "editable" %>
+              <%= document.source_based ? "Source" : "Document" %>
             </td>
             <td>
-              <%= link_to "Restore", undiscard_document_path(document), data: { turbo_frame: '_top' } %>
+              <%= link_to undiscard_document_path(document), data: { turbo_frame: '_top' } do %>
+                <i class="fa-solid fa-trash-can-arrow-up"></i>
+              <% end %>
             </td>
           </tr>
         <% end %>
         <% @voices.each do |voice| %>
           <tr>
             <td>
-              <span class='icon'>👤 </span><%= voice.name %>
+              <i class="fa-solid fa-robot" style='margin-right: 0.5rem'></i><%= voice.name %>
             </td>
             <td><%= voice.created_at.strftime("%b %d, %Y %H:%M") %></td>
             <td><%= voice.updated_at.strftime("%b %d, %Y %H:%M") %></td>
             <td>
-              voice
+              Voice
             </td>
             <td>
-              <%= link_to "Restore", undiscard_voice_path(voice), data: { turbo_frame: '_top' } %>
+              <%= link_to undiscard_voice_path(voice), data: { turbo_frame: '_top' } do %>
+                <i class="fa-solid fa-trash-can-arrow-up"></i>
+              <% end %>
             </td>
           </tr>
         <% end %>

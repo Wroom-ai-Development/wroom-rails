@@ -3,6 +3,7 @@
 class VoicesController < ApplicationController
   before_action :set_voice, only: %i[edit update destroy delete_from_frame undiscard]
   load_and_authorize_resource
+  layout 'dashboard', only: %i[manager edit]
 
   def delete_from_frame
     @voice.destroy
@@ -26,6 +27,7 @@ class VoicesController < ApplicationController
   def manager
     set_voice if params[:id].present?
     @manager ||= current_user.voices.first
+    render layout: 'dashboard'
   end
 
   # GET /voices/1/edit

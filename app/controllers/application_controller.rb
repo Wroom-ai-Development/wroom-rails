@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :onboard_if_necessary
   before_action :ensure_valid_user, unless: :devise_controller?
+  before_action :set_root_folder, if: :user_signed_in?
 
   protected
 
@@ -23,5 +24,9 @@ class ApplicationController < ActionController::Base
     return if current_user.security_updated == true
 
     redirect_to edit_user_registration_path
+  end
+
+  def set_root_folder
+    @root_folder = current_user.root_folder
   end
 end

@@ -81,7 +81,7 @@ module Sources
     end
 
     def headers_regex
-      @headers_regex ||= /\b(?:#{@source.section_headers.join("|")})\b/i
+      @headers_regex ||= /\b(?:#{@source.section_headers.join('|')})\b/i
     end
 
     def save_chunks_from_sections

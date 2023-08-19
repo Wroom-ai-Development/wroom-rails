@@ -16,6 +16,7 @@ class User < ApplicationRecord
   has_many :monitoring_events, as: :trackable, dependent: :nullify
   has_many :usage_records, dependent: :nullify
   has_one :current_document, class_name: 'Document', dependent: :nullify
+  has_one :current_folder, class_name: 'Folder', dependent: :nullify
   validates :email, uniqueness: true, presence: true
   has_many :folders, dependent: :destroy
   has_one :root_folder, class_name: 'RootFolder', dependent: :destroy

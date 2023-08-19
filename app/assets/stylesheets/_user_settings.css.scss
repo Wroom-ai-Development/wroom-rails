@@ -1,17 +1,15 @@
 @import 'colors';
+@import 'fonts';
 
 div.settings-view {
   margin: 0;
   div.settings-panel {
-    width: 50vw;
     background-color: $wroom-gray;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     background-color: white;
     margin-top: 1rem;
-    padding: 1rem;
-    border: 1px solid $wroom-light-gray;
 
     div.action-needed {
       margin-bottom: 2rem;
@@ -73,11 +71,11 @@ div.settings-view {
         padding: 0.5rem;
         box-sizing: border-box;
         border-radius: 5px;
-        font-family: 'Roboto Slab', serif;
+        font-family: $body-font;
 
         &:focus {
           outline: none;
-          border: 1px solid $wroom-blue;
+          border: 1px solid $wroom-primary;
         }
       }
 
@@ -86,10 +84,10 @@ div.settings-view {
       }
 
       input[type='submit'] {
-        font-family: 'Roboto Slab', serif;
+        font-family: $body-font;
         background-color: white;
         border: none;
-        color: $wroom-blue;
+        color: $wroom-primary;
         font-size: 0.7rem;
         margin: 0;
         padding: 0;
@@ -97,7 +95,7 @@ div.settings-view {
       
       
       input[type='file'] {
-        font-family: 'Roboto Slab', serif;
+        font-family: $body-font;
         background-color: white;
         border: none;
         font-size: 0.7rem;
@@ -146,7 +144,7 @@ div.settings-view {
           border: 1px solid $wroom-gray;
           font-size: 0.8rem;
           &:hover {
-            background-color: $wroom-baby-blue;
+            background-color: $wroom-primary-light;
           }
         }
 

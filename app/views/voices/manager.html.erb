@@ -1,9 +1,14 @@
-<%= turbo_stream_from 'voices' %>
-<div id="voices-manager">
-  <%= turbo_frame_tag "voices", src: voices_path %>
-  <% if @voice %>
-    <%= turbo_frame_tag 'voice_editor', src: edit_voice_path(@voice) %>
-  <% else %>
-    <%= turbo_frame_tag 'voice_editor', src: new_voice_path %>
-  <% end %>
-</div>
+<%= turbo_frame_tag 'view_content' do %>
+  <%= turbo_stream_from 'voices' %>
+  <div class='header'>
+    <span>Voices</span>
+  </div>
+  <div id="voices-manager">
+    <%= turbo_frame_tag "voices", src: voices_path %>
+    <% if @voice %>
+      <%= turbo_frame_tag 'voice_editor', src: edit_voice_path(@voice) %>
+    <% else %>
+      <%= turbo_frame_tag 'voice_editor', src: new_voice_path %>
+    <% end %>
+  </div>
+<% end %>

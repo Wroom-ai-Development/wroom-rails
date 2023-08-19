@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   def toggle_gpt_4
     @user.toggle!(:gpt_4_enabled) # rubocop:disable Rails/SkipsModelValidations
     @user.save!
-    redirect_to root_path
+    redirect_to dashboard_path
   end
 
   def update

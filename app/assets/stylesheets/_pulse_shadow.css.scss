@@ -17,9 +17,5 @@
   }
   0% {
     box-shadow: 0 1.3rem 2rem 1.4rem #FFFFFFFF;
-    /* 
-      In the final state (100%), we increase the blur-radius to make the shadow more diffuse
-      and the spread-radius to spread the shadow over a larger area.
-    */
   }
 }

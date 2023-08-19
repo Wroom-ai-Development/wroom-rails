@@ -1,0 +1,45 @@
+<script>
+  function handleEnter(e) {
+    const newMessageForm = document.getElementById('new-message-form')
+    const submitButton = document.getElementById('submit')
+    console.log("yay")
+    if (e.which === 13 && !e.shiftKey) {
+      e.preventDefault();
+      submitButton.click();
+    }
+  };
+  document.getElementById('new-message-text-area').addEventListener('keypress', handleEnter);
+</script>
+<%= turbo_stream_from @conversation.id, 'chat_messages'%>
+<div id='conversation'>
+  <div id='messages'>
+    <% if conversation.messages.kept.count == 0 %>
+      <div id='initial-message'>
+        Hello, may I be of any help?
+      </div>
+    <% end %>
+    <% conversation.messages.kept.order(:created_at).reverse.each do |message| %>
+      <% if message.role == 'error' && message.content.include?("maximum context length") %>
+        <div class='message error'>
+          <div class='content'>
+            <div class='main-message'>
+              <%= button_to('❌', delete_message_conversation_path(message.conversation, message_id: message.id), method: :delete) %>
+              <div class='main-message-content'>
+                You have exceeded the token limit in this conversation. If you would like to chat further,
+                you can remove some messages to make space. If you would like to keep some of the content,
+                copy it to your document.
+              </div>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <%= render 'message', message: message %>
+      <% end %>
+    <% end %>
+  </div>
+  <%= form_with url: new_message_conversation_path(id: conversation.id), id: 'new-message-form'  do |f| %>
+    <%= render 'conversation_status', conversation: conversation %>
+    <%= f.text_area :content, required: 'required', rows: 5, id: 'new-message-text-area' %>
+    <%= f.submit '➳', id: 'submit', style: 'display: none;' %>
+  <% end %>
+</div>

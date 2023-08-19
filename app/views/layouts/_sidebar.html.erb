@@ -1,0 +1,69 @@
+<script>
+  function toggleNewOptions() {
+    const options = document.getElementsByClassName('options')[0];
+    const outside = document.getElementsByClassName('outside')[0];
+    options.style.display = 'flex';
+    outside.style.display = 'block';
+    outside.addEventListener('click', (e) => {
+      options.style.display = 'none';
+      outside.style.display = 'none';
+    })
+  }
+</script>
+<script>
+  function displayChildren(id) {
+    const children = document.getElementById(id).children[1]
+    if (children.style.display == 'flex')
+      children.style.display = 'none';
+    else
+    children.style.display = 'flex';
+  }
+</script>
+<div id='sidebar-background'>
+  <div id='sidebar'>
+    <div id='wroom-logo'>
+      <div>
+        <span id='wroom'>WROOM</span>
+      </div>
+    </div>
+    <div class="new">
+      <div class="button" onClick="toggleNewOptions();">
+        <i class="fa-solid fa-square-plus"></i><span>New</span>
+      </div>
+      <div class="options" style="display: none;">
+        <%= link_to "New folder", new_folder_path, data: { turbo_action: 'replace', turbo_frame: 'view_content' } %>
+        <%= link_to "New document", new_document_path, data: { turbo_action: 'replace', turbo_frame: '_top' } %>
+        <%= link_to "Upload document", new_source_path, data: { turbo_action: 'replace', turbo_frame: 'view_content' } %>
+        <%= link_to "New voice", manager_voices_path %>
+      </div>
+    </div>
+    <div id='folder-tree'>
+      <%= render 'folders/tree_folder', folder: root_folder %>
+      <%= link_to recycle_bin_folders_path, data: { turbo_action: 'replace', turbo_frame: 'view_content' }, class: 'trash-link'  do %>
+        <i class="fa-solid fa-trash fa-fw"></i>Trash
+      <% end %>
+      <% if can? :manage, Voice %>
+        <div class="link-wrapper">
+          <%= link_to manager_voices_path, data: { turbo_action: 'replace', turbo_frame: 'view_content' } do %>
+            <i class="fa-solid fa-robot"></i>Voices
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <% if can? :manage, User %>
+      <div class="link-wrapper">
+        <%= link_to "Monitoring", monitoring_path, data: { turbo_action: 'replace', turbo_frame: 'view_content' } %>
+      </div>
+    <% end %>
+    <% if can? :manage, User %>
+      <div class="link-wrapper">
+        <%= link_to "GPT-4", toggle_gpt_4_user_path(current_user), class: "gpt-4-toggle #{current_user.gpt_4_enabled ? "on" : "off"}" %>
+      </div>
+    <% end %>
+    <div id='account-links'>
+      <p id='current-user'><%= current_user.email %></p>
+      <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: 'sign-out' %>
+      <%= link_to "⚙️", edit_user_registration_path, data: { turbo_action: 'replace', turbo_frame: 'view_content' }, class: 'settings-link' %>
+    </div>
+  </div>
+</div>

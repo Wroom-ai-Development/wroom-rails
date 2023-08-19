@@ -9,13 +9,13 @@
 </script>
 <div class='tree-folder' id="<%= "context-tree-folder-#{folder.id}" %>">
   <div class="parent" onClick=<%= "displayChildren('context-tree-folder-#{folder.id}')" %>>
-    <span class='icon'>📁 </span><%= folder.name %>
+     <i class="fa-regular fa-folder fa-fw"></i><%= folder.type == 'RootFolder' ? 'My Files' : folder.name %>
   </div>
   <div class="children" style="<%= folder.type == 'RootFolder' ? "" : "display: none;" %>">
-    <% folder.children.each do |folder| %>
+    <% folder.children.kept.each do |folder| %>
       <%= render 'tree_folder', folder: folder %>
     <% end %>
-    <% folder.documents.each do |document| %>
+    <% folder.documents.kept.each do |document| %>
       <%= render 'tree_document', document: document, conversation: @conversation %>
     <% end %>
   </div>

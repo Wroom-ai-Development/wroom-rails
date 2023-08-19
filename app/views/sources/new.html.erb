@@ -1,9 +1,8 @@
-<div id="record-form-view">
-  <div id="record-form-box">
-    <div id="header">
-      <h3>Upload document</h3>
-      <%= link_to "❌", explorer_folder_path(@folder_id || @source.folder_id || current_user.root_folder.id ) %>
-    </div>
+<%= turbo_frame_tag 'view_content' do %>
+  <div class="header">
+    <span>Upload document</span>
+  </div>
+  <div class='new-folder'>
     <%= render "form", source: @source, folder_id: @folder_id %>
   </div>
-</div>
+<% end %>

@@ -1,255 +1,159 @@
 @import 'colors';
 @import 'pulse_shadow';
 
-div.outside {
-  z-index: 998;
-  position: absolute;
-  width: 100%;
-  height: 100%;
+form#empty-trash-form {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 1rem;
+  button.empty-trash-button {
+    background-color: $wroom-primary;
+    color: white;
+    border-radius: 3px;
+    padding: 0.3rem;
+    font-size: 0.6rem;
+    font-weight: 900;
+    border: none;
+    margin-left: auto;
+    &:hover {
+      cursor: pointer;
+      background-color: $wroom-red;
+    }
+  }
 }
+
 
 div.recycle-bin {
-  width: 50rem;
-    background-color: white;
-    padding: 1rem;
-    border-radius: 10px;
-    font-size: 0.7rem;
-    table {
-      width: 100%;
-      td, th {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  border-radius: 10px;
+  table {
+    width: 100%;
+    border-spacing: 0;
+    th {
+      color: $wroom-halfway-dark-gray;
+    }
+
+    th, td {
+      &:first-child {
         text-align: left;
-        &:not(:first-child) {
-          text-align: right;
-        }
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 20rem;
+      }
+      text-align: right;
+      white-space: nowrap;
+      &:not(:first-child):not(:last-child) {
+        padding: 0 1rem;
       }
     }
-}
-span.icon {
-  margin-right: 0.5rem;
+    tr { 
+      padding: 0.5rem 0;
+    }
+  }
 }
 
-div#folder-explorer {
-  height: 100%;
-  width: 100%;
+
+div#folder-tree-background {
+  background-color: white;
+}
+
+
+div#current-folder-background {
+  background-color: $wroom-primary;
+  flex-grow: 1;
+  width: 1px;
   display: flex;
-  padding: 1rem;
+  overflow: hidden;
   
   box-sizing: border-box;
-  div#folder-tree {
-    box-sizing: border-box;
-    padding: 1rem;
-    width: 15rem;
-    min-width: min-content;
-    height: 100%;
-    display: flex;
-    z-index: 995;
-
-    flex-direction: column;
-    background-color: white;
-    height: 100%;
-    overflow-y: auto;
-    border-radius: 10px;
-    font-size: 0.7rem;
-
-    a.trash-link {
-      margin-top: 1rem;
-    }
-    div.tree-folder {
-      div.parent {
-        width: 100%;
-        height: 1.5rem;
-        white-space: nowrap;
-        display: flex;
-        align-items: center;
-        padding: 0.1rem;
-        &:hover {
-          background-color: $wroom-light-gray;
-          cursor: pointer;
-        }
-      }
-      div.children {
-        display: flex;
-        flex-direction: column;
-        padding-left: 1rem;
-        width: fit-content;
-        white-space: nowrap;
-      }
-    }
-
-    div.tree-document {
-      width: 100%;
-      height: 1.5rem;
-      display: flex;
-      align-items: center;
-      &:hover {
-        background-color: $wroom-light-gray;
-        cursor: pointer;
+}
+table.folder-contents-table {
+  width: 100%;
+  border-spacing: 0;
+  span.icon {
+    margin-right: 0.5rem;
+  }
+  th {
+    color: $wroom-halfway-dark-gray;
+    border-bottom: 1px solid $wroom-light-gray;
+  }
+  tr {
+    border-radius: 5px;
+    padding: 0.5rem 0;
+    color: $wroom-dark-gray;
+    &:hover {
+      color: $wroom-primary;
+      // background-color: $wroom-gray;
+      cursor: pointer;
+      a {
+        color: $wroom-primary;
       }
     }
   }
 
-  div#current-folder {
-    width: 1rem;
-    flex-grow: 1;
-    height: 100%;
-    padding-left: 1rem;
+  th, td {
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid $wroom-light-gray;
+    &:first-child {
+      max-width: 20rem;
+    }
+    &:last-child {
+      color: $wroom-gray;
+    }
 
-    div.columns {
-      display: flex;
-      flex-direction: row;
-      height: 100%;
-      div.ui-column {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 4rem;
-        box-sizing: border-box;
-        padding-right: 1rem;
-        div.new {
-          font-size: 0.7rem;
-          font-weight: 400;
-          box-sizing: border-box;
-          
-          div.button {
-            animation: pulseShadow 4s infinite alternate;
+    &:not(:first-child):not(:last-child) {
+      padding-left: 1rem;
+      padding-right: 1rem;
 
-            color: $wroom-blue;
-            background-color: white;
-            padding: 1rem 1.2rem;
-            border-radius: 10px;
-            text-align: center;
-            &:hover {
-              cursor: pointer;
-              background-color: $wroom-baby-blue;
-            }
-          }
-          
-        }
-      div.options {
-        z-index: 999;
-        text-align: left;
-        flex-direction: column;
-        font-size: 0.6rem;
-        font-weight: 300;
-        position: relative;
-        box-sizing: border-box;
-        top: -0.5rem;
-        color: $wroom-blue;
-        background-color: white;
-        padding: 1rem;
-        border-radius: 10px;
-        border: 1px solid $wroom-gray;
-        display: flex;
-        a {
-          color: $wroom-blue;
-          margin-top: 0.5rem;
-          white-space: nowrap;
-          display: flex;
-          &:hover {
-            text-decoration: underline 1px $wroom-blue;
-          }
-        }
-      }
-      }
-      div.content-column {
-        width: 50rem;
-        background-color: white;
-        padding: 1rem;
-        border-radius: 10px;
-        font-size: 0.7rem;
-        z-index: 995;
-        div.header {
-          display: flex;
-          align-items: start;
-          justify-content: space-between;
-          span {
-            font-size: 1rem;
-            font-weight: 500;
-            color: $wroom-dark-gray;
-            margin-right: 1rem;
-          }
-          div.controls {
-            display: flex;
-            flex-direction: row;
-            align-items: baseline;
-            a, button {
-              font-family: 'Roboto Slab', serif;
-              font-size: 0.7rem;
-              background-color: white;
-              color: $wroom-blue;
-              margin: 0;
-              margin-left: 1rem;
-              padding: 0;
-              border: none;
-              font-weight: 300;
-            }
-            a:hover {
-              text-decoration: underline 1px $wroom-blue;
-            }
-
-            button {
-              color: transparent;
-              text-shadow: 0 0 0 $wroom-red;
-            }
-          }
-        }
-
-        div.content {
-          height: 100%;
-          overflow-y: auto;
-
-          table.folder-contents-table {
-            width: 100%;
-            margin-top: 1rem;
-            th {
-              color: $wroom-halfway-dark-gray;
-            }
-
-            th, td {
-              &:first-child {
-                text-align: left;
-              }
-              text-align: right;
-            }
-            tr { 
-              padding: 0.5rem 0;
-            }
-          }
-          div.item {
-            padding: 0.2rem 0;
-            height: 1.5rem;
-            display: flex;
-            align-items: center;
-            span.icon {
-              font-size: 1rem;
-            }
-            &:hover {
-              background-color: $wroom-light-gray;
-              cursor: pointer;
-            }
-          }
-          div.no-content {
-            h3 {
-              font-size: 1rem;
-            }
-            p {
-              span {
-                color: $wroom-blue;
-              }
-            }
-
-            div.haiku {
-              margin-left: 37vw;
-              margin-top: 37vh;
-              padding-right: 0.5rem;
-              border-right: 7px solid $wroom-gray;
-              font-weight: 100;
-              text-align: right;
-            }
-          }
-        }
-      }
     }
 
   }
 }
+
+div.folder-content {
+  height: 100%;
+  overflow-y: auto;
+  margin-top: 2rem;
+
+
+  div.item {
+    padding: 0.2rem 0;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    span.icon {
+      font-size: 1rem;
+    }
+    &:hover {
+      background-color: $wroom-light-gray;
+      cursor: pointer;
+    }
+  }
+  div.no-content {
+    h3 {
+      font-size: 1rem;
+    }
+    p {
+      span {
+        color: $wroom-primary;
+      }
+    }
+
+    div.haiku {
+      margin-left: 37vw;
+      margin-top: 37vh;
+      padding-right: 0.5rem;
+      border-right: 7px solid $wroom-gray;
+      font-weight: 100;
+      text-align: right;
+    }
+  }
+}
+

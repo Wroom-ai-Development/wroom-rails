@@ -1,4 +1,5 @@
 @import 'colors';
+@import 'fonts';
 
 div#record-form-view {
   height: 100%;
@@ -14,11 +15,12 @@ div#record-form-view {
     flex-direction: column;
     background-color: white;
     border-radius: 10px;
-    margin-top: 1rem;
     width: 100%;
-    padding: 1rem;
-    border: 1px solid $wroom-light-gray;
     
+    &.new-source {
+      width: 30vw;
+    }
+
     div.validation {
       color: $wroom-red;
       margin-top: 1rem;
@@ -42,6 +44,14 @@ div#record-form-view {
         text-shadow: 0 0 0 $wroom-dark-gray;
         font-size: 0.6rem;
       }
+
+      i {
+        margin-left: auto;
+        &:hover {
+          cursor: pointer;
+          color: $wroom-red;
+        }
+      }
     }
 
     form {
@@ -52,12 +62,12 @@ div#record-form-view {
         padding: 0.5rem;
         box-sizing: border-box;
         border-radius: 5px;
-        font-family: 'Roboto Slab', serif;
+        font-family: $body-font;
         border-radius: 5px;
 
         &:focus {
           outline: none;
-          border: 1px solid $wroom-blue;
+          border: 1px solid $wroom-primary;
         }
       }
 
@@ -68,10 +78,10 @@ div#record-form-view {
       }
 
       input[type='submit'] {
-        font-family: 'Roboto Slab', serif;
+        font-family: $body-font;
         background-color: white;
         border: none;
-        color: $wroom-blue;
+        color: $wroom-primary;
         font-size: 0.6rem;
         margin: 0;
         padding: 0;
@@ -82,7 +92,7 @@ div#record-form-view {
       
       
       input[type='file'] {
-        font-family: 'Roboto Slab', serif;
+        font-family: $body-font;
         background-color: white;
         border: none;
         font-size: 0.7rem;
@@ -121,7 +131,7 @@ div#record-form-view {
           border: 1px solid $wroom-gray;
           font-size: 0.8rem;
           &:hover {
-            background-color: $wroom-baby-blue;
+            background-color: $wroom-primary-light;
           }
         }
 

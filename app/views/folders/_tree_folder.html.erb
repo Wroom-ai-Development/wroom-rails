@@ -1,15 +1,15 @@
 <div class='tree-folder' id="<%= "tree-folder-#{folder.id}" %>">
-  <%= link_to folder_path(folder), data: { turbo_frame: 'current_folder' } do %>
-    <div class="parent" onClick=<%= "displayChildren('tree-folder-#{folder.id}')" %>>
-      <span class='icon'>📁 </span><%= folder.name %>
+  <%= link_to folder_path(folder), data: { turbo_action: 'replace', turbo_frame: 'view_content' } do %>
+    <div class="folder" onClick=<%= "displayChildren('tree-folder-#{folder.id}')" %>>
+      <i class="fa fa-folder fa-fw"></i><span class='folder-name'><%= folder.type == 'RootFolder' ? 'My Files' : folder.name %></span>
     </div>
   <% end %>
-  <div class="children" style="<%= folder.type == 'RootFolder' ? "" : "display: none;" %>">
-    <% folder.children.kept.each do |folder| %>
-      <%= render 'tree_folder', folder: folder %>
+  <div class="children" style="display: none;">
+    <% folder.children.kept.each do |child_folder| %>
+      <%= render 'folders/tree_folder', folder: child_folder %>
     <% end %>
     <% folder.documents.kept.each do |document| %>
-      <%= render 'tree_document', document: document %>
+      <%= render 'folders/tree_document', document: document %>
     <% end %>
   </div>
 </div>

@@ -1,93 +1,104 @@
-<%= turbo_stream_from 'monitoring' %>
-<%= turbo_frame_tag 'monitoring' %>
-<% @users.each do |user| %>
-  <li class='index-list-item'>
-    <%= link_to "#{user.email} #{user.first_name} #{user.last_name}", user %>
-    <%= button_to "❌", user, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Please confirm you meant to delete #{user.email}"} %>
-  </li>
-<% end %>
-<div class='view-content monitoring'>
-  <div class='lists'>
-    <ul>
-      <h4>Token usage by user</h4>
-      <h5>Total tokens used since 2023-07-12: <%= @total_tokens_used %></h5>
-      <% @users_data.each do |user| %>
-        <h4><%= user[:email] %>:</h4>
-        <li>
-          <div>
-            <h6>GPT-4:</h6>
-            <p>
-              <b>Input: </b><%= user[:gpt_4_input_tokens] %> tokens ($<%= "%.2f" % user[:gpt_4_input_tokens_price] %>)
-            </p>
-            <p>
-              <b>Output: </b><%= user[:gpt_4_output_tokens] %> tokens ($<%= "%.2f" % user[:gpt_4_output_tokens_price] %>)
-            </p>
-          </div>
-          <div>
-            <h6>
-              GPT-3.5-turbo-16k:
-            </h6>
-            <p>
-              <b>Input: </b><%= user[:gpt_3_5_turbo_16k_input_tokens] %> tokens ($<%= "%.2f" % user[:gpt_3_5_turbo_16k_input_tokens_price] %>)
-            </p>
-            <p>
-              <b>Output: </b><%= user[:gpt_3_5_turbo_16k_output_tokens] %> tokens ($<%= "%.2f" % user[:gpt_3_5_turbo_16k_output_tokens_price] %>)
-            </p>
-          </div>
-          <div>
-            <h6>
-              GPT-3.5-turbo:
-            </h6>
-            <p>
-              <b>Input: </b><%= user[:gpt_3_5_turbo_input_tokens] %> tokens ($<%= "%.2f" % user[:gpt_3_5_turbo_input_tokens_price] %>)
-            </p>
-            <p>
-              <b>Output: </b><%= user[:gpt_3_5_turbo_output_tokens] %> tokens  ($<%= "%.2f" % user[:gpt_3_5_turbo_output_tokens_price] %>)
-            </p>
-          </div>
-          <div>
-            <h6>
-              Total:
-            </h6>
-            $<%= "%.2f" % (user[:gpt_4_input_tokens_price] +
-                user[:gpt_4_output_tokens_price] +
-                user[:gpt_3_5_turbo_16k_input_tokens_price] +
-                user[:gpt_3_5_turbo_16k_output_tokens_price] +
-                user[:gpt_3_5_turbo_input_tokens_price] +
-                user[:gpt_3_5_turbo_output_tokens_price]) %>
-          </div>
-        </li>
-      <% end %>
-    </ul>
-    <ul>
-      <h4>Messages</h4>
-      <% @message_events.each do |event| %>
-        <%= render 'event', event: event %>
-      <% end %>
-    </ul>
-    <ul>
-      <h4>Registrations</h4>
-      <% @registration_events.each do |event| %>
-        <%= render 'event', event: event %>
-      <% end %>
-    </ul>
-    <ul>
-      <h4>Sign-ins</h4>
-      <% @sign_in_events.each do |event| %>
-        <%= render 'event', event: event %>
-      <% end %>
-    </ul>
-    <ul>
-      <h4>Records created</h4>
-      <% @create_record_events.each do |event| %>
-        <%= render 'event', event: event %>
-      <% end %>
-    </ul>
-    <ul>
-      <h4>All</h4>
-      <% @monitoring_events.each do |event| %>
-        <%= render 'event', event: event %>
-      <% end %>
-    </ul>
+<%= turbo_frame_tag "view_content" do %>
+  <%= turbo_stream_from 'monitoring' %>
+  <%= turbo_frame_tag 'monitoring' %>
+  <div class="header">
+    <span>Monitoring</span>
   </div>
-</div>
+  <% if false %>
+    <% @users.each do |user| %>
+      <li class='index-list-item'>
+        <%= link_to "#{user.email} #{user.first_name} #{user.last_name}", user %>
+        <%= button_to "❌", user, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Please confirm you meant to delete #{user.email}"} %>
+      </li>
+    <% end %>
+  <% end %>
+  <div class='view-content monitoring'>
+    <div class='lists'>
+      <ul>
+        <h4>Token usage by user</h4>
+        <h5>Total tokens used since 2023-07-12: <%= @total_tokens_used %></h5>
+        <% @users_data.each do |user| %>
+          <h4><%= user[:email] %>:</h4>
+          <li>
+            <div>
+              <h6>GPT-4:</h6>
+              <p>
+                <b>Input: </b><%= user[:gpt_4_input_tokens] %> tokens ($<%= "%.2f" % user[:gpt_4_input_tokens_price] %>)
+              </p>
+              <p>
+                <b>Output: </b><%= user[:gpt_4_output_tokens] %> tokens ($<%= "%.2f" % user[:gpt_4_output_tokens_price] %>)
+              </p>
+            </div>
+            <div>
+              <h6>
+                GPT-3.5-turbo-16k:
+              </h6>
+              <p>
+                <b>Input: </b><%= user[:gpt_3_5_turbo_16k_input_tokens] %> tokens ($<%= "%.2f" % user[:gpt_3_5_turbo_16k_input_tokens_price] %>)
+              </p>
+              <p>
+                <b>Output: </b><%= user[:gpt_3_5_turbo_16k_output_tokens] %> tokens ($<%= "%.2f" % user[:gpt_3_5_turbo_16k_output_tokens_price] %>)
+              </p>
+            </div>
+            <div>
+              <h6>
+                GPT-3.5-turbo:
+              </h6>
+              <p>
+                <b>Input: </b><%= user[:gpt_3_5_turbo_input_tokens] %> tokens ($<%= "%.2f" % user[:gpt_3_5_turbo_input_tokens_price] %>)
+              </p>
+              <p>
+                <b>Output: </b><%= user[:gpt_3_5_turbo_output_tokens] %> tokens  ($<%= "%.2f" % user[:gpt_3_5_turbo_output_tokens_price] %>)
+              </p>
+            </div>
+            <div>
+              <h6>
+                Total:
+              </h6>
+              $<%= "%.2f" % (user[:gpt_4_input_tokens_price] +
+                  user[:gpt_4_output_tokens_price] +
+                  user[:gpt_3_5_turbo_16k_input_tokens_price] +
+                  user[:gpt_3_5_turbo_16k_output_tokens_price] +
+                  user[:gpt_3_5_turbo_input_tokens_price] +
+                  user[:gpt_3_5_turbo_output_tokens_price]) %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+      <% if false %>
+        <ul>
+          <h4>Messages</h4>
+          <% @message_events.each do |event| %>
+            <%= render 'event', event: event %>
+          <% end %>
+        </ul>
+      <% end %>
+      <ul>
+        <h4>Registrations</h4>
+        <% @registration_events.each do |event| %>
+          <%= render 'event', event: event %>
+        <% end %>
+      </ul>
+      <% if false %>
+        <ul>
+          <h4>Sign-ins</h4>
+          <% @sign_in_events.each do |event| %>
+            <%= render 'event', event: event %>
+          <% end %>
+        </ul>
+        <ul>
+          <h4>Records created</h4>
+          <% @create_record_events.each do |event| %>
+            <%= render 'event', event: event %>
+          <% end %>
+        </ul>
+      <% end %>
+      <ul>
+        <h4>All</h4>
+        <% @monitoring_events.each do |event| %>
+          <%= render 'event', event: event %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>

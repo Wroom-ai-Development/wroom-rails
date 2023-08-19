@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class MonitoringController < ApplicationController
+  layout 'dashboard'
   def index # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     authorize! :create, MonitoringEvent
     @monitoring_events = MonitoringEvent.all.order(:created_at).reverse

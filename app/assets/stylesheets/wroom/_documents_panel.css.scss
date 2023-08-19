@@ -1,0 +1,12 @@
+@import 'scrollbars';
+
+div#documents-panel {
+  width: 20vw;
+  height: 100%;
+}
+
+div.documents-wrapper {
+  max-height: 60vh;
+  overflow-y: auto;
+  @include custom-scrollbar;
+}

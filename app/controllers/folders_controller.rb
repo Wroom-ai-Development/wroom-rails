@@ -3,7 +3,7 @@
 class FoldersController < ApplicationController
   before_action :set_folder, only: %i[show edit update destroy undiscard]
   load_and_authorize_resource
-
+  layout 'dashboard'
   # GET /folders/1 or /folders/1.json
 
   def explorer
@@ -17,7 +17,18 @@ class FoldersController < ApplicationController
     @voices = current_user.voices.discarded
   end
 
+  def empty_recycle_bin
+    @folders = current_user.folders.discarded
+    @documents = current_user.documents.discarded
+    @voices = current_user.voices.discarded
+    @folders.destroy_all
+    @documents.destroy_all
+    @voices.destroy_all
+    redirect_to dashboard_path
+  end
+
   def show
+    current_user.update!(current_folder_id: @folder.id)
     return unless @folder.type == 'RootFolder' && @folder.empty?
 
     @haiku = OpenaiService.new.haiku_about_new_venture
@@ -26,7 +37,7 @@ class FoldersController < ApplicationController
   # GET /folders/new
   def new
     @folder = Folder.new
-    @parent_id = (params[:parent_id].presence || current_user.root_folder.id)
+    @parent_id = current_user.current_folder_id || current_user.root_folder.id
   end
 
   # GET /folders/1/edit
@@ -34,44 +45,36 @@ class FoldersController < ApplicationController
 
   # POST /folders or /folders.json
   def create
+    # binding.pry
     @folder = Folder.new(folder_params)
     @folder.type = 'Folder'
-    respond_to do |format|
-      if @folder.save
-        format.html { redirect_to explorer_folder_url(@folder) }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-      end
+    if @folder.save
+      current_user.update!(current_folder_id: @folder.id)
+      render :show, status: :ok
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /folders/1 or /folders/1.json
   def update
-    respond_to do |format|
-      if @folder.update(folder_params)
-        format.html { redirect_to explorer_folder_url(@folder) }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-      end
+    if @folder.update(folder_params)
+      redirect_to @folder
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /folders/1 or /folders/1.json
   def destroy
-    @folder.parent_id
-
     @folder.discard
-
-    respond_to do |format|
-      format.html { redirect_to explorer_folder_path(@folder.parent) }
-    end
+    @folder = @folder.parent
+    head :no_content
   end
 
   def undiscard
     @folder.undiscard
-    respond_to do |format|
-      format.html { redirect_to explorer_folder_path(@folder) }
-    end
+    redirect_to @folder
   end
 
   private
