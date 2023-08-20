@@ -51,7 +51,12 @@ class DocumentsController < ApplicationController
 
   # DELETE /documents/1 or /documents/1.json
   def destroy
-    @document.discard
+    if @document.discarded?
+      @document.source.subtract_size_from_user_storage_used if @document.source.present? && @document.source_based
+      @document.destroy
+    else
+      @document.discard
+    end
     current_user.update!(current_document_id: nil) if current_user.current_document_id == @document.id
     head :no_content
   end
