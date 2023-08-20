@@ -23,6 +23,20 @@ div.new-folder {
       &[type="text"] {
         width: 50vw;
       }
+      &[type="submit"] {
+        background-color: $wroom-primary;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        font-size: $font-size-70;
+        font-weight: bold;
+        padding: 0.5rem;
+        width: 10vw;
+        &:hover {
+          background-color: $wroom-dark-gray;
+        }
+      }
       border: 1px solid $wroom-light-gray;
       border-radius: 5px;
       box-sizing: border-box;

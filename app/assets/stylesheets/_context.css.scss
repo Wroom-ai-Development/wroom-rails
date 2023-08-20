@@ -1,5 +1,6 @@
 @import 'colors';
 @import 'fonts';
+@import 'scrollbars';
 
 div.context {
   display: flex;
@@ -39,6 +40,8 @@ div.context {
     height: 10px;
     margin-bottom: 3rem;
     padding: 1rem;
+    overflow-y: scroll;
+    @include custom-scrollbar;
   }
 
 

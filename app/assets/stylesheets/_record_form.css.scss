@@ -78,15 +78,17 @@ div#record-form-view {
       }
 
       input[type='submit'] {
-        font-family: $body-font;
-        background-color: white;
+        background-color: $wroom-primary;
         border: none;
-        color: $wroom-primary;
-        font-size: $font-size-60;
-        margin: 0;
-        padding: 0;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        font-size: $font-size-70;
+        font-weight: bold;
+        padding: 0.5rem;
+        width: 10vw;
         &:hover {
-          cursor: pointer;
+          background-color: $wroom-dark-gray;
         }
       }
       
