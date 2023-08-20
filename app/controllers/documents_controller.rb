@@ -52,6 +52,7 @@ class DocumentsController < ApplicationController
     if @document.source.present?
       source = @document.source.dup
       source.document_id = duplicate.id
+      source.file.attach @document.source.file.blob
       source.save!
     end
     head :no_content
