@@ -6,6 +6,25 @@
       <h3>Context</h3>
       <%= link_to "❌", chat_conversation_path(@conversation), class: 'quit-context-dialog' %>
     </div>
+    <div class='currently-selected'>
+      <div class='current-context-header'>
+        <h3>What this chat currently knows:</h3>
+        <%= link_to 'Clear context', clear_context_conversation_path(@conversation), class: 'clear-context' %>
+      </div>
+      <div class='context-table-container'>
+        <table id='currently-selected-context-table'>
+          <tr>
+            <th>
+            </th>
+            <th>
+            </th>
+          </tr>
+          <% @conversation.documents.each do |document| %>
+            <%= render 'conversations/currently_selected_document', document: document, conversation: @conversation %>
+          <% end %>
+        </table>
+      </div>
+    </div>
     <div class='folders'>
       <%= render 'tree_folder', folder: current_user.root_folder %>
     </div>

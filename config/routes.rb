@@ -38,6 +38,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       delete 'clear_chat'
       get 'cancel_processing'
       patch 'toggle_context'
+      get 'clear_context'
     end
   end
   resources :sources, except: [:index]

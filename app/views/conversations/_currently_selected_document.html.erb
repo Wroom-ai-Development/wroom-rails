@@ -1,0 +1,10 @@
+<tr id="document-<%= document.id %>-context-row">
+  <td>
+    <%= document.title %>
+  </td>
+    <td>
+  <%= button_to toggle_context_conversation_path(id: conversation.id, document_id: document.id), method: :patch, form: { id: "current-document-#{document.id}" } do %>
+      <i class="fa-solid fa-file-circle-minus fa-lg"></i>
+  <% end %>
+    </td>
+</tr>

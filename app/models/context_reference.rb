@@ -4,12 +4,12 @@ class ContextReference < ApplicationRecord
   belongs_to :conversation
   belongs_to :document
 
-  after_create :announce_change
-  after_destroy :announce_change
+  after_create :announce_create
+  after_destroy :announce_destroy
 
   private
 
-  def announce_change
+  def announce_create
     broadcast_replace_to(
       conversation.id,
       'conversation_context',
@@ -19,6 +19,34 @@ class ContextReference < ApplicationRecord
         document:
       },
       target: "tree-document-#{document.id}"
+    )
+    broadcast_append_to(
+      conversation.id,
+      'conversation_context',
+      partial: 'conversations/currently_selected_document',
+      locals: {
+        conversation:,
+        document:
+      },
+      target: 'currently-selected-context-table'
+    )
+  end
+
+  def announce_destroy
+    broadcast_replace_to(
+      conversation.id,
+      'conversation_context',
+      partial: 'conversations/tree_document',
+      locals: {
+        conversation:,
+        document:
+      },
+      target: "tree-document-#{document.id}"
+    )
+    broadcast_remove_to(
+      conversation.id,
+      'conversation_context',
+      target: "document-#{document.id}-context-row"
     )
   end
 end

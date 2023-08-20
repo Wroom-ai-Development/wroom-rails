@@ -17,6 +17,7 @@
 - Adjusted font sizes all over the app
 - Fixed bug with word docs not parsing tables
 - User is redirected to parent folder after a folder is created
+- Adjusted editor colors and logo to match dashboard
 
 ### Version 0.2.0
 Out August 6th 2023
