@@ -29,7 +29,8 @@ class Source < ApplicationRecord
   end
 
   def subtract_size_from_user_storage_used
-    user.update!(storage_used: user.storage_used - file_size)
+    remaining_storage = user.storage_used - file_size
+    user.update!(storage_used: remaining_storage.negative? ? 0 : remaining_storage)
   end
 
   def parse_source_chunks_from_file # rubocop:disable Metrics/MethodLength

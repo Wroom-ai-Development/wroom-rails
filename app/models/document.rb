@@ -18,6 +18,7 @@ class Document < ApplicationRecord
   after_create_commit :broadcast_create
   after_discard :remove_document_row
   before_destroy :remove_document_row
+  after_destroy :update_storage_bar
   after_save :remove_document_row, if: :saved_change_to_folder_id?
 
   def refresh_source
@@ -35,6 +36,16 @@ class Document < ApplicationRecord
       partial: 'folders/document_row',
       locals: { document: self },
       target: "document-row-#{cloned_from}"
+    )
+  end
+
+  def update_storage_bar
+    broadcast_replace_to(
+      user.id,
+      'storage-bar',
+      partial: 'documents/storage_limit',
+      locals: { user: },
+      target: 'storage_bar'
     )
   end
 
