@@ -9,7 +9,7 @@ class ContextReference < ApplicationRecord
 
   private
 
-  def announce_create
+  def announce_create # rubocop:disable Metrics/MethodLength
     broadcast_replace_to(
       conversation.id,
       'conversation_context',
@@ -32,7 +32,7 @@ class ContextReference < ApplicationRecord
     )
   end
 
-  def announce_destroy
+  def announce_destroy # rubocop:disable Metrics/MethodLength
     broadcast_replace_to(
       conversation.id,
       'conversation_context',
