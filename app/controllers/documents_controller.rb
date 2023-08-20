@@ -46,6 +46,12 @@ class DocumentsController < ApplicationController
     duplicate = @document.dup
     duplicate.cloned_from = @document.id
     duplicate.save!
+    conversation = @document.conversation.dup
+    conversation.document_id = duplicate.id
+    conversation.save!
+    source = @document.source.dup
+    source.document_id = duplicate.id
+    source.save!
     head :no_content
   end
 
