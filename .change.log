@@ -24,6 +24,10 @@
 - Allowed document download
 - Added copy buttons to alternative answers
 - Allowed duplicating records
+- Added persisting file sizes for uploads
+- Added storage used to User
+- Ensured documents sync with user storage
+- Added storage bar
 
 
 

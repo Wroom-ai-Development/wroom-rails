@@ -57,7 +57,8 @@
     <div class='field' style='display: none;'>
       <%= form.text_field :folder_id, value: folder_id, readonly: cannot?(:manage, User) %>
     </div>
-    <%= form.submit 'Confirm' %>
+    <%= form.submit 'Confirm', onclick: 'document.getElementById("spinner").style.display = "inline-block"' %>
+    <i id='spinner' class="fa-solid fa-spinner fa-spin fa-2xs" style='display: none; line-height: 1rem; font-size: 1rem; color: gray;'></i>
     <div class='field' style='display: none;'>
       <%= form.label :user_id, style: "display: block" %>
       <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
