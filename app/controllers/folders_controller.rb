@@ -50,7 +50,7 @@ class FoldersController < ApplicationController
     @folder.type = 'Folder'
     if @folder.save
       current_user.update!(current_folder_id: @folder.id)
-      redirect_to @folder.parent
+      redirect_to folder_path(@folder.parent)
     else
       render :new, status: :unprocessable_entity
     end
