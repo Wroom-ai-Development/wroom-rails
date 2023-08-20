@@ -45,6 +45,7 @@ class DocumentsController < ApplicationController
     @document = Document.find(params[:id])
     duplicate = @document.dup
     duplicate.cloned_from = @document.id
+    duplicate.content = @document.content
     duplicate.save!
     conversation = @document.conversation.dup
     conversation.document_id = duplicate.id
