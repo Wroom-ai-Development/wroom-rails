@@ -49,9 +49,11 @@ class DocumentsController < ApplicationController
     conversation = @document.conversation.dup
     conversation.document_id = duplicate.id
     conversation.save!
-    source = @document.source.dup
-    source.document_id = duplicate.id
-    source.save!
+    if @document.source.present?
+      source = @document.source.dup
+      source.document_id = duplicate.id
+      source.save!
+    end
     head :no_content
   end
 
