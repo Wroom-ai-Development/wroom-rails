@@ -21,6 +21,9 @@
   <td onclick='document.getElementById("<%= "document-#{document.id}" %>").click();'>
     <%= document.source_based ? "Source" : "Document" %>
   </td>
+  <td onclick='document.getElementById("<%= "document-#{document.id}" %>").click();'>
+    <%= number_to_human_size(document.source.file_size) if document.source_based && document.source.present? %>
+  </td>
   <td>
     <%= button_to "❌", document, method: :delete, id: "delete-document-button-#{document.id}",
     form: {

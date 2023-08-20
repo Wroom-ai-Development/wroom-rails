@@ -20,6 +20,17 @@ class Source < ApplicationRecord
 
   after_create_commit :log_event
   after_create_commit :create_document
+  
+  after_create_commit :add_size_to_user_storage_used
+  after_destroy_commit :subtract_size_from_user_storage_used
+
+  def add_size_to_user_storage_used
+    user.update!(storage_used: user.storage_used + file_size)
+  end
+
+  def subtract_size_from_user_storage_used
+    user.update!(storage_used: user.storage_used - file_size)
+  end
 
   def parse_source_chunks_from_file # rubocop:disable Metrics/MethodLength
     raw_text = if file.content_type == 'application/pdf'
