@@ -54,6 +54,10 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     UPLOAD_STORAGE_LIMIT
   end
 
+  def percent_storage_used
+    storage_used / UPLOAD_STORAGE_LIMIT.to_f * 100
+  end
+
   after_create_commit :log_event
 
   def reonboard

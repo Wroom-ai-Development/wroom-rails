@@ -1,0 +1,29 @@
+div.storage-header {
+  color: $wroom-dark-gray;
+  i {
+    font-size: $base-font-size;
+    margin-right: 0.5rem;
+  }
+}
+div.storage-details {
+  font-size: $font-size-60;
+  color: $wroom-dark-gray;
+  margin-bottom: 1rem;
+}
+div.storage-limit-bar {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  background-color: $wroom-primary-light;
+  border-radius: 5px;
+  height: 0.5rem;
+  margin-bottom: 0.3rem;
+  div.storage-filled {
+    background-color: $wroom-dark-gray;
+    border-radius: 5px;
+    height: 0.5rem;
+    min-width: 0.5rem;
+  }
+}

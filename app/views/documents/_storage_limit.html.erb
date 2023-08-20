@@ -1,0 +1,7 @@
+<div class='storage-header'><i class="fa-solid fa-cloud fa-fw"></i>Storage</div>
+<div class='storage-limit-bar'>
+  <% if current_user.storage_used > 0 %>
+    <div class='storage-filled' style="width: <%= current_user.percent_storage_used %>%;"></div>
+  <% end %>
+</div>
+<div class='storage-details'><%= "#{number_to_human_size(current_user.storage_available)} out of #{number_to_human_size(current_user.total_storage)} available" %></div>
