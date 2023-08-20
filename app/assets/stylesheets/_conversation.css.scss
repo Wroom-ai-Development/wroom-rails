@@ -15,7 +15,7 @@ div#chat {
   div#settings {
     display: flex;
     align-items: center;
-    font-size: 0.8rem;
+    font-size: $font-size-80;
     box-sizing: border-box;
     padding: 1rem;
     flex: none;
@@ -28,13 +28,13 @@ div#chat {
       margin-left: auto;
   
       label {
-        font-size: 0.6rem;
+        font-size: $font-size-60;
       }
       select {
         max-width: 10rem;
         margin-left: 0.5rem;
         font-family: $body-font;
-        font-size: 0.7rem;
+        font-size: $font-size-70;
         padding: 0.5rem;
         border: 1px solid $wroom-light-gray;
         background-color: white;
@@ -57,7 +57,7 @@ div#chat {
         border: none;
         font-family: $body-font;
         padding: 0.5rem;
-        font-size: 0.7rem;
+        font-size: $font-size-70;
         color: $wroom-red;
         background-color: white;
         border-radius: 10px;
@@ -74,7 +74,7 @@ div#chat {
       color: $wroom-primary;
       padding: 0.5rem;
       background-color: white;
-      font-size: 0.7rem;
+      font-size: $font-size-70;
       margin-right: 0.5rem;
       border-radius: 10px;
       border: 1px solid white;
@@ -113,7 +113,7 @@ div#chat {
         padding: 1rem;
         box-sizing: border-box;
         font-family: $body-font;
-        font-size: 0.7rem;
+        font-size: $font-size-80;
         font-weight: 600;
         height: min-content;
         border-top: 1px solid $wroom-gray;
@@ -136,7 +136,7 @@ div#chat {
         border: none;
         color: $wroom-primary;
         background-color: white;
-        font-size: 1rem;
+        font-size: $base-font-size;
         width: 2rem;
       }
     }
@@ -153,7 +153,7 @@ div#chat {
       background-color: white;
       @include custom-scrollbar;
       div#initial-message {
-        font-size: 0.7rem;
+        font-size: $font-size-80;
         text-decoration: underline 1px $wroom-primary;
         width: 100%;
         padding: 1rem;
@@ -168,7 +168,7 @@ div#chat {
       div.message {
         padding: 0.5rem 2rem 0 1rem;
         text-align: justify;
-        font-size: 0.6rem;
+        font-size: $font-size-80;
         hyphens: auto;
         line-height: 0.8rem;
         width: 100%;
@@ -222,7 +222,7 @@ div#chat {
               padding-left: 0.5rem;
               padding-right: 1rem;
               padding-bottom: 0.5rem;
-              font-size: 0.8rem;
+              font-size: $font-size-80;
             };
 
             i.copy-icon {
@@ -233,14 +233,14 @@ div#chat {
             }
 
             button {
-              font-size: 0.6rem !important;
+              font-size: $font-size-60 !important;
               background-color: white;
               padding: 0;
               color: transparent;
               text-shadow: 0 0 0 $wroom-red;
               border: none;
               margin: 0;
-              font-size: 0.7rem;
+              font-size: $font-size-70;
               content: 'asdasd';
               &.copy {
                 text-shadow: 0 0 0 $wroom-primary;
@@ -308,7 +308,7 @@ form#new-message-form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: 0.7rem;
+    font-size: $font-size-70;
     color: $wroom-primary;
     padding: 1rem;
     position: absolute;
@@ -316,7 +316,7 @@ form#new-message-form {
     user-select: none;
     div.conversation-loading-label {
       width: auto;
-      font-size: 0.7rem;
+      font-size: $font-size-70;
       text-align: center;
       display: flex;
       flex-direction: column;
@@ -327,7 +327,7 @@ form#new-message-form {
       }
       a {
         margin-top: 0.5rem;
-        font-size: 0.6rem;
+        font-size: $font-size-60;
         text-align: center;
         color: $wroom-red;
         font-family: $body-font;

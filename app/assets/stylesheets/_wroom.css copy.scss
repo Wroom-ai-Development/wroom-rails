@@ -31,7 +31,7 @@ body#wroom {
     width: 100%;
     padding: 0.5rem 1rem;
     align-self: center;
-    font-size: 0.8rem;
+    font-size: $font-size-80;
     color: $wroom-primary;
     background-color: white;
     border-radius: 10px;
@@ -92,7 +92,7 @@ body#wroom {
     div#settings {
       display: flex;
       align-items: center;
-      font-size: 0.8rem;
+      font-size: $font-size-80;
       box-sizing: border-box;
       padding: 1rem;
 
@@ -102,13 +102,13 @@ body#wroom {
         margin-left: 1rem;
 
         label {
-          font-size: 0.6rem;
+          font-size: $font-size-60;
         }
         select {
           width: 15rem;
           margin-left: 0.5rem;
           font-family: $body-font;
-          font-size: 0.7rem;
+          font-size: $font-size-70;
           padding: 0.5rem;
           border: 1px solid $wroom-light-gray;
           background-color: white;
@@ -133,7 +133,7 @@ body#wroom {
           border: none;
           font-family: $body-font;
           padding: 0.5rem;
-          font-size: 0.7rem;
+          font-size: $font-size-70;
           color: $wroom-red;
           background-color: white;
           border-radius: 10px;
@@ -149,7 +149,7 @@ body#wroom {
         color: $wroom-primary;
         padding: 0.5rem;
         background-color: white;
-        font-size: 0.7rem;
+        font-size: $font-size-70;
 
         border-radius: 10px;
         &:hover {
@@ -187,7 +187,7 @@ body#wroom {
             border: none;
             padding: 0.5rem 0 0 0.5rem;
             font-family: $body-font;
-            font-size: 0.7rem;
+            font-size: $font-size-70;
             height: min-content;
             background-color: $wroom-lighter-gray;
             resize: none;
@@ -206,7 +206,7 @@ body#wroom {
             border: none;
             color: $wroom-primary;
             background-color: white;
-            font-size: 1rem;
+            font-size: $base-font-size;
             width: 2rem;
           }
         }
@@ -221,7 +221,7 @@ body#wroom {
           padding-left: 1rem;
   
           div#initial-message {
-            font-size: 0.7rem;
+            font-size: $font-size-70;
             text-decoration: underline 1px $wroom-primary;
             width: 100%;
             padding: 1rem;
@@ -233,12 +233,12 @@ body#wroom {
             display: flex;
             flex-direction: column;
             align-items: center;
-            font-size: 0.7rem;
+            font-size: $font-size-70;
             color: $wroom-primary;
             padding: 1rem;
             div.conversation-loading-label {
               width: auto;
-              font-size: 0.7rem;
+              font-size: $font-size-70;
               text-align: center;
               display: flex;
               flex-direction: column;
@@ -249,7 +249,7 @@ body#wroom {
               }
               a {
                 margin-top: 0.5rem;
-                font-size: 0.6rem;
+                font-size: $font-size-60;
                 text-align: center;
                 color: $wroom-red;
                 font-family: $body-font;
@@ -270,7 +270,7 @@ body#wroom {
           div.message {
             padding: 0.5rem 2rem 0 1rem;
             text-align: justify;
-            font-size: 0.6rem;
+            font-size: $font-size-60;
             hyphens: auto;
             line-height: 0.8rem;
             width: 100%;
@@ -325,13 +325,13 @@ body#wroom {
                 button {
                   height: 1rem;
                   width: 1rem;
-                  font-size: 1rem;
+                  font-size: $base-font-size;
                   background-color: white;
                   color: transparent;
                   text-shadow: 0 0 0 $wroom-red;
                   border: none;
                   margin: 0;
-                  font-size: 0.7rem;
+                  font-size: $font-size-70;
                   content: 'asdasd';
                   &.copy {
                     text-shadow: 0 0 0 $wroom-primary;
@@ -409,7 +409,7 @@ body#wroom {
           border: none;
           color: transparent;
           text-shadow: 0 0 0 $wroom-red;
-          font-size: 0.7rem;
+          font-size: $font-size-70;
         }
       }
 
@@ -430,7 +430,7 @@ body#wroom {
 
       trix-editor {
         height: 60vh;
-        font-size: 0.7rem;
+        font-size: $font-size-70;
         overflow-y: auto;
         background-color: white;
         padding-right: 1rem;
@@ -447,7 +447,7 @@ body#wroom {
           width: -webkit-fill-available;
           margin-right: 1rem;
           font-family: $body-font;
-          font-size: 1rem;
+          font-size: $base-font-size;
           font-weight: 500;
           background-color: white;
           border: none;
@@ -467,7 +467,7 @@ body#wroom {
         font-family: $body-font;
         color: $wroom-primary;
         background-color: rgba(0, 0, 0, 0);
-        font-size: 0.7rem;
+        font-size: $font-size-70;
         width: 100%;
         text-align: end;
         &:hover {

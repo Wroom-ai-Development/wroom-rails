@@ -8,7 +8,7 @@ div#record-form-view {
   display: flex;
   align-items: start;
   justify-content: center;
-  font-size: 0.7rem;
+  font-size: $font-size-70;
 
   div#record-form-box {
     display: flex;
@@ -37,12 +37,12 @@ div#record-form-view {
         margin: 0;
         margin-bottom: -0.5rem;
         color: $wroom-gray;
-        font-size: 0.8rem;
+        font-size: $font-size-80;
       }
       a {
         color: transparent;
         text-shadow: 0 0 0 $wroom-dark-gray;
-        font-size: 0.6rem;
+        font-size: $font-size-60;
       }
 
       i {
@@ -82,7 +82,7 @@ div#record-form-view {
         background-color: white;
         border: none;
         color: $wroom-primary;
-        font-size: 0.6rem;
+        font-size: $font-size-60;
         margin: 0;
         padding: 0;
         &:hover {
@@ -95,7 +95,7 @@ div#record-form-view {
         font-family: $body-font;
         background-color: white;
         border: none;
-        font-size: 0.7rem;
+        font-size: $font-size-70;
         margin: 0;
         padding: 0;
       }
@@ -106,7 +106,7 @@ div#record-form-view {
 
         label {
           margin-bottom: 0.1rem;
-          font-size: 0.7rem;
+          font-size: $font-size-70;
         }
       }
 
@@ -129,7 +129,7 @@ div#record-form-view {
           padding: 0.5rem;
           border-radius: 5px;
           border: 1px solid $wroom-gray;
-          font-size: 0.8rem;
+          font-size: $font-size-80;
           &:hover {
             background-color: $wroom-primary-light;
           }

@@ -25,7 +25,7 @@ div.monitoring {
       }
 
       h6 {
-        font-size: 0.9rem;
+        font-size: $font-size-90;
         margin: 0;
       }
       ul {
@@ -38,7 +38,7 @@ div.monitoring {
           background-color: rgb(19, 21, 24);
           color: rgb(21, 218, 40);
           width: 100%;
-          font-size: 0.8rem;
+          font-size: $font-size-80;
           padding: 0.5rem;
           margin-bottom: 0.4rem;
           font-weight: 700;
