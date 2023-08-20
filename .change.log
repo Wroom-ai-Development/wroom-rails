@@ -20,6 +20,7 @@
 - Adjusted editor colors and logo to match dashboard
 - Added currently selected table to chat context
 - Added clear context button
+- Added carets to folders with contents
 
 ### Version 0.2.0
 Out August 6th 2023
