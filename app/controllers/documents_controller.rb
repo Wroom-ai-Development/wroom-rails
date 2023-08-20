@@ -41,7 +41,7 @@ class DocumentsController < ApplicationController
     head :ok
   end
 
-  def duplicate
+  def duplicate # rubocop:disable Metrics/AbcSize Metrics/MethodLength
     @document = Document.find(params[:id])
     duplicate = @document.dup
     duplicate.cloned_from = @document.id
