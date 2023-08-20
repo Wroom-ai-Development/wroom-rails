@@ -23,9 +23,7 @@ class SourcesController < ApplicationController
   # POST /sources or /sources.json
   def create # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     @source = Source.new(source_params)
-    if source_params[:file].present?
-      @source.file_size = source_params[:file].size
-    end
+    @source.file_size = source_params[:file].size if source_params[:file].present?
     save_section_headers
     if @source.save
       if @source.file.attached?
@@ -47,9 +45,7 @@ class SourcesController < ApplicationController
     respond_to do |format|
       if @source.update(source_params)
         old_headers = @source.section_headers
-        if source_params[:file].present?
-          @source.file_size = source_params[:file].size
-        end
+        @source.file_size = source_params[:file].size if source_params[:file].present?
         if params[:source][:section_headers].blank?
           @source.update(section_headers: [])
         else
