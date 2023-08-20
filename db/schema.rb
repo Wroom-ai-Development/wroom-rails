@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_15_155457) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_20_100416) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -90,6 +90,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_15_155457) do
     t.boolean "source_based", default: false, null: false
     t.bigint "folder_id"
     t.datetime "discarded_at"
+    t.integer "cloned_from"
     t.index ["discarded_at"], name: "index_documents_on_discarded_at"
     t.index ["folder_id"], name: "index_documents_on_folder_id"
     t.index ["user_id"], name: "index_documents_on_user_id"

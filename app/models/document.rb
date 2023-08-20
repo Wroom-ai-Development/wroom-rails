@@ -15,6 +15,7 @@ class Document < ApplicationRecord
 
   after_create_commit :log_event
   after_create_commit :create_conversation
+  after_create_commit :broadcast_create
   after_discard :remove_document_row
   after_save :remove_document_row, if: :saved_change_to_folder_id?
 
@@ -24,6 +25,16 @@ class Document < ApplicationRecord
     Source.where(document_id: id).destroy_all
     source = Source.create!(name: title, user_id:, document_id: id, fileless: true)
     source.parse_source_chunks_from_text(content.body.to_plain_text)
+  end
+
+  def broadcast_create
+    broadcast_after_to(
+      user.id,
+      'folder_documents',
+      partial: 'folders/document_row',
+      locals: { document: self },
+      target: "document-row-#{cloned_from}"
+    )
   end
 
   def remove_document_row

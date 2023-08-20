@@ -6,6 +6,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       patch 'autosave'
       get 'editor'
       get 'undiscard'
+      get 'duplicate'
     end
   end
   resources :folders do
