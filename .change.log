@@ -16,6 +16,7 @@
 - Made prompt clear after sending in chat
 - Adjusted font sizes all over the app
 - Fixed bug with word docs not parsing tables
+- User is redirected to parent folder after a folder is created
 
 ### Version 0.2.0
 Out August 6th 2023
