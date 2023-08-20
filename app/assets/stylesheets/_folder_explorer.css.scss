@@ -1,5 +1,6 @@
 @import 'colors';
 @import 'pulse_shadow';
+@import 'fonts';
 
 form#empty-trash-form {
   display: flex;
@@ -10,7 +11,7 @@ form#empty-trash-form {
     color: white;
     border-radius: 3px;
     padding: 0.3rem;
-    font-size: 0.6rem;
+    font-size: $font-size-60;
     font-weight: 900;
     border: none;
     margin-left: auto;
@@ -129,7 +130,7 @@ div.folder-content {
     display: flex;
     align-items: center;
     span.icon {
-      font-size: 1rem;
+      font-size: $base-font-size;
     }
     &:hover {
       background-color: $wroom-light-gray;
@@ -138,7 +139,7 @@ div.folder-content {
   }
   div.no-content {
     h3 {
-      font-size: 1rem;
+      font-size: $base-font-size;
     }
     p {
       span {

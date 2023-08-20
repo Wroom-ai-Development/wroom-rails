@@ -3,7 +3,7 @@
 class ConversationsController < ApplicationController
   before_action :set_conversation,
                 only: %i[settings update_settings chat context toggle_context
-                         new_message clear_chat cancel_processing]
+                         new_message clear_chat cancel_processing clear_context]
 
   def chat
     @conversation.user.conversations.where.not(id: @conversation.id).map(&:cancel_processing)
@@ -24,6 +24,11 @@ class ConversationsController < ApplicationController
         document: @document
       )
     end
+    head :no_content
+  end
+
+  def clear_context
+    @conversation.context_references.destroy_all
     head :no_content
   end
 

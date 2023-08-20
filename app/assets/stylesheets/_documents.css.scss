@@ -16,7 +16,7 @@ div#documents {
   background-color: white;
   overflow-y: auto;
   border-radius: 10px;
-  font-size: 0.7rem;
+  font-size: $font-size-70;
   flex-grow: 1;
   div.documents-wrapper {
     @include custom-scrollbar;
@@ -35,7 +35,7 @@ div#documents {
       width: 100%;
       padding: 0.5rem 1rem;
       align-self: flex-end;
-      font-size: 1rem;
+      font-size: $base-font-size;
       color: $wroom-primary;
       background-color: $wroom-primary;
       border-radius: 5px;
@@ -79,7 +79,7 @@ div#documents {
     overflow: hidden;
     text-overflow: ellipsis;
     i {
-      font-size: 0.8rem;
+      font-size: $font-size-80;
       margin-right: -0.1rem;
     }
     &:hover {

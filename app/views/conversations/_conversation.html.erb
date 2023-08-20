@@ -2,10 +2,12 @@
   function handleEnter(e) {
     const newMessageForm = document.getElementById('new-message-form')
     const submitButton = document.getElementById('submit')
+    const newMessageTextArea = document.getElementById('new-message-text-area')
     console.log("yay")
     if (e.which === 13 && !e.shiftKey) {
       e.preventDefault();
       submitButton.click();
+      newMessageTextArea.value = '';
     }
   };
   document.getElementById('new-message-text-area').addEventListener('keypress', handleEnter);

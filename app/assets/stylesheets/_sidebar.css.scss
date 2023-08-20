@@ -19,7 +19,7 @@ div#sidebar {
   height: 100%;
   overflow-y: auto;
   border-bottom-right-radius: 30px;
-  font-size: 0.8rem;
+  font-size: $font-size-80;
   overflow: hidden;
   padding-bottom: 0.5rem;
 
@@ -61,7 +61,7 @@ div#sidebar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 0.6rem;
+    font-size: $font-size-60;
     padding-left: 0.5rem;
     margin-top: 0.5rem;
 
@@ -69,7 +69,7 @@ div#sidebar {
       background-color: rgba(0,0,0,0);
       border: none;
       outline: none;
-      font-size: 0.6rem;
+      font-size: $font-size-60;
 
       cursor: pointer;
       &:hover {
@@ -85,7 +85,7 @@ div#sidebar {
     }
     a.settings-link {
       margin-left: 0.7rem;
-      font-size: 0.8rem;
+      font-size: $font-size-80;
       color: transparent;
       align-self: center;
       text-shadow: 0 0 0 $wroom-dark-gray;
@@ -192,7 +192,7 @@ div#sidebar {
   }
 }
 div.new {
-  font-size: 0.7rem;
+  font-size: $font-size-70;
   font-weight: 400;
   box-sizing: border-box;
   margin-bottom: 0.5rem;
@@ -204,7 +204,7 @@ div.new {
     background-color: $wroom-dark-gray;
     border-radius: 5px;
     text-align: center;
-    font-size: 0.9rem;
+    font-size: $font-size-90;
     font-weight: 800;
     padding-top: 0.2rem;
     i {
@@ -221,7 +221,7 @@ div.new {
     z-index: 999;
     text-align: left;
     flex-direction: column;
-    font-size: 0.6rem;
+    font-size: $font-size-60;
     font-weight: 300;
     position: relative;
     box-sizing: border-box;

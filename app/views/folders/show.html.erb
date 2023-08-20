@@ -40,6 +40,7 @@
           <th>Type</th>
           <th></th>
           <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody id='draggables'>
@@ -59,6 +60,7 @@
               <i class="fa fa-folder fa-fw" style="margin-right: 0.3rem;"></i>..
               <% end %>
             </td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -97,51 +99,14 @@
               } %>
               <i class="fa-solid fa-trash fa-fw delete-icon" onClick="document.getElementById('delete-folder-button-<%= folder.id %>').click();"></i>
             </td>
+            <td></td>
             <td>
               <i class="fa-solid fa-grip-vertical"></i>
             </td>
           <% end %>
         <% end %>
-        <% @folder.documents.kept.each do |document| %>
-          <%= content_tag :tr, id: "document-row-#{document.id}", class: 'draggable', draggable: true, data: {
-            controller: 'drag',
-            action: drag_actions,
-            resource_id: document.id,
-            draggable_type: 'document',
-            url: drag_document_path
-          } do %>
-            <td onclick='document.getElementById("<%= "document-#{document.id}" %>").click();'>
-              <%= link_to wroom_path(document_id: document.id), id: "document-#{document.id}", draggable: false, data: { turbo_frame: '_top' } do %>
-                <% if document.source_based %>
-                  <i class="fa fa-book fa-fw" aria-hidden="true"></i>
-                <% else %>
-                  <i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>
-                <% end %>
-                <%= document.title %>
-              <% end %>
-            </td>
-            <td onclick='document.getElementById("<%= "document-#{document.id}" %>").click();'><%= document.created_at.strftime("%b %d, %Y %H:%M") %></td>
-            <td onclick='document.getElementById("<%= "document-#{document.id}" %>").click();'><%= document.updated_at.strftime("%b %d, %Y %H:%M") %></td>
-            <td onclick='document.getElementById("<%= "document-#{document.id}" %>").click();'>
-              <%= document.source_based ? "Source" : "Document" %>
-            </td>
-            <td>
-              <%= button_to "❌", document, method: :delete, id: "delete-document-button-#{document.id}",
-              form: {
-                id: 'delete-form',
-                data: {
-                    turbo: false,
-                    controller: "confirmation",
-                    action: 'submit->confirmation#confirm',
-                    confirmation_message_value: "Please confirm you meant to delete #{document.title}",
-                }
-              } %>
-              <i class="fa-solid fa-trash fa-fw delete-icon" onClick="document.getElementById('delete-document-button-<%= document.id %>').click();"></i>
-            </td>
-            <td>
-              <i class="fa-solid fa-grip-vertical"></i>
-            </td>
-          <% end %>
+        <% @folder.documents.order(:title).kept.each do |document| %>
+          <%= render 'folders/document_row', document: document %>
         <% end %>
       </table>
     <% end %>

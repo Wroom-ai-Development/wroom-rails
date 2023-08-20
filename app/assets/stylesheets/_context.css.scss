@@ -1,11 +1,12 @@
 @import 'colors';
 @import 'fonts';
+@import 'scrollbars';
 
 div.context {
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-  font-size: 0.7rem;
+  font-size: $font-size-70;
   box-sizing: border-box;
   height: 90vh;
   background-color: white;
@@ -17,7 +18,7 @@ div.context {
     justify-content: space-between;
     padding: 1rem;
     h3 {
-      font-size: 0.7rem;
+      font-size: $font-size-70;
       font-weight: 500;
       margin: 0;
       user-select: none;
@@ -33,12 +34,73 @@ div.context {
     }
   }
 
+  div.currently-selected {
+    padding: 1rem 0 1rem 1rem;
+
+    div.current-context-header {
+      h3 {
+        font-size: $font-size-70;
+        font-weight: 100;
+        margin: 0;
+        user-select: none;
+      }
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    a.clear-context {
+      margin-left: auto;
+      color: $wroom-red;
+      border-radius: 3px;
+      border: 1px solid $wroom-red;
+      padding: 0.2rem 0.5rem;
+      font-size: $font-size-70;
+      text-decoration: none;
+      margin-right: 1rem;
+      &:hover {
+        background-color: $wroom-red;
+        color: white;
+      }
+    }
+    
+    div.context-table-container {
+      height: 30vh;
+      overflow-y: auto;
+      @include custom-scrollbar;
+
+      table {
+        width: 100%;
+        border-spacing: 0;
+
+        td {
+          padding: 0;
+          &:last-child {
+            button {
+              text-align: right;
+            }
+            i {
+              margin-right: 1rem;
+            }
+            i:hover {
+              color: $wroom-red;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+  }
+
   div.folders {
     background-color: white;
-    flex: auto;
-    height: 10px;
+    height: 30vh;
     margin-bottom: 3rem;
     padding: 1rem;
+    overflow-y: scroll;
+    @include custom-scrollbar;
   }
 
 
@@ -53,7 +115,7 @@ div.context {
       border: none;
       text-align: left;
       padding-left: 0;
-      font-size: 0.7rem;
+      font-size: $font-size-70;
       height: 1.5rem;
       margin: 0;
     }

@@ -18,7 +18,7 @@
 
 body#wroom {
   color: $wroom-dark-gray;
-  background-color: $wroom-light-gray;
+  background-color: $wroom-primary;
   padding: 1rem;
 
   display: flex;
@@ -89,7 +89,7 @@ body#wroom {
     
         font-weight: $app-logo-weight;
         font-size: $app-logo-size;
-        color: $wroom-logo-primary;
+        color: white;
         span.oo {
           color: $wroom-logo-secondary;
         }

@@ -41,7 +41,7 @@ div#content {
   background-color: white;
   padding: 1rem;
   border-top-left-radius: 30px;
-  font-size: 0.8rem;
+  font-size: $font-size-80;
   z-index: 995;
   padding-top: 11vh;
   padding-left: 4vw;
@@ -53,7 +53,7 @@ div#content {
     align-items: start;
     justify-content: space-between;
     span {
-      font-size: 1.1rem;
+      font-size: $font-size-110;
       font-weight: 100;
       color: $wroom-dark-gray;
       margin-right: 1rem;
@@ -64,7 +64,7 @@ div#content {
       align-items: baseline;
       a, button {
         font-family: $body-font;
-        font-size: 0.7rem;
+        font-size: $font-size-70;
         background-color: white;
         color: $wroom-primary;
         margin: 0;
@@ -94,7 +94,7 @@ main {
   width: 100%;
   font-family: $body-font;
   font-weight: 300;
-  font-size: 0.9rem;
+  font-size: $font-size-90;
   display: flex;
 }
 

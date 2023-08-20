@@ -7,7 +7,7 @@ div.new-folder {
     margin-top: 1rem;
     input {
       font-family: $body-font;
-      font-size: 0.7rem;
+      font-size: $font-size-70;
       padding: 0.5rem;
       &:focus {
         background-color: $wroom-lighter-gray;
@@ -22,6 +22,20 @@ div.new-folder {
       }
       &[type="text"] {
         width: 50vw;
+      }
+      &[type="submit"] {
+        background-color: $wroom-primary;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        font-size: $font-size-70;
+        font-weight: bold;
+        padding: 0.5rem;
+        width: 10vw;
+        &:hover {
+          background-color: $wroom-dark-gray;
+        }
       }
       border: 1px solid $wroom-light-gray;
       border-radius: 5px;

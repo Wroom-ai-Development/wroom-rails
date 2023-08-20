@@ -22,13 +22,13 @@ header {
       font-family: $logo-font;
       color: black;
       font-weight: 900;
-      font-size: 1.1rem;
+      font-size: $font-size-110;
     }
 
     p#dashboard {
       font-family: $logo-font;
       font-weight: 100;
-      font-size: 0.9rem;
+      font-size: $font-size-90;
       padding-left: 0.5rem;
       color: $wroom-dark-gray;
       text-decoration: none;
@@ -40,7 +40,7 @@ header {
   nav {
     display: flex;
     align-items: baseline;
-    font-size: 0.6rem;
+    font-size: $font-size-60;
     margin-right: 1rem;
 
     a {
@@ -59,7 +59,7 @@ header {
         color: black;
         padding: 0.5rem;
         border-radius: 40px;
-        font-size: 0.7rem;
+        font-size: $font-size-70;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -69,7 +69,7 @@ header {
       color: $wroom-red;
       background-color: rgba(0, 0, 0, 0);
       font-family: $body-font;
-      font-size: 0.6rem;
+      font-size: $font-size-60;
       margin-right: 0.5rem;
       border: none;
       &:hover {
@@ -102,7 +102,7 @@ header {
     }
     
     p#current-user {
-      font-size: 0.6rem;
+      font-size: $font-size-60;
       font-weight: 200;
     }
 
@@ -113,7 +113,7 @@ header {
 
     a.settings-link {
       margin-left: 0.7rem;
-      font-size: 0.8rem;
+      font-size: $font-size-80;
       color: transparent;
       align-self: center;
       text-shadow: 0 0 0 $wroom-dark-gray;

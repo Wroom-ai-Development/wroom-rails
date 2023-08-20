@@ -7,7 +7,7 @@ google:
 google_dev:
   service: GCS
   project: WROOM-poc
-  credentials: <%= Rails.root.join("config/secrets/google-service-account-key.json") %>
+  credentials: <%= Rails.root.join("google-service-account-key.json") %>
   bucket: wroom-rails
 
 test:

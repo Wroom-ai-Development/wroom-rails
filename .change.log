@@ -13,6 +13,18 @@
 - Implemented FontAwesome icons
 - Adjusted dashboard form styling
 - Added new button to editor app
+- Made prompt clear after sending in chat
+- Adjusted font sizes all over the app
+- Fixed bug with word docs not parsing tables
+- User is redirected to parent folder after a folder is created
+- Adjusted editor colors and logo to match dashboard
+- Added currently selected table to chat context
+- Added clear context button
+- Added carets to folders with contents
+- Allowed document download
+- Added copy buttons to alternative answers
+
+
 
 ### Version 0.2.0
 Out August 6th 2023

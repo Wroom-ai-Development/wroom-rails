@@ -41,6 +41,14 @@ class DocumentsController < ApplicationController
     head :ok
   end
 
+  def duplicate
+    @document = Document.find(params[:id])
+    duplicate = @document.dup
+    duplicate.cloned_from = @document.id
+    duplicate.save!
+    head :no_content
+  end
+
   # DELETE /documents/1 or /documents/1.json
   def destroy
     @document.discard

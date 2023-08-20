@@ -13,14 +13,14 @@ div.settings-view {
 
     div.action-needed {
       margin-bottom: 2rem;
-      font-size: 0.8rem;
+      font-size: $font-size-80;
       padding: 3rem 5rem;
       text-align: justify;
       color: black;
       h3 {
         margin: 0 0 1rem 0;
         color: $wroom-red;
-        font-size: 1rem;
+        font-size: $base-font-size;
       }
 
     }
@@ -29,12 +29,12 @@ div.settings-view {
       margin-top: 0.5rem;
       h2 {
         text-decoration: underline 1px $wroom-red;
-        font-size: 0.7rem;
+        font-size: $font-size-70;
       }
       ul {
         padding: 0;
         list-style: none;
-        font-size: 0.7rem;
+        font-size: $font-size-70;
       }
     }
     
@@ -53,12 +53,12 @@ div.settings-view {
 
       h3 {
         margin: 0;
-        font-size: 0.8rem;
+        font-size: $font-size-80;
       }
       a {
         color: transparent;
         text-shadow: 0 0 0 $wroom-dark-gray;
-        font-size: 0.6rem;
+        font-size: $font-size-60;
       }
     }
 
@@ -88,7 +88,7 @@ div.settings-view {
         background-color: white;
         border: none;
         color: $wroom-primary;
-        font-size: 0.7rem;
+        font-size: $font-size-70;
         margin: 0;
         padding: 0;
       }
@@ -98,7 +98,7 @@ div.settings-view {
         font-family: $body-font;
         background-color: white;
         border: none;
-        font-size: 0.7rem;
+        font-size: $font-size-70;
         margin: 0;
         padding: 0;
       }
@@ -109,11 +109,11 @@ div.settings-view {
 
         label {
           margin-bottom: 0.1rem;
-          font-size: 0.7rem;
+          font-size: $font-size-70;
         }
         
         i {
-          font-size: 0.7rem;
+          font-size: $font-size-70;
         }
       }
 
@@ -128,7 +128,7 @@ div.settings-view {
       }
 
       div.password-instructions {
-        font-size: 0.7rem;
+        font-size: $font-size-70;
         margin-bottom: 0.5rem;
       }
 
@@ -142,7 +142,7 @@ div.settings-view {
           padding: 0.5rem;
           border-radius: 5px;
           border: 1px solid $wroom-gray;
-          font-size: 0.8rem;
+          font-size: $font-size-80;
           &:hover {
             background-color: $wroom-primary-light;
           }
