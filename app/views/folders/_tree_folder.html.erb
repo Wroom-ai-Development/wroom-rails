@@ -8,10 +8,10 @@
     </div>
   <% end %>
   <div class="children" style="display: none;">
-    <% folder.children.kept.each do |child_folder| %>
+    <% folder.children.order(:name).kept.each do |child_folder| %>
       <%= render 'folders/tree_folder', folder: child_folder %>
     <% end %>
-    <% folder.documents.kept.each do |document| %>
+    <% folder.documents.order(:title).kept.each do |document| %>
       <%= render 'folders/tree_document', document: document %>
     <% end %>
   </div>

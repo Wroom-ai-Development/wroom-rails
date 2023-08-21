@@ -46,6 +46,13 @@ class Document < ApplicationRecord
       locals: { document: self },
       target: "document-row-#{cloned_from}"
     )
+    broadcast_after_to(
+      user.id,
+      'sidebar_explorer',
+      partial: 'folders/tree_document',
+      locals: { document: self },
+      target: "tree-document-#{cloned_from}"
+    )
   end
 
   def update_storage_bar
