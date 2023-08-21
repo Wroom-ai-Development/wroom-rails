@@ -34,6 +34,7 @@ Out August 21st 2023
 - Added link to my files in logo
 - Fixed storage counting bug
 - Fixed csrf bug when deleting duplicated items
+- Lowered chunk size by half
 
 
 

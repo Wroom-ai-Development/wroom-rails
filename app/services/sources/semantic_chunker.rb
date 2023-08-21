@@ -3,7 +3,7 @@
 module Sources
   class SemanticChunker # rubocop:disable Metrics/ClassLength
     # TODO : Dynamically set this value depending on tokens in messages
-    CHUNK_MAX_TOKEN_SIZE = 10_000
+    CHUNK_MAX_TOKEN_SIZE = 5_000
     # TODO : Implement actual token counts
     CHARACTERS_PER_TOKEN = 2.7
     HEADER_RECOGNITION_THRESHOLD = 5
