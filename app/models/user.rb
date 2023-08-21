@@ -42,7 +42,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     documents.discarded.any? || voices.discarded.any? || folders.discarded.any?
   end
 
-  def root_folderfff
+  def root_folder
     folders.where(type: 'RootFolder').first_or_create!(name: '/')
   end
 

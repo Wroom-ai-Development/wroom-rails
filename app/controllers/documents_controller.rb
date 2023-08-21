@@ -52,6 +52,9 @@ class DocumentsController < ApplicationController
     conversation.save!
     if @document.source.present?
       source = @document.source.dup
+      @document.source.source_chunks.each do |chunk|
+        source.source_chunks << chunk.dup
+      end
       source.file.attach @document.source.file.blob
       source.save!
       duplicate.source = source
