@@ -38,7 +38,7 @@ class Document < ApplicationRecord
     source.parse_source_chunks_from_text(content.body.to_plain_text)
   end
 
-  def broadcast_create
+  def broadcast_create # rubocop:disable Metrics/MethodLength
     broadcast_after_to(
       user.id,
       'folder_documents',

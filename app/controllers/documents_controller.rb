@@ -52,9 +52,10 @@ class DocumentsController < ApplicationController
     conversation.save!
     if @document.source.present?
       source = @document.source.dup
-      source.document_id = duplicate.id
       source.file.attach @document.source.file.blob
       source.save!
+      duplicate.source = source
+      duplicate.save!
     end
     @document.update_storage_bar
     head :no_content
