@@ -57,6 +57,11 @@ class DocumentsController < ApplicationController
       conversation.voice = @document.conversation.voice
     end
     conversation.save!
+    if @document.conversation.context_references.present?
+      @document.conversation.context_references.each do |reference|
+        ContextReference.create!(document_id: reference.document_id, conversation_id: conversation.id)
+      end
+    end
     duplicate.conversation = conversation
     duplicate.save!
     if @document.source.present?
