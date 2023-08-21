@@ -48,8 +48,14 @@ class DocumentsController < ApplicationController
     duplicate.content = @document.content
     duplicate.save!
     conversation = @document.conversation.dup
-    conversation.document_id = duplicate.id
+    if @document.conversation.messages.present?
+      @document.conversation.messages.each do |message|
+        conversation.messages << message.dup
+      end
+    end
     conversation.save!
+    duplicate.conversation = conversation
+    duplicate.save!
     if @document.source.present?
       source = @document.source.dup
       @document.source.source_chunks.each do |chunk|
