@@ -14,7 +14,7 @@ div#sidebar {
   height: 100%;
   display: flex;
   flex-direction: column;
-  z-index: 995;
+  z-index: 300;
   background-color: $wroom-primary;
   height: 100%;
   overflow-y: auto;
@@ -198,7 +198,6 @@ div.new {
   margin-bottom: 0.5rem;
   display: block;
   div.button {
-    animation: pulseShadow 4s infinite alternate;
     height: 1.5rem;
     color: white;
     background-color: $wroom-dark-gray;
@@ -223,7 +222,7 @@ div.new {
     flex-direction: column;
     font-size: $font-size-60;
     font-weight: 300;
-    position: relative;
+    // position: relative;
     box-sizing: border-box;
     color: $wroom-primary;
     background-color: $wroom-light-gray;
@@ -240,7 +239,7 @@ div.new {
       box-sizing: border-box;
       border-radius: 3px;
       &:hover {
-        background-color: $wroom-light-gray;
+        background-color: $wroom-lighter-gray;
       }
     }
   }

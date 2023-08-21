@@ -1,0 +1,33 @@
+<script>
+  function showNewOptions() {
+    const options = document.getElementsByClassName('options')[0];
+    const button = document.getElementById('new-button');
+    options.style.display = 'flex';
+    button.addEventListener('click', hideOptions)
+    document.body.addEventListener('click', function(e) {
+      if (options.contains(e.target) || button.contains(e.target)) {
+        // hideOptions();
+      } else {
+        hideOptions();
+      }
+    })
+  }
+  function hideOptions() {
+    const options = document.getElementsByClassName('options')[0];
+    const button = document.getElementById('new-button');
+    button.removeEventListener('click', hideOptions)
+    button.addEventListener('click', showNewOptions)
+    options.style.display = 'none';
+  }
+</script>
+<div class="new">
+  <div class="button" onClick="showNewOptions();" id="new-button">
+    <i class="fa-solid fa-square-plus"></i><span>New</span>
+  </div>
+  <div class="options" style="display: none;">
+    <%= link_to "New folder", new_folder_path, data: { turbo_action: 'replace', turbo_frame: 'view_content' } %>
+    <%= link_to "New document", new_document_path, data: { turbo_action: 'replace', turbo_frame: '_top' } %>
+    <%= link_to "Upload document", new_source_path, data: { turbo_action: 'replace', turbo_frame: 'view_content' } %>
+    <%= link_to "New voice", manager_voices_path %>
+  </div>
+</div>
