@@ -22,9 +22,11 @@
 <div id='sidebar-background'>
   <div id='sidebar'>
     <div id='wroom-logo'>
-      <div>
-        <span id='wroom'>WROOM</span>
-      </div>
+      <%= link_to dashboard_path do %>
+        <div>
+          <span id='wroom'>WROOM</span>
+        </div>
+      <% end %>
     </div>
     <%= render 'wroom/new_button' %>
     <div id='folder-tree'>
