@@ -1,0 +1,10 @@
+<%= turbo_stream_from user.id, "mana-bar" %>
+<div id='gpt_cost_bar'>
+  <div class='mana-header'><i class="fa-solid fa-fire fa-fw"></i>Mana</div>
+  <div class='mana-limit-bar'>
+    <% if user.storage_used > 0 %>
+      <div class='mana-filled' style="width: <%= user.percentage_gpt_fees_available %>%;"></div>
+    <% end %>
+  </div>
+  <div class='mana-details'><%= "#{"%.2f" % (user.gpt_budget_available * 100)} out of #{user.gpt_fees_limit.to_i * 100} MP available" %></div>
+</div>

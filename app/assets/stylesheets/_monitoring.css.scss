@@ -3,11 +3,10 @@
 @import 'fonts';
 
 div.monitoring {
-  font-family: 'Inconsolata', monospace;
   margin-top: 1rem;
   align-items: flex-start;
   overflow: hidden;
-  background-color: rgb(11, 9, 21);
+  background-color: $wroom-primary;
   border-radius: 10px;
   padding: 1rem;
   height: 72vh;
@@ -37,18 +36,19 @@ div.monitoring {
         margin: 0 2rem 0 0;
         padding: 0;
         li {
-          background-color: rgb(19, 21, 24);
-          color: rgb(21, 218, 40);
+          background-color: $wroom-lighter-gray;
+          color: $wroom-dark-gray;
           width: 100%;
-          font-size: $font-size-80;
+          font-size: $font-size-70;
           padding: 0.5rem;
           margin-bottom: 0.4rem;
-          font-weight: 700;
+          font-weight: 300;
           line-height: 1rem;
           border-radius: 5px;
           list-style-type: none;
           h6 {
-            color: rgb(21, 218, 40);
+            color: $wroom-dark-gray;
+            margin-top: 1rem;
           }
           p {
             margin-top: 0.5rem;

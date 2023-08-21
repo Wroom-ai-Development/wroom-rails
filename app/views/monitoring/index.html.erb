@@ -19,7 +19,10 @@
         <h5>Total tokens used since 2023-07-12: <%= @total_tokens_used %></h5>
         <% @users_data.each do |user| %>
           <h4><%= user[:email] %>:</h4>
+          <% user_record = User.find(user[:id]) %>
           <li>
+            <%= render 'conversations/gpt_cost_limit', user: user_record %>
+            <%= render 'documents/storage_limit', user: user_record %>
             <div>
               <h6>GPT-4:</h6>
               <p>
@@ -55,12 +58,7 @@
               <h6>
                 Total:
               </h6>
-              $<%= "%.2f" % (user[:gpt_4_input_tokens_price] +
-                  user[:gpt_4_output_tokens_price] +
-                  user[:gpt_3_5_turbo_16k_input_tokens_price] +
-                  user[:gpt_3_5_turbo_16k_output_tokens_price] +
-                  user[:gpt_3_5_turbo_input_tokens_price] +
-                  user[:gpt_3_5_turbo_output_tokens_price]) %>
+              $<%= "%.2f" % user_record.total_gpt_cost %>
             </div>
           </li>
         <% end %>
