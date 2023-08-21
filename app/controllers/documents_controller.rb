@@ -41,15 +41,27 @@ class DocumentsController < ApplicationController
     head :ok
   end
 
-  def duplicate # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def duplicate # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
     @document = Document.find(params[:id])
     duplicate = @document.dup
     duplicate.cloned_from = @document.id
     duplicate.content = @document.content
     duplicate.save!
     conversation = @document.conversation.dup
-    conversation.document_id = duplicate.id
+    if @document.conversation.messages.present?
+      @document.conversation.messages.each do |message|
+        conversation.messages << message.dup
+      end
+    end
+    conversation.voice = @document.conversation.voice if @document.conversation.voice.present?
     conversation.save!
+    if @document.conversation.context_references.present?
+      @document.conversation.context_references.each do |reference|
+        ContextReference.create!(document_id: reference.document_id, conversation_id: conversation.id)
+      end
+    end
+    duplicate.conversation = conversation
+    duplicate.save!
     if @document.source.present?
       source = @document.source.dup
       @document.source.source_chunks.each do |chunk|

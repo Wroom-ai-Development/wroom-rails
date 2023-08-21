@@ -18,7 +18,7 @@ class ContextReference < ApplicationRecord
         conversation:,
         document:
       },
-      target: "tree-document-#{document.id}"
+      target: "context-tree-document-#{document.id}"
     )
     broadcast_append_to(
       conversation.id,
@@ -41,7 +41,7 @@ class ContextReference < ApplicationRecord
         conversation:,
         document:
       },
-      target: "tree-document-#{document.id}"
+      target: "context-tree-document-#{document.id}"
     )
     broadcast_remove_to(
       conversation.id,

@@ -1,5 +1,5 @@
 
-<%= button_to toggle_context_conversation_path(id: conversation.id, document_id: document.id), method: :patch, form: { id: "tree-document-#{document.id}" } do %>
+<%= button_to toggle_context_conversation_path(id: conversation.id, document_id: document.id), method: :patch, form: { id: "context-tree-document-#{document.id}" } do %>
   <% linked = conversation.documents.include?(document) %>
   <div class='tree-document <%= linked ? 'linked' : '' %>'>
     <% if document.source_based %>
