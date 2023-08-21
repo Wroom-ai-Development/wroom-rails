@@ -6,5 +6,5 @@
       <div class='storage-filled' style="width: <%= user.percent_storage_used %>%;"></div>
     <% end %>
   </div>
-  <div class='storage-details'><%= "#{number_to_human_size(user.storage_available)} out of #{number_to_human_size(user.total_storage)} available" %></div>
+  <div class='storage-details'><%= "#{number_to_human_size(user.storage_used)} out of #{number_to_human_size(user.total_storage)} used" %></div>
 </div>

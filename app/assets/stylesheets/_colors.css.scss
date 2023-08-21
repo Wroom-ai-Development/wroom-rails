@@ -12,9 +12,14 @@ $wroom-halfway-dark-gray: rgb(76, 102, 114);
 $wroom-gray: rgb(230, 230, 230);
 $wroom-light-gray: #eaeff5;
 $wroom-lighter-gray: rgb(250, 250, 250);
+$wroom-mana-blue: rgb(59, 79, 255);
 $scrollbar-foreground: $wroom-dark-gray;
 $scrollbar-background: rgba(0,0,0,0);
 $linked-source-color: $wroom-primary-dark;
+$mana-color: $wroom-mana-blue;
+$mana-background: $wroom-light-gray;
+$storage-color: rgb(143, 233, 83);
+$storage-background: $wroom-light-gray;
 
 // OPTION 1
 // $wroom-primary: rgb(0, 102, 255);

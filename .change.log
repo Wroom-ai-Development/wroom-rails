@@ -1,5 +1,10 @@
 ## Relase notes
 
+### Version 0.4.0
+- Added mana counter
+- Added mana limits
+
+
 ### Version 0.3.0
 Out August 21st 2023
 - Eliminated most flickers in the UI

@@ -10,6 +10,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   validate :password_complexity
 
   UPLOAD_STORAGE_LIMIT = 200.megabytes
+  GPT_FEES_LIMIT = 5.0
 
   has_many :sources, dependent: :destroy
   has_many :voices, dependent: :destroy
@@ -25,6 +26,23 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   enum role: { 'admin': 0, 'user': 1, 'supplicant': 2 }
   after_initialize :set_default_role, if: :new_record?
+
+  def total_gpt_cost
+    usage_records.sum(&:total_price)
+  end
+
+  def gpt_fees_limit
+    GPT_FEES_LIMIT
+  end
+
+  def gpt_budget_available
+    difference = GPT_FEES_LIMIT - total_gpt_cost
+    difference.positive? ? difference : 0
+  end
+
+  def percentage_gpt_fees_available
+    gpt_budget_available / gpt_fees_limit * 100.0
+  end
 
   def password_complexity
     # Regexp extracted from https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a
