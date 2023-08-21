@@ -24,10 +24,13 @@
 - Allowed document download
 - Added copy buttons to alternative answers
 - Allowed duplicating records
+- Added loading spinner to upload confirm button
 - Added persisting file sizes for uploads
 - Added storage used to User
 - Ensured documents sync with user storage
 - Added storage bar
+- Added icons to new dropdown
+- Added link to my files in logo
 
 
 

@@ -19,7 +19,16 @@ class Document < ApplicationRecord
   after_discard :remove_document_row
   before_destroy :remove_document_row
   after_destroy :update_storage_bar
+  after_discard :remove_from_sidebar
   after_save :remove_document_row, if: :saved_change_to_folder_id?
+
+  def remove_from_sidebar
+    broadcast_remove_to(
+      user.id,
+      'sidebar_explorer',
+      target: "tree-document-#{id}"
+    )
+  end
 
   def refresh_source
     return if content.body.blank?

@@ -9,7 +9,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   VALID_PASSWORD_REGEX = /\A(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{11,}\z/
   validate :password_complexity
 
-  UPLOAD_STORAGE_LIMIT = 200.megabytes
+  UPLOAD_STORAGE_LIMIT = 3.megabytes
 
   has_many :sources, dependent: :destroy
   has_many :voices, dependent: :destroy
@@ -47,7 +47,8 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def storage_available
-    UPLOAD_STORAGE_LIMIT - storage_used
+    difference = UPLOAD_STORAGE_LIMIT - storage_used
+    difference.positive? ? difference : 0
   end
 
   def total_storage
