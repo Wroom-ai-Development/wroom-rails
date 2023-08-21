@@ -2,7 +2,7 @@
 
 class DocumentsController < ApplicationController
   before_action :set_document,
-                only: %i[editor destroy autosave undiscard]
+                only: %i[editor destroy autosave undiscard discard]
   load_and_authorize_resource
 
   def editor
@@ -60,15 +60,15 @@ class DocumentsController < ApplicationController
     head :no_content
   end
 
+  def discard
+    @document.discard
+    current_user.update!(current_document_id: nil) if current_user.current_document_id == @document.id
+    head :no_content
+  end
+
   # DELETE /documents/1 or /documents/1.json
   def destroy
-    if @document.discarded?
-      # @document.source.subtract_size_from_user_storage_used if @document.source.present? && @document.source_based
-      @document.destroy
-    else
-      @document.discard
-    end
-    current_user.update!(current_document_id: nil) if current_user.current_document_id == @document.id
+    @document.destroy
     head :no_content
   end
 

@@ -2,6 +2,13 @@
   <%= turbo_stream_from current_user.id, 'folders' %>
   <%= turbo_stream_from current_user.id, 'folder_documents' %>
   <% drag_actions = "dragstart->drag#drag_start dragover->drag#drag_over dragenter->drag_enter drop->drag#drop dragend->drag#drag_end" %>
+  <script>
+    function confirmDelete(id, name) {
+      if (confirm(`Please confirm you meant to delete ${name}`) == true) {
+        document.getElementById(id).click();
+      }
+    }
+  </script>
   <div class="header">
     <span><%= @folder.type == 'RootFolder' ? 'My Files' : @folder.name %></span>
     <% unless @folder.type == 'RootFolder' %>
@@ -70,7 +77,7 @@
             <td></td>
           <% end %>
         <% end %>
-        <% @folder.children.kept.each do |folder| %>
+        <% @folder.children.order(:name).kept.each do |folder| %>
           <%= content_tag :tr, id: "folder-row-#{folder.id}", class: 'draggable', draggable: true, data: {
             controller: 'drag',
             action: drag_actions,

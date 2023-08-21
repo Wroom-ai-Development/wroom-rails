@@ -31,6 +31,8 @@
 - Added storage bar
 - Added icons to new dropdown
 - Added link to my files in logo
+- Fixed storage counting bug
+- Fixed csrf bug when deleting duplicated items
 
 
 

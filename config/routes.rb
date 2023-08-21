@@ -7,6 +7,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       get 'editor'
       get 'undiscard'
       get 'duplicate'
+      get 'discard'
     end
   end
   resources :folders do

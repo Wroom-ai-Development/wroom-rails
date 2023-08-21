@@ -25,17 +25,8 @@
     <%= number_to_human_size(document.source.file_size) if document.source_based && document.source.present? %>
   </td>
   <td>
-    <%= button_to "❌", document, method: :delete, id: "delete-document-button-#{document.id}",
-    form: {
-      id: 'delete-form',
-      data: {
-          turbo: false,
-          controller: "confirmation",
-          action: 'submit->confirmation#confirm',
-          confirmation_message_value: "Please confirm you meant to delete #{document.title}",
-      }
-    } %>
-    <i class="fa-solid fa-trash fa-fw delete-icon" onClick="document.getElementById('delete-document-button-<%= document.id %>').click();"></i>
+    <%= link_to 'discard', discard_document_path(document), id: "delete-document-link-#{document.id}", style: 'display:none;'%>
+    <i class="fa-solid fa-trash fa-fw delete-icon" onClick="confirmDelete('delete-document-link-<%= document.id %>', '<%= document.title %>')"></i>
   </td>
   <td>
     <%= link_to duplicate_document_path(document) do %>
