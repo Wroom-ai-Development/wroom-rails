@@ -23,6 +23,7 @@ class Source < ApplicationRecord
   after_create_commit :create_document
 
   after_create_commit :add_size_to_user_storage_used
+  before_destroy :subtract_size_from_user_storage_used
 
   def add_size_to_user_storage_used
     user.update!(storage_used: user.storage_used + file_size)

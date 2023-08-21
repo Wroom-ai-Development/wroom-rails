@@ -21,8 +21,8 @@ class FoldersController < ApplicationController
     @folders = current_user.folders.discarded
     @documents = current_user.documents.discarded
     @voices = current_user.voices.discarded
-    @folders.destroy_all
     @documents.destroy_all
+    @folders.destroy_all
     @voices.destroy_all
     redirect_to dashboard_path
   end

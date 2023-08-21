@@ -18,7 +18,7 @@ class Document < ApplicationRecord
   after_create_commit :broadcast_create
   after_discard :remove_document_row
   before_destroy :remove_document_row
-  after_destroy :update_storage_bar
+  before_destroy :update_storage_bar
   after_discard :remove_from_sidebar
   after_save :remove_document_row, if: :saved_change_to_folder_id?
 

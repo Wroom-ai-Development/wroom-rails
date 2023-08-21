@@ -56,13 +56,14 @@ class DocumentsController < ApplicationController
       source.file.attach @document.source.file.blob
       source.save!
     end
+    @document.update_storage_bar
     head :no_content
   end
 
   # DELETE /documents/1 or /documents/1.json
   def destroy
     if @document.discarded?
-      @document.source.subtract_size_from_user_storage_used if @document.source.present? && @document.source_based
+      # @document.source.subtract_size_from_user_storage_used if @document.source.present? && @document.source_based
       @document.destroy
     else
       @document.discard
