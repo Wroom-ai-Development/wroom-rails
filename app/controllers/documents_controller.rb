@@ -53,6 +53,9 @@ class DocumentsController < ApplicationController
         conversation.messages << message.dup
       end
     end
+    if @document.conversation.voice.present?
+      conversation.voice = @document.conversation.voice
+    end
     conversation.save!
     duplicate.conversation = conversation
     duplicate.save!
