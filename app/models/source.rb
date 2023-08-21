@@ -17,7 +17,7 @@ class Source < ApplicationRecord
                              }
   validate :source_url_leads_somewhere, if: -> { source_url.present? }
   validate :file_or_source_url, if: -> { fileless == false }
-  validate :file_size_within_limit, if: -> { file.attached? && user.present? }
+  validate :file_size_within_limit, if: -> { file.attached? && user.present? && file.changed? }
 
   after_create_commit :log_event
   after_create_commit :create_document
