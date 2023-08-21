@@ -36,7 +36,8 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def gpt_budget_available
-    GPT_FEES_LIMIT - total_gpt_cost
+    difference = GPT_FEES_LIMIT - total_gpt_cost
+    difference.positive? ? difference : 0
   end
 
   def percentage_gpt_fees_available
