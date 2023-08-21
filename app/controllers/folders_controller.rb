@@ -21,8 +21,8 @@ class FoldersController < ApplicationController
     @folders = current_user.folders.discarded
     @documents = current_user.documents.discarded
     @voices = current_user.voices.discarded
-    @folders.destroy_all
     @documents.destroy_all
+    @folders.destroy_all
     @voices.destroy_all
     redirect_to dashboard_path
   end
@@ -50,7 +50,7 @@ class FoldersController < ApplicationController
     @folder.type = 'Folder'
     if @folder.save
       current_user.update!(current_folder_id: @folder.id)
-      redirect_to @folder.parent
+      redirect_to folder_path(@folder.parent)
     else
       render :new, status: :unprocessable_entity
     end

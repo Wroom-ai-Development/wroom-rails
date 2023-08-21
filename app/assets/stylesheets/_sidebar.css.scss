@@ -14,7 +14,7 @@ div#sidebar {
   height: 100%;
   display: flex;
   flex-direction: column;
-  z-index: 995;
+  z-index: 300;
   background-color: $wroom-primary;
   height: 100%;
   overflow-y: auto;
@@ -187,60 +187,6 @@ div#sidebar {
           margin-right: 0.4rem;
           margin-left: 0.2rem;
         }
-      }
-    }
-  }
-}
-div.new {
-  font-size: $font-size-70;
-  font-weight: 400;
-  box-sizing: border-box;
-  margin-bottom: 0.5rem;
-  display: block;
-  div.button {
-    animation: pulseShadow 4s infinite alternate;
-    height: 1.5rem;
-    color: white;
-    background-color: $wroom-dark-gray;
-    border-radius: 5px;
-    text-align: center;
-    font-size: $font-size-90;
-    font-weight: 800;
-    padding-top: 0.2rem;
-    i {
-      margin-right: 0.5rem;
-      margin-left: -0.5rem;
-    }
-    &:hover {
-      cursor: pointer;
-      background-color: $wroom-primary-dark;
-    }
-  }
-  
-  div.options {
-    z-index: 999;
-    text-align: left;
-    flex-direction: column;
-    font-size: $font-size-60;
-    font-weight: 300;
-    position: relative;
-    box-sizing: border-box;
-    color: $wroom-primary;
-    background-color: $wroom-light-gray;
-    padding: 0.2rem;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    display: inline-block;
-    a {
-      color: $wroom-dark-gray;
-      white-space: nowrap;
-      display: flex;
-      width: 100%;
-      padding: 0.5rem;
-      box-sizing: border-box;
-      border-radius: 3px;
-      &:hover {
-        background-color: $wroom-light-gray;
       }
     }
   }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_20_100416) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_20_105541) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -157,6 +157,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_20_100416) do
     t.string "source_url"
     t.bigint "document_id"
     t.bigint "folder_id"
+    t.bigint "file_size", default: 0, null: false
     t.index ["document_id"], name: "index_sources_on_document_id"
     t.index ["folder_id"], name: "index_sources_on_folder_id"
     t.index ["user_id"], name: "index_sources_on_user_id"
@@ -197,6 +198,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_20_100416) do
     t.boolean "security_updated", default: false, null: false
     t.boolean "gpt_4_enabled", default: false, null: false
     t.integer "current_folder_id"
+    t.bigint "storage_used", default: 0, null: false
     t.index ["current_document_id"], name: "index_users_on_current_document_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

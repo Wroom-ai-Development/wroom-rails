@@ -1,4 +1,5 @@
 <%= turbo_frame_tag "view_content" do %>
+  <%= turbo_stream_from current_user.id, "folder_documents" %>
   <div class="header">
     <span>Trash</span>
   </div>
@@ -24,6 +25,8 @@
           <th>Created</th>
           <th>Last accessed</th>
           <th>Type</th>
+          <th>Upload size</th>
+          <th></th>
           <th></th>
         </tr>
       </thead>
@@ -39,6 +42,21 @@
               Folder
             </td>
             <td>
+            </td>
+            <td>
+              <%= button_to "❌", folder, method: :delete, id: "delete-folder-button-#{folder.id}",
+              form: {
+                id: 'delete-form',
+                data: {
+                    turbo: false,
+                    controller: "confirmation",
+                    action: 'submit->confirmation#confirm',
+                    confirmation_message_value: "Please confirm you meant to IRREVOCABLY delete #{folder.name}",
+                }
+              } %>
+              <i class="fa-solid fa-trash fa-fw delete-icon" onClick="document.getElementById('delete-folder-button-<%= folder.id %>').click();"></i>
+            </td>
+            <td>
               <%= link_to undiscard_folder_path(folder), data: { turbo_frame: '_top' } do %>
                 <i class="fa-solid fa-trash-can-arrow-up"></i>
               <% end %>
@@ -46,7 +64,7 @@
           </tr>
         <% end %>
         <% @documents.each do |document| %>
-          <tr>
+          <tr id="document-row-<%= document.id %>">
             <td>
               <% if document.source_based %>
                 <i class="fa fa-book fa-fw" aria-hidden="true"></i>
@@ -57,8 +75,22 @@
             </td>
             <td><%= document.created_at.strftime("%b %d, %Y %H:%M") %></td>
             <td><%= document.updated_at.strftime("%b %d, %Y %H:%M") %></td>
+            <td><%= document.updated_at.strftime("%b %d, %Y %H:%M") %></td>
             <td>
-              <%= document.source_based ? "Source" : "Document" %>
+              <%= number_to_human_size(document.source.file_size) if document.source_based && document.source.present? %>
+            </td>
+            <td>
+              <%= button_to "❌", document, method: :delete, id: "delete-document-button-#{document.id}",
+              form: {
+                id: 'delete-form',
+                data: {
+                    turbo: false,
+                    controller: "confirmation",
+                    action: 'submit->confirmation#confirm',
+                    confirmation_message_value: "Please confirm you meant to IRREVOCABLY delete #{document.title}",
+                }
+              } %>
+              <i class="fa-solid fa-trash fa-fw delete-icon" onClick="document.getElementById('delete-document-button-<%= document.id %>').click();"></i>
             </td>
             <td>
               <%= link_to undiscard_document_path(document), data: { turbo_frame: '_top' } do %>

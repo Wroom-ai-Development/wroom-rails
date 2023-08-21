@@ -17,7 +17,18 @@ class Document < ApplicationRecord
   after_create_commit :create_conversation
   after_create_commit :broadcast_create
   after_discard :remove_document_row
+  before_destroy :remove_document_row
+  before_destroy :update_storage_bar
+  after_discard :remove_from_sidebar
   after_save :remove_document_row, if: :saved_change_to_folder_id?
+
+  def remove_from_sidebar
+    broadcast_remove_to(
+      user.id,
+      'sidebar_explorer',
+      target: "tree-document-#{id}"
+    )
+  end
 
   def refresh_source
     return if content.body.blank?
@@ -27,13 +38,30 @@ class Document < ApplicationRecord
     source.parse_source_chunks_from_text(content.body.to_plain_text)
   end
 
-  def broadcast_create
+  def broadcast_create # rubocop:disable Metrics/MethodLength
     broadcast_after_to(
       user.id,
       'folder_documents',
       partial: 'folders/document_row',
       locals: { document: self },
       target: "document-row-#{cloned_from}"
+    )
+    broadcast_after_to(
+      user.id,
+      'sidebar_explorer',
+      partial: 'folders/tree_document',
+      locals: { document: self },
+      target: "tree-document-#{cloned_from}"
+    )
+  end
+
+  def update_storage_bar
+    broadcast_replace_to(
+      user.id,
+      'storage-bar',
+      partial: 'documents/storage_limit',
+      locals: { user: },
+      target: 'storage_bar'
     )
   end
 

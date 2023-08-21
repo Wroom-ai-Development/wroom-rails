@@ -10,16 +10,25 @@
       button.innerHTML = '<i class="fa-solid fa-circle-chevron-up fa-rotate-90"></i>'
     }
   }
-  function toggleNewOptions() {
+  function showNewOptions() {
+    console.log('show')
     const options = document.getElementsByClassName('options')[0];
     const outside = document.getElementsByClassName('outside')[0];
+    const button = document.getElementById('new-button');
     outside.style.display = 'block';
     options.style.display = 'flex';
-    outside.addEventListener('click', (e) => {
-      console.log("clicked outside")
-      options.style.display = 'none';
-      outside.style.display = 'none';
-    })
+    button.addEventListener('click', hideOptions)
+    outside.addEventListener('click', hideOptions)
+  }
+  function hideOptions() {
+    console.log('hide')
+    const options = document.getElementsByClassName('options')[0];
+    const outside = document.getElementsByClassName('outside')[0];
+    const button = document.getElementById('new-button');
+    button.removeEventListener('click', hideOptions)
+    button.addEventListener('click', showNewOptions)
+    options.style.display = 'none';
+    outside.style.display = 'none';
   }
 </script>
 <div id="collapse-button" onClick=toggleLeftPanel()>
@@ -27,26 +36,18 @@
 </div>
 <div id="documents-panel" class="panel">
   <div id='wroom-logo'>
-    <div>
-      <span id='wroom'>WROOM</span>
-    </div>
+    <%= link_to dashboard_path do %>
+      <div>
+        <span id='wroom'>WROOM</span>
+      </div>
+    <% end %>
   </div>
   <div id="documents">
     <div id='navigation'>
       <% folder_id = @document ? @document.folder.id : current_user.root_folder.id %>
       <%= button_to "Dashboard", dashboard_path, params: { current_folder_id: folder_id }, class: 'library-link', method: :get %>
     </div>
-    <div class="new">
-      <div class="button" onClick="toggleNewOptions();">
-        <i class="fa-solid fa-square-plus"></i><span>New</span>
-      </div>
-      <div class="options" style="display: none;">
-        <%= link_to "New folder", new_folder_path, data: { turbo_action: 'replace', turbo_frame: 'view_content' } %>
-        <%= link_to "New document", new_document_path, data: { turbo_action: 'replace', turbo_frame: '_top' } %>
-        <%= link_to "Upload document", new_source_path, data: { turbo_action: 'replace', turbo_frame: 'view_content' } %>
-        <%= link_to "New voice", manager_voices_path %>
-      </div>
-    </div>
+    <%= render 'wroom/new_button' %>
     <div class='documents-wrapper'>
       <%= render 'tree_folder', folder: current_user.root_folder %>
     </div>

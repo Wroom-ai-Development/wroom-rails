@@ -17,9 +17,22 @@ class Source < ApplicationRecord
                              }
   validate :source_url_leads_somewhere, if: -> { source_url.present? }
   validate :file_or_source_url, if: -> { fileless == false }
+  validate :file_size_within_limit, if: -> { file.attached? && user.present? }
 
   after_create_commit :log_event
   after_create_commit :create_document
+
+  after_create_commit :add_size_to_user_storage_used
+  before_destroy :subtract_size_from_user_storage_used
+
+  def add_size_to_user_storage_used
+    user.update!(storage_used: user.storage_used + file_size)
+  end
+
+  def subtract_size_from_user_storage_used
+    remaining_storage = user.storage_used - file_size
+    user.update!(storage_used: remaining_storage.negative? ? 0 : remaining_storage)
+  end
 
   def parse_source_chunks_from_file # rubocop:disable Metrics/MethodLength
     raw_text = if file.content_type == 'application/pdf'
@@ -62,6 +75,10 @@ class Source < ApplicationRecord
 
     document = Document.create!(title: name, user_id:, folder_id:, source_based: true)
     update!(document_id: document.id)
+  end
+
+  def file_size_within_limit
+    errors.add(:base, 'You do not have enough storage to upload this file.') if file_size > user.storage_available
   end
 
   def file_or_source_url

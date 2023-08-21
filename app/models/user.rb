@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class User < ApplicationRecord
+class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -8,6 +8,8 @@ class User < ApplicationRecord
 
   VALID_PASSWORD_REGEX = /\A(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{11,}\z/
   validate :password_complexity
+
+  UPLOAD_STORAGE_LIMIT = 200.megabytes
 
   has_many :sources, dependent: :destroy
   has_many :voices, dependent: :destroy
@@ -42,6 +44,19 @@ class User < ApplicationRecord
 
   def root_folder
     folders.where(type: 'RootFolder').first_or_create!(name: '/')
+  end
+
+  def storage_available
+    difference = UPLOAD_STORAGE_LIMIT - storage_used
+    difference.positive? ? difference : 0
+  end
+
+  def total_storage
+    UPLOAD_STORAGE_LIMIT
+  end
+
+  def percent_storage_used
+    storage_used / UPLOAD_STORAGE_LIMIT.to_f * 100
   end
 
   after_create_commit :log_event

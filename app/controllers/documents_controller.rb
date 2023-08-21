@@ -2,7 +2,7 @@
 
 class DocumentsController < ApplicationController
   before_action :set_document,
-                only: %i[editor destroy autosave undiscard]
+                only: %i[editor destroy autosave undiscard discard]
   load_and_authorize_resource
 
   def editor
@@ -41,18 +41,35 @@ class DocumentsController < ApplicationController
     head :ok
   end
 
-  def duplicate
+  def duplicate # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     @document = Document.find(params[:id])
     duplicate = @document.dup
     duplicate.cloned_from = @document.id
+    duplicate.content = @document.content
     duplicate.save!
+    conversation = @document.conversation.dup
+    conversation.document_id = duplicate.id
+    conversation.save!
+    if @document.source.present?
+      source = @document.source.dup
+      source.file.attach @document.source.file.blob
+      source.save!
+      duplicate.source = source
+      duplicate.save!
+    end
+    @document.update_storage_bar
+    head :no_content
+  end
+
+  def discard
+    @document.discard
+    current_user.update!(current_document_id: nil) if current_user.current_document_id == @document.id
     head :no_content
   end
 
   # DELETE /documents/1 or /documents/1.json
   def destroy
-    @document.discard
-    current_user.update!(current_document_id: nil) if current_user.current_document_id == @document.id
+    @document.destroy
     head :no_content
   end
 
