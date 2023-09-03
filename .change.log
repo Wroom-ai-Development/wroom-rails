@@ -5,6 +5,7 @@
 - Added mana limits
 - Added dynamic search
 - Added links to containing folder in search results
+- Fixed source styling when viewport is narrow
 
 
 ### Version 0.3.0

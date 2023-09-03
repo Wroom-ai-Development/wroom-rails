@@ -4,19 +4,25 @@
   <table>
     <tr>
       <td class='left'>Title:</td>
-      <td class='right'><%= source.title %></td>
+      <td class='right'><%= trim_string_to_20_chars(source.title) %></td>
+    </tr>
+    <tr>      
       <td class='left'>Author:</td>
-      <td class='right'><%= source.author %></td>
+      <td class='right'><%= trim_string_to_20_chars(source.author) %></td>
     </tr>
     <tr>
       <td class='left'>Text category:</td>
-      <td class='right'><%= source.text_category %></td>
+      <td class='right'><%= trim_string_to_20_chars(source.text_category) %></td>
+    </tr>
+    <tr>
       <td class='left'>Year published:</td>
       <td class='right'><%= source.year_published %></td>
     </tr>
     <tr>
       <td class='left'>Source URL:</td>
-      <td class='right'><%= source.source_url %></td>
+      <td class='right'><%= trim_string_to_20_chars(source.source_url.gsub(/https+:\/\/(www.)+/, '')) %></td>
+    </tr>
+    <tr>
       <td class='left'>File:</td>
       <td class='right'>
         <% if source.file.attached? %>
