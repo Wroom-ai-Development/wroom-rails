@@ -11,6 +11,8 @@ gem 'rails', '~> 7.0.5'
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 
+gem 'activesupport', '>= 7.0.7.1'
+
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.1'
 
