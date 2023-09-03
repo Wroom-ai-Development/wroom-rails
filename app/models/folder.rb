@@ -25,4 +25,26 @@ class Folder < ApplicationRecord
   def remove_folder_row
     broadcast_remove_to user.id, 'folders', target: "folder-row-#{id}"
   end
+
+  def all_documents
+    Document.kept.where(folder_id: all_child_folders.pluck(:id)).or(Document.kept.where(folder: self))
+  end
+
+  def all_child_folders
+    Folder.kept.where(id: children.pluck(:id)).or(Folder.where(id: children.flat_map(&:all_child_folders).pluck(:id)))
+  end
+
+  def path
+    build_path(self)
+  end
+
+  private
+
+  def build_path(folder)
+    if folder.parent
+      File.join(build_path(folder.parent), folder.name)
+    else
+      File.join('/', folder.name)
+    end
+  end
 end

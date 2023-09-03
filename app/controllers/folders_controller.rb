@@ -27,8 +27,20 @@ class FoldersController < ApplicationController
     redirect_to dashboard_path
   end
 
-  def show
+  def show # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     current_user.update!(current_folder_id: @folder.id)
+    if params[:query].present?
+      @in_query = true
+      @folders = @folder.all_child_folders.where('lower(name) LIKE ?', "%#{params[:query].downcase}%")
+      @documents = @folder.all_documents.where('lower(title) LIKE ?', "%#{params[:query].downcase}%")
+      if turbo_frame_request?
+        render partial: 'folders/records_table', locals: { folder: @folder, folders: @folders, documents: @documents }
+      end
+    else
+      @folders = @folder.children.kept
+      @documents = @folder.documents.kept
+    end
+
     return unless @folder.type == 'RootFolder' && @folder.empty?
 
     @haiku = OpenaiService.new.haiku_about_new_venture

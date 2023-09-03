@@ -24,6 +24,9 @@
   <td onclick='document.getElementById("<%= "document-#{document.id}" %>").click();'>
     <%= number_to_human_size(document.source.file_size) if document.source_based && document.source.present? %>
   </td>
+  <td onclick='document.getElementById("<%= "document-#{document.id}" %>").click();'>
+    <%= document.path %>
+  </td>
   <td>
     <%= link_to 'discard', discard_document_path(document), id: "delete-document-link-#{document.id}", style: 'display:none;'%>
     <i class="fa-solid fa-trash fa-fw delete-icon" onClick="confirmDelete('delete-document-link-<%= document.id %>', '<%= document.title %>')"></i>

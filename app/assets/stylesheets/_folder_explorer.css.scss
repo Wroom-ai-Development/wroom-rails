@@ -22,6 +22,33 @@ form#empty-trash-form {
   }
 }
 
+form#search-form {
+  display: flex;
+  margin-bottom: 1rem;
+  align-items: center;
+  i {
+    position: relative;
+    width: 0;
+    z-index: 999;
+    left: 0.9rem;
+  }
+  input#query {
+    border: 1px solid #eaeff5;
+    border-radius: 100px;
+    padding: 0.6rem;
+    padding-left: 2rem;
+    font-size: 0.6rem;
+    font-weight: 900;
+    width: 25rem;
+    font-family: $body-font;
+    font-weight: 100;
+    &:focus {
+      outline: none;
+      border: 1px solid $wroom-primary;
+    }
+  }
+}
+
 
 div.recycle-bin {
   display: flex;
