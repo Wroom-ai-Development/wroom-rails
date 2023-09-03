@@ -1,0 +1,44 @@
+<% drag_actions = "dragstart->drag#drag_start dragover->drag#drag_over dragenter->drag_enter drop->drag#drop dragend->drag#drag_end" %>
+<%= content_tag :tr, id: "folder-row-#{folder.id}", class: 'draggable', draggable: true, data: {
+  controller: 'drag',
+  action: drag_actions,
+  resource_id: folder.id,
+  draggable_type: 'folder',
+  url: drag_folder_path
+} do %>
+  <td onclick='document.getElementById("<%= "folder-#{folder.id}" %>").click();'>
+    <%= link_to folder_path(folder), id: "folder-#{folder.id}", draggable: false, data: { turbo_action: 'replace', turbo_frame: '_top' } do %>
+      <i class="fa fa-folder fa-fw" style="margin-right: 0.3rem;"></i><%= folder.name %>
+    <% end %>
+  </td>
+  <td onclick='document.getElementById("<%= "folder-#{folder.id}" %>").click();'><%= folder.created_at.strftime("%b %d, %Y %H:%M") %></td>
+  <td onclick='document.getElementById("<%= "folder-#{folder.id}" %>").click();'><%= folder.updated_at.strftime("%b %d, %Y %H:%M") %></td>
+  <td onclick='document.getElementById("<%= "folder-#{folder.id}" %>").click();'>
+    Folder
+  </td>
+  <td></td>
+  <% if in_query %>
+    <td>
+      <%= link_to folder_path(folder.parent), id: "folder-#{folder.id}", draggable: false, data: { turbo_action: 'replace', turbo_frame: '_top' } do %>
+        <i class="fa fa-arrow-right-from-bracket fa-fw" style="margin-right: 0.3rem;"></i><%= folder.type == 'RootFolder' ? 'My Files' : folder.name %>
+      <% end %>
+    </td>
+  <% end %>
+  <td>
+    <%= button_to "❌", folder, method: :delete, id: "delete-folder-button-#{folder.id}",
+    form: {
+      id: 'delete-form',
+      data: {
+          turbo: false,
+          controller: "confirmation",
+          action: 'submit->confirmation#confirm',
+          confirmation_message_value: "Please confirm you meant to delete #{folder.name}",
+      }
+    } %>
+    <i class="fa-solid fa-trash fa-fw delete-icon" onClick="document.getElementById('delete-folder-button-<%= folder.id %>').click();"></i>
+  </td>
+  <td></td>
+  <td>
+    <i class="fa-solid fa-grip-vertical"></i>
+  </td>
+<% end %>

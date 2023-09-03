@@ -43,7 +43,7 @@ class Document < ApplicationRecord
       user.id,
       'folder_documents',
       partial: 'folders/document_row',
-      locals: { document: self },
+      locals: { document: self, in_query: false },
       target: "document-row-#{cloned_from}"
     )
     broadcast_after_to(
@@ -73,11 +73,19 @@ class Document < ApplicationRecord
     )
   end
 
-  def icon
-    source_based ? '📔' : '📄'
+  def path
+    build_path(self)
   end
 
   private
+
+  def build_path(document)
+    if document.folder.parent && !document.folder.type == 'RootFolder'
+      File.join(build_path(document.folder.parent), document.folder.name, document.title)
+    else
+      File.join('/', document.folder.name, document.title)
+    end
+  end
 
   def log_event
     monitoring_events.create!(user_id: user&.id, note: "#{user&.email} created document #{title}",

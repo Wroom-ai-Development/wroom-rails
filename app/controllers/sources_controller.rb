@@ -41,7 +41,7 @@ class SourcesController < ApplicationController
   end
 
   # PATCH/PUT /sources/1 or /sources/1.json
-  def update # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity
+  def update # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
     respond_to do |format|
       if @source.update(source_params)
         old_headers = @source.section_headers
@@ -59,7 +59,7 @@ class SourcesController < ApplicationController
           @source.clear_chunks
           @source.parse_source_chunks_from_source_url
         end
-
+        @source.document.update!(title: @source.name) if params[:source][:name].present?
         @source.rechunk if @source.section_headers != old_headers
         format.html { redirect_to wroom_path(@source.document) }
       else

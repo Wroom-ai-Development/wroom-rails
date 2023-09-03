@@ -1,0 +1,54 @@
+<%= turbo_frame_tag "records_table" do %>
+  <% drag_actions = "dragstart->drag#drag_start dragover->drag#drag_over dragenter->drag_enter drop->drag#drop dragend->drag#drag_end" %>
+  <% in_query = @in_query || in_query %>
+  <table class="folder-contents-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Created</th>
+        <th>Last accessed</th>
+        <th>Type</th>
+        <th>Upload size</th>
+        <% if in_query %>
+          <th></th>
+        <% end %>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id='draggables'>
+      <% if folder && folder.type != 'RootFolder' && !@in_query %>
+        <%= content_tag :tr, id: "folder-row-parent",
+          class: 'draggable',
+          onclick: 'document.getElementById("parent_link").click();',
+          data: {
+          controller: 'drag',
+          action: drag_actions,
+          resource_id: folder.parent.id,
+          draggable_type: 'folder',
+          url: drag_folder_path
+        } do %>
+          <td>
+            <%= link_to folder_path(folder.parent), id: 'parent_link', data: { turbo_action: 'replace' } do %>
+            <i class="fa fa-folder fa-fw" style="margin-right: 0.3rem;"></i>..
+            <% end %>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        <% end %>
+      <% end %>
+      <% folders.order(:name).each do |folder| %>
+        <%= render 'folders/folder_row', folder: folder, in_query: in_query %>
+      <% end %>
+      <% documents.order(:title).each do |document| %>
+        <%= render 'folders/document_row', document: document, in_query: in_query %>
+      <% end %>
+    </table>
+  <% end %>

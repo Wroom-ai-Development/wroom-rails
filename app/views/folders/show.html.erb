@@ -1,7 +1,6 @@
 <%= turbo_frame_tag 'view_content' do %>
   <%= turbo_stream_from current_user.id, 'folders' %>
   <%= turbo_stream_from current_user.id, 'folder_documents' %>
-  <% drag_actions = "dragstart->drag#drag_start dragover->drag#drag_over dragenter->drag_enter drop->drag#drop dragend->drag#drag_end" %>
   <script>
     function confirmDelete(id, name) {
       if (confirm(`Please confirm you meant to delete ${name}`) == true) {
@@ -9,25 +8,6 @@
       }
     }
   </script>
-  <div class="header">
-    <span><%= @folder.type == 'RootFolder' ? 'My Files' : @folder.name %></span>
-    <% unless @folder.type == 'RootFolder' %>
-      <div class="controls">
-        <%= link_to "Rename", edit_folder_path(@folder), data: { turbo_frame: '_top' } %>
-        <%= button_to "❌", @folder, method: :delete, id: 'delete-button',
-          form: {
-            id: 'delete-form',
-            data: {
-                turbo: false,
-                controller: "confirmation",
-                action: 'submit->confirmation#confirm',
-                confirmation_message_value: "Please confirm you meant to delete #{@folder.name}",
-            }
-          } %>
-          <i class="fa-solid fa-trash fa-fw delete-icon" onClick="document.getElementById('delete-button').click();"></i>
-      </div>
-    <% end %>
-  </div>
   <div class="folder-content">
     <% if @folder.type == 'RootFolder' && @folder.empty? %>
       <div class="no-content">
@@ -38,89 +18,35 @@
         </div>
       </div>
     <% else %>
-    <table class="folder-contents-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Created</th>
-          <th>Last accessed</th>
-          <th>Type</th>
-          <th>Upload size</th>
-          <th></th>
-          <th></th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody id='draggables'>
+      <%= form_with(url: folder_path(@folder), method: "GET", data: {
+        turbo_action: 'advance',
+        turbo_frame: "records_table",
+        controller: 'search'
+      }, id: 'search-form' ) do |form| %>
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <%= form.text_field :query, data: { action: 'input->search#search'} %>
+        <%= form.submit 'Search', name: nil, style: 'display: none;' %>
+      <% end %>
+      <div class="header">
+        <span><%= @folder.type == 'RootFolder' ? 'My Files' : @folder.name %></span>
         <% unless @folder.type == 'RootFolder' %>
-          <%= content_tag :tr, id: "folder-row-parent",
-           class: 'draggable',
-           onclick: 'document.getElementById("parent_link").click();',
-           data: {
-            controller: 'drag',
-            action: drag_actions,
-            resource_id: @folder.parent.id,
-            draggable_type: 'folder',
-            url: drag_folder_path
-          } do %>
-            <td>
-              <%= link_to folder_path(@folder.parent), id: 'parent_link', data: { turbo_action: 'replace' } do %>
-              <i class="fa fa-folder fa-fw" style="margin-right: 0.3rem;"></i>..
-              <% end %>
-            </td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          <% end %>
-        <% end %>
-        <% @folder.children.order(:name).kept.each do |folder| %>
-          <%= content_tag :tr, id: "folder-row-#{folder.id}", class: 'draggable', draggable: true, data: {
-            controller: 'drag',
-            action: drag_actions,
-            resource_id: folder.id,
-            draggable_type: 'folder',
-            url: drag_folder_path
-          } do %>
-            <td onclick='document.getElementById("<%= "folder-#{folder.id}" %>").click();'>
-              <%= link_to folder, id: "folder-#{folder.id}", draggable: false, data: { turbo_action: 'replace' } do %>
-                <i class="fa fa-folder fa-fw" style="margin-right: 0.3rem;"></i><%= folder.name %>
-              <% end %>
-            </td>
-            <td onclick='document.getElementById("<%= "folder-#{folder.id}" %>").click();'><%= folder.created_at.strftime("%b %d, %Y %H:%M") %></td>
-            <td onclick='document.getElementById("<%= "folder-#{folder.id}" %>").click();'><%= folder.updated_at.strftime("%b %d, %Y %H:%M") %></td>
-            <td onclick='document.getElementById("<%= "folder-#{folder.id}" %>").click();'>
-              Folder
-            </td>
-            <td></td>
-            <td>
-              <%= button_to "❌", folder, method: :delete, id: "delete-folder-button-#{folder.id}",
+          <div class="controls">
+            <%= link_to "Rename", edit_folder_path(@folder), data: { turbo_frame: '_top' } %>
+            <%= button_to "❌", @folder, method: :delete, id: 'delete-button',
               form: {
                 id: 'delete-form',
                 data: {
                     turbo: false,
                     controller: "confirmation",
                     action: 'submit->confirmation#confirm',
-                    confirmation_message_value: "Please confirm you meant to delete #{folder.name}",
+                    confirmation_message_value: "Please confirm you meant to delete #{@folder.name}"
                 }
               } %>
-              <i class="fa-solid fa-trash fa-fw delete-icon" onClick="document.getElementById('delete-folder-button-<%= folder.id %>').click();"></i>
-            </td>
-            <td></td>
-            <td>
-              <i class="fa-solid fa-grip-vertical"></i>
-            </td>
-          <% end %>
+              <i class="fa-solid fa-trash fa-fw delete-icon" onClick="document.getElementById('delete-button').click();"></i>
+          </div>
         <% end %>
-        <% @folder.documents.order(:title).kept.each do |document| %>
-          <%= render 'folders/document_row', document: document %>
-        <% end %>
-      </table>
+      </div>
+      <%= render "records_table", folder: @folder, folders: @folders, documents: @documents, in_query: @in_query %>
     <% end %>
-
-
   </div>
 <% end %>
