@@ -17,7 +17,13 @@
     Folder
   </td>
   <td></td>
-  <td><%= folder.path %></td>
+  <% if in_query %>
+    <td>
+      <%= link_to folder_path(folder.parent), id: "folder-#{folder.id}", draggable: false, data: { turbo_action: 'replace', turbo_frame: '_top' } do %>
+        <i class="fa fa-arrow-right-from-bracket fa-fw" style="margin-right: 0.3rem;"></i><%= folder.type == 'RootFolder' ? 'My Files' : folder.name %>
+      <% end %>
+    </td>
+  <% end %>
   <td>
     <%= button_to "❌", folder, method: :delete, id: "delete-folder-button-#{folder.id}",
     form: {

@@ -29,8 +29,8 @@ class FoldersController < ApplicationController
 
   def show # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     current_user.update!(current_folder_id: @folder.id)
-    if params[:query].present?
-      @in_query = true
+    @in_query = params[:query].present?
+    if @in_query
       @folders = @folder.all_child_folders.where('lower(name) LIKE ?', "%#{params[:query].downcase}%")
       @documents = @folder.all_documents.where('lower(title) LIKE ?', "%#{params[:query].downcase}%")
       if turbo_frame_request?

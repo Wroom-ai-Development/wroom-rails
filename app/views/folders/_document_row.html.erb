@@ -24,9 +24,13 @@
   <td onclick='document.getElementById("<%= "document-#{document.id}" %>").click();'>
     <%= number_to_human_size(document.source.file_size) if document.source_based && document.source.present? %>
   </td>
-  <td onclick='document.getElementById("<%= "document-#{document.id}" %>").click();'>
-    <%= document.path %>
-  </td>
+  <% if in_query %>
+    <td>
+      <%= link_to folder_path(document.folder), id: "folder-#{document.folder.id}", draggable: false, data: { turbo_action: 'replace', turbo_frame: '_top' } do %>
+        <i class="fa fa-arrow-right-from-bracket fa-fw" style="margin-right: 0.3rem;"></i><%= document.folder.type == 'RootFolder' ? 'My Files' : document.folder.name %>
+      <% end %>
+    </td>
+  <% end %>
   <td>
     <%= link_to 'discard', discard_document_path(document), id: "delete-document-link-#{document.id}", style: 'display:none;'%>
     <i class="fa-solid fa-trash fa-fw delete-icon" onClick="confirmDelete('delete-document-link-<%= document.id %>', '<%= document.title %>')"></i>
