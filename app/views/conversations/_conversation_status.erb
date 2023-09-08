@@ -5,7 +5,6 @@
       <% if conversation.status_message.present? %>
         <%= conversation.status_message %>
       <% end %>
-      This is a message
       <%= link_to('cancel request', cancel_processing_conversation_path(id: conversation.id)) %>
     </div>  
   </div>
