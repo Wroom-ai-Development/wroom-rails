@@ -1,25 +1,26 @@
 // OPTION 1
-$wroom-primary: rgb(130, 178, 214);
+$wroom-primary: #EDEDDB;
 $wroom-primary-dark: rgb(51, 88, 117);
-$wroom-primary-light: rgb(197, 213, 228);
+$wroom-primary-light: #fffff4;
 $wroom-logo-primary: black;
 $wroom-logo-secondary: $wroom-primary;
-$wroom-red: rgb(226, 3, 3);
-$wroom-green: rgb(19, 208, 145);
-$wroom-yellow: rgb(251, 194, 79);
+$wroom-red: rgb(255, 75, 75);
+$wroom-green: rgb(0, 132, 62);
+$wroom-blue: rgb(87, 135, 255);
+$wroom-yellow: rgb(255, 170, 1);
 $wroom-dark-gray: rgb(62, 58, 58);
 $wroom-halfway-dark-gray: rgb(76, 102, 114);
 $wroom-gray: rgb(230, 230, 230);
-$wroom-light-gray: #eaeff5;
+$wroom-light-gray: #f8f9f4;
 $wroom-lighter-gray: rgb(250, 250, 250);
 $wroom-mana-blue: rgb(59, 79, 255);
 $scrollbar-foreground: $wroom-dark-gray;
 $scrollbar-background: rgba(0,0,0,0);
 $linked-source-color: $wroom-primary-dark;
 $mana-color: $wroom-mana-blue;
-$mana-background: $wroom-light-gray;
-$storage-color: rgb(143, 233, 83);
-$storage-background: $wroom-light-gray;
+$mana-background: $wroom-lighter-gray;
+$storage-color: #5cce0f;
+$storage-background: $wroom-lighter-gray;
 
 // OPTION 1
 // $wroom-primary: rgb(0, 102, 255);

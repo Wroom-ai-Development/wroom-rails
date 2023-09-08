@@ -1,8 +1,6 @@
 <div class='tree-folder' id="<%= "tree-folder-#{folder.id}" %>">
   <div class="folder">
-    <% if !folder.empty? %>
-      <i class="fa-solid fa-caret-down fa-sm" onClick=<%= "displayChildren('tree-folder-#{folder.id}')" %>></i>
-    <% end %>
+    <i class="fa-solid fa-caret-down fa-sm fa-fw <%= folder.empty? ? 'invisible' : '' %>" onClick=<%= "displayChildren('tree-folder-#{folder.id}')" %>></i>
     <%= link_to folder_path(folder), data: { turbo_action: 'replace', turbo_frame: 'view_content' } do %>
       <i class="fa fa-folder fa-fw"></i><span class='folder-name'><%= folder.type == 'RootFolder' ? 'My Files' : folder.name %></span>
     <% end %>

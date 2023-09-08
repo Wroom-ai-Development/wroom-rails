@@ -173,6 +173,9 @@ div.context {
       border: 0;
       border-radius: 5px;
       background-color: white;
+      font-family: $body-font;
+      color: $wroom-dark-gray;
+      font-size: $font-size-70;
       i {
         margin-left: 1.3rem;
         margin-right: 0.5rem;
@@ -186,7 +189,7 @@ div.context {
         background-color: $wroom-dark-gray;
         border-radius: 5px;
         &:hover {
-          background-color: $wroom-primary;
+          background-color: $wroom-blue;
           cursor: pointer;
         }
       }

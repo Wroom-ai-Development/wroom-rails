@@ -40,7 +40,7 @@ div#sidebar {
         margin-right: 0.5rem;
       }
       &:hover {
-        background-color: $wroom-light-gray;
+        background-color: $wroom-primary-light;
         cursor: pointer;
       }
     }
@@ -60,7 +60,6 @@ div#sidebar {
     align-items: center;
     justify-content: space-between;
     font-size: $font-size-60;
-    padding-left: 0.5rem;
     margin-top: 0.5rem;
 
     button {
@@ -98,26 +97,11 @@ div#sidebar {
     @include flex-center-content;
     min-height: 2rem;
     height: 0;
-    margin-bottom: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
     
-    div {
-      border-radius: 10px;
-      background: none;
-      width: 1px;
-      text-align: center;
-      margin-top: 1.6rem;
-      height: 1px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-
-      span#wroom {
-        font-family: $logo-font;
-        font-weight: $app-logo-weight;
-        font-size: $dashboard-logo-size;
-        color: white;
-      }
+    svg {
+      width: 8rem;
     }
   }
 
@@ -154,10 +138,13 @@ div#sidebar {
         }
         i {
           margin-right: 0.5rem;
-          margin-left: 0.2rem;
+
+          &.invisible {
+            color: rgba(0, 0, 0, 0);
+          }
         }
         &:hover {
-          background-color: $wroom-light-gray;
+          background-color: $wroom-primary-light;
           cursor: pointer;
         }
       }
@@ -171,7 +158,7 @@ div#sidebar {
         }
         div.document i {
           margin-right: 0.4rem;
-          margin-left: 0.2rem;
+          margin-left: 1.3rem;
         }
       }
     }

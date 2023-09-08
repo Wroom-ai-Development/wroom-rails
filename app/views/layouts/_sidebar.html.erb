@@ -24,9 +24,7 @@
   <div id='sidebar'>
     <div id='wroom-logo'>
       <%= link_to dashboard_path do %>
-        <div>
-          <span id='wroom'>WROOM</span>
-        </div>
+        <%= show_svg('logo.svg') %>
       <% end %>
     </div>
     <%= render 'wroom/new_button' %>

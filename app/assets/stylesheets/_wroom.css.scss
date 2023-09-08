@@ -74,38 +74,6 @@ body#wroom {
       }
     }
   }
-
-
-  div#wroom-logo {
-    @include flex-center-content;
-    min-height: 2rem;
-    height: 0;
-    margin-bottom: 2rem;
-    
-    div {
-      border-radius: 10px;
-      background: none;
-      width: 1px;
-      text-align: center;
-      margin-top: 1.6rem;
-      height: 1px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-
-      span#wroom {
-        font-family: $logo-font;
-    
-        font-weight: $app-logo-weight;
-        font-size: $app-logo-size;
-        color: white;
-        span.oo {
-          color: $wroom-logo-secondary;
-        }
-      }
-    }
-  }
 }
 
 
