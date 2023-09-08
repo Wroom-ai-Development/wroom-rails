@@ -10,7 +10,7 @@ div#chat {
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-
+  color: $wroom-dark-gray;
   background-color: white;
   div#settings {
     display: flex;
@@ -25,20 +25,34 @@ div#chat {
     form {
       display: flex;
       align-items: center;
-      margin-left: auto;
-  
-      label {
-        font-size: $font-size-60;
+
+      div.label-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: $font-size-70;
+        border: 1px solid $wroom-gray;
+        border-right: none;
+        height: 2.1rem;
+        border-radius: 5px;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+        padding: 0 0.5rem 0 0.5rem;
+        font-weight: 600;
+        box-sizing: border-box;
       }
+  
       select {
-        max-width: 10rem;
-        margin-left: 0.5rem;
+        max-width: 15rem;
+        height: 2.1rem;
         font-family: $body-font;
         font-size: $font-size-70;
         padding: 0.5rem;
         border: 1px solid $wroom-light-gray;
         background-color: white;
-        border-radius: 10px;
+        border-radius: 5px;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
         z-index: 997;
   
         &:focus {
@@ -53,6 +67,8 @@ div#chat {
       flex-direction: row;
       align-items: center;
       justify-content: end;
+      margin-left: auto;
+
       button {
         border: none;
         font-family: $body-font;
@@ -60,7 +76,7 @@ div#chat {
         font-size: $font-size-70;
         color: $wroom-red;
         background-color: white;
-        border-radius: 10px;
+        border-radius: 5px;
         white-space: nowrap;
         border: 1px solid white;
         &:hover {
@@ -71,12 +87,13 @@ div#chat {
     }
     
     a {
-      color: $wroom-primary;
+      color: white;
       padding: 0.5rem;
-      background-color: white;
+      background-color: $wroom-dark-gray;
+      font-weight: 800;
       font-size: $font-size-70;
       margin-right: 0.5rem;
-      border-radius: 10px;
+      border-radius: 5px;
       border: 1px solid white;
       &:hover {
         border: 1px solid $wroom-primary;
@@ -96,9 +113,8 @@ div#chat {
     form#new-message-form {
       margin: 0;
       display: flex;
-      height: 5rem;
       align-items: center;
-      padding: 0;
+      padding: 1rem;
       flex: none;
       justify-content: center;
       box-sizing: border-box;
@@ -106,20 +122,20 @@ div#chat {
 
       textarea {
         width: 100%;
-        border-radius: 10px;
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-        border: none;
-        padding: 1rem 1rem 0 1rem;
+        padding: 0.5rem;
         box-sizing: border-box;
         font-family: $body-font;
         font-size: $font-size-80;
         font-weight: 600;
-        height: min-content;
-        border-top: 1px solid $wroom-gray;
-        background-color: white;
+        min-height: 34px;
+        height: 34px;
+        background-color: $wroom-light-gray;
+        border-radius: 5px;
+        border: none;
         color: $wroom-dark-gray;
+        overflow: hidden;
         resize: none;
+        margin-left: 1rem;
         &:hover {
           background-color: $wroom-primary-light;
           cursor: pointer;
@@ -127,6 +143,12 @@ div#chat {
         &:focus {
           outline: none !important;
         }
+      }
+
+      i {
+        position: relative;
+        right: 1.5rem;
+        width: 0;
       }
 
       input#content {
@@ -166,7 +188,7 @@ div#chat {
       }
 
       div.message {
-        padding: 0.5rem 1rem 0 1rem;
+        // padding: 0.5rem 1rem 0 1rem;
         text-align: justify;
         font-size: $font-size-80;
         hyphens: auto;
@@ -192,10 +214,10 @@ div#chat {
             }
           }
         }
-
-        &:first-child {
-          padding-bottom: 1rem;
+        &:hover {
+          background-color: $wroom-gray;
         }
+        padding-bottom: 1rem;
 
         p::selection {
           background-color: $wroom-primary-light;
@@ -224,10 +246,13 @@ div#chat {
             animation: select 100ms step-end forwards;
           }
           div.message-controls {
-            padding-bottom: 0.5rem;
+            display: flex;
+            flex-direction: row;
+
+
             form {
               display: flex;
-              flex-direction: column;
+              flex-direction: row;
               align-items: center;
               padding-left: 0.5rem;
               padding-right: 1rem;
@@ -238,8 +263,6 @@ div#chat {
               flex-direction: column;
               align-items: center;
               padding-left: 0.5rem;
-              padding-right: 1rem;
-              padding-bottom: 0.5rem;
               font-size: $font-size-80;
             };
 
@@ -285,16 +308,40 @@ div#chat {
         }
 
         &.user {
+          padding: 1rem;
+
           div.main-message {
             text-align: right;
             justify-content: space-between;
             border-bottom: 1px solid rgb(220, 220, 220);
+            align-items: center;
 
             &:last-child {
               border-bottom: none;
             }
           }
         }
+
+        &.wroom {
+          padding: 1rem;
+          div.main-message {
+            text-align: justify;
+            justify-content: space-between;
+            border-bottom: 1px solid rgb(220, 220, 220);
+            align-items: flex-start;
+
+            div.message-controls {
+              margin-top: 0.8rem;
+            }
+
+            &:last-child {
+              border-bottom: none;
+            }
+          }
+        }
+
+
+
         div.main-message {  
           button {
             margin-right: 0.5rem;

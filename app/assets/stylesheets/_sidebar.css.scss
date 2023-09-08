@@ -27,19 +27,17 @@ div#sidebar {
     width: 100%;
     font-weight: 600;
     a {
-      height: 1.5rem;
+      display: flex;
       white-space: nowrap;
+      width: calc(100% - 4px);
+      height: 1.5rem;
       display: flex;
       align-items: center;
       padding: 0.1rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
       border-radius: 5px;
-      padding-left: 0.5rem;
-      i {
+      i, span.spacer {
+        margin-left: 1.3rem;
         margin-right: 0.5rem;
-        margin-left: -0.2rem;
       }
       &:hover {
         background-color: $wroom-light-gray;
@@ -140,24 +138,7 @@ div#sidebar {
       text-overflow: ellipsis;
       overflow: hidden;
     }
-    a.trash-link {
-      display: flex;
-      white-space: nowrap;
-      width: calc(100% - 4px);
-      height: 1.5rem;
-      display: flex;
-      align-items: center;
-      padding: 0.1rem;
-      border-radius: 5px;
-      i {
-        margin-left: 0.2rem;
-        margin-right: 0.5rem;
-      }
-      &:hover {
-        background-color: $wroom-light-gray;
-        cursor: pointer;
-      }
-    }
+    
     div.tree-folder {
       div.folder {
         width: calc(100% - 4px);
@@ -166,6 +147,11 @@ div#sidebar {
         align-items: center;
         padding: 0.1rem;
         border-radius: 5px;
+        a {
+          display: flex;
+          align-items: center;
+          flex: 1;
+        }
         i {
           margin-right: 0.5rem;
           margin-left: 0.2rem;

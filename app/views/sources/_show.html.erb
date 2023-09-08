@@ -20,7 +20,7 @@
     </tr>
     <tr>
       <td class='left'>Source URL:</td>
-      <td class='right'><%= trim_string_to_20_chars(source.source_url.gsub(/https+:\/\/(www.)+/, '')) %></td>
+      <td class='right'><%= trim_string_to_20_chars(source.clean_url) %></td>
     </tr>
     <tr>
       <td class='left'>File:</td>

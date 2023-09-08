@@ -24,6 +24,7 @@ body#wroom {
   display: flex;
   font-family: $body-font;
   overflow: hidden;
+  padding: 0;
 
 
 
@@ -41,30 +42,39 @@ body#wroom {
     }
   }
 
+  div#document-editor-background {
+    color: $wroom-primary;
+    width: 81vw;
+    height: 100vh;
+  }
   div#document-editor {
+    background-color: white;
     display: flex;
-    height: 90vh;
+    height: 100vh;
+    border-top-left-radius: 30px;
+    display: flex;
+    align-items: center;
     .panel:not(:first-child) {
       margin-left: 1rem;
     }
-    &#document-panel {
-      width: 30vw;
-      padding: 1rem 1rem 0 1rem;
-      height: 50rem;
-    }
-    &#conversation-panel {
-      // height: 100%;
-      width: 30vw;
-      padding: 1rem 1rem 1rem 0;
-      height: 50rem;
+    .panel {
+      display: flex;
+      flex-direction: column;
+      height: 90vh;
+      &#document-panel {
+        width: 40.5vw;
+        box-sizing: border-box;
+        border-right: 1px solid $wroom-light-gray;
+
+      }
+      &#conversation-panel {
+        // height: 100%;
+        width: 40.5vw;
+        padding: 1rem 1rem 1rem 0;
+      }
     }
   }
 
-  .panel {
-    display: flex;
-    flex-direction: column;
-    height: 90vh;
-  }
 
   div#wroom-logo {
     @include flex-center-content;

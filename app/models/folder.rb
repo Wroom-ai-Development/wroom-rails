@@ -8,6 +8,7 @@ class Folder < ApplicationRecord
   has_many :documents, dependent: :destroy
   after_discard :remove_folder_row
   after_discard :remove_from_sidebar
+  after_create :add_to_sidebar
   after_save :remove_folder_row, if: :saved_change_to_parent_id?
 
   def remove_from_sidebar
@@ -15,6 +16,16 @@ class Folder < ApplicationRecord
       user.id,
       'sidebar_explorer',
       target: "tree-folder-#{id}"
+    )
+  end
+
+  def add_to_sidebar
+    broadcast_append_to(
+      user.id,
+      'sidebar_explorer',
+      partial: 'folders/tree_folder',
+      locals: { folder: self },
+      target: 'folder-tree'
     )
   end
 

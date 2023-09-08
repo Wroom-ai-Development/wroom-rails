@@ -13,6 +13,8 @@
     <%= folder.type == 'RootFolder' ? 'My Files' : folder.name %>
     <% if !folder.empty? %>
       <i class="fa-solid fa-caret-down fa-sm"></i>
+    <% else %>
+      <span class='spacer'></span>
     <% end %>
   </div>
   <div class="children" style="<%= folder.type == 'RootFolder' ? "" : "display: none;" %>">
