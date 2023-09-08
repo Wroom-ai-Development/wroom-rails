@@ -10,6 +10,7 @@ div.context {
   box-sizing: border-box;
   height: 90vh;
   background-color: white;
+  color: $wroom-dark-gray;
 
   div.header {
     display: flex;
@@ -17,20 +18,18 @@ div.context {
     align-items: center;
     justify-content: space-between;
     padding: 1rem;
-    h3 {
-      font-size: $font-size-70;
-      font-weight: 500;
-      margin: 0;
-      user-select: none;
-    }
-    a.quit-context-dialog {
-      background-color: rgba(0,0,0,0);
-      border: none;
-      color: transparent;
-      text-shadow: 0 0 0 $wroom-dark-gray;
-      font-size: 0.5rem;
-      display: flex;
-      justify-content: flex-end;
+    a {
+      span {
+        margin-right: 0.5rem;
+      }
+      color: white;
+      padding: 0.5rem;
+      background-color: #3e3a3a;
+      font-weight: 800;
+      font-size: 0.7rem;
+      margin-right: 0.5rem;
+      border-radius: 5px;
+      border: 1px solid white;
     }
   }
 
@@ -39,7 +38,7 @@ div.context {
 
     div.current-context-header {
       h3 {
-        font-size: $font-size-70;
+        font-size: $font-size-80;
         font-weight: 100;
         margin: 0;
         user-select: none;
@@ -48,38 +47,51 @@ div.context {
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
 
     a.clear-context {
-      margin-left: auto;
-      color: $wroom-red;
-      border-radius: 3px;
-      border: 1px solid $wroom-red;
-      padding: 0.2rem 0.5rem;
-      font-size: $font-size-70;
-      text-decoration: none;
-      margin-right: 1rem;
+      padding: 0.5rem;
+      font-size: 0.7rem;
+      color: #e20303;
+      background-color: white;
+      border-radius: 5px;
+      white-space: nowrap;
+      border: 1px solid white;
       &:hover {
-        background-color: $wroom-red;
-        color: white;
+        border: 1px solid #e20303;
+        cursor: pointer;
       }
     }
     
     div.context-table-container {
       height: 30vh;
       overflow-y: auto;
+      background-color: $wroom-light-gray;
+      padding: 0.5rem;
+      border-radius: 5px;
       @include custom-scrollbar;
 
       table {
         width: 100%;
         border-spacing: 0;
 
+        tr {
+          &:hover {
+            background-color: $wroom-lighter-gray;
+            cursor: pointer;
+          }
+        }
+
         td {
-          padding: 0;
+          padding: 0.4rem;
           &:last-child {
+            width: 1rem;
             button {
               text-align: right;
+              border: 0;
+              background-color: rgba(0, 0, 0, 0);
+              width: 1.7rem;
             }
             i {
               margin-right: 1rem;
@@ -100,56 +112,54 @@ div.context {
     margin-bottom: 3rem;
     padding: 1rem;
     overflow-y: scroll;
+    overflow-x: hidden;
     @include custom-scrollbar;
+    div.folder {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      div.parent {
+        width: 100%;
+        height: 1.5rem;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        padding: 0.1rem;
+        border-radius: 5px;
+        i {
+          margin-left: 0.3rem;
+          margin-right: 0.3rem;
+          color: $wroom-dark-gray;
+          &.invisible {
+            color: rgba(0, 0, 0, 0);
+          }
+        }
+        &:hover {
+          background-color: $wroom-light-gray;
+          cursor: pointer;
+        }
+      }
+      div.children {
+        white-space:zz nowrap;
+        display: flex;
+        align-items: start;
+        padding: 0.1rem;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        margin-left: 0.5rem;
+      }
+    }
   }
 
 
-  form.button_to {
+  form.document {
     width: 100%;
     margin: 0 !important;
     margin-bottom: 0.3rem !important;
+    display: flex;
+    flex-direction: row;
     button {
-      font-family: $body-font;
-      width: 100%;
-      background: rgba(0, 0, 0, 0);
-      border: none;
-      text-align: left;
-      padding-left: 0;
-      font-size: $font-size-70;
-      height: 1.5rem;
-      margin: 0;
-    }
-  }
-
-  div.tree-folder {
-    div.parent {
-      width: 100%;
-      height: 1.5rem;
-      white-space: nowrap;
-      display: flex;
-      align-items: center;
-      padding: 0.1rem;
-      border-radius: 5px;
-      i {
-        margin-left: 0.3rem;
-        margin-right: 0.5rem;
-        color: $wroom-dark-gray;
-      }
-      &:hover {
-        background-color: $wroom-light-gray;
-        cursor: pointer;
-      }
-    }
-    div.children {
-      display: flex;
-      flex-direction: column;
-      padding-left: 1rem;
-      width: 100%;
-      white-space: nowrap;
-      box-sizing: border-box;
-    }
-
-    div.tree-document {
       width: 100%;
       height: 1.5rem;
       display: flex;
@@ -160,8 +170,11 @@ div.context {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      border: 0;
+      border-radius: 5px;
+      background-color: white;
       i {
-        margin-left: 0.4rem;
+        margin-left: 1.3rem;
         margin-right: 0.5rem;
         color: $wroom-dark-gray;
       }
@@ -170,8 +183,16 @@ div.context {
         i {
           color: white;
         }
-        background-color: $linked-source-color;
+        background-color: $wroom-dark-gray;
         border-radius: 5px;
+        &:hover {
+          background-color: $wroom-primary;
+          cursor: pointer;
+        }
+      }
+      &:hover {
+        background-color: $wroom-light-gray;
+        cursor: pointer;
       }
     }
   }
