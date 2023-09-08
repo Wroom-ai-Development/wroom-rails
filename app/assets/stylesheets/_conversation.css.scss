@@ -371,27 +371,29 @@ form#new-message-form {
 
   div#conversation_status.present {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     font-size: $font-size-70;
-    color: $wroom-primary;
-    padding: 1rem;
+    color: $wroom-green;
     position: absolute;
     z-index: 999;
+    width: 34vw;
     user-select: none;
     div.conversation-loading-label {
-      width: auto;
+      width: 100%;
       font-size: $font-size-70;
       text-align: center;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
       justify-content: center;
+      color: $wroom-green;
+      font-weight: 500;
       form.button_to {
         text-align: center;
       }
       a {
-        margin-top: 0.5rem;
+        margin-left: auto;
         font-size: $font-size-60;
         text-align: center;
         color: $wroom-red;
