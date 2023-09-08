@@ -2,7 +2,7 @@
 <div id='devise' class='reset-password'>
   <div class='ui-box'>
     <div id='logo'>
-      <span id='wroom'>WROOM</span>
+      <%= show_svg('logo.svg') %>
     </div>
     <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
