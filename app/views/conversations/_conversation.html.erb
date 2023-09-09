@@ -14,8 +14,14 @@
 </script>
 <%= turbo_stream_from @conversation.id, 'chat_messages'%>
 <div id='conversation'>
+  <script>
+    function copyContent(id) {
+      const text = document.getElementById(id).innerHTML.replace(/<br>/g, "\n").replace("<p>", "").replace("</p>", "")
+      navigator.clipboard.writeText(text)
+    }
+  </script>
   <div id='messages'>
-    <% if conversation.messages.kept.count == 0 %>
+    <% if conversation.messages.count == 0 %>
       <div id='initial-message'>
         Hello, may I be of any help?
       </div>
@@ -39,9 +45,18 @@
       <% end %>
     <% end %>
   </div>
-  <%= form_with url: new_message_conversation_path(id: conversation.id), id: 'new-message-form'  do |f| %>
+  <script>
+    const textarea = document.getElementById('new-message-text-area');
+
+    textarea.addEventListener('input', () => {
+        textarea.style.height = '1rem';
+        textarea.style.height = `${textarea.scrollHeight}px`;
+    });
+  </script>
+  <%= form_with url: new_message_conversation_path(id: conversation.id), id: 'new-message-form' do |f| %>
     <%= render 'conversation_status', conversation: conversation %>
-    <%= f.text_area :content, required: 'required', rows: 5, id: 'new-message-text-area' %>
+    <%= f.text_area :content, required: 'required', id: 'new-message-text-area' %>
+    <i class="fa-solid fa-paper-plane" onclick="document.getElementByID('new-message-form').submit"></i>
     <%= f.submit '➳', id: 'submit', style: 'display: none;' %>
   <% end %>
 </div>

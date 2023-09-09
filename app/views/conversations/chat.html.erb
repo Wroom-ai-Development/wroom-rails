@@ -2,15 +2,15 @@
   <%= turbo_stream_from @conversation.id, 'conversation_status' %>
   <div id="chat">
     <div id='settings'>
-      <%= link_to 'context', context_conversation_path(@conversation) %>
-      <%= link_to "voices", manager_voices_path, data: { turbo_frame: "_top" } %>
-      <%= button_to('clear chat', clear_chat_conversation_path(conversation_id: @conversation.id), method: :delete) %>
+      <%= link_to 'Context', context_conversation_path(@conversation) %>
       <%= form_with(
         model: @conversation,
         url: update_settings_conversation_url
       ) do |form| %>
         <% if @conversation.user.voices.present? %>
-          <%= form.label 'voice', style: "display: block" %>
+          <div class='label-wrapper'>
+            <%= form.label 'Voice', style: "display: block" %>
+          </div>
           <%= form.collection_select :voice_id, @conversation.user.voices.order(:name), :id, :name, { include_blank: "Default", selected: @conversation.voice.try(:id) }, onchange: "this.form.submit();" do |voice| %>
             <option value="<%= voice.id %>">
               <%= voice.name.length > 15 ? voice.name.slice(0, 15) + '...' : voice.name %>
@@ -19,6 +19,7 @@
         <% end %>
         <%= form.submit style: 'display:none;' %>
       <% end %>
+      <%= button_to('Clear chat', clear_chat_conversation_path(conversation_id: @conversation.id), method: :delete) %>
     </div>
     <%= render 'conversation', conversation: @conversation %>
   </div>

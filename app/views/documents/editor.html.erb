@@ -1,27 +1,29 @@
 <%= turbo_frame_tag "document_editor" do %>
-  <div id='document-editor'>
-    <div id="document-panel" class="panel">
-      <div id='edit-document'>
-        <% if @document.source_based %>
-          <%= render 'sources/show', source: @document.source %>
-        <% else %>
-          <%= form_with(
-              model: @document,
-              data: {controller: 'document', autosave_delay: '250'},
-              id: 'edit-document'
-          ) do |form| %>
-              <div class='top-pane'>
-                <%= form.text_field :title, data: { action: "keyup->document#save blur->document#save" } %>
-              </div>
-              <%= form.rich_text_area :content, placeholder: 'Use this space to make notes and save useful fragments of your conversation.', data: { action: "keyup->document#save blur->document#save" } %>
+  <div id='document-editor-background'>
+    <div id='document-editor'>
+      <div id="document-panel" class="panel">
+        <div id='edit-document'>
+          <% if @document.source_based %>
+            <%= render 'sources/show', source: @document.source %>
+          <% else %>
+            <%= form_with(
+                model: @document,
+                data: {controller: 'document', autosave_delay: '250'},
+                id: 'edit-document'
+            ) do |form| %>
+                <div class='top-pane'>
+                  <%= form.text_field :title, data: { action: "keyup->document#save blur->document#save" } %>
+                </div>
+                <%= form.rich_text_area :content, placeholder: 'Use this space to make notes and save useful fragments of your conversation.', data: { action: "keyup->document#save blur->document#save" } %>
+            <% end %>
           <% end %>
+        </div>
+      </div>
+      <div id="conversation-panel" class="panel">
+        <% if @document.conversation %>
+          <%= turbo_frame_tag "conversation_frame", src: chat_conversation_path(@document.conversation) %>
         <% end %>
       </div>
-    </div>
-    <div id="conversation-panel" class="panel">
-      <% if @document.conversation %>
-        <%= turbo_frame_tag "conversation_frame", src: chat_conversation_path(@document.conversation) %>
-      <% end %>
     </div>
   </div>
 <% end %>

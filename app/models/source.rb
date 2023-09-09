@@ -25,6 +25,10 @@ class Source < ApplicationRecord
   after_create_commit :add_size_to_user_storage_used
   before_destroy :subtract_size_from_user_storage_used
 
+  def clean_url
+    source_url.present? ? source_url.gsub(%r{https+://(www.)+}, '') : ''
+  end
+
   def add_size_to_user_storage_used
     user.update!(storage_used: user.storage_used + file_size)
   end

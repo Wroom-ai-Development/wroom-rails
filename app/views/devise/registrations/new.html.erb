@@ -1,7 +1,7 @@
 <div id='devise'>
   <div class='ui-box'>
     <div id='logo'>
-      <span id='wroom'>WROOM</span>
+      <%= show_svg('logo.svg') %>
     </div>
     <%= render "devise/shared/error_messages", resource: resource %>
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>

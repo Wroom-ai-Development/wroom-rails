@@ -4,9 +4,7 @@
 
 div#edit-document {
   padding: 0;
-  background-color: white;
-  border-radius: 10px;
-  width: 35vw;
+  width: 100%;
   height: 90vh;
   flex-flow: column;
   display: flex;
@@ -60,11 +58,11 @@ div#edit-document {
     font-size: $font-size-80;
     overflow-y: auto;
     background-color: white;
-    padding-right: 1rem;
+    color: $wroom-dark-gray;
+    padding: 1rem;
     border: none;
     text-align: justify;
     line-height: 1.4rem;
-    padding: 3vw 3vw 3vw 1vw;
     flex: auto;
     height: 10px;
     margin-bottom: 3rem;
@@ -85,7 +83,7 @@ div#edit-document {
       padding: 0.5rem;
       border-radius: 5px;
       font-weight: 500;
-      background-color: $wroom-lighter-gray;
+      background-color: $wroom-light-gray;
       border: none;
       box-sizing: content-box;
       &:focus {

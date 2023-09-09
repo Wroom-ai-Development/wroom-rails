@@ -3,8 +3,9 @@
   <%= turbo_stream_from @conversation.id, "conversation_context" %>
   <div class="context">
     <div class='header'>
-      <h3>Context</h3>
-      <%= link_to "❌", chat_conversation_path(@conversation), class: 'quit-context-dialog' %>
+      <%= link_to chat_conversation_path(@conversation) do %>
+        <span>Back to chat</span><i class="fa-solid fa-rotate-left"></i>
+      <% end %>
     </div>
     <div class='currently-selected'>
       <div class='current-context-header'>

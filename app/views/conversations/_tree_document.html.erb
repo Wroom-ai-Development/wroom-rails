@@ -1,7 +1,7 @@
 
-<%= button_to toggle_context_conversation_path(id: conversation.id, document_id: document.id), method: :patch, form: { id: "context-tree-document-#{document.id}" } do %>
-  <% linked = conversation.documents.include?(document) %>
-  <div class='tree-document <%= linked ? 'linked' : '' %>'>
+<% linked = conversation.documents.include?(document) %>
+<%= button_to toggle_context_conversation_path(id: conversation.id, document_id: document.id), method: :patch, form: { class: 'document', id: "context-tree-document-#{document.id}" }, class: "document-button #{linked ? 'linked' : ''}" do %>
+  <div class='document'>
     <% if document.source_based %>
       <i class="fa fa-book fa-fw" aria-hidden="true"></i>
     <% else %>
