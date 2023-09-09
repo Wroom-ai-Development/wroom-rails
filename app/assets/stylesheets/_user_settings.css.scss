@@ -1,12 +1,13 @@
 @import 'colors';
 @import 'fonts';
 @import 'scrollbars';
+@import 'subscriptions';
 
 div#account-control {
   display: flex;
   height: 80vh;
   div#settings-links {
-    width: 20rem;
+    width: 10rem;
     border-right: 1px solid $wroom-gray;
     display: flex;
     flex-direction: column;
@@ -56,6 +57,12 @@ div.settings-view {
     background-color: white;
     margin-top: 1rem;
 
+    h4 {
+      margin-top: 2rem;
+      font-size: 0.8rem;
+      font-weight: 900;
+
+    }
     div.action-needed {
       margin-bottom: 2rem;
       font-size: $font-size-80;
@@ -180,7 +187,7 @@ div.settings-view {
       div.actions {
         display: flex;
         flex-direction: row;
-        justify-content: flex-end;
+        justify-content: flex-start;
         margin-top: 0.5rem;
         padding-right: 0.2rem;
         input {

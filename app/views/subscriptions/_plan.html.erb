@@ -1,0 +1,46 @@
+<% if current %>
+  <h4>Current plan details</h4>
+<% end %>
+<% if plan == 'free' %>
+  <div class='plan free'>
+    <div class='left'>
+      <h5>wroom Free</h5>
+    </div>
+    <ul>
+      <li>Single user</li>
+      <li>Free for life</li>
+      <li>1,500 Mana Points at the start of each month</li>
+      <li>200MB of storage</li>
+    </ul>
+  </div>
+<% elsif plan == 'basic' %>
+  <div class='plan basic'>
+    <div class='left'>
+      <h5>wroom Basic</h5>
+      <button class='upgrade-button basic'>
+        Upgrade to wroom Basic
+      </button>
+    </div>
+    <ul>
+      <li>Single user</li>
+      <li>$29.00 a month</li>
+      <li>1,500 Mana Points at the start of each month</li>
+      <li>25GB of storage</li>
+    </ul>
+  </div>
+<% elsif plan == 'pro' %>
+  <div class='plan pro'>
+    <div class='left'>
+      <h5>wroom Pro</h5>
+      <button class='upgrade-button pro'>
+        Upgrade to wroom Pro
+      </button>
+    </div>
+    <ul>
+      <li>Single user</li>
+      <li>$79.00 a month</li>
+      <li>5,000 Mana Points at the start of each month</li>
+      <li>100GB of storage</li>
+    </ul>
+  </div>
+<% end %>
