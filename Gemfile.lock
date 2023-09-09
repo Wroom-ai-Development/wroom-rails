@@ -449,6 +449,7 @@ GEM
     stimulus-rails (1.2.2)
       railties (>= 6.0.0)
     stringio (3.0.8)
+    stripe (9.2.0)
     temple (0.10.2)
     thin (1.8.2)
       daemons (~> 1.0, >= 1.0.9)
@@ -535,6 +536,7 @@ DEPENDENCIES
   simplecov
   sprockets-rails
   stimulus-rails
+  stripe (~> 9.2)
   tiktoken_ruby (~> 0.0.5)
   turbo-rails (= 1.4.0)
   tzinfo-data
