@@ -10,7 +10,32 @@ div#account-control {
     border-right: 1px solid $wroom-gray;
     display: flex;
     flex-direction: column;
+    padding-right: 1rem;
+    h4 {
+      font-size: 1.5rem;
+      margin: 0;
+      margin-bottom: 1rem;
+    }
     
+    a, button {
+      width: 100%;
+      padding: 0.5rem;
+      box-sizing: border-box;
+      margin-bottom: 0.5rem;
+      border-radius: 5px;
+      text-align: left;
+      font-family: $body-font;
+      font-size: $font-size-80;
+      border: 0;
+      background-color: white;
+      color: $wroom-dark-gray;
+      &:hover {
+        background-color: $wroom-gray;
+      }
+    }
+    button {
+      margin-top: 2rem;
+    }
   }
   div#account-control-content {
     overflow-y: auto;
@@ -73,7 +98,7 @@ div.settings-view {
 
       h3 {
         margin: 0;
-        font-size: $font-size-80;
+        font-size: $font-size-90;
       }
       a {
         color: transparent;
@@ -105,9 +130,9 @@ div.settings-view {
 
       input[type='submit'] {
         font-family: $body-font;
-        background-color: white;
+        background-color: $wroom-dark-gray;
+        color: white;
         border: none;
-        color: $wroom-primary;
         font-size: $font-size-70;
         margin: 0;
         padding: 0;
@@ -164,12 +189,28 @@ div.settings-view {
           border: 1px solid $wroom-gray;
           font-size: $font-size-80;
           &:hover {
-            background-color: $wroom-primary-light;
+            background-color: $wroom-halfway-dark-gray;
+            cursor: pointer;
           }
         }
 
       }
     }
 
+  }
+}
+
+div#cancel-account {
+  button {
+    background-color: $wroom-red;
+    color: white;
+    border: none;
+    font-size: $font-size-70;
+    margin: 0;
+    padding: 0.5rem;
+    border-radius: 5px;
+    &:hover {
+      background-color: $wroom-dark-red;
+    }
   }
 }

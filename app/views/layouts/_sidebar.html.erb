@@ -59,7 +59,6 @@
     <% end %>
     <div id='account-links'>
       <p id='current-user'><%= current_user.email %></p>
-      <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: 'sign-out' %>
       <%= link_to "⚙️", edit_user_registration_path, data: { turbo_action: 'replace', turbo_frame: 'view_content' }, class: 'settings-link' %>
     </div>
   </div>
