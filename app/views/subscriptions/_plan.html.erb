@@ -17,9 +17,11 @@
   <div class='plan basic'>
     <div class='left'>
       <h5>wroom Basic</h5>
-      <button class='upgrade-button basic'>
-        Upgrade to wroom Basic
-      </button>
+      <% unless current || plan == 'free' %>
+        <a class='upgrade-button basic' href='<%= ENV['STRIPE_BASIC_PAYMENT_LINK'] %>'>
+          Upgrade to wroom Basic
+        </a>
+      <% end %>
     </div>
     <ul>
       <li>Single user</li>
@@ -32,9 +34,11 @@
   <div class='plan pro'>
     <div class='left'>
       <h5>wroom Pro</h5>
-      <button class='upgrade-button pro'>
-        Upgrade to wroom Pro
-      </button>
+      <% unless current %>
+        <a class='upgrade-button pro' href='<%= ENV['STRIPE_PRO_PAYMENT_LINK'] %>'>
+          Upgrade to wroom Pro
+        </a>
+      <% end %>
     </div>
     <ul>
       <li>Single user</li>

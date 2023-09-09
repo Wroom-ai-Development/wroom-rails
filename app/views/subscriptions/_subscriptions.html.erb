@@ -5,8 +5,13 @@
       <div id="header">
         <h3>Subscriptions & Billing</h3>
       </div>
-      <%= render 'plan', current: true, plan: 'free' %>
-      <h4>Also available</h4>
+      <% current_subscription = @current_subscription if @current_subscription %>
+      <% if current_subscription %>
+        <%= render 'plan', current: true, plan: current_subscription.plan %>
+        <h4>Also available</h4>
+      <% else %>
+        <%= render 'plan', current: true, plan: 'free' %>
+      <% end %>
       <%= render 'plans' %>
   </div>
 <% end %>

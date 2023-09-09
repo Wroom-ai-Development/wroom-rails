@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_21_122704) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_09_124523) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -163,6 +163,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_21_122704) do
     t.index ["user_id"], name: "index_sources_on_user_id"
   end
 
+  create_table "subscriptions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "plan", null: false
+    t.date "start_date", null: false
+    t.date "end_date", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_subscriptions_on_user_id"
+  end
+
   create_table "usage_records", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -230,5 +240,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_21_122704) do
   add_foreign_key "sources", "documents", on_delete: :cascade
   add_foreign_key "sources", "folders", on_delete: :cascade
   add_foreign_key "sources", "users", on_delete: :cascade
+  add_foreign_key "subscriptions", "users"
   add_foreign_key "voices", "users", on_delete: :cascade
 end

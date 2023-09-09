@@ -53,12 +53,13 @@ div.plan {
   }
 }
 
-button.upgrade-button {
+a.upgrade-button {
   padding: 0.5rem 1rem;
   box-sizing: border-box;
   border-radius: 5px;
   font-family: $body-font;
   font-size: $font-size-80;
+  text-align: center;
   width: 12rem;
   font-weight: 700;
   border: 0;
