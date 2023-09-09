@@ -1,129 +1,134 @@
 <%= turbo_frame_tag "view_content" do %>
-  <div id="header">
-    <span>Account settings</span>
-  </div>
-  <div class="settings-view">
-    <div class="settings-panel">
-      <% if current_user.security_updated == true %>
-        <%= render "devise/shared/error_messages", resource: resource %>
-        <div class="record-form">
-          <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, id: 'account_details' }) do |f| %>
-            <h4>
-              Account details
-            </h4>
-            <div class="field">
-              <%= f.label :email %><br>
-              <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-            </div>
-            <div class="field">
-              <%= f.label :first_name %><br>
-              <%= f.text_field :first_name %>
-            </div>
-            <div class="field">
-              <%= f.label :last_name %><br>
-              <%= f.text_field :last_name %>
-            </div>
-
-            <div class="field">
-              <%= f.label 'Input current password to make changes' %>
-              <%= f.password_field :current_password, autocomplete: "current-password" %>
-            </div>
-
-            <div class="actions">
-              <%= f.submit "Confirm" %>
-            </div>
-          <% end %>
-
-            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-              <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-            <% end %>
-
-            <h4>
-              Password
-            </h4>
-
-            <div class="password-instructions">
-              Please make sure that your password matches the following criteria:
-              <ul>
-                <li>At least 11 characters long</li>
-                <li>Contains at least one letter (A-Za-z)</li>
-                <li>Contains at least one digit</li>
-                <li>Contains at least one special character from @ $ ! % * # ? &</li>
-              </ul>
-              We recommend using a password manager to generate and store your passwords.
-            </div>
-            <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, id: 'change_password' }) do |f| %>
-              <div class="field">
-                <%= f.label 'New password' %>
-                <%= f.password_field :password, autocomplete: "new-password" %>
-              </div>
-
-              <div class="field">
-                <%= f.label :password_confirmation %><br>
-                <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-              </div>
-
-              <div class="field">
-                <%= f.label 'Input current password to make changes' %>
-                <%= f.password_field :current_password, autocomplete: "current-password" %>
-              </div>
-
-              <div class="actions">
-                <%= f.submit "Confirm" %>
-              </div>
-            <% end %>
+  <div id='account-control'>
+    <%= render 'settings/settings_links' %>
+    <div id='account-control-content'>
+      <div id="header">
+        <span>Account settings</span>
       </div>
-
-        <h4>
-          Danger zone
-        </h4>
-
-        <div><%= button_to "Cancel my account", registration_path(resource_name), data: {
-            confirm: "Please confirm that you would like to cancel your account. This cannot be undone.",
-            turbo_confirm: "Please confirm that you would like to cancel your account. This cannot be undone."
-          },
-          method: :delete %>
-        </div>
-      <% else %>
-        <div class="action-needed">
-          <h3>Security update</h3>
-          We have introduced a new password policy to better protect our users. Below you can find the requirements for your new password, along with the form to change it.
-        </div>
-        <div class="record-form">
-          <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-            <div class="password-instructions">
-              Please make sure that your password matches the following criteria:
-              <ul>
-                <li>At least 11 characters long</li>
-                <li>Contains at least one letter (A-Za-z)</li>
-                <li>Contains at least one digit</li>
-                <li>Contains at least one special character from @ $ ! % * # ? &</li>
-              </ul>
-              We recommend using a password manager to generate and store your passwords.
-            </div>
+      <div class="settings-view">
+        <div class="settings-panel">
+          <% if current_user.security_updated == true %>
             <%= render "devise/shared/error_messages", resource: resource %>
+            <div class="record-form">
+              <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, id: 'account_details' }) do |f| %>
+                <h4>
+                  Account details
+                </h4>
+                <div class="field">
+                  <%= f.label :email %><br>
+                  <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+                </div>
+                <div class="field">
+                  <%= f.label :first_name %><br>
+                  <%= f.text_field :first_name %>
+                </div>
+                <div class="field">
+                  <%= f.label :last_name %><br>
+                  <%= f.text_field :last_name %>
+                </div>
 
-            <div class="field">
-              <%= f.label 'New password' %>
-              <%= f.password_field :password, autocomplete: "new-password" %>
+                <div class="field">
+                  <%= f.label 'Input current password to make changes' %>
+                  <%= f.password_field :current_password, autocomplete: "current-password" %>
+                </div>
+
+                <div class="actions">
+                  <%= f.submit "Confirm" %>
+                </div>
+              <% end %>
+
+                <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+                  <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+                <% end %>
+
+                <h4>
+                  Password
+                </h4>
+
+                <div class="password-instructions">
+                  Please make sure that your password matches the following criteria:
+                  <ul>
+                    <li>At least 11 characters long</li>
+                    <li>Contains at least one letter (A-Za-z)</li>
+                    <li>Contains at least one digit</li>
+                    <li>Contains at least one special character from @ $ ! % * # ? &</li>
+                  </ul>
+                  We recommend using a password manager to generate and store your passwords.
+                </div>
+                <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, id: 'change_password' }) do |f| %>
+                  <div class="field">
+                    <%= f.label 'New password' %>
+                    <%= f.password_field :password, autocomplete: "new-password" %>
+                  </div>
+
+                  <div class="field">
+                    <%= f.label :password_confirmation %><br>
+                    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+                  </div>
+
+                  <div class="field">
+                    <%= f.label 'Input current password to make changes' %>
+                    <%= f.password_field :current_password, autocomplete: "current-password" %>
+                  </div>
+
+                  <div class="actions">
+                    <%= f.submit "Confirm" %>
+                  </div>
+                <% end %>
+          </div>
+
+            <h4>
+              Danger zone
+            </h4>
+
+            <div><%= button_to "Cancel my account", registration_path(resource_name), data: {
+                confirm: "Please confirm that you would like to cancel your account. This cannot be undone.",
+                turbo_confirm: "Please confirm that you would like to cancel your account. This cannot be undone."
+              },
+              method: :delete %>
             </div>
-
-            <div class="field">
-              <%= f.label :password_confirmation %><br>
-              <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+          <% else %>
+            <div class="action-needed">
+              <h3>Security update</h3>
+              We have introduced a new password policy to better protect our users. Below you can find the requirements for your new password, along with the form to change it.
             </div>
+            <div class="record-form">
+              <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+                <div class="password-instructions">
+                  Please make sure that your password matches the following criteria:
+                  <ul>
+                    <li>At least 11 characters long</li>
+                    <li>Contains at least one letter (A-Za-z)</li>
+                    <li>Contains at least one digit</li>
+                    <li>Contains at least one special character from @ $ ! % * # ? &</li>
+                  </ul>
+                  We recommend using a password manager to generate and store your passwords.
+                </div>
+                <%= render "devise/shared/error_messages", resource: resource %>
 
-            <div class="field">
-              <%= f.label 'Input current password to make changes' %>
-              <%= f.password_field :current_password, autocomplete: "current-password" %>
-            </div>
+                <div class="field">
+                  <%= f.label 'New password' %>
+                  <%= f.password_field :password, autocomplete: "new-password" %>
+                </div>
 
-            <div class="actions">
-              <%= f.submit "Confirm" %>
+                <div class="field">
+                  <%= f.label :password_confirmation %><br>
+                  <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+                </div>
+
+                <div class="field">
+                  <%= f.label 'Input current password to make changes' %>
+                  <%= f.password_field :current_password, autocomplete: "current-password" %>
+                </div>
+
+                <div class="actions">
+                  <%= f.submit "Confirm" %>
+                </div>
+              <% end %>
             </div>
           <% end %>
         </div>
-      <% end %>
+      </div>
     </div>
   </div>
 <% end %>

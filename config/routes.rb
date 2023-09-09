@@ -62,6 +62,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   patch '/drag/document', to: 'drag#document'
   get '/monitoring', to: 'monitoring#index'
   get '/wroom', to: 'wroom#app'
+  get '/billing', to: 'subscriptions#subscriptions'
   get '/dashboard', to: 'wroom#dashboard'
   root 'wroom#dashboard'
 end

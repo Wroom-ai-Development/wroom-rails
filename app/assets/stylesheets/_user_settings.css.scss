@@ -1,5 +1,25 @@
 @import 'colors';
 @import 'fonts';
+@import 'scrollbars';
+
+div#account-control {
+  display: flex;
+  height: 80vh;
+  div#settings-links {
+    width: 20rem;
+    border-right: 1px solid $wroom-gray;
+    display: flex;
+    flex-direction: column;
+    
+  }
+  div#account-control-content {
+    overflow-y: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    @include custom-scrollbar;
+  }
+
+}
 
 div.settings-view {
   margin: 0;
