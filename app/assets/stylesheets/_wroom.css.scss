@@ -43,7 +43,7 @@ body#wroom {
   }
 
   div#document-editor-background {
-    color: $wroom-primary;
+    color:white;
     width: 81vw;
     height: 100vh;
   }
@@ -51,7 +51,6 @@ body#wroom {
     background-color: white;
     display: flex;
     height: 100vh;
-    border-top-left-radius: 30px;
     display: flex;
     align-items: center;
     .panel:not(:first-child) {

@@ -15,13 +15,13 @@ div#sidebar {
   display: flex;
   flex-direction: column;
   z-index: 300;
-  background-color: $wroom-primary;
+  background-color: white;
   height: 100%;
   overflow-y: auto;
-  border-bottom-right-radius: 30px;
   font-size: $font-size-80;
   overflow: hidden;
   padding-bottom: 0.5rem;
+  border-right: 1px solid $wroom-gray;
 
   div.link-wrapper {
     width: 100%;
@@ -40,14 +40,14 @@ div#sidebar {
         margin-right: 0.5rem;
       }
       &:hover {
-        background-color: $wroom-primary-light;
+        background-color: $wroom-primary;
         cursor: pointer;
       }
     }
     a.gpt-4-toggle {
       &.on {
-        color: $wroom-green;
-        background-color: $wroom-primary-dark;
+        color: white;
+        background-color: $wroom-green;
       }
 
       &.off {
@@ -144,7 +144,7 @@ div#sidebar {
           }
         }
         &:hover {
-          background-color: $wroom-primary-light;
+          background-color: $wroom-primary;
           cursor: pointer;
         }
       }
