@@ -30,7 +30,7 @@ class Folder < ApplicationRecord
   end
 
   def empty?
-    children.empty? && documents.empty?
+    children.kept.empty? && documents.kept.empty?
   end
 
   def remove_folder_row
