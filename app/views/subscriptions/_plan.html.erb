@@ -7,44 +7,47 @@
       <h5>wroom Free</h5>
     </div>
     <ul>
-      <li>Single user</li>
-      <li>Free for life</li>
-      <li>1,500 Mana Points at the start of each month</li>
+      <li>A one-time gift of 500 Mana Points</li>
       <li>200MB of storage</li>
     </ul>
   </div>
 <% elsif plan == 'basic' %>
-  <div class='plan basic'>
+  <div class='plan basic' data-turbo="false">
     <div class='left'>
       <h5>wroom Basic</h5>
       <% unless current || plan == 'free' %>
-        <a class='upgrade-button basic' href='<%= ENV['STRIPE_BASIC_PAYMENT_LINK'] %>'>
-          Upgrade to wroom Basic
-        </a>
+        <%= form_with url: subscribe_path do |form| %>
+          <%= form.hidden_field :plan, value: 'basic' %>
+          <%= form.submit 'Upgrade to wroom Basic', class: 'upgrade-button basic' %>
+        <% end %>
       <% end %>
     </div>
     <ul>
       <li>Single user</li>
       <li>$29.00 a month</li>
-      <li>1,500 Mana Points at the start of each month</li>
+      <li>1,500 Mana Points replenishing monthly</li>
       <li>25GB of storage</li>
     </ul>
   </div>
 <% elsif plan == 'pro' %>
-  <div class='plan pro'>
+  <div class='plan pro' data-turbo="false">
     <div class='left'>
       <h5>wroom Pro</h5>
       <% unless current %>
-        <a class='upgrade-button pro' href='<%= ENV['STRIPE_PRO_PAYMENT_LINK'] %>'>
-          Upgrade to wroom Pro
-        </a>
+        <%= form_with url: subscribe_path do |form| %>
+          <%= form.hidden_field :plan, value: 'pro' %>
+          <%= form.submit 'Upgrade to wroom Pro', class: 'upgrade-button pro' %>
+        <% end %>
       <% end %>
     </div>
     <ul>
       <li>Single user</li>
       <li>$79.00 a month</li>
-      <li>5,000 Mana Points at the start of each month</li>
+      <li>5,000 Mana Points replenishing monthly</li>
       <li>100GB of storage</li>
     </ul>
   </div>
+<% end %>
+<% if current && current_user.active_plan != 'free' %>
+  Next payment due <%= current_user.subscription.next_invoice_on.strftime('%B %d, %Y') %>
 <% end %>

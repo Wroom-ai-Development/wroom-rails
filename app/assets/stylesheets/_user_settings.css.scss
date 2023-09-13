@@ -40,9 +40,11 @@ div#account-control {
   }
   div#account-control-content {
     overflow-y: auto;
+    overflow-x: hidden;
     padding-left: 1rem;
     padding-right: 1rem;
     @include custom-scrollbar;
+    width: 40rem;
   }
 
 }

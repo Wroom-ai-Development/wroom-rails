@@ -23,13 +23,21 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   validates :email, uniqueness: true, presence: true
   has_many :folders, dependent: :destroy
   has_one :root_folder, class_name: 'RootFolder', dependent: :destroy
-  has_many :subscriptions, dependent: :destroy
+  has_one :subscription, dependent: :destroy
 
   enum role: { 'admin': 0, 'user': 1, 'supplicant': 2 }
   after_initialize :set_default_role, if: :new_record?
 
   def total_gpt_cost
     usage_records.sum(&:total_price)
+  end
+
+  def active_plan
+    if subscription.status == 'active'
+      subscription.plan
+    else
+      'free'
+    end
   end
 
   def gpt_fees_limit

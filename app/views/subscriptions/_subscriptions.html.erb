@@ -7,11 +7,13 @@
       </div>
       <% current_subscription = @current_subscription if @current_subscription %>
       <% if current_subscription %>
-        <%= render 'plan', current: true, plan: current_subscription.plan %>
-        <h4>Also available</h4>
+        <%= render 'plan', current: true, plan: current_subscription %>
       <% else %>
         <%= render 'plan', current: true, plan: 'free' %>
       <% end %>
-      <%= render 'plans' %>
+      <% unless current_user.active_plan == 'pro' %>
+        <h4>Also available</h4>
+        <%= render 'plans' %>
+      <% end %>
   </div>
 <% end %>

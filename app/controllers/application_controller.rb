@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
 
   def ensure_valid_user
     # binding.pry
-    return if current_user.security_updated == true
+    return if current_user.nil? || current_user.security_updated == true
 
     redirect_to edit_user_registration_path
   end
