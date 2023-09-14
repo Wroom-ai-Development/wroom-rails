@@ -3,7 +3,6 @@
     const newMessageForm = document.getElementById('new-message-form')
     const submitButton = document.getElementById('submit')
     const newMessageTextArea = document.getElementById('new-message-text-area')
-    console.log("yay")
     if (e.which === 13 && !e.shiftKey) {
       e.preventDefault();
       submitButton.click();
@@ -52,11 +51,15 @@
         textarea.style.height = '1rem';
         textarea.style.height = `${textarea.scrollHeight}px`;
     });
+    function submitMessage() {
+      document.getElementById('new-message-submit').click();
+      document.getElementById('new-message-text-area').value = '';
+    }
   </script>
   <%= form_with url: new_message_conversation_path(id: conversation.id), id: 'new-message-form' do |f| %>
     <%= render 'conversation_status', conversation: conversation %>
     <%= f.text_area :content, required: 'required', id: 'new-message-text-area' %>
-    <i class="fa-solid fa-paper-plane" onclick="document.getElementByID('new-message-form').submit"></i>
-    <%= f.submit '➳', id: 'submit', style: 'display: none;' %>
+    <i class="fa-solid fa-paper-plane" onclick="submitMessage();"></i>
+    <%= f.submit '➳', id: 'submit', style: 'display: none;', id: 'new-message-submit' %>
   <% end %>
 </div>

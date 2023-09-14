@@ -5,7 +5,7 @@
       <i class="fa fa-folder fa-fw"></i><span class='folder-name'><%= folder.type == 'RootFolder' ? 'My Files' : folder.name %></span>
     <% end %>
   </div>
-  <div class="children" style="display: none;">
+  <div class="children" style="display: none;" id='children-of-folder-<%= folder.id %>'>
     <% folder.children.order(:name).kept.each do |child_folder| %>
       <%= render 'folders/tree_folder', folder: child_folder %>
     <% end %>

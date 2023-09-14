@@ -25,7 +25,7 @@ class Folder < ApplicationRecord
       'sidebar_explorer',
       partial: 'folders/tree_folder',
       locals: { folder: self },
-      target: 'folder-tree'
+      target: "children-of-folder-#{parent_id}"
     )
   end
 
