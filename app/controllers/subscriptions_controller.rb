@@ -92,15 +92,15 @@ class SubscriptionsController < ApplicationController
     status 200
   end
 
-  def purchase_success
-    session = Stripe::Checkout::Session.retrieve(params[:session_id])
-    if session.payment_status == 'paid'
-      current_user.update(stripe_customer_id: session.customer) if current_user.stripe_customer_id.nil?
-      Subscription.find_or_create_by!(user: current_user) do |s|
-        s.status = 'active'
-      end
-    else
-    end
-    redirect_to billing_path
-  end
+  # def purchase_success
+  #   session = Stripe::Checkout::Session.retrieve(params[:session_id])
+  #   if session.payment_status == 'paid'
+  #     current_user.update(stripe_customer_id: session.customer) if current_user.stripe_customer_id.nil?
+  #     Subscription.find_or_create_by!(user: current_user) do |s|
+  #       s.status = 'active'
+  #     end
+  #   else
+  #   end
+  #   redirect_to billing_path
+  # end
 end
