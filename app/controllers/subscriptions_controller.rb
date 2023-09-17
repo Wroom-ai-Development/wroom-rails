@@ -19,7 +19,7 @@ class SubscriptionsController < ApplicationController
       }
     elsif params[:plan] == 'basic'
       {
-        price: ENV['STRIPE_BASIC_PRICE_ID']],
+        price: ENV['STRIPE_BASIC_PRICE_ID'],
         quantity: 1
       }
     end
