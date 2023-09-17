@@ -14,12 +14,12 @@ class SubscriptionsController < ApplicationController
   def subscribe
     line_item = if params[:plan] == 'pro'
       {
-        price: 'price_1NoMW7JKu4x9o99so5s5VJYi',
+        price: ENV['STRIPE_PRO_PRICE_ID'],
         quantity: 1
       }
     elsif params[:plan] == 'basic'
       {
-        price: 'price_1NoMVBJKu4x9o99sIG6FEJVT',
+        price: ENV['STRIPE_BASIC_PRICE_ID']],
         quantity: 1
       }
     end
@@ -42,7 +42,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def webhook
-    endpoint_secret = 'whsec_fa072d8b322d39d6a480fa6e681605b80fa06e99a9a5fd8e7aa9ff7fa842e370'
+    endpoint_secret = ENV['STRIPE_WEBHOOK_SECRET']
 
     payload = request.body.read
     sig_header = request.env['HTTP_STRIPE_SIGNATURE']
