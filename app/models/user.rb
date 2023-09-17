@@ -33,11 +33,8 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def active_plan
-    if subscription.status == 'active'
-      subscription.plan
-    else
-      'free'
-    end
+    return 'free' unless subscription
+    subscription.plan
   end
 
   def gpt_fees_limit
