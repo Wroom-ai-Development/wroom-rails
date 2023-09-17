@@ -48,6 +48,6 @@
     </ul>
   </div>
 <% end %>
-<% if current && current_user.active_plan != 'free' %>
+<% if current && current_user.subscription.next_invoice_on.present? && current_user.active_plan != 'free' %>
   Next payment due <%= current_user.subscription.next_invoice_on.strftime('%B %d, %Y') %>
 <% end %>
