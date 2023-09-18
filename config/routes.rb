@@ -64,7 +64,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get '/wroom', to: 'wroom#app'
   get '/billing', to: 'subscriptions#subscriptions'
   post '/subscribe', to: 'subscriptions#subscribe'
-  post '/stripe_webhook', to: 'subscriptions#webhook'
+  post '/stripe_webhook', to: 'subscriptions#stripe_webhook'
   get '/purchase_success', to: 'subscriptions#purchase_success'
   get '/dashboard', to: 'wroom#dashboard'
   root 'wroom#dashboard'

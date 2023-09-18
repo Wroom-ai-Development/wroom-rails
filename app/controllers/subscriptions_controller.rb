@@ -1,14 +1,11 @@
 # frozen_string_literal: true
 
 class SubscriptionsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:webhook]
-  skip_before_action :authenticate_user!, only: [:webhook]
+  skip_before_action :verify_authenticity_token, only: [:stripe_webhook]
+  skip_before_action :authenticate_user!, only: [:stripe_webhook]
   layout 'dashboard'
   def subscriptions
     @current_subscription = current_user.active_plan
-    if turbo_frame_request?
-      render partial: 'subscriptions/subscriptions'
-    end
   end
 
   def subscribe
@@ -23,9 +20,11 @@ class SubscriptionsController < ApplicationController
         quantity: 1
       }
     end
-    subscription = Subscription.find_or_create_by!(user: current_user) do |s|
-      s.plan = params[:plan]
-      s.status = 'pending'
+    if current_user.subscription.present?
+      subscription = current_user.subscription
+      subscription.update(plan: params[:plan], status: 'pending')
+    else
+      subscription = Subscription.create!(user: current_user, plan: params[:plan], status: 'pending')
     end
     session = Stripe::Checkout::Session.create(
       metadata: {
@@ -41,12 +40,14 @@ class SubscriptionsController < ApplicationController
     redirect_to session.url, allow_other_host: true, status: 303
   end
 
-  def webhook
+  def stripe_webhook
     endpoint_secret = ENV['STRIPE_WEBHOOK_SECRET']
 
     payload = request.body.read
     sig_header = request.env['HTTP_STRIPE_SIGNATURE']
     event = nil
+
+    # binding.pry
 
     begin
         event = Stripe::Webhook.construct_event(
@@ -54,18 +55,19 @@ class SubscriptionsController < ApplicationController
         )
     rescue JSON::ParserError => e
         # Invalid payload
-        status 400
+        head :ok
         return
     rescue Stripe::SignatureVerificationError => e
         # binding.pry
         # Invalid signature
-        status 400
+        head :no_content, status: :bad_request
         return
     end
 
     # Handle the event
     case event.type
     when 'checkout.session.completed'
+        # binding.pry
         session = event.data.object
         if session.metadata.sub_id.present?
           subscription = Subscription.find(session.metadata.sub_id)
@@ -75,32 +77,34 @@ class SubscriptionsController < ApplicationController
         stripe_subscription = event.data.object
         subscription = Subscription.find_by(stripe_subscription_id: stripe_subscription.id)
         subscription.update(status: stripe_subscription.status, paid_until: Time.at(stripe_subscription.current_period_end))
-      when 'customer.subscription.deleted'
-        stripe_subscription = event.data.object
-        stripe_subscription = event.data.object
-        subscription = Subscription.find_by(stripe_subscription_id: stripe_subscription.id)
-        subscription.update(status: stripe_subscription.status, paid_until: Time.at(stripe_subscription.current_period_end))
-      when 'customer.subscription.updated'
-        stripe_subscription = event.data.object
-        stripe_subscription = event.data.object
-        subscription = Subscription.find_by(stripe_subscription_id: stripe_subscription.id)
-        subscription.update(status: stripe_subscription.status, paid_until: Time.at(stripe_subscription.current_period_end))
+    when 'customer.subscription.deleted'
+      stripe_subscription = event.data.object
+      stripe_subscription = event.data.object
+      subscription = Subscription.find_by(stripe_subscription_id: stripe_subscription.id)
+      subscription.update(status: stripe_subscription.status, paid_until: Time.at(stripe_subscription.current_period_end))
+    when 'customer.subscription.updated'
+      stripe_subscription = event.data.object
+      stripe_subscription = event.data.object
+      subscription = Subscription.find_by(stripe_subscription_id: stripe_subscription.id)
+      subscription.update(status: stripe_subscription.status, paid_until: Time.at(stripe_subscription.current_period_end))
     else
         puts "Unhandled event type: #{event.type}"
     end
 
-    status 200
+    head :ok
   end
 
-  # def purchase_success
-  #   session = Stripe::Checkout::Session.retrieve(params[:session_id])
-  #   if session.payment_status == 'paid'
-  #     current_user.update(stripe_customer_id: session.customer) if current_user.stripe_customer_id.nil?
-  #     Subscription.find_or_create_by!(user: current_user) do |s|
-  #       s.status = 'active'
-  #     end
-  #   else
-  #   end
-  #   redirect_to billing_path
-  # end
+  def purchase_success
+    session = Stripe::Checkout::Session.retrieve(params[:session_id])
+    if session.payment_status == 'paid'
+      current_user.update(stripe_customer_id: session.customer) if current_user.stripe_customer_id.nil?
+      Subscription.find_or_create_by!(user: current_user) do |s|
+        s.status = 'active'
+      end
+      @current_subscription = current_user.active_plan
+      render 'subscriptions/subscription_succeeded'
+    else
+      render 'subscriptions/subscription_failed'
+    end
+  end
 end
