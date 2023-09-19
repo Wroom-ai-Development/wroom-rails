@@ -1,7 +1,7 @@
 <script>
   function handleEnter(e) {
     const newMessageForm = document.getElementById('new-message-form')
-    const submitButton = document.getElementById('submit')
+    const submitButton = document.getElementById('new-message-submit')
     const newMessageTextArea = document.getElementById('new-message-text-area')
     if (e.which === 13 && !e.shiftKey) {
       e.preventDefault();
@@ -52,7 +52,7 @@
         textarea.style.height = `${textarea.scrollHeight}px`;
     });
     function submitMessage() {
-      document.getElementById('new-message-submit').click();
+      document.getElementById('new-message-form').submit();
       document.getElementById('new-message-text-area').value = '';
     }
   </script>
@@ -60,6 +60,6 @@
     <%= render 'conversation_status', conversation: conversation %>
     <%= f.text_area :content, required: 'required', id: 'new-message-text-area' %>
     <i class="fa-solid fa-paper-plane" onclick="submitMessage();"></i>
-    <%= f.submit '➳', id: 'submit', style: 'display: none;', id: 'new-message-submit' %>
+    <%= f.submit '➳', style: 'display: none;', id: 'new-message-submit' %>
   <% end %>
 </div>
