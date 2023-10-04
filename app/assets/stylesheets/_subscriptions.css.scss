@@ -2,6 +2,21 @@
 @import 'fonts';
 @import 'scrollbars';
 
+a#cancel-subscription-link {
+  color: white;
+  background-color: $wroom-red;
+  font-size: $font-size-80;
+  font-weight: 600;
+  padding: 0.5rem;
+  border-radius: 5px;
+  margin-top: 1rem;
+  white-space: nowrap;
+  &:hover {
+    background-color: $wroom-dark-red;
+    cursor: pointer;
+  }
+}
+
 div.plan {
   width: 35rem;
   background-color: $wroom-lighter-gray;
@@ -26,13 +41,18 @@ div.plan {
   }
   ul {
     margin: 0;
+    flex: 1;
+  }
+
+  div#cancel-wrapper {
+    max-width: min-content;
   }
 
   .left {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 14rem;
+    width: 15rem;
   }
 
   &.basic {

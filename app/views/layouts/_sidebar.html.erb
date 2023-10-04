@@ -47,12 +47,16 @@
     </div>
     <%= render 'conversations/gpt_cost_limit', user: current_user %>
     <%= render 'documents/storage_limit', user: current_user %>
+    <% unless current_user.subscription.plan == 'pro' %>
+      <%= link_to 'Upgrade your plan', billing_path, data: { turbo_action: 'replace' }, id: 'upgrade-plan' %>
+    <% end %>
+
     <% if can? :manage, User %>
       <div class="link-wrapper">
         <%= link_to "Monitoring", monitoring_path, data: { turbo_action: 'replace', turbo_frame: 'view_content' } %>
       </div>
     <% end %>
-    <% if can? :manage, User %>
+  <% if can? :manage, User %>
       <div class="link-wrapper">
         <%= link_to "GPT-4", toggle_gpt_4_user_path(current_user), class: "gpt-4-toggle #{current_user.gpt_4_enabled ? "on" : "off"}" %>
       </div>

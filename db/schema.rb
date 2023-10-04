@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_16_095748) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_23_091113) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -164,7 +164,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_16_095748) do
   end
 
   create_table "subscriptions", force: :cascade do |t|
-    t.bigint "user_id", null: false
     t.string "plan", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -172,7 +171,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_16_095748) do
     t.string "stripe_customer_id"
     t.datetime "paid_until"
     t.datetime "next_invoice_on"
-    t.string "status"
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
@@ -212,10 +211,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_16_095748) do
     t.boolean "gpt_4_enabled", default: false, null: false
     t.integer "current_folder_id"
     t.bigint "storage_used", default: 0, null: false
-    t.string "stripe_customer_id"
+    t.bigint "subscription_id"
     t.index ["current_document_id"], name: "index_users_on_current_document_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["subscription_id"], name: "index_users_on_subscription_id"
   end
 
   create_table "voices", force: :cascade do |t|
@@ -244,6 +244,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_16_095748) do
   add_foreign_key "sources", "documents", on_delete: :cascade
   add_foreign_key "sources", "folders", on_delete: :cascade
   add_foreign_key "sources", "users", on_delete: :cascade
-  add_foreign_key "subscriptions", "users"
+  add_foreign_key "users", "subscriptions"
   add_foreign_key "voices", "users", on_delete: :cascade
 end

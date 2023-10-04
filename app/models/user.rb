@@ -27,13 +27,22 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   enum role: { 'admin': 0, 'user': 1, 'supplicant': 2 }
   after_initialize :set_default_role, if: :new_record?
+  after_create :create_subscription
+
+  def max_mana
+    
+  end
+
+  def current_mana
+
+  end
+
 
   def total_gpt_cost
     usage_records.sum(&:total_price)
   end
 
   def active_plan
-    return 'free' unless subscription
     subscription.plan
   end
 
@@ -155,5 +164,9 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     new_voices.each do |voice|
       voices.create(name: voice[0], meta_prompt: voice[1])
     end
+  end
+
+  def create_subscription
+    Subscription.create!(user: self, plan: 'free', status: 'active')
   end
 end

@@ -28,6 +28,11 @@
       <li>1,500 Mana Points replenishing monthly</li>
       <li>25GB of storage</li>
     </ul>
+    <% if current == true && plan != 'free' %>
+      <div>
+          <%= link_to 'Cancel subscription', cancel_subscription_path, id: 'cancel-subscription-link' %>
+      </div>
+    <% end %>
   </div>
 <% elsif plan == 'pro' %>
   <div class='plan pro' data-turbo="false">
@@ -46,6 +51,13 @@
       <li>5,000 Mana Points replenishing monthly</li>
       <li>100GB of storage</li>
     </ul>
+    <div id='cancel-wrapper'>
+      <% if current == true && plan != 'free' %>
+        <div>
+            <%= link_to 'Cancel subscription', cancel_subscription_path, id: 'cancel-subscription-link' %>
+        </div>
+      <% end %>
+    </div>
   </div>
 <% end %>
 <% if current && current_user.subscription.next_invoice_on.present? && current_user.active_plan != 'free' %>

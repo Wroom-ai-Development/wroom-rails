@@ -3,6 +3,6 @@
 class Subscription < ApplicationRecord # rubocop:disable Metrics/ClassLength
   belongs_to :user
 
-  validates :plan, inclusion: { in: %w[pro basic] }
+  validates :plan, inclusion: { in: %w[pro basic free] }
 
 end
