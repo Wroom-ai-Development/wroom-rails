@@ -29,14 +29,9 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   after_initialize :set_default_role, if: :new_record?
   after_create :create_subscription
 
-  def max_mana
-    
-  end
+  def max_mana; end
 
-  def current_mana
-
-  end
-
+  def current_mana; end
 
   def total_gpt_cost
     usage_records.sum(&:total_price)
@@ -167,6 +162,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def create_subscription
-    Subscription.create!(user: self, plan: 'free', status: 'active')
+    Subscription.create!(user: self, plan: 'free')
   end
 end

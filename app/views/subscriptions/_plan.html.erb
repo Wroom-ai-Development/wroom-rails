@@ -30,14 +30,14 @@
     </ul>
     <% if current == true && plan != 'free' %>
       <div>
-          <%= link_to 'Cancel subscription', cancel_subscription_path, id: 'cancel-subscription-link' %>
+          <%= link_to 'Manage subscription', url_for(ENV['STRIPE_CUSTOMER_PORTAL_LINK']), id: 'cancel-subscription-link' %>
       </div>
     <% end %>
   </div>
 <% elsif plan == 'pro' %>
   <div class='plan pro' data-turbo="false">
     <div class='left'>
-      <h5>wroom Pro</h5>
+      <h5>wroom Pro</h5> 
       <% unless current %>
         <%= form_with url: subscribe_path do |form| %>
           <%= form.hidden_field :plan, value: 'pro' %>
@@ -54,7 +54,7 @@
     <div id='cancel-wrapper'>
       <% if current == true && plan != 'free' %>
         <div>
-            <%= link_to 'Cancel subscription', cancel_subscription_path, id: 'cancel-subscription-link' %>
+            <%= link_to 'Manage subscription', url_for(ENV['STRIPE_CUSTOMER_PORTAL_LINK']), id: 'cancel-subscription-link' %>
         </div>
       <% end %>
     </div>
