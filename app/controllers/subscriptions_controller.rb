@@ -1,23 +1,17 @@
 # frozen_string_literal: true
 
-def fputs(string)
-  File.open('debug', 'a+') do |f|
-    f.puts string
-  end
-end
 
 class SubscriptionsController < ApplicationController # rubocop:disable Metrics/ClassLength
-  skip_before_action :verify_authenticity_token, only: [:stripe_webhook]
-  skip_before_action :authenticate_user!, only: [:stripe_webhook]
-  layout 'dashboard'
-  def subscriptions
-    @current_subscription = current_user.subscription
-  end
+skip_before_action :verify_authenticity_token, only: [:stripe_webhook]
+skip_before_action :authenticate_user!, only: [:stripe_webhook]
+layout 'dashboard'
+def subscriptions
+  @current_subscription = current_user.subscription
+end
 
-  def subscribe # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    line_item = if params[:plan] == 'pro'
-                  {
-                    price: ENV['STRIPE_PRO_PRICE_ID'],
+def subscribe # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  line_item = if params[:plan] == 'pro'
+                {
                     quantity: 1
                   }
                 elsif params[:plan] == 'basic'
@@ -53,6 +47,23 @@ class SubscriptionsController < ApplicationController # rubocop:disable Metrics/
     redirect_to session.url, allow_other_host: true, status: :see_other
   end
 
+  def upgrade_subscription
+    sub_id = current_user.subscription.stripe_subscription_id
+    subscription = Stripe::Subscription.retrieve(sub_id)
+  
+    updated_subscription =
+      Stripe::Subscription.update(
+        sub_id,
+        cancel_at_period_end: false,
+        items: [
+          { id: subscription.items.data[0].id, price: ENV['STRIPE_PRO_PRICE_ID'] }
+        ]
+      )
+  
+    # binding.pry
+    render 'subscriptions/subscription_upgraded'
+  end
+
   def stripe_webhook # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     endpoint_secret = ENV['STRIPE_WEBHOOK_SECRET']
 
@@ -74,25 +85,18 @@ class SubscriptionsController < ApplicationController # rubocop:disable Metrics/
       return
     end
 
-    fputs 'event.data.object.inspect'
-    fputs event.data.object.inspect
-    fputs 'event.data.object.metadata'
-    fputs event.data.object.metadata
-    fputs 'event.data.object.metadata.sub_id'
-    fputs event.data.object.metadata.sub_id
-
     # Handle the event
     case event.type
     when 'checkout.session.completed'
       session = event.data.object
-      if session.metadata.sub_id.present?
+      if session.metadata.present? && session.metadata.sub_id.present?
         subscription = Subscription.find(session.metadata.sub_id.to_i)
         stripe_subscription = Stripe::Subscription.retrieve(session.subscription)
         plan = Stripe::Product.retrieve(stripe_subscription.plan.product)
         # plan = Stripe::Product.retrieve()
         # binding.pry
         subscription.update!(plan: plan.name.gsub('wroom ', '').downcase, stripe_subscription_id: session.subscription,
-                             stripe_customer_id: session.customer)
+                             stripe_customer_id: session.customer, cancelled: false)
       end
     when 'customer.subscription.created'
       stripe_subscription = event.data.object
@@ -105,17 +109,17 @@ class SubscriptionsController < ApplicationController # rubocop:disable Metrics/
       Rails.logger.debug stripe_subscription.inspect
       Rails.logger.debug '~~~~~~~~~~~~~~~~~~~~~~~~~~~'
       subscription = Subscription.find_by(stripe_subscription_id: stripe_subscription.id)
-      subscription.update(paid_until: Time.zone.at(stripe_subscription.current_period_end))
-    when 'customer.subscription.deleted'
-      stripe_subscription = event.data.object
-      subscription = Subscription.find_by(stripe_subscription_id: stripe_subscription.id)
-      subscription.update(plan: 'free', paid_until: nil)
+      subscription.update(paid_until: Time.zone.at(stripe_subscription.current_period_end, cancelled: false))
     when 'customer.subscription.updated'
       stripe_subscription = event.data.object
       subscription = Subscription.find_by(stripe_subscription_id: stripe_subscription.id)
       plan = Stripe::Product.retrieve(stripe_subscription.plan.product)
-      subscription.update(paid_until: Time.zone.at(stripe_subscription.current_period_end),
-                          plan: plan.name.gsub('wroom ', '').downcase)
+      if event.data.object.cancel_at_period_end
+        subscription.update(paid_until: Time.zone.at(stripe_subscription.current_period_end), cancelled: true)
+      else
+        subscription.update(paid_until: Time.zone.at(stripe_subscription.current_period_end),
+                            plan: plan.name.gsub('wroom ', '').downcase, cancelled: false)
+      end
     else
       Rails.logger.debug "Unhandled event type: #{event.type}"
     end

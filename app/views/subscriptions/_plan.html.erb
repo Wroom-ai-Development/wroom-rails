@@ -15,6 +15,15 @@
   <div class='plan basic' data-turbo="false">
     <div class='left'>
       <h5>wroom Basic</h5>
+      <% if current %>
+        <% unless current_user.subscription.plan == 'free' %>
+          <% if current_user.subscription.cancelled %>
+            This subscription has been cancelled, but will remain active until <%= current_user.subscription.paid_until.strftime('%B %d, %Y') %>
+          <% else %>
+            Next payment due <%= current_user.subscription.paid_until.strftime('%B %d, %Y') %>
+          <% end %>
+        <% end %>
+      <% end %>
       <% unless current || plan == 'free' %>
         <%= form_with url: subscribe_path do |form| %>
           <%= form.hidden_field :plan, value: 'basic' %>
@@ -38,10 +47,22 @@
   <div class='plan pro' data-turbo="false">
     <div class='left'>
       <h5>wroom Pro</h5> 
-      <% unless current %>
-        <%= form_with url: subscribe_path do |form| %>
-          <%= form.hidden_field :plan, value: 'pro' %>
-          <%= form.submit 'Upgrade to wroom Pro', class: 'upgrade-button pro' %>
+      <% if current %>
+        <% unless current_user.subscription.plan == 'free' %>
+          <% if current_user.subscription.cancelled %>
+            This subscription has been cancelled, but will remain active until <%= current_user.subscription.paid_until.strftime('%B %d, %Y') %>
+          <% else %>
+            Next payment due <%= current_user.subscription.paid_until.strftime('%B %d, %Y') %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <% if current_user.subscription.plan == 'basic' %>
+          <%= link_to 'Upgrade to wroom Pro', upgrade_subscription_path, class: 'upgrade-button pro' %>
+        <% else %>
+          <%= form_with url: subscribe_path do |form| %>
+            <%= form.hidden_field :plan, value: 'pro' %>
+            <%= form.submit 'Upgrade to wroom Pro', class: 'upgrade-button pro' %>
+          <% end %>
         <% end %>
       <% end %>
     </div>
