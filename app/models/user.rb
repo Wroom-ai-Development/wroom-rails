@@ -28,6 +28,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enum role: { 'admin': 0, 'user': 1, 'supplicant': 2 }
   after_initialize :set_default_role, if: :new_record?
   after_create :create_subscription
+  after_create :make_security_updated
 
   def max_mana; end
 
@@ -163,5 +164,9 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def create_subscription
     Subscription.create!(user: self, plan: 'free')
+  end
+
+  def make_security_updated
+    update(security_updated: true)
   end
 end

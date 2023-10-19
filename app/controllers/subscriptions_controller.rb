@@ -1,17 +1,16 @@
 # frozen_string_literal: true
 
-
 class SubscriptionsController < ApplicationController # rubocop:disable Metrics/ClassLength
-skip_before_action :verify_authenticity_token, only: [:stripe_webhook]
-skip_before_action :authenticate_user!, only: [:stripe_webhook]
-layout 'dashboard'
-def subscriptions
-  @current_subscription = current_user.subscription
-end
+  skip_before_action :verify_authenticity_token, only: [:stripe_webhook]
+  skip_before_action :authenticate_user!, only: [:stripe_webhook]
+  layout 'dashboard'
+  def subscriptions
+    @current_subscription = current_user.subscription
+  end
 
-def subscribe # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-  line_item = if params[:plan] == 'pro'
-                {
+  def subscribe # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    line_item = if params[:plan] == 'pro'
+                  {
                     quantity: 1
                   }
                 elsif params[:plan] == 'basic'
@@ -50,16 +49,15 @@ def subscribe # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def upgrade_subscription
     sub_id = current_user.subscription.stripe_subscription_id
     subscription = Stripe::Subscription.retrieve(sub_id)
-  
-    updated_subscription =
-      Stripe::Subscription.update(
-        sub_id,
-        cancel_at_period_end: false,
-        items: [
-          { id: subscription.items.data[0].id, price: ENV['STRIPE_PRO_PRICE_ID'] }
-        ]
-      )
-  
+
+    Stripe::Subscription.update(
+      sub_id,
+      cancel_at_period_end: false,
+      items: [
+        { id: subscription.items.data[0].id, price: ENV['STRIPE_PRO_PRICE_ID'] }
+      ]
+    )
+
     # binding.pry
     render 'subscriptions/subscription_upgraded'
   end
@@ -108,11 +106,13 @@ def subscribe # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       Rails.logger.debug '~~~~~~~~~~~~~~~~~~~~~~~~~~~'
       Rails.logger.debug stripe_subscription.inspect
       Rails.logger.debug '~~~~~~~~~~~~~~~~~~~~~~~~~~~'
-      subscription = Subscription.find_by(stripe_subscription_id: stripe_subscription.id)
-      subscription.update(paid_until: Time.zone.at(stripe_subscription.current_period_end, cancelled: false))
+      user_email = Stripe::Customer.retrieve(stripe_subscription.customer).email
+      subscription = User.find_by(email: user_email).subscription
+      subscription.update(paid_until: Time.zone.at(stripe_subscription.current_period_end), cancelled: false)
     when 'customer.subscription.updated'
       stripe_subscription = event.data.object
-      subscription = Subscription.find_by(stripe_subscription_id: stripe_subscription.id)
+      user_email = Stripe::Customer.retrieve(stripe_subscription.customer).email
+      subscription = User.find_by(email: user_email).subscription
       plan = Stripe::Product.retrieve(stripe_subscription.plan.product)
       if event.data.object.cancel_at_period_end
         subscription.update(paid_until: Time.zone.at(stripe_subscription.current_period_end), cancelled: true)
