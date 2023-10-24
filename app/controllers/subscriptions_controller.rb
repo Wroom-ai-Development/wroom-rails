@@ -91,21 +91,11 @@ class SubscriptionsController < ApplicationController # rubocop:disable Metrics/
         subscription = Subscription.find(session.metadata.sub_id.to_i)
         stripe_subscription = Stripe::Subscription.retrieve(session.subscription)
         plan = Stripe::Product.retrieve(stripe_subscription.plan.product)
-        # plan = Stripe::Product.retrieve()
-        # binding.pry
         subscription.update!(plan: plan.name.gsub('wroom ', '').downcase, stripe_subscription_id: session.subscription,
                              stripe_customer_id: session.customer, cancelled: false)
       end
     when 'customer.subscription.created'
       stripe_subscription = event.data.object
-      Rails.logger.debug '~~~~~~~~~~~~~~~~~~~~~~~~~~~'
-      Rails.logger.debug '~~~~~~~~~~~~~~~~~~~~~~~~~~~'
-      Rails.logger.debug '~~~~~~~~~~~~~~~~~~~~~~~~~~~'
-      Rails.logger.debug '~~~~~~~~~~~~~~~~~~~~~~~~~~~'
-      Rails.logger.debug '~~~~~~~~~~~~~~~~~~~~~~~~~~~'
-      Rails.logger.debug '~~~~~~~~~~~~~~~~~~~~~~~~~~~'
-      Rails.logger.debug stripe_subscription.inspect
-      Rails.logger.debug '~~~~~~~~~~~~~~~~~~~~~~~~~~~'
       user_email = Stripe::Customer.retrieve(stripe_subscription.customer).email
       subscription = User.find_by(email: user_email).subscription
       subscription.update(paid_until: Time.zone.at(stripe_subscription.current_period_end), cancelled: false)
@@ -113,10 +103,10 @@ class SubscriptionsController < ApplicationController # rubocop:disable Metrics/
       stripe_subscription = event.data.object
       user_email = Stripe::Customer.retrieve(stripe_subscription.customer).email
       subscription = User.find_by(email: user_email).subscription
-      plan = Stripe::Product.retrieve(stripe_subscription.plan.product)
       if event.data.object.cancel_at_period_end
         subscription.update(paid_until: Time.zone.at(stripe_subscription.current_period_end), cancelled: true)
       else
+        plan = Stripe::Product.retrieve(stripe_subscription.plan.product)
         subscription.update(paid_until: Time.zone.at(stripe_subscription.current_period_end),
                             plan: plan.name.gsub('wroom ', '').downcase, cancelled: false)
       end
