@@ -19,6 +19,8 @@
         <% unless current_user.subscription.plan == 'free' %>
           <% if current_user.subscription.cancelled %>
             This subscription has been cancelled, but will remain active until <%= current_user.subscription.paid_until.strftime('%B %d, %Y') %>
+          <% elsif current_user.subscription.paid == false %>
+            We were not able to charge your card, your Mana will refill once your payment goes through.
           <% else %>
             Next payment due <%= current_user.subscription.paid_until.strftime('%B %d, %Y') %>
           <% end %>
@@ -51,6 +53,8 @@
         <% unless current_user.subscription.plan == 'free' %>
           <% if current_user.subscription.cancelled %>
             This subscription has been cancelled, but will remain active until <%= current_user.subscription.paid_until.strftime('%B %d, %Y') %>
+          <% elsif current_user.subscription.paid == false %>
+            We were not able to charge your card, your Mana will refill once your payment goes through.
           <% else %>
             Next payment due <%= current_user.subscription.paid_until.strftime('%B %d, %Y') %>
           <% end %>

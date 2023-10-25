@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_18_120942) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_24_100331) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -173,6 +173,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_18_120942) do
     t.datetime "next_invoice_on"
     t.bigint "user_id"
     t.boolean "cancelled", default: false, null: false
+    t.boolean "paid", default: false
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
@@ -187,7 +188,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_18_120942) do
     t.bigint "gpt_3_5_turbo_16k_input_tokens", default: 0, null: false
     t.bigint "user_id"
     t.bigint "conversation_id"
+    t.datetime "discarded_at"
     t.index ["conversation_id"], name: "index_usage_records_on_conversation_id"
+    t.index ["discarded_at"], name: "index_usage_records_on_discarded_at"
     t.index ["user_id"], name: "index_usage_records_on_user_id"
   end
 

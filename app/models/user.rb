@@ -9,9 +9,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   VALID_PASSWORD_REGEX = /\A(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{11,}\z/
   validate :password_complexity
 
-  UPLOAD_STORAGE_LIMIT = 200.megabytes
-  GPT_FEES_LIMIT = 5.0
-
   has_many :sources, dependent: :destroy
   has_many :voices, dependent: :destroy
   has_many :documents, dependent: :destroy
@@ -30,10 +27,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   after_create :create_subscription
   after_create :make_security_updated
 
-  def max_mana; end
-
-  def current_mana; end
-
   def total_gpt_cost
     usage_records.sum(&:total_price)
   end
@@ -43,11 +36,22 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def gpt_fees_limit
-    GPT_FEES_LIMIT
+    case subscription.plan # rubocop:disable Style/HashLikeCase
+    when 'free'
+      5.0
+    when 'basic'
+      15.0
+    when 'pro'
+      50.0
+    end
+  end
+
+  def gpt_fees_incurred
+    usage_records.kept.sum(&:total_price)
   end
 
   def gpt_budget_available
-    difference = GPT_FEES_LIMIT - total_gpt_cost
+    difference = gpt_fees_limit - gpt_fees_incurred
     difference.positive? ? difference : 0
   end
 
@@ -75,17 +79,28 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     folders.where(type: 'RootFolder').first_or_create!(name: '/')
   end
 
+  def upload_storage_limit
+    case subscription.plan
+    when 'free'
+      200.megabytes
+    when 'basic'
+      25.gigabytes
+    when 'pro'
+      100.gigabytes
+    end
+  end
+
   def storage_available
-    difference = UPLOAD_STORAGE_LIMIT - storage_used
+    difference = upload_storage_limit - storage_used
     difference.positive? ? difference : 0
   end
 
   def total_storage
-    UPLOAD_STORAGE_LIMIT
+    upload_storage_limit
   end
 
   def percent_storage_used
-    storage_used / UPLOAD_STORAGE_LIMIT.to_f * 100
+    storage_used / upload_storage_limit.to_f * 100
   end
 
   after_create_commit :log_event

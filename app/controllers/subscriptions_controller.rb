@@ -62,7 +62,7 @@ class SubscriptionsController < ApplicationController # rubocop:disable Metrics/
     render 'subscriptions/subscription_upgraded'
   end
 
-  def stripe_webhook # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def stripe_webhook # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     endpoint_secret = ENV['STRIPE_WEBHOOK_SECRET']
 
     payload = request.body.read
@@ -85,30 +85,48 @@ class SubscriptionsController < ApplicationController # rubocop:disable Metrics/
 
     # Handle the event
     case event.type
-    when 'checkout.session.completed'
-      session = event.data.object
-      if session.metadata.present? && session.metadata.sub_id.present?
-        subscription = Subscription.find(session.metadata.sub_id.to_i)
-        stripe_subscription = Stripe::Subscription.retrieve(session.subscription)
-        plan = Stripe::Product.retrieve(stripe_subscription.plan.product)
-        subscription.update!(plan: plan.name.gsub('wroom ', '').downcase, stripe_subscription_id: session.subscription,
-                             stripe_customer_id: session.customer, cancelled: false)
-      end
     when 'customer.subscription.created'
       stripe_subscription = event.data.object
       user_email = Stripe::Customer.retrieve(stripe_subscription.customer).email
+      plan = Stripe::Product.retrieve(stripe_subscription.plan.product)
+
       subscription = User.find_by(email: user_email).subscription
-      subscription.update(paid_until: Time.zone.at(stripe_subscription.current_period_end), cancelled: false)
+      subscription.update(
+        paid_until: Time.zone.at(stripe_subscription.current_period_end),
+        stripe_subscription_id: stripe_subscription.id,
+        plan: plan.name.gsub('wroom ', '').downcase,
+        cancelled: false
+      )
+    when 'invoice.payment_succeeded'
+      invoice = event.data.object
+      user_email = Stripe::Customer.retrieve(invoice.customer).email
+      user = User.find_by(email: user_email)
+      subscription = user.subscription
+      user.usage_records.kept.each(&:discard)
+      subscription.update(
+        paid_until: Time.zone.at(invoice.lines.data[0].period.end),
+        cancelled: false,
+        paid: true
+      )
+    when 'invoice.payment_failed'
+      invoice = event.data.object
+      user_email = Stripe::Customer.retrieve(invoice.customer).email
+      subscription = User.find_by(email: user_email).subscription
+      subscription.update(paid: false)
+
+    when 'customer.created'
+      customer = event.data.object
+      user = User.find_by(email: customer.email)
+      user.subscription.update(stripe_customer_id: customer.id) if user.present?
     when 'customer.subscription.updated'
       stripe_subscription = event.data.object
       user_email = Stripe::Customer.retrieve(stripe_subscription.customer).email
       subscription = User.find_by(email: user_email).subscription
+      plan = Stripe::Product.retrieve(stripe_subscription.plan.product).name.gsub('wroom ', '').downcase
       if event.data.object.cancel_at_period_end
         subscription.update(paid_until: Time.zone.at(stripe_subscription.current_period_end), cancelled: true)
-      else
-        plan = Stripe::Product.retrieve(stripe_subscription.plan.product)
-        subscription.update(paid_until: Time.zone.at(stripe_subscription.current_period_end),
-                            plan: plan.name.gsub('wroom ', '').downcase, cancelled: false)
+      elsif subscription.plan != plan
+        subscription.update(plan:)
       end
     else
       Rails.logger.debug "Unhandled event type: #{event.type}"

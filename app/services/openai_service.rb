@@ -31,6 +31,7 @@ class OpenaiService
         max_tokens:
       }
     )
+    # binding.pry
     handle_response(response)
   rescue TokenRateLimitExceeded, RequestRateLimitExceeded => e
     retries += 1
