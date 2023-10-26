@@ -7,9 +7,9 @@ module Conversations
     class InterruptSignal < StandardError; end
     class ConversationStatusIsNotWorking < StandardError; end
 
-    META_PROMPT = <<-PROMPT
+    META_PROMPT = <<-PROMPT.freeze
       Provide an adequate response to a query related to the provided texts.
-      If the query doesn’t relate to the text, kindly but firmly answer that it is out of the scope of the given texts. 
+      If the query doesn’t relate to the text, kindly but firmly answer that it is out of the scope of the given texts.#{' '}
       Then try and provide an answer if available from your general knowledge.
     PROMPT
 

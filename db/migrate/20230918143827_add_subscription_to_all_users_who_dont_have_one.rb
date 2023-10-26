@@ -1,9 +1,9 @@
+# frozen_string_literal: true
+
 class AddSubscriptionToAllUsersWhoDontHaveOne < ActiveRecord::Migration[7.0]
   def change
     User.all.each do |user|
-      if !user.subscription
-        Subscription.create!(plan: 'free', status: 'active', user_id: user.id)
-      end
+      Subscription.create!(plan: 'free', status: 'active', user_id: user.id) unless user.subscription
     end
   end
 end
