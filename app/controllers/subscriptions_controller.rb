@@ -11,6 +11,7 @@ class SubscriptionsController < ApplicationController # rubocop:disable Metrics/
   def subscribe # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     line_item = if params[:plan] == 'pro'
                   {
+                    price: ENV['STRIPE_PRO_PRICE_ID'],
                     quantity: 1
                   }
                 elsif params[:plan] == 'basic'
