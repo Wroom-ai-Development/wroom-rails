@@ -9,6 +9,10 @@ class RegistrationsController < Devise::RegistrationsController
     new_user_session_path
   end
 
+  def after_update_path_for(_resource)
+    edit_user_registration_path
+  end
+
   def create # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     build_resource(sign_up_params.merge!(security_updated: true))
 

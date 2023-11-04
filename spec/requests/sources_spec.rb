@@ -23,6 +23,7 @@ RSpec.describe '/sources', type: :request do
     { name: 'Source name',
       user_id: user.id,
       folder_id: user.root_folder.id,
+      source_url: '',
       file: ActiveStorage::Blob.create_and_upload!(
         io: File.open(Rails.root.join('spec/factories/files/file.pdf'), 'rb'),
         filename: 'file.pdf',

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class UsageRecord < ApplicationRecord
+  include Discard::Model
+
   belongs_to :user
   belongs_to :conversation
 

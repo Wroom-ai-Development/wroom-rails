@@ -1,0 +1,6 @@
+<div id='settings-links'>
+  <h4>Settings</h4>
+  <%= link_to 'General', edit_user_registration_path, data: { turbo_action: 'replace' } %>
+  <%= link_to 'Subscription & Billing', billing_path, data: { turbo_action: 'replace' } %>
+  <%= button_to "Sign out", destroy_user_session_path, method: :delete, data: { turbo_frame: '_top' } %>
+</div>

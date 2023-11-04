@@ -88,9 +88,22 @@ div#sidebar {
       text-shadow: 0 0 0 $wroom-dark-gray;
       &:hover {
         text-decoration: none;
-        text-shadow: 0 0 0 $wroom-primary-light;
+        text-shadow: 0 0 0 $wroom-halfway-dark-gray;
       }
     }
+  }
+
+  a#upgrade-plan {
+    margin-bottom: 1rem;
+    margin-left: auto;
+    background-color: $wroom-mana-blue;
+    color: white;
+    border: none;
+    outline: none;
+    padding: 0.5rem;
+    font-weight: 700;
+    font-size: $font-size-70;
+    border-radius: 5px;
   }
 
   div#wroom-logo {

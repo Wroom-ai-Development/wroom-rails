@@ -1,0 +1,6 @@
+<% if current_user.active_plan == 'free' %>
+  <%= render 'plan', current: false, plan: 'basic' %>
+  <%= render 'plan', current: false, plan: 'pro' %>
+<% elsif current_user.active_plan == 'basic' %>
+  <%= render 'plan', current: false, plan: 'pro' %>
+<% end %>

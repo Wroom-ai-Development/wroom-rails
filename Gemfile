@@ -113,7 +113,7 @@ gem 'pdf-reader', '~> 2.11'
 
 gem 'sass-rails', '~> 6.0'
 
-gem 'sidekiq', '~> 7.1'
+gem 'sidekiq', '>= 7.1.3'
 
 gem 'sentry-rails'
 gem 'sentry-raven'
@@ -130,3 +130,5 @@ gem 'httparty', '~> 0.21.0'
 gem 'sidekiq-status', '~> 3.0'
 
 gem 'discard', '~> 1.2'
+
+gem 'stripe', '~> 9.2'

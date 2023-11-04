@@ -17,7 +17,7 @@ class Ability
     can :manage, Conversation, document: { user: }
     can(:manage, Folder, user:)
     can(:manage, RootFolder, user:)
-
+    can(:manage, Subscription, user:)
     # Define abilities for the user here. For example:
     #
     #   return unless user.present?

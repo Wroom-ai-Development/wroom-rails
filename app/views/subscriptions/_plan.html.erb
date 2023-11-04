@@ -1,0 +1,90 @@
+<% if current %>
+  <h4>Current plan details</h4>
+<% end %>
+<% if plan == 'free' %>
+  <div class='plan free'>
+    <div class='left'>
+      <h5>wroom Free</h5>
+    </div>
+    <ul>
+      <li>A one-time gift of 500 Mana Points</li>
+      <li>200MB of storage</li>
+    </ul>
+  </div>
+<% elsif plan == 'basic' %>
+  <div class='plan basic' data-turbo="false">
+    <div class='left'>
+      <h5>wroom Basic</h5>
+      <% if current %>
+        <% unless current_user.subscription.plan == 'free' %>
+          <% if current_user.subscription.cancelled %>
+            This subscription has been cancelled, but will remain active until <%= current_user.subscription.paid_until.strftime('%B %d, %Y') %>
+          <% elsif current_user.subscription.paid == false %>
+            We were not able to charge your card, your Mana will refill once your payment goes through.
+          <% else %>
+            Next payment due <%= current_user.subscription.paid_until.strftime('%B %d, %Y') %>
+          <% end %>
+        <% end %>
+      <% end %>
+      <% unless current || plan == 'free' %>
+        <%= form_with url: subscribe_path do |form| %>
+          <%= form.hidden_field :plan, value: 'basic' %>
+          <%= form.submit 'Upgrade to wroom Basic', class: 'upgrade-button basic' %>
+        <% end %>
+      <% end %>
+    </div>
+    <ul>
+      <li>Single user</li>
+      <li>$29.00 a month</li>
+      <li>1,500 Mana Points replenishing monthly</li>
+      <li>25GB of storage</li>
+    </ul>
+    <% if current == true && plan != 'free' %>
+      <div>
+          <%= link_to 'Manage subscription', url_for(ENV['STRIPE_CUSTOMER_PORTAL_LINK']), id: 'cancel-subscription-link' %>
+      </div>
+    <% end %>
+  </div>
+<% elsif plan == 'pro' %>
+  <div class='plan pro' data-turbo="false">
+    <div class='left'>
+      <h5>wroom Pro</h5> 
+      <% if current %>
+        <% unless current_user.subscription.plan == 'free' %>
+          <% if current_user.subscription.cancelled %>
+            This subscription has been cancelled, but will remain active until <%= current_user.subscription.paid_until.strftime('%B %d, %Y') %>
+          <% elsif current_user.subscription.paid == false %>
+            We were not able to charge your card, your Mana will refill once your payment goes through.
+          <% else %>
+            Next payment due <%= current_user.subscription.paid_until.strftime('%B %d, %Y') %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <% if current_user.subscription.plan == 'basic' %>
+          <%= link_to 'Upgrade to wroom Pro', url_for(ENV['STRIPE_CUSTOMER_PORTAL_LINK']), class: 'upgrade-button pro' %>
+        <% else %>
+          <%= form_with url: subscribe_path do |form| %>
+            <%= form.hidden_field :plan, value: 'pro' %>
+            <%= form.submit 'Upgrade to wroom Pro', class: 'upgrade-button pro' %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+    <ul>
+      <li>Single user</li>
+      <li>$79.00 a month</li>
+      <li>5,000 Mana Points replenishing monthly</li>
+      <li>100GB of storage</li>
+    </ul>
+    <div id='cancel-wrapper'>
+      <% if current == true && plan != 'free' %>
+        <div>
+            <%= link_to 'Manage subscription', url_for(ENV['STRIPE_CUSTOMER_PORTAL_LINK']), id: 'cancel-subscription-link' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+<% if current && current_user.subscription.next_invoice_on.present? && current_user.active_plan != 'free' %>
+  Next payment due <%= current_user.subscription.next_invoice_on.strftime('%B %d, %Y') %>
+<% end %>

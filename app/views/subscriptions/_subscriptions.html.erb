@@ -1,0 +1,15 @@
+<%= turbo_frame_tag "view_content" do %>
+  <div id='account-control'>
+    <%= render 'settings/settings_links' %>
+    <div id='account-control-content'>
+      <div id="header">
+        <h3>Subscriptions & Billing</h3>
+      </div>
+      <% current_subscription = @current_subscription if @current_subscription %>
+        <%= render 'plan', current: true, plan: current_subscription.plan %>
+      <% unless current_user.active_plan == 'pro' %>
+        <h4>Also available</h4>
+        <%= render 'plans' %>
+      <% end %>
+  </div>
+<% end %>

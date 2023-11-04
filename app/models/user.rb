@@ -9,9 +9,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   VALID_PASSWORD_REGEX = /\A(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{11,}\z/
   validate :password_complexity
 
-  UPLOAD_STORAGE_LIMIT = 200.megabytes
-  GPT_FEES_LIMIT = 5.0
-
   has_many :sources, dependent: :destroy
   has_many :voices, dependent: :destroy
   has_many :documents, dependent: :destroy
@@ -23,20 +20,50 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   validates :email, uniqueness: true, presence: true
   has_many :folders, dependent: :destroy
   has_one :root_folder, class_name: 'RootFolder', dependent: :destroy
+  has_one :subscription, dependent: :destroy
 
   enum role: { 'admin': 0, 'user': 1, 'supplicant': 2 }
   after_initialize :set_default_role, if: :new_record?
+  after_create :create_subscription
+  after_create :make_security_updated
+
+  def clear_subscription!
+    return if subscription.blank?
+
+    subscription.update(
+      stripe_subscription_id: nil,
+      paid_until: nil,
+      plan: 'free',
+      cancelled: false,
+      paid: false
+    )
+  end
 
   def total_gpt_cost
     usage_records.sum(&:total_price)
   end
 
+  def active_plan
+    subscription.plan
+  end
+
   def gpt_fees_limit
-    GPT_FEES_LIMIT
+    case subscription.plan # rubocop:disable Style/HashLikeCase
+    when 'free'
+      5.0
+    when 'basic'
+      15.0
+    when 'pro'
+      50.0
+    end
+  end
+
+  def gpt_fees_incurred
+    usage_records.kept.sum(&:total_price)
   end
 
   def gpt_budget_available
-    difference = GPT_FEES_LIMIT - total_gpt_cost
+    difference = gpt_fees_limit - gpt_fees_incurred
     difference.positive? ? difference : 0
   end
 
@@ -64,17 +91,28 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     folders.where(type: 'RootFolder').first_or_create!(name: '/')
   end
 
+  def upload_storage_limit
+    case subscription.plan
+    when 'free'
+      200.megabytes
+    when 'basic'
+      25.gigabytes
+    when 'pro'
+      100.gigabytes
+    end
+  end
+
   def storage_available
-    difference = UPLOAD_STORAGE_LIMIT - storage_used
+    difference = upload_storage_limit - storage_used
     difference.positive? ? difference : 0
   end
 
   def total_storage
-    UPLOAD_STORAGE_LIMIT
+    upload_storage_limit
   end
 
   def percent_storage_used
-    storage_used / UPLOAD_STORAGE_LIMIT.to_f * 100
+    storage_used / upload_storage_limit.to_f * 100
   end
 
   after_create_commit :log_event
@@ -149,5 +187,13 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     new_voices.each do |voice|
       voices.create(name: voice[0], meta_prompt: voice[1])
     end
+  end
+
+  def create_subscription
+    Subscription.create!(user: self, plan: 'free')
+  end
+
+  def make_security_updated
+    update(security_updated: true)
   end
 end

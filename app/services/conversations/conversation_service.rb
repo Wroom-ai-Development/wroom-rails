@@ -7,9 +7,9 @@ module Conversations
     class InterruptSignal < StandardError; end
     class ConversationStatusIsNotWorking < StandardError; end
 
-    META_PROMPT = <<-PROMPT
+    META_PROMPT = <<-PROMPT.freeze
       Provide an adequate response to a query related to the provided texts.
-      If the query doesn’t relate to the text, kindly but firmly answer that it is out of the scope of the given texts. 
+      If the query doesn’t relate to the text, kindly but firmly answer that it is out of the scope of the given texts.#{' '}
       Then try and provide an answer if available from your general knowledge.
     PROMPT
 
@@ -39,8 +39,12 @@ module Conversations
     end
 
     def respond
-      answer = handle_business
-      @conversation.messages.create!(role: 'assistant', content: answer, partial_answers: @partial_answers || [])
+      if @user.gpt_budget_available.positive?
+        answer = handle_business
+        @conversation.messages.create!(role: 'assistant', content: answer, partial_answers: @partial_answers || [])
+      else
+        @conversation.messages.create!(role: 'assistant', content: 'Sorry, but you ran out of Mana!')
+      end
     end
 
     private
@@ -272,6 +276,7 @@ module Conversations
 
       tokens_left_for_answer = REQUEST_MAX_TOKEN_SIZES[model] - token_count
       response = @openai_service.chat_completion(messages, model, max_tokens || tokens_left_for_answer)
+      # binding.pry
 
       @requests_made += 1
 

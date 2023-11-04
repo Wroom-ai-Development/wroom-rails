@@ -19,11 +19,12 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name])
+    devise_parameter_sanitizer.permit(:account_update, keys: %i[first_name last_name])
   end
 
   def ensure_valid_user
     # binding.pry
-    return if current_user.security_updated == true
+    return if current_user.nil? || current_user.security_updated == true
 
     redirect_to edit_user_registration_path
   end
