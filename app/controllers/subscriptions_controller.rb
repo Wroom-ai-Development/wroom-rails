@@ -98,7 +98,7 @@ class SubscriptionsController < ApplicationController # rubocop:disable Metrics/
         plan: plan.name.gsub('wroom ', '').downcase,
         cancelled: false
       )
-    when 'invoice.payment_succeeded'
+    when 'invoice.paid'
       invoice = event.data.object
       user_email = Stripe::Customer.retrieve(invoice.customer).email
       user = User.find_by(email: user_email)
