@@ -27,9 +27,8 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   after_create :create_subscription
   after_create :make_security_updated
 
-
   def clear_subscription!
-    return unless subscription.present?
+    return if subscription.blank?
 
     subscription.update(
       stripe_subscription_id: nil,
