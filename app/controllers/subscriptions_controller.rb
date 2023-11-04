@@ -123,15 +123,11 @@ class SubscriptionsController < ApplicationController # rubocop:disable Metrics/
       stripe_subscription = event.data.object
       user_email = Stripe::Customer.retrieve(stripe_subscription.customer).email
       subscription = User.find_by(email: user_email).subscription
-      if stripe_subscription.plan.nil?
-        if event.data.object.cancel_at_period_end
-          subscription.update(paid_until: Time.zone.at(stripe_subscription.current_period_end), cancelled: true)
-        end
-      else
-        plan = Stripe::Product.retrieve(stripe_subscription.plan.product).name.gsub('wroom ', '').downcase
-        if subscription.plan != plan
-          subscription.update(plan:)
-        end
+      plan = Stripe::Product.retrieve(stripe_subscription.plan.product).name.gsub('wroom ', '').downcase
+      if event.data.object.cancel_at_period_end
+        subscription.update(paid_until: Time.zone.at(stripe_subscription.current_period_end), cancelled: true)
+      elsif subscription.plan != plan
+        subscription.update(plan:)
       end
     else
       Rails.logger.debug "Unhandled event type: #{event.type}"
