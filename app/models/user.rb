@@ -27,6 +27,17 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   after_create :create_subscription
   after_create :make_security_updated
 
+
+  def clear_subscription!
+    subscription.update(
+      stripe_subscription_id: nil,
+      paid_until: nil,
+      plan: 'free',
+      cancelled: false,
+      paid: false
+    )
+  end
+
   def total_gpt_cost
     usage_records.sum(&:total_price)
   end
