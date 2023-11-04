@@ -61,7 +61,7 @@
         <% end %>
       <% else %>
         <% if current_user.subscription.plan == 'basic' %>
-          <%= link_to 'Upgrade to wroom Pro', upgrade_subscription_path, class: 'upgrade-button pro' %>
+          <%= link_to 'Upgrade to wroom Pro', url_for(ENV['STRIPE_CUSTOMER_PORTAL_LINK']), class: 'upgrade-button pro' %>
         <% else %>
           <%= form_with url: subscribe_path do |form| %>
             <%= form.hidden_field :plan, value: 'pro' %>
