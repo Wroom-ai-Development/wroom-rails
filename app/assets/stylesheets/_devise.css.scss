@@ -89,17 +89,17 @@ div#devise {
     align-items: center;
     justify-content: center;
     input {
-      font-size: $font-size-70;
-      color: $wroom-primary;
-      font-weight: 300;
-      border-top: 1px solid $wroom-primary;
-      border-bottom: 1px solid $wroom-primary;
-      border-left: none;
-      border-right: none;
-      background-color: rgba(0, 0, 0, 0);
+      padding: 0.5rem 1rem;
+      color: white;
+      background-color: $wroom-dark-gray;
+      border-radius: 5px;
+      border: none;
+      text-align: center;
+      font-size: $font-size-80;
+      font-weight: 400;
       &:hover {
         cursor: pointer;
-        color: blue;
+        background-color: $wroom-halfway-dark-gray;
       }
     }
   }
