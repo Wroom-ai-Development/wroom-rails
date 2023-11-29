@@ -33,7 +33,7 @@ jobs:
         uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf # v1.146.0
         with:
           bundler-cache: true
-          ruby-version: '3.1.4'
+          ruby-version: '3.2.2'
       - name: Set up database schema
         run: bin/rails db:schema:load
       - name: Run tests
@@ -48,7 +48,7 @@ jobs:
         uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf # v1.146.0
         with:
           bundler-cache: true
-          ruby-version: '3.1.4'
+          ruby-version: '3.2.2'
       - name: Lint Ruby files
         run: bundle exec rubocop --parallel
 
@@ -62,7 +62,7 @@ jobs:
         uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf # v1.146.0
         with:
           bundler-cache: true
-          ruby-version: '3.1.4'
+          ruby-version: '3.2.2'
       - name: Security audit dependencies
         run: bundle exec bundler-audit --update
       - name: Security audit application code
