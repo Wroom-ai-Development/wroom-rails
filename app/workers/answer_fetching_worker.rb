@@ -22,7 +22,9 @@ class AnswerFetchingWorker
       conversation.messages.create!(content: 'There is too much text in your chat for me to handle',
                                     role: 'error')
     rescue Conversations::ConversationService::OpenAIApiError => e
+      logger.error '~~~~~~ Conversations::ConversationService::OpenAIApiError ~~~~~~~~~'
       logger.error e
+      logger.error e.message
       logger.error e.backtrace.join("\n")
 
       conversation.update!(status: 3)

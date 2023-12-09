@@ -34,7 +34,6 @@ class ConversationsController < ApplicationController
 
   def new_message
     @conversation.update!(status: 1)
-    @conversation.messages.where(role: 'error').destroy_all
     @conversation.messages.create!(content: params[:content], role: 'user')
     sidekiq_job_id = AnswerFetchingWorker.perform_async(@conversation.id)
     @conversation.update!(sidekiq_job_id:)

@@ -32,6 +32,7 @@ class OpenaiService
       }
     )
     # binding.pry
+    # log respn
     handle_response(response)
   rescue TokenRateLimitExceeded, RequestRateLimitExceeded => e
     retries += 1

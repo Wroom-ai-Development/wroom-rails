@@ -125,7 +125,7 @@ module Conversations
 
     def get_answer_without_sources
       @conversation.update!(status_message: 'Processing without sources')
-      response_from_messages(@conversation_messages, model: 'gpt-3.5-turbo')
+      response_from_messages(@conversation_messages, model: 'gpt-3.5-turbo-16k')
     end
 
     def get_answer_from_source(source)
@@ -180,7 +180,7 @@ module Conversations
       messages << { role: 'system', content: summary_prompt }
       @conversation.update!(status_message: 'Summarizing obtained information')
       rephrase_with_voice(response_from_messages(messages,
-                                                 model: @conversation.user.gpt_4_enabled ? 'gpt-4' : 'gpt-3.5-turbo'))
+                                                 model: @conversation.user.gpt_4_enabled ? 'gpt-4' : 'gpt-3.5-turbo-16k')) # rubocop:disable Layout/LineLength
     end
 
     def rephrase_with_voice(string) # rubocop:disable Metrics/MethodLength
@@ -203,12 +203,13 @@ module Conversations
       end
     end
 
-    def get_answer_from_chunk(chunk) # rubocop:disable Metrics/MethodLength
+    def get_answer_from_chunk(chunk) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       messages = prepare_messages_for_chunk(chunk)
-
-      model = if chunk.token_length <= REQUEST_MAX_TOKEN_SIZES['gpt-3.5-turbo']
+      tokens_in_messages = TokenCounter.new('gpt-4').count_tokens(messages.map { |m| m[:content] }.join(' '))
+      tokens_needed = chunk.token_length + tokens_in_messages
+      model = if tokens_needed <= REQUEST_MAX_TOKEN_SIZES['gpt-3.5-turbo'] - TOKEN_SPACE_FOR_ANSWER
                 'gpt-3.5-turbo'
-              elsif chunk.token_length <= REQUEST_MAX_TOKEN_SIZES['gpt-3.5-turbo-16k']
+              elsif tokens_needed <= REQUEST_MAX_TOKEN_SIZES['gpt-3.5-turbo-16k'] - TOKEN_SPACE_FOR_ANSWER
                 'gpt-3.5-turbo-16k'
               else
                 raise ContextExceeded
