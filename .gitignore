@@ -77,3 +77,4 @@ yarn-debug.log*
 /config/master.key
 .vscode/settings.json
 dump.rdb
+dump.rdb
