@@ -6,7 +6,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :confirmable, :validatable, password_length: 11..128
 
-  VALID_PASSWORD_REGEX = /\A(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{11,}\z/
+  VALID_PASSWORD_REGEX = /\A(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{11,}\z/
   validate :password_complexity
 
   has_many :sources, dependent: :destroy
@@ -88,7 +88,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return if password.blank? || password =~ VALID_PASSWORD_REGEX
 
     errors.add(:password,
-               'must be at least 11 characters long and include at least one letter, one digit, and one special character (@ $ ! % * # ? &)') # rubocop:disable Layout/LineLength
+               'must be at least 11 characters long and include at least one letter and one digit') # rubocop:disable Layout/LineLength
   end
 
   def set_default_role
