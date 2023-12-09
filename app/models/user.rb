@@ -88,7 +88,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return if password.blank? || password =~ VALID_PASSWORD_REGEX
 
     errors.add(:password,
-               'must be at least 11 characters long and include at least one letter and one digit') # rubocop:disable Layout/LineLength
+               'must be at least 11 characters long and include at least one letter and one digit')
   end
 
   def set_default_role
