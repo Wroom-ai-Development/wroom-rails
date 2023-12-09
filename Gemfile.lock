@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/basecamp/mail_view.git
+  revision: 50831ad31c6f9042469a33dab1394bd2a4042fd8
+  specs:
+    mail_view (2.0.4)
+      tilt
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -518,6 +525,7 @@ DEPENDENCIES
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
+  mail_view!
   mailcatcher (~> 0.2.4)
   pdf-reader (~> 2.11)
   pg (~> 1.1)
