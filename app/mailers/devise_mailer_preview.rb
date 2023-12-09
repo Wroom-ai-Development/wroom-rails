@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DeviseMailerPreview < MailView
   def confirmation_instructions
     user = User.first

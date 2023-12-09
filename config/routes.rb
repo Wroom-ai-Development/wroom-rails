@@ -29,10 +29,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
   end
   mount ActionCable.server => '/cable'
-  if Rails.env.development?
-    mount DeviseMailerPreview, at: 'mail_view'
-  end
-  
+  mount DeviseMailerPreview, at: 'mail_view' if Rails.env.development?
+
   resources :conversations, only: [] do
     member do
       post 'new_message'
