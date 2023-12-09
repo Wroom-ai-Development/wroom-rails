@@ -5,6 +5,7 @@ class OpenaiService
 
   class ApiError < StandardError; end
   class TokenRateLimitExceeded < ApiError; end
+  class ContextExceeded < ApiError; end
   class RequestRateLimitExceeded < ApiError; end
   class ModelDoesNotExist < ApiError; end
 
@@ -43,10 +44,13 @@ class OpenaiService
   private
 
   def handle_response(response) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    # binding.pry
     if response['error'].present?
       case response['error']['code']
       when 'model_not_found'
         raise ModelDoesNotExist, response['error']['message']
+      when 'context_length_exceeded'
+        raise ContextExceeded, response['error']['message']
       when 'rate_limit_exceeded'
         raise TokenRateLimitExceeded, response['error']['message'] if response['error']['type'] == 'tokens'
 

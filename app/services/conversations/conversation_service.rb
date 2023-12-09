@@ -14,9 +14,9 @@ module Conversations
     PROMPT
 
     REQUEST_MAX_TOKEN_SIZES = {
-      'gpt-3.5-turbo-16k' => 16_000,
-      'gpt-3.5-turbo' => 4_000,
-      'gpt-4' => 8_000
+      'gpt-3.5-turbo-16k' => 14_000,
+      'gpt-3.5-turbo' => 3_000,
+      'gpt-4-1106-preview' => 125_000
     }.freeze
     CHARACTERS_PER_TOKEN = 4
     TOKEN_SPACE_FOR_ANSWER = 1000
@@ -93,12 +93,13 @@ module Conversations
           All the sources that are the context of this query are: #{@sources.map(&:name).join(' ')}
         CONTENT
       }
-      response_from_messages(messages, model: @conversation.user.gpt_4_enabled ? 'gpt-4' : 'gpt-3.5-turbo-16k')
+      response_from_messages(messages,
+                             model: @conversation.user.gpt_4_enabled ? 'gpt-4-1106-preview' : 'gpt-3.5-turbo-16k')
     end
 
     def all_sources_fit_in_multi_limit?
       total_tokens = @sources.map { |source| source.source_chunks.map(&:token_length).compact.sum }.sum
-      total_limit = @conversation.user.gpt_4_enabled ? REQUEST_MAX_TOKEN_SIZES['gpt-4'] : REQUEST_MAX_TOKEN_SIZES['gpt-3.5-turbo-16k'] # rubocop:disable Layout/LineLength
+      total_limit = @conversation.user.gpt_4_enabled ? REQUEST_MAX_TOKEN_SIZES['gpt-4-1106-preview'] : REQUEST_MAX_TOKEN_SIZES['gpt-3.5-turbo-16k'] # rubocop:disable Layout/LineLength
       total_tokens <= total_limit - TOKEN_SPACE_FOR_ANSWER
     end
 
@@ -180,7 +181,7 @@ module Conversations
       messages << { role: 'system', content: summary_prompt }
       @conversation.update!(status_message: 'Summarizing obtained information')
       rephrase_with_voice(response_from_messages(messages,
-                                                 model: @conversation.user.gpt_4_enabled ? 'gpt-4' : 'gpt-3.5-turbo-16k')) # rubocop:disable Layout/LineLength
+                                                 model: @conversation.user.gpt_4_enabled ? 'gpt-4-1106-preview' : 'gpt-3.5-turbo-16k')) # rubocop:disable Layout/LineLength
     end
 
     def rephrase_with_voice(string) # rubocop:disable Metrics/MethodLength
@@ -207,7 +208,9 @@ module Conversations
       messages = prepare_messages_for_chunk(chunk)
       tokens_in_messages = TokenCounter.new('gpt-4').count_tokens(messages.map { |m| m[:content] }.join(' '))
       tokens_needed = chunk.token_length + tokens_in_messages
-      model = if tokens_needed <= REQUEST_MAX_TOKEN_SIZES['gpt-3.5-turbo'] - TOKEN_SPACE_FOR_ANSWER
+      model = if @user.gpt_4_enabled
+                'gpt-4-1106-preview'
+              elsif tokens_needed <= REQUEST_MAX_TOKEN_SIZES['gpt-3.5-turbo'] - TOKEN_SPACE_FOR_ANSWER
                 'gpt-3.5-turbo'
               elsif tokens_needed <= REQUEST_MAX_TOKEN_SIZES['gpt-3.5-turbo-16k'] - TOKEN_SPACE_FOR_ANSWER
                 'gpt-3.5-turbo-16k'
@@ -265,7 +268,7 @@ module Conversations
 
     def count_tokens_in_messages(messages)
       full_text = messages.map { |m| m[:content] }.join(' ')
-      TokenCounter.new('gpt-4').count_tokens(full_text)
+      TokenCounter.new('gpt-4-1106-preview').count_tokens(full_text)
     end
 
     def response_from_messages(messages, model: 'gpt-3.5-turbo', max_tokens: nil) # rubocop:disable Metrics/AbcSize
@@ -281,7 +284,7 @@ module Conversations
 
       @requests_made += 1
 
-      raise OpenAIApiError, response['error'].to_json if response['error'].present?
+      raise OpenAIApiError, response['error'].to_json if response['error'].present? || response.nil?
 
       TokenUsageService.new(@user, @conversation, model).persist_token_usage(messages, response)
 
