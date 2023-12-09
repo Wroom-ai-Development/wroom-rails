@@ -27,6 +27,18 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   after_create :create_subscription
   after_create :make_security_updated
 
+  def full_name
+    if first_name.blank? && last_name.blank?
+      email
+    elsif first_name.blank?
+      last_name
+    elsif last_name.blank?
+      first_name
+    else
+      'Wroom User'
+    end
+  end
+
   def clear_subscription!
     return if subscription.blank?
 
