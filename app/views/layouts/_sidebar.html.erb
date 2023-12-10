@@ -44,6 +44,11 @@
           <i class="fa-solid fa-trash fa-fw"></i>Trash
         <% end %>
       </div>
+      <div class="link-wrapper">
+        <%= link_to 'https://discord.gg/hf7zzNyJuD', target: :_blank do %>
+          <i class="fa-solid fa-circle-question fa-fw"></i>Support
+        <% end %>
+      </div>
     </div>
     <%= render 'conversations/gpt_cost_limit', user: current_user %>
     <%= render 'documents/storage_limit', user: current_user %>
