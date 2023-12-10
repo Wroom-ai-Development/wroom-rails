@@ -7,11 +7,11 @@
         model: @conversation,
         url: update_settings_conversation_url
       ) do |form| %>
-        <% if @conversation.user.voices.present? %>
-          <div class='label-wrapper'>
+        <% if @conversation.user.voices.kept.present? %>
+          <div class='label-wrapper' onClick="openSelect();">
             <%= form.label 'Voice', style: "display: block" %>
           </div>
-          <%= form.collection_select :voice_id, @conversation.user.voices.order(:name), :id, :name, { include_blank: "Default", selected: @conversation.voice.try(:id) }, onchange: "this.form.submit();" do |voice| %>
+          <%= form.collection_select :voice_id, @conversation.user.voices.kept.order(:name), :id, :name, { include_blank: "Default", selected: @conversation.voice.try(:id) }, onchange: "this.form.submit();" do |voice| %>
             <option value="<%= voice.id %>">
               <%= voice.name.length > 15 ? voice.name.slice(0, 15) + '...' : voice.name %>
             </option>
