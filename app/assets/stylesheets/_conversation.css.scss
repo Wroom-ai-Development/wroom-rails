@@ -123,13 +123,14 @@ div#chat {
       textarea {
         width: 100%;
         padding: 0.5rem;
+        padding-right: 2rem;
         box-sizing: border-box;
         font-family: $body-font;
         font-size: $font-size-80;
         font-weight: 600;
         min-height: 34px;
         height: 34px;
-        background-color: $wroom-light-gray;
+        background-color: #3b50ff1f;
         border-radius: 5px;
         border: none;
         color: $wroom-dark-gray;
