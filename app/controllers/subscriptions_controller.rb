@@ -41,7 +41,8 @@ class SubscriptionsController < ApplicationController # rubocop:disable Metrics/
       line_items: [line_item],
       payment_method_types: ['card'],
       success_url: "#{ENV['STRIPE_SUCCESS_URL']}?session_id={CHECKOUT_SESSION_ID}",
-      cancel_url: "#{ENV['HOST']}/billing"
+      cancel_url: "#{ENV['HOST']}/billing",
+      allow_promotion_codes: true
     )
 
     redirect_to session.url, allow_other_host: true, status: :see_other
