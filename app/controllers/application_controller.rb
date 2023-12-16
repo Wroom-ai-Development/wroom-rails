@@ -8,8 +8,13 @@ class ApplicationController < ActionController::Base
   before_action :onboard_if_necessary
   before_action :ensure_valid_user, unless: :devise_controller?
   before_action :set_root_folder, if: :user_signed_in?
+  before_action :set_new_source, if: :user_signed_in?
 
   protected
+
+  def set_new_source
+    @new_source = Source.new
+  end
 
   def onboard_if_necessary
     return unless current_user

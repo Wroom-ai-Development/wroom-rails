@@ -22,20 +22,37 @@
 </script>
 <div class="new">
   <div class="button" onClick="showNewOptions();" id="new-button">
-    <i class="fa-solid fa-square-plus"></i><span>New</span>
+    <i class="fa-solid fa-wand-magic-sparkles fa-xs" style="color: #ffffff;"></i><span>Create</span>
   </div>
   <div class="options" style="display: none;">
     <%= link_to new_folder_path, data: { turbo_action: 'replace', turbo_frame: 'view_content' } do %>
       <i class="fa fa-folder fa-fw"></i><span>New folder</span>
     <% end %>
     <%= link_to new_document_path, data: { turbo_action: 'replace', turbo_frame: '_top' } do %>
-      <i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i><span>New document</span>
+      <i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i><span>New Wroom doc</span>
     <% end %>
-    <%= link_to new_source_path, data: { turbo_action: 'replace', turbo_frame: 'view_content' } do %>
-      <i class="fa fa-book fa-fw" aria-hidden="true"></i><span>Upload document</span>
-    <% end %>
+    <a href="#" onclick="document.getElementById('source-file-field').click(); return false;">
+      <i class="fa fa-book fa-fw" aria-hidden="true"></i><span>Upload file</span>
+    </a>
     <%= link_to manager_voices_path do %>
-      <i class="fa-solid fa-robot fa-fw"></i><span>New voice</span>
+      <i class="fa-solid fa-robot fa-fw"></i><span>Create persona</span>
     <% end %>
   </div>
+</div>
+<div style='display: none;'>
+  <%= form_with(
+    model: @new_source,
+    data: {
+      controller: 'form-redirect',
+      action: 'turbo:submit-end->form-redirect#next'
+    },
+    html: { 
+      id: 'source-form',
+      onchange: 'document.getElementById("source-form").submit();' 
+    }
+  ) do |form| %>
+    <%= form.label :file %>
+    <%= form.file_field :file, id: 'source-file-field' %>
+    <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
+  <% end %>
 </div>

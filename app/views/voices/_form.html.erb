@@ -3,7 +3,7 @@
     <% if voice.errors.any? %>
       <div class='validation'>
         <div class='message'>
-          <%= pluralize(voice.errors.count, "error") %> prohibited this voice from being saved:
+          <%= pluralize(voice.errors.count, "error") %> prohibited this persona from being saved:
         </div>
         <div class='errors'>
           <% voice.errors.each do |error| %>
