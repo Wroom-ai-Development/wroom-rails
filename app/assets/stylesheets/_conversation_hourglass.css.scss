@@ -14,9 +14,9 @@
   height: 0;
   margin: 8px;
   box-sizing: border-box;
-  border: 10px solid white;
+  border: 10px solid black;
   border-radius: 10px;
-  border-color: white transparent white transparent;
+  border-color: black transparent black transparent;
   animation: conversation-hourglass 1.2s infinite;
 }
 @keyframes conversation-hourglass {
