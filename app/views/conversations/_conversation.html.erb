@@ -7,6 +7,7 @@
       e.preventDefault();
       submitButton.click();
       newMessageTextArea.value = '';
+      newMessageTextArea.style.height = '1rem';
     }
   };
   document.getElementById('new-message-text-area').addEventListener('keypress', handleEnter);

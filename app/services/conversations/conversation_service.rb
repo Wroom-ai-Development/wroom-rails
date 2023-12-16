@@ -129,7 +129,7 @@ module Conversations
     end
 
     def get_answer_from_source(source)
-      @conversation.update!(status_message: "Processing #{source.name}")
+      @conversation.update!(status_message: "Processing #{source.name[0..10]}")
       chunks = source.source_chunks
       answer = if chunks.size == 1
                  get_answer_from_chunk(chunks.first)
