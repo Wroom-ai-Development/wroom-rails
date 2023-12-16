@@ -46,7 +46,7 @@ class SourcesController < ApplicationController
 
   # PATCH/PUT /sources/1 or /sources/1.json
   def update # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
-    respond_to do |format|
+    respond_to do |format| # rubocop:disable Metrics/BlockLength
       if @source.update(source_params)
         old_headers = @source.section_headers
         @source.file_size = source_params[:file].size if source_params[:file].present?
