@@ -26,7 +26,7 @@
       <td class='left'>File:</td>
       <td class='right'>
         <% if source.file.attached? %>
-          <%= link_to source.file.filename, rails_blob_path(source.file, disposition: 'attachment') %>
+          <i class="fa-regular fa-file fa-2xs" style="color: #000000;"></i><%= link_to trim_string_to_20_chars(source.file.filename.to_s), rails_blob_path(source.file, disposition: 'attachment') %>
         <% else %>
           None attached
         <% end %>
