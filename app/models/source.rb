@@ -77,7 +77,8 @@ class Source < ApplicationRecord
   def create_document
     return if document.present?
 
-    document = Document.create!(title: name, user_id:, folder_id:, source_based: true)
+    document = Document.create!(title: name, user_id:,
+                                folder_id: (folder_id.presence || user.current_folder_id), source_based: true)
     update!(document_id: document.id)
   end
 
@@ -87,7 +88,7 @@ class Source < ApplicationRecord
 
   def file_or_source_url
     errors.add(:base, 'Must have a file or source url') unless file.attached? || source_url
-    errors.add(:base, 'Cannot have both a file and a source url') if file.attached? && !source_url
+    errors.add(:base, 'Cannot have both a file and a source url') if file.attached? && source_url.present?
   end
 
   def source_url_leads_somewhere

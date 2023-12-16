@@ -19,7 +19,7 @@
         <%= link_to document.title, wroom_path(document_id: document.id) %>
       </p>
     <% end %>
-        <h4>Voices</h4>
+        <h4>Personas</h4>
     <% @user.voices.each do |voice| %>
       <p>
         <%= link_to voice.name, edit_voice_path(voice) %>

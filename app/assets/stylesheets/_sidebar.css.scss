@@ -10,7 +10,8 @@ div#sidebar-background {
 div#sidebar {
   box-sizing: border-box;
   padding: 1rem;
-  width: 75%;
+  width: 100%;
+  max-width: 11rem;
   height: 100%;
   display: flex;
   flex-direction: column;
