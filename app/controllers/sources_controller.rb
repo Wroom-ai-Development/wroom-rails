@@ -18,7 +18,9 @@ class SourcesController < ApplicationController
   end
 
   # GET /sources/1/edit
-  def edit; end
+  def edit
+    @is_new_source = params[:is_new_source]
+  end
 
   # POST /sources or /sources.json
   def create # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
@@ -33,7 +35,7 @@ class SourcesController < ApplicationController
         # elsif @source.source_url.present?
         # @source.parse_source_chunks_from_source_url
       end
-      redirect_to edit_source_path(@source)
+      redirect_to edit_source_path(@source, is_new_source: true)
     else
       respond_to do |format|
         @folder_id = @source.folder_id
@@ -64,7 +66,11 @@ class SourcesController < ApplicationController
         @source.document.update!(title: @source.name) if params[:source][:name].present?
         @source.rechunk if @source.section_headers != old_headers
         current_user.update!(current_document_id: @source.document_id)
-        format.html { redirect_to wroom_path(@source.document) }
+        if params[:is_new_source] == 'true'
+          format.html { redirect_to folder_path(@source.document.folder) }
+        else
+          format.html { redirect_to wroom_path(@source.document) }
+        end
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
