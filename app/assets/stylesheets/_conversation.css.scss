@@ -130,7 +130,7 @@ div#chat {
         font-weight: 600;
         min-height: 34px;
         height: 34px;
-        background-color: #3b50ff1f;
+        background-color: $wroom-mana-blue;
         border-radius: 5px;
         border: none;
         color: $wroom-dark-gray;
@@ -138,7 +138,7 @@ div#chat {
         resize: none;
         margin-left: 1rem;
         &:hover {
-          background-color: $wroom-primary-light;
+          background-color: $wroom-blue;
           cursor: pointer;
         }
         &:focus {
@@ -151,7 +151,7 @@ div#chat {
         right: 1.5rem;
         width: 0;
         &:hover {
-          color: $wroom-green;
+          color: white;
           cursor: pointer;
         }
       }
@@ -379,7 +379,7 @@ form#new-message-form {
     flex-direction: row;
     align-items: center;
     font-size: $font-size-70;
-    color: $wroom-green;
+    color: white;
     position: absolute;
     z-index: 999;
     width: 34vw;
@@ -392,7 +392,7 @@ form#new-message-form {
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      color: $wroom-green;
+      color: white;
       font-weight: 500;
       form.button_to {
         text-align: center;

@@ -4,6 +4,7 @@
   display: inline-block;
   position: relative;
   width: 34px;
+  margin-left: 1rem;
   height: 34px;
 }
 .conversation-hourglass:after {
@@ -13,9 +14,9 @@
   height: 0;
   margin: 8px;
   box-sizing: border-box;
-  border: 10px solid $wroom-green;
+  border: 10px solid white;
   border-radius: 10px;
-  border-color: $wroom-green transparent $wroom-green transparent;
+  border-color: white transparent white transparent;
   animation: conversation-hourglass 1.2s infinite;
 }
 @keyframes conversation-hourglass {
