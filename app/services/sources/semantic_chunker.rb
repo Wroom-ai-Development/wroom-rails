@@ -101,11 +101,12 @@ module Sources
         break if @source.source_chunks.count >= MAX_CHUNKS
 
         chunk_token_length = Tiktoken.encoding_for_model('gpt-4').encode(chunk).length
+        chunk_without_null_bytes = chunk.gsub("\u0000", '')
         SourceChunk.create!(
           source_id: @source.id,
           section_header: section[:section_header].strip,
           ordinal_number: @current_chunk_ordinal_number,
-          content: chunk,
+          content: chunk_without_null_bytes,
           token_length: chunk_token_length
         )
         @current_chunk_ordinal_number += 1
