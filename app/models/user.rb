@@ -208,4 +208,12 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def make_security_updated
     update(security_updated: true)
   end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["conversations", "current_document", "current_folder", "documents", "folders", "monitoring_events", "root_folder", "sources", "subscription", "usage_records", "voices"]
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["confirmation_sent_at", "confirmation_token", "confirmed_at", "created_at", "current_document_id", "current_folder_id", "email", "encrypted_password", "first_name", "gpt_4_enabled", "id", "last_name", "onboarded", "remember_created_at", "reset_password_sent_at", "reset_password_token", "role", "security_updated", "storage_used", "subscription_id", "tokens_used", "updated_at"]
+  end
 end

@@ -28,4 +28,8 @@ class Voice < ApplicationRecord
     monitoring_events.create!(user_id: user&.id, note: "#{user&.email} created voice #{name}",
                               event_type: 'create_record')
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "discarded_at", "id", "meta_prompt", "name", "updated_at", "user_id"]
+  end
 end

@@ -21,4 +21,8 @@ class MonitoringEvent < ApplicationRecord
       target: 'monitoring'
     )
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "event_type", "id", "note", "trackable_id", "trackable_type", "updated_at", "user_id"]
+  end
 end

@@ -115,4 +115,8 @@ class Source < ApplicationRecord
 
     errors.add(:file, 'must be a .pdf,.docx or .txt')
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["author", "created_at", "document_id", "file_size", "fileless", "folder_id", "id", "name", "section_headers", "source_url", "text_category", "title", "truncated", "updated_at", "user_id", "year_published"]
+  end
 end

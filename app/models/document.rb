@@ -96,4 +96,8 @@ class Document < ApplicationRecord
     Conversation.create!(title:, document_id: id)
     ContextReference.create!(document_id: id, conversation_id: conversation.id)
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["cloned_from", "created_at", "discarded_at", "folder_id", "id", "source_based", "title", "updated_at", "user_id"]
+  end
 end

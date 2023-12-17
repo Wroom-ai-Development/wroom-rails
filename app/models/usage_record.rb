@@ -52,4 +52,8 @@ class UsageRecord < ApplicationRecord
   def gpt_3_5_turbo_output_price
     gpt_3_5_turbo_output_tokens / 100.0 * GPT_3_5_TURBO_OUTPUT_PRICE_PER_1000_TOKENS
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["conversation_id", "created_at", "discarded_at", "gpt_3_5_turbo_16k_input_tokens", "gpt_3_5_turbo_16k_output_tokens", "gpt_3_5_turbo_input_tokens", "gpt_3_5_turbo_output_tokens", "gpt_4_input_tokens", "gpt_4_output_tokens", "id", "updated_at", "user_id"]
+  end
 end

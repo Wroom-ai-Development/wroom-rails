@@ -45,4 +45,8 @@ class Conversation < ApplicationRecord
       target: 'conversation_status'
     )
   end
+  
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "document_id", "id", "last_query_requests", "sidekiq_job_id", "status", "status_message", "title", "total_requests", "updated_at"]
+  end
 end

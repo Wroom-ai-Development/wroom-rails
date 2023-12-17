@@ -58,4 +58,8 @@ class Folder < ApplicationRecord
       File.join('/', folder.name)
     end
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "discarded_at", "id", "name", "parent_id", "type", "updated_at", "user_id"]
+  end
 end
