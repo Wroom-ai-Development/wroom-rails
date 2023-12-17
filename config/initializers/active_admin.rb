@@ -4,7 +4,7 @@ ActiveAdmin.setup do |config|
   # Set the title that is displayed on the main layout
   # for each of the active admin pages.
   #
-  config.site_title = "Wroom Rails"
+  config.site_title = "Wroom Boss Admin"
 
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
@@ -167,7 +167,10 @@ ActiveAdmin.setup do |config|
   # You can add before, after and around filters to all of your
   # Active Admin resources and pages from here.
   #
-  # config.before_action :do_something_awesome
+  config.before_action do
+    # redirect to root if user does not have admin role
+    redirect_to root_path unless current_user&.admin?
+  end
 
   # == Attribute Filters
   #
