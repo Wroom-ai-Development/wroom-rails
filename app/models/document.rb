@@ -77,6 +77,10 @@ class Document < ApplicationRecord
     build_path(self)
   end
 
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[cloned_from created_at discarded_at folder_id id source_based title updated_at user_id]
+  end
+
   private
 
   def build_path(document)

@@ -134,3 +134,5 @@ gem 'discard', '~> 1.2'
 gem 'stripe', '~> 9.2'
 
 gem 'mail_view', git: 'https://github.com/basecamp/mail_view.git'
+
+gem 'activeadmin'

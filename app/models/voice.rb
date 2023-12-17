@@ -12,6 +12,10 @@ class Voice < ApplicationRecord
   after_update_commit :announce_update
   after_discard :announce_destroy
 
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[created_at discarded_at id meta_prompt name updated_at user_id]
+  end
+
   private
 
   def announce_destroy

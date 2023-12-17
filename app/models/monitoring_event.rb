@@ -12,6 +12,10 @@ class MonitoringEvent < ApplicationRecord
 
   after_create_commit :broadcast_status
 
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[created_at event_type id note trackable_id trackable_type updated_at user_id]
+  end
+
   private
 
   def broadcast_status

@@ -143,6 +143,16 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     update(onboarded: true)
   end
 
+  def self.ransackable_associations(_auth_object = nil)
+    %w[conversations current_document current_folder documents folders monitoring_events root_folder
+       sources subscription usage_records voices]
+  end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[confirmation_sent_at confirmation_token confirmed_at created_at current_document_id
+       current_folder_id email encrypted_password first_name gpt_4_enabled id last_name onboarded remember_created_at reset_password_sent_at reset_password_token role security_updated storage_used subscription_id tokens_used updated_at] # rubocop:disable Layout/LineLength
+  end
+
   private
 
   def log_event
