@@ -49,6 +49,10 @@ class Folder < ApplicationRecord
     build_path(self)
   end
 
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[created_at discarded_at id name parent_id type updated_at user_id]
+  end
+
   private
 
   def build_path(folder)
@@ -57,9 +61,5 @@ class Folder < ApplicationRecord
     else
       File.join('/', folder.name)
     end
-  end
-
-  def self.ransackable_attributes(auth_object = nil)
-    ["created_at", "discarded_at", "id", "name", "parent_id", "type", "updated_at", "user_id"]
   end
 end

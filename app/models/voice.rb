@@ -12,6 +12,10 @@ class Voice < ApplicationRecord
   after_update_commit :announce_update
   after_discard :announce_destroy
 
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[created_at discarded_at id meta_prompt name updated_at user_id]
+  end
+
   private
 
   def announce_destroy
@@ -27,9 +31,5 @@ class Voice < ApplicationRecord
     broadcast_after_to 'voices', partial: 'voices/voice', locals: { voice: self }, target: 'new-voices-marker'
     monitoring_events.create!(user_id: user&.id, note: "#{user&.email} created voice #{name}",
                               event_type: 'create_record')
-  end
-
-  def self.ransackable_attributes(auth_object = nil)
-    ["created_at", "discarded_at", "id", "meta_prompt", "name", "updated_at", "user_id"]
   end
 end
