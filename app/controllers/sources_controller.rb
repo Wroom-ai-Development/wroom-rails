@@ -72,7 +72,7 @@ class SourcesController < ApplicationController
           format.html { redirect_to wroom_path(@source.document) }
         end
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_entity, layout: 'dashboard' }
       end
     end
   end
