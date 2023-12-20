@@ -265,7 +265,7 @@ module Conversations
 
     def count_tokens_in_messages(messages)
       full_text = messages.map { |m| m[:content] }.join(' ')
-      TokenCounter.new('gpt-4').count_tokens(full_text)
+      TokenCounter.new('gpt-3.5-turbo').count_tokens(full_text)
     end
 
     def response_from_messages(messages, model: 'gpt-3.5-turbo', max_tokens: nil) # rubocop:disable Metrics/AbcSize
@@ -275,10 +275,8 @@ module Conversations
 
       @user.update!(tokens_used: @user.tokens_used + token_count)
 
-      tokens_left_for_answer = REQUEST_MAX_TOKEN_SIZES[model] - token_count
+      tokens_left_for_answer = REQUEST_MAX_TOKEN_SIZES[model] - token_count - 200
       response = @openai_service.chat_completion(messages, model, max_tokens || tokens_left_for_answer)
-      # binding.pry
-
       @requests_made += 1
 
       raise OpenAIApiError, response['error'].to_json if response['error'].present?

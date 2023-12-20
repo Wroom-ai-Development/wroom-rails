@@ -6,6 +6,7 @@ class OpenaiService
   class ApiError < StandardError; end
   class TokenRateLimitExceeded < ApiError; end
   class RequestRateLimitExceeded < ApiError; end
+  class ContextExceeded < ApiError; end
   class ModelDoesNotExist < ApiError; end
 
   RETRY_LIMIT = 4
@@ -31,8 +32,6 @@ class OpenaiService
         max_tokens:
       }
     )
-    # binding.pry
-    # log respn
     handle_response(response)
   rescue TokenRateLimitExceeded, RequestRateLimitExceeded => e
     retries += 1
@@ -52,6 +51,8 @@ class OpenaiService
 
         raise RequestRateLimitExceeded, response['error']['message']
 
+      when 'context_length_exceeded'
+        raise ContextExceeded, response['error']['message']
       end
     else
       response.dig('choices', 0, 'message', 'content')

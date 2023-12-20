@@ -16,6 +16,7 @@ class Document < ApplicationRecord
   after_create_commit :log_event
   after_create_commit :create_conversation
   after_create_commit :broadcast_create
+  after_create_commit :update_storage_bar
   after_discard :remove_document_row
   before_destroy :remove_document_row
   before_destroy :update_storage_bar

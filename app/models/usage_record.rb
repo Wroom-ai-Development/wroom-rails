@@ -13,6 +13,8 @@ class UsageRecord < ApplicationRecord
   GPT_3_5_TURBO_INPUT_PRICE_PER_1000_TOKENS = 0.0015
   GPT_3_5_TURBO_OUTPUT_PRICE_PER_1000_TOKENS = 0.002
 
+  after_create_commit :update_mana_bar
+
   def total_price
     gpt_4_price + gpt_3_5_turbo_16k_price + gpt_3_5_turbo_price
   end
@@ -56,5 +58,15 @@ class UsageRecord < ApplicationRecord
   def self.ransackable_attributes(_auth_object = nil)
     %w[conversation_id created_at discarded_at gpt_3_5_turbo_16k_input_tokens
        gpt_3_5_turbo_16k_output_tokens gpt_3_5_turbo_input_tokens gpt_3_5_turbo_output_tokens gpt_4_input_tokens gpt_4_output_tokens id updated_at user_id] # rubocop:disable Layout/LineLength
+  end
+
+  def update_mana_bar
+    broadcast_replace_to(
+      user.id,
+      'mana-bar',
+      partial: 'conversations/gpt_cost_limit',
+      locals: { user: },
+      target: 'gpt_cost_bar'
+    )
   end
 end
