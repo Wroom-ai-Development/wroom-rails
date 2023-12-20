@@ -130,7 +130,7 @@ div#chat {
         font-weight: 600;
         min-height: 34px;
         height: 34px;
-        background-color: #FFEDD2;
+        background-color: $wroom-gray;
         border-radius: 5px;
         border: none;
         color: $wroom-dark-gray;
@@ -138,7 +138,7 @@ div#chat {
         resize: none;
         margin-left: 1rem;
         &:hover {
-          background-color: #f9dfb9;
+          background-color: $wroom-light-gray;
           cursor: pointer;
         }
         &:focus {
