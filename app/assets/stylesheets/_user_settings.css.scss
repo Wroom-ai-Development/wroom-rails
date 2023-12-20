@@ -195,10 +195,9 @@ div.settings-view {
         input {
           padding: 0.5rem;
           border-radius: 5px;
-          border: 1px solid $wroom-gray;
           font-size: $font-size-80;
           &:hover {
-            background-color: $wroom-halfway-dark-gray;
+            background-color: $wroom-primary-dark;
             cursor: pointer;
           }
         }

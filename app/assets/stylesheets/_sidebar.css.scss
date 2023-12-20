@@ -96,7 +96,7 @@ div#sidebar {
   a#upgrade-plan {
     margin-bottom: 1rem;
     margin-left: auto;
-    background-color: $wroom-mana-blue;
+    background-color: $wroom-dark-blue;
     color: white;
     border: none;
     outline: none;
@@ -104,6 +104,11 @@ div#sidebar {
     font-weight: 700;
     font-size: $font-size-70;
     border-radius: 5px;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $wroom-blue;
+    }
   }
 
   div#wroom-logo {

@@ -25,7 +25,6 @@ div.new-folder {
       }
       &[type="submit"] {
         background-color: $wroom-dark-gray;
-        border: none;
         border-radius: 5px;
         color: white;
         cursor: pointer;
@@ -33,11 +32,13 @@ div.new-folder {
         font-weight: bold;
         padding: 0.5rem;
         width: 10vw;
+        border: 1px solid $wroom-dark-gray;
         &:hover {
-          background-color: $wroom-dark-gray;
+          border: 1px solid $wroom-primary-dark;
+          background-color: $wroom-primary-dark;
         }
       }
-      border: 1px solid $wroom-light-gray;
+      border: 1px solid $wroom-gray;
       border-radius: 5px;
       box-sizing: border-box;
       margin-bottom: 0.5rem;
