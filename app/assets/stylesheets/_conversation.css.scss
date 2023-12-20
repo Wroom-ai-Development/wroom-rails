@@ -96,7 +96,7 @@ div#chat {
       border-radius: 5px;
       border: 1px solid white;
       &:hover {
-        border: 1px solid $wroom-primary;
+        background-color: $wroom-primary-dark;
         cursor: pointer;
       }
     }
@@ -139,7 +139,7 @@ div#chat {
         margin-left: 1rem;
         &:hover {
           background-color: $wroom-light-gray;
-          cursor: pointer;
+          cursor: text;
         }
         &:focus {
           outline: none !important;

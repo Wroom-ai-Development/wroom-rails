@@ -79,7 +79,7 @@ div#record-form-view {
 
       input[type='submit'] {
         background-color: $wroom-dark-gray;
-        border: none;
+        border: 1px solid $wroom-dark-gray;
         border-radius: 5px;
         color: white;
         cursor: pointer;
@@ -88,7 +88,8 @@ div#record-form-view {
         padding: 0.5rem;
         width: 10vw;
         &:hover {
-          background-color: $wroom-dark-gray;
+          background-color: $wroom-primary-dark;
+          border: 1px solid $wroom-primary-dark;
         }
       }
       
@@ -130,10 +131,12 @@ div#record-form-view {
         input {
           padding: 0.5rem;
           border-radius: 5px;
-          border: 1px solid $wroom-gray;
+          border: 1px solid $wroom-dark-gray;
+          background-color: $wroom-dark-gray;
           font-size: $font-size-80;
           &:hover {
-            background-color: $wroom-primary-light;
+            border: 1px solid $wroom-primary-dark;
+            background-color: $wroom-primary-dark;
           }
         }
 
