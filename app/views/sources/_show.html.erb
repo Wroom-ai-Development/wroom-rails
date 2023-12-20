@@ -2,44 +2,59 @@
 <div id='source'>
   <h3><%= source.name || source.title || "Untitled" %></h3>
   <table>
-    <tr>
-      <td class='left'>Title:</td>
-      <td class='right'><%= trim_string_to_20_chars(source.title) %></td>
-    </tr>
-    <tr>      
-      <td class='left'>Author:</td>
-      <td class='right'><%= trim_string_to_20_chars(source.author) %></td>
-    </tr>
-    <tr>
-      <td class='left'>Text category:</td>
-      <td class='right'><%= trim_string_to_20_chars(source.text_category) %></td>
-    </tr>
-    <tr>
-      <td class='left'>Year published:</td>
-      <td class='right'><%= source.year_published %></td>
-    </tr>
-    <tr>
-      <td class='left'>Source URL:</td>
-      <td class='right'><%= trim_string_to_20_chars(source.clean_url) %></td>
-    </tr>
-    <tr>
-      <td class='left'>File:</td>
-      <td class='right'>
-        <% if source.file.attached? %>
-          <i class="fa-regular fa-file fa-2xs" style="color: #000000;"></i><%= link_to trim_string_to_20_chars(source.file.filename.to_s), rails_blob_path(source.file, disposition: 'attachment') %>
-        <% else %>
-          None attached
-        <% end %>
-      </td>
-    </tr>
-    <tr>
-      <td class='left'>Section headers:</td>
-      <td class='right'><%= source.section_headers.join(', ') %></td>
-    </tr>
+    <% if source.title.present? %>
+      <tr>
+        <td class='left'>Title:</td>
+        <td class='right'><%= trim_string_to_20_chars(source.title) %></td>
+      </tr>
+    <% end %>
+    <% if source.author.present? %>
+      <tr>      
+        <td class='left'>Author:</td>
+        <td class='right'><%= trim_string_to_20_chars(source.author) %></td>
+      </tr>
+    <% end %>
+    <% if source.text_category.present? %>
+      <tr>
+        <td class='left'>Text category:</td>
+        <td class='right'><%= trim_string_to_20_chars(source.text_category) %></td>
+      </tr>
+    <% end %>
+    <% if source.year_published.present? %>
+      <tr>
+        <td class='left'>Year published:</td>
+        <td class='right'><%= source.year_published %></td>
+      </tr>
+    <% end %>
+    <% if source.source_url.present? %>
+      <tr>
+        <td class='left'>Source URL:</td>
+        <td class='right'><%= trim_string_to_20_chars(source.clean_url) %></td>
+      </tr>
+    <% end %>
+    <% if source.file.attached? %>
+      <tr>
+        <td class='left'>File:</td>
+        <td class='right'>
+          <% if source.file.attached? %>
+            <i class="fa-regular fa-file fa-2xs" style="color: #000000;"></i><%= link_to trim_string_to_20_chars(source.file.filename.to_s), rails_blob_path(source.file, disposition: 'attachment') %>
+          <% else %>
+            None attached
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    <% if source.section_headers.present? %>
+      <tr>
+        <td class='left'>Section headers:</td>
+        <td class='right'><%= source.section_headers.join(', ') %></td>
+      </tr>
+    <% end %>
+    
   </table>
   <div class='instructions'>
     <p>
-      Providing the above metadata for the source makes it easier for our language model to give contextually relevant answers.
+      Providing metadata for the source makes it easier for our language model to give contextually relevant answers.
     </p>
     <%= link_to "Edit metadata", edit_source_path(@document.source), data: { turbo_frame: '_top' } %>
   </div>
