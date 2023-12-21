@@ -10,6 +10,16 @@ class ApplicationController < ActionController::Base
   before_action :set_root_folder, if: :user_signed_in?
   before_action :set_new_source, if: :user_signed_in?
 
+  helper_method :breadcrumbs
+
+  def breadcrumbs
+    @breadcrumbs ||= []
+  end
+
+  def add_breadcrumb(name, path = nil)
+    breadcrumbs << Breadcrumb.new(name, path)
+  end
+
   protected
 
   def set_new_source
