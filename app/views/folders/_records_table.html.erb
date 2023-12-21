@@ -30,7 +30,7 @@
           url: drag_folder_path
         } do %>
           <td>
-            <%= link_to folder_path(folder.parent), id: 'parent_link', data: { turbo_action: 'replace' } do %>
+            <%= link_to folder_path(folder.parent), id: 'parent_link', data: { turbo: "false" } do %>
             <i class="fa fa-folder fa-fw" style="margin-right: 0.3rem;"></i>..
             <% end %>
           </td>
