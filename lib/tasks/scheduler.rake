@@ -1,6 +1,9 @@
-# frozen_string_literal: true
-
-desc 'Reset subscription limits where appropriate'
-task subscription_upkeep: :environment do
-  # Get all subscriptions with paid_until
+desc "This task is called by the Heroku scheduler add-on"
+task :renew_free_users_mana => :environment do
+  puts "Renewing Free-tier users' mana supply"
+  User.all.each do |user|
+    next unless user.subscription && user.subscription.plan == 'free'
+    user.usage_records.discard_all!
+  end
+  puts "done."
 end
