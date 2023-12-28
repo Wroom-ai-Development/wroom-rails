@@ -20,6 +20,10 @@ class ApplicationController < ActionController::Base
     breadcrumbs << Breadcrumb.new(name, path)
   end
 
+  def clear_breadcrumbs
+    @breadcrumbs = []
+  end
+
   protected
 
   def set_new_source

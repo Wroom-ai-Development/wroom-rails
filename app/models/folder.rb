@@ -11,6 +11,12 @@ class Folder < ApplicationRecord
   after_create :add_to_sidebar
   after_save :remove_folder_row, if: :saved_change_to_parent_id?
 
+  def parents
+    return [] unless parent
+
+    [parent] + parent.parents
+  end
+
   def remove_from_sidebar
     broadcast_remove_to(
       user.id,
