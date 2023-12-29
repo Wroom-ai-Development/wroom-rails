@@ -24,6 +24,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   enum role: { 'admin': 0, 'user': 1, 'supplicant': 2 }
   after_initialize :set_default_role, if: :new_record?
+  after_initialize :set_referral_code, if: :new_record?
   after_create :create_subscription
   after_create :make_security_updated
 
@@ -60,14 +61,15 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def gpt_fees_limit
-    case subscription.plan # rubocop:disable Style/HashLikeCase
-    when 'free'
-      5.0
-    when 'basic'
-      15.0
-    when 'pro'
-      50.0
-    end
+    base_limit = case subscription.plan # rubocop:disable Style/HashLikeCase
+                 when 'free'
+                   5.0
+                 when 'basic'
+                   15.0
+                 when 'pro'
+                   50.0
+                 end
+    base_limit + bonus_gpt_budget
   end
 
   def gpt_fees_incurred
@@ -93,6 +95,12 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def set_default_role
     self.role ||= :user
+  end
+
+  def set_referral_code
+    charset = ('A'..'Z').to_a + (0..9).to_a
+    code = Array.new(8) { charset.sample }.join + id.to_s
+    update(referral_code: code)
   end
 
   def anything_in_recycle_bin?
