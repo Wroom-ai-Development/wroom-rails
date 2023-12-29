@@ -60,14 +60,15 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def gpt_fees_limit
-    case subscription.plan # rubocop:disable Style/HashLikeCase
-    when 'free'
-      5.0
-    when 'basic'
-      15.0
-    when 'pro'
-      50.0
-    end
+    base_limit = case subscription.plan # rubocop:disable Style/HashLikeCase
+                 when 'free'
+                   5.0
+                 when 'basic'
+                   15.0
+                 when 'pro'
+                   50.0
+                 end
+    base_limit + bonus_gpt_budget
   end
 
   def gpt_fees_incurred
