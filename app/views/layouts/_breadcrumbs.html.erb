@@ -4,10 +4,10 @@
     <li>
       <% if crumb.name == '/' %>
         <span class="breadcrumb-page">
-          <%= link_to 'My Files', root_path, class: 'breadcrumb-link' %>
+          <%= link_to 'My Files', root_path, class: 'breadcrumb-link', data: { turbo_frame: '_top' } %>
         </span>
       <% elsif crumb.link? %>
-        <%= link_to crumb.name, crumb.path, class: "breadcrumb-link" %>
+        <%= link_to crumb.name, crumb.path, class: "breadcrumb-link", data: { turbo_frame: '_top' } %>
       <% else %>
         <span class="breadcrumb-page">
           <%= crumb.name %>
@@ -15,7 +15,7 @@
       <% end %>
 
       <% unless crumb == breadcrumbs.last %>
-        <span class="breadcrumb-separator">|</span>
+        <span class="breadcrumb-separator">»</span>
       <% end %>
     </li>
     <% end %>
