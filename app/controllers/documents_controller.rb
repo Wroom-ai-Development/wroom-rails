@@ -5,13 +5,18 @@ class DocumentsController < ApplicationController
                 only: %i[editor destroy autosave undiscard discard]
   load_and_authorize_resource
 
-  def editor
+  def editor # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     @document = if params[:id].present?
                   Document.find(params[:id])
                 else
                   current_user.documents.first
                 end
     @conversation = @document.conversation
+    @document.folder.parents.reverse.each do |parent|
+      breadcrumbs << Breadcrumb.new(parent.name, folder_path(parent))
+    end
+    breadcrumbs << Breadcrumb.new(@document.folder.name, folder_path(@document.folder))
+    breadcrumbs << Breadcrumb.new(@document.title, editor_document_path(@document))
   end
 
   def index

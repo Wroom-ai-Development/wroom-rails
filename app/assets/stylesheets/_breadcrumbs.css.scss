@@ -1,0 +1,44 @@
+@import 'colors';
+@import 'fonts';
+
+nav#breadcrumbs {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0.5rem;
+  font-size: $font-size-80;
+  font-weight: 100;
+  color: $wroom-dark-gray;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  
+  ol.breadcrumbs {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin: 0;
+      padding: 0;
+    }
+  }
+  .breadcrumb-link {
+    color: $wroom-dark-gray;
+    text-decoration: none;
+    padding: 0.5rem;
+    border-radius: 5px;
+    &:hover {
+      background-color: $wroom-light-gray;
+    }
+  }
+  span.breadcrumb-separator {
+    margin: 0 0.5rem;
+    color: $wroom-gray;
+    font-weight: 600;
+  }
+}

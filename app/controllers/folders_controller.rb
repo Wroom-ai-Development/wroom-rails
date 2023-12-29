@@ -40,7 +40,11 @@ class FoldersController < ApplicationController
       @folders = @folder.children.kept
       @documents = @folder.documents.kept
     end
-
+    clear_breadcrumbs
+    @folder.parents.reverse.each do |parent|
+      breadcrumbs << Breadcrumb.new(parent.name, folder_path(parent))
+    end
+    breadcrumbs << Breadcrumb.new(@folder.name, folder_path(@folder))
     return unless @folder.type == 'RootFolder' && @folder.empty?
 
     @haiku = OpenaiService.new.haiku_about_new_venture
