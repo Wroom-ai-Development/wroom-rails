@@ -1,0 +1,28 @@
+<div class='referral-codes'>
+  <h4>The Wroom Referral Program</h4>
+  <p>
+    We would love for our users to spread the word about Wroom. And so, dear user,
+    for every user you refer to Wroom, you will receive an increase of 200 mana points 
+    to your monthly limit, and so will they. 
+  </p>
+  <p>
+    To refer a friend, simply send them your referral code. When they sign up, they
+    will be prompted to enter your referral code. Once they do, you will receive your
+    mana limit upgrade.
+  </p>
+  <h3>
+    Your referral code is <%= current_user.referral_code %>
+  </h3>
+  <h4>Redeem a referral code</h4>
+  <p>
+    If you have received a referral code from a friend, enter it below to receive
+    your mana limit upgrade.
+  </p>
+  <%= form_tag redeem_referral_code_path, method: :post do %>
+    <%= text_field_tag :referral_code %>
+    <%= submit_tag "Redeem" %>
+  <% end %>
+  <% if flash[:alert].present? %>
+    <%= flash[:alert] %>
+  <% end %>
+</div>

@@ -8,6 +8,26 @@ class SubscriptionsController < ApplicationController # rubocop:disable Metrics/
     @current_subscription = current_user.subscription
   end
 
+  def redeem_referral_code # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    referring_user = User.find_by(referral_code: params[:referral_code])
+    if current_user.referred_by.present?
+      redirect_to billing_path, alert: 'You have already redeemed a referral code.'
+    elsif current_user.referral_code == params[:referral_code]
+      redirect_to billing_path, alert: 'You cannot redeem your own referral code.'
+    elsif referring_user.nil?
+      redirect_to billing_path, alert: 'Invalid referral code.'
+    else
+      current_user.update(
+        referred_by: User.find_by(referral_code: params[:referral_code]).id,
+        bonus_gpt_budget: current_user.bonus_gpt_budget + 2
+      )
+      referring_user.update(
+        bonus_gpt_budget: referring_user.bonus_gpt_budget + 2
+      )
+      redirect_to billing_path, alert: 'Referral code redeemed.'
+    end
+  end
+
   def subscribe # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     line_item = if params[:plan] == 'pro'
                   {

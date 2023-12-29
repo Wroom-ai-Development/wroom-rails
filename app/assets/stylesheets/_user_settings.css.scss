@@ -222,3 +222,40 @@ div#cancel-account {
     }
   }
 }
+
+div.referral-codes {
+  form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  input[type='text'] {
+    width: 15rem;
+    border: 1px solid $wroom-gray;
+    height: 2rem;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-family: $body-font;
+
+    &:focus {
+      outline: none;
+      border: 1px solid $wroom-primary;
+    }
+  }
+
+  input[type='submit'] {
+    background-color: black;
+    border: 1px solid black;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 0.5rem;
+    margin-left: 0.5rem;
+    &:hover {
+      background-color: $wroom-dark-gray;
+    }
+  }
+}
