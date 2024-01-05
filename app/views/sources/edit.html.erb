@@ -4,6 +4,9 @@
       <h3>Source metadata</h3>
       <%= link_to "❌", wroom_path(@source.document) %>
     </div>
+    <p>
+      Providing metadata for the source makes it easier for the language model to give contextually relevant answers.
+    </p>
     <%= render "form", source: @source, folder_id: @source.document.folder_id %>
   </div>
 </div>

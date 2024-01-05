@@ -15,6 +15,7 @@ class DocumentsController < ApplicationController
     @document.folder.parents.reverse.each do |parent|
       breadcrumbs << Breadcrumb.new(parent.name, folder_path(parent))
     end
+    # binding.pry
     breadcrumbs << Breadcrumb.new(@document.folder.name, folder_path(@document.folder))
     breadcrumbs << Breadcrumb.new(@document.title, editor_document_path(@document))
   end

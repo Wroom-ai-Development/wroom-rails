@@ -27,7 +27,10 @@ class SourcesController < ApplicationController
     @source = Source.new(source_params)
     @source.file_size = source_params[:file].size if source_params[:file].present?
     @source.source_url = nil
-    @source.name = @source.file.filename.to_s if @source.file.present?
+    if @source.file.present?
+      @source.name = @source.file.filename.to_s
+      @source.file_extension = @source.file.filename.extension.to_s
+    end
     save_section_headers
     if @source.save
       if @source.file.attached?
