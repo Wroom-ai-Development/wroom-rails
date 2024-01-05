@@ -1,23 +1,23 @@
 <nav id='breadcrumbs'>
   <ol class="breadcrumbs">
     <% breadcrumbs.each do |crumb| %>
-    <li>
-      <% if crumb.name == '/' %>
-        <span class="breadcrumb-page">
-          <%= link_to 'My Files', root_path, class: 'breadcrumb-link', data: { turbo_frame: '_top' } %>
-        </span>
-      <% elsif crumb.link? %>
-        <%= link_to crumb.name, crumb.path, class: "breadcrumb-link", data: { turbo_frame: '_top' } %>
-      <% else %>
-        <span class="breadcrumb-page">
-          <%= crumb.name %>
-        </span>
-      <% end %>
+      <li>
+        <% if crumb.name == '/' %>
+          <span class="breadcrumb-page">
+            <%= link_to 'My Files', root_path, class: 'breadcrumb-link', data: { turbo_frame: '_top' } %>
+          </span>
+        <% elsif crumb.link? && crumb != breadcrumbs.last %>
+          <%= link_to crumb.name, crumb.path, class: "breadcrumb-link", data: { turbo_frame: '_top' } %>
+        <% else %>
+          <span class="breadcrumb-page">
+            <%= crumb.name %>
+          </span>
+        <% end %>
 
-      <% unless crumb == breadcrumbs.last %>
-        <span class="breadcrumb-separator">»</span>
-      <% end %>
-    </li>
+        <% unless crumb == breadcrumbs.last %>
+          <span class="breadcrumb-separator">»</span>
+        <% end %>
+      </li>
     <% end %>
   </ol>
 </nav>

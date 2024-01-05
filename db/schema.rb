@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_29_134941) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_05_110439) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -183,6 +183,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_29_134941) do
     t.bigint "document_id"
     t.bigint "folder_id"
     t.bigint "file_size", default: 0, null: false
+    t.string "file_extension", default: "", null: false
     t.index ["document_id"], name: "index_sources_on_document_id"
     t.index ["folder_id"], name: "index_sources_on_folder_id"
     t.index ["user_id"], name: "index_sources_on_user_id"

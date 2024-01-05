@@ -1,80 +1,51 @@
 
 <div id='source'>
-  <h3><%= source.name || source.title || "Untitled" %></h3>
-  <table>
-    <% if source.title.present? %>
-      <tr>
-        <td class='left'>Title:</td>
-        <td class='right'><%= trim_string_to_20_chars(source.title) %></td>
-      </tr>
-    <% end %>
-    <% if source.author.present? %>
-      <tr>      
-        <td class='left'>Author:</td>
-        <td class='right'><%= trim_string_to_20_chars(source.author) %></td>
-      </tr>
-    <% end %>
-    <% if source.text_category.present? %>
-      <tr>
-        <td class='left'>Text category:</td>
-        <td class='right'><%= trim_string_to_20_chars(source.text_category) %></td>
-      </tr>
-    <% end %>
-    <% if source.year_published.present? %>
-      <tr>
-        <td class='left'>Year published:</td>
-        <td class='right'><%= source.year_published %></td>
-      </tr>
-    <% end %>
-    <% if source.source_url.present? %>
-      <tr>
-        <td class='left'>Source URL:</td>
-        <td class='right'><%= trim_string_to_20_chars(source.clean_url) %></td>
-      </tr>
-    <% end %>
-    <% if source.file.attached? %>
-      <tr>
-        <td class='left'>File:</td>
-        <td class='right'>
-          <% if source.file.attached? %>
-            <i class="fa-regular fa-file fa-2xs" style="color: #000000;"></i><%= link_to trim_string_to_20_chars(source.file.filename.to_s), rails_blob_path(source.file, disposition: 'attachment') %>
-          <% else %>
-            None attached
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-    <% if source.section_headers.present? %>
-      <tr>
-        <td class='left'>Section headers:</td>
-        <td class='right'><%= source.section_headers.join(', ') %></td>
-      </tr>
-    <% end %>
-    
-  </table>
-  <div class='instructions'>
-    <p>
-      Providing metadata for the source makes it easier for our language model to give contextually relevant answers.
-    </p>
-    <%= link_to "Edit metadata", edit_source_path(@document.source), data: { turbo_frame: '_top' } %>
-  </div>
-  <div class='chunks'>
-      <% if source.truncated? %>
-        <div class='truncation-notice'>
-          This source exceeded our text volume limits, and has been truncated.
-        </div>
+  <div id='source-header'>
+    <h3><%= source.name || source.title || "Untitled" %></h3>
+    <div id='source-controls'>
+      <% if source.source_url.present? %>
+        <%= link_to 'Visit source site' %>
+        <tr>
+          <td class='left'>Source URL:</td>
+          <td class='right'><%= trim_string_to_20_chars(source.clean_url) %></td>
+        </tr>
       <% end %>
-      <% source.source_chunks.each do |chunk| %>
-        <div class='chunk'>
-          <details>
-            <summary>
-              <%= "Chunk #{chunk.ordinal_number + 1}: #{chunk.section_header.strip}" %>
-            </summary>
-            <p>
-              <%= chunk.content %>
-            </p>
-          </details>
-        </div>
+      <% if source.file.attached? %>
+        <%= link_to 'Download file', rails_blob_path(source.file, disposition: 'attachment') %>
+        <% if false %>
+          <tr>
+            <td class='left'>File:</td>
+            <td class='right'>
+              <i class="fa-regular fa-file fa-2xs" style="color: #000000;"></i><%= link_to trim_string_to_20_chars(source.file.filename.to_s), rails_blob_path(source.file, disposition: 'attachment') %>
+            </td>
+          </tr>
+        <% end %>
       <% end %>
+      <%= link_to "Edit metadata", edit_source_path(@document.source), data: { turbo_frame: '_top' } %>
+    </div>
   </div>
+  <% if source.file_extension == 'pdf' %>
+    <iframe id='pdf-preview' width='300' height='200' src=<%= rails_blob_url(source.file) %>></iframe>
+  <% end %>
+  <% if false %>
+    <div class='chunks'>
+        <% if source.truncated? %>
+          <div class='truncation-notice'>
+            This source exceeded our text volume limits, and has been truncated.
+          </div>
+        <% end %>
+        <% source.source_chunks.each do |chunk| %>
+          <div class='chunk'>
+            <details>
+              <summary>
+                <%= "Chunk #{chunk.ordinal_number + 1}: #{chunk.section_header.strip}" %>
+              </summary>
+              <p>
+                <%= chunk.content %>
+              </p>
+            </details>
+          </div>
+        <% end %>
+    </div>
+  <% end %>
 </div>
