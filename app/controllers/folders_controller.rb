@@ -15,6 +15,8 @@ class FoldersController < ApplicationController
     @folders = current_user.folders.discarded
     @documents = current_user.documents.discarded
     @voices = current_user.voices.discarded
+    clear_breadcrumbs
+    add_breadcrumb 'Trash'
   end
 
   def empty_recycle_bin
@@ -42,9 +44,9 @@ class FoldersController < ApplicationController
     end
     clear_breadcrumbs
     @folder.parents.reverse.each do |parent|
-      breadcrumbs << Breadcrumb.new(parent.name, folder_path(parent))
+      add_breadcrumb(parent.name, folder_path(parent))
     end
-    breadcrumbs << Breadcrumb.new(@folder.name, folder_path(@folder))
+    add_breadcrumb(@folder.name, folder_path(@folder))
     return unless @folder.type == 'RootFolder' && @folder.empty?
 
     @haiku = OpenaiService.new.haiku_about_new_venture
