@@ -89,14 +89,14 @@ div#chat {
     a {
       color: white;
       padding: 0.5rem;
-      background-color: $wroom-dark-gray;
+      background-color: $wroom-darker-gray;
       font-weight: 800;
       font-size: $font-size-70;
       margin-right: 0.5rem;
       border-radius: 5px;
       border: 1px solid white;
       &:hover {
-        background-color: $wroom-primary-dark;
+        background-color: $wroom-dark-gray;
         cursor: pointer;
       }
     }
@@ -130,7 +130,7 @@ div#chat {
         font-weight: 600;
         min-height: 34px;
         height: 34px;
-        background-color: $wroom-gray;
+        background-color: $wroom-primary;
         border-radius: 5px;
         border: none;
         color: $wroom-dark-gray;
@@ -138,7 +138,7 @@ div#chat {
         resize: none;
         margin-left: 1rem;
         &:hover {
-          background-color: $wroom-light-gray;
+          background-color: $wroom-gray;
           cursor: text;
         }
         &:focus {
@@ -151,7 +151,7 @@ div#chat {
         right: 1.5rem;
         width: 0;
         &:hover {
-          color: white;
+          color: $wroom-darker-gray;
           cursor: pointer;
         }
       }
