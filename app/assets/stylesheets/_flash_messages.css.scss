@@ -9,6 +9,9 @@ div.flash-message {
   position: fixed;
   top: 5.1rem;
   height: min-content;
+  min-width: 15rem;
+  text-align: right;
+  font-weight: 500;
   padding: 1rem 3rem 1rem 1rem;
   color: white;
   border-top-right-radius: 5px;

@@ -45,6 +45,7 @@ class FoldersController < ApplicationController
       add_breadcrumb(parent.name, folder_path(parent))
     end
     add_breadcrumb(@folder.name, folder_path(@folder))
+
     return unless @folder.type == 'RootFolder' && @folder.empty?
 
     @haiku = OpenaiService.new.haiku_about_new_venture
@@ -66,7 +67,7 @@ class FoldersController < ApplicationController
     @folder.type = 'Folder'
     if @folder.save
       current_user.update!(current_folder_id: @folder.id)
-      redirect_to folder_path(@folder.parent)
+      redirect_to folder_path(@folder.parent), notice: 'Folder was successfully created.'
     else
       render :new, status: :unprocessable_entity
     end

@@ -38,12 +38,15 @@ class SourcesController < ApplicationController
         # elsif @source.source_url.present?
         # @source.parse_source_chunks_from_source_url
       end
-      redirect_to edit_source_path(@source, is_new_source: true)
+      redirect_to edit_source_path(@source, is_new_source: true), notice: 'Source file uploaded successfully.'
+    elsif current_user.storage_available <= 0
+      redirect_to root_path, alert: 'You have exceeded your storage limit. Please upgrade your plan.'
     else
-      respond_to do |format|
-        @folder_id = @source.folder_id
-        format.html { render :new, status: :unprocessable_entity }
-      end
+      redirect_to root_path, alert: 'Failure uploading source.'
+      # respond_to do |format|
+      #   @folder_id = @source.folder_id
+      #   format.html { render :new, status: :unprocessable_entity }
+      # end
     end
   end
 
