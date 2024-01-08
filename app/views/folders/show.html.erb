@@ -8,6 +8,7 @@
       }
     }
   </script>
+  <%= render partial: 'layouts/breadcrumbs' %>
   <div class="folder-content">
     <% if @folder.type == 'RootFolder' && @folder.empty? %>
       <div class="no-content">

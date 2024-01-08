@@ -15,8 +15,6 @@ class FoldersController < ApplicationController
     @folders = current_user.folders.discarded
     @documents = current_user.documents.discarded
     @voices = current_user.voices.discarded
-    clear_breadcrumbs
-    add_breadcrumb 'Trash'
   end
 
   def empty_recycle_bin
