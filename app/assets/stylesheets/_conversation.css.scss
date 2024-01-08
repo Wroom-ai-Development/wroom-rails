@@ -31,8 +31,6 @@ div#chat {
         align-items: center;
         justify-content: center;
         font-size: $font-size-70;
-        border: 1px solid $wroom-gray;
-        border-right: none;
         height: 2.1rem;
         border-radius: 5px;
         border-top-right-radius: 0px;
@@ -48,8 +46,8 @@ div#chat {
         font-family: $body-font;
         font-size: $font-size-70;
         padding: 0.5rem;
-        border: 1px solid $wroom-gray;
         background-color: white;
+        border: none;
         border-radius: 5px;
         border-top-left-radius: 0px;
         border-bottom-left-radius: 0px;
