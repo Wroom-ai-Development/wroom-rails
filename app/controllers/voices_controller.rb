@@ -27,8 +27,6 @@ class VoicesController < ApplicationController
   def manager
     set_voice if params[:id].present?
     @manager ||= current_user.voices.first
-    clear_breadcrumbs
-    add_breadcrumb 'Personas', voices_path
     render layout: 'dashboard'
   end
 
