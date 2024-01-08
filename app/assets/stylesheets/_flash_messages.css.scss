@@ -1,0 +1,35 @@
+div.flash-message {
+  &.notice {
+    background: $wroom-green;
+  }
+  &.alert {
+    background: $wroom-red;
+  }
+  background: $wroom-dark-gray;
+  position: fixed;
+  top: 5.1rem;
+  height: min-content;
+  padding: 1rem 3rem 1rem 1rem;
+  color: white;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  z-index: 1000;
+  animation: slideOut .5s ease-out 5s forwards;
+
+  span.close-icon {
+    cursor: pointer;
+    position: absolute;
+    top: 0.5rem;
+    right: 0.8rem;
+    font-size: 0.6rem;
+    color: transparent;
+    text-shadow: 1px 1px 0px white;
+  }
+  
+}
+
+@keyframes slideOut {
+  to {
+    transform: translateX(-100%);
+  }
+}
