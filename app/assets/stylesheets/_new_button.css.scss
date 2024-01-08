@@ -32,7 +32,8 @@ div.new {
     flex-direction: column;
     font-size: $font-size-70;
     font-weight: 300;
-    // position: relative;
+    position: absolute;
+    width: 8.8rem;
     box-sizing: border-box;
     color: $wroom-primary;
     background-color: $wroom-light-gray;
@@ -40,6 +41,7 @@ div.new {
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
     display: inline-block;
+    line-height: 0.8rem;
     a {
       color: $wroom-dark-gray;
       white-space: nowrap;
