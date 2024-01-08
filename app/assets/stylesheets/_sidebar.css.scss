@@ -96,9 +96,9 @@ div#sidebar {
   a#upgrade-plan {
     margin-bottom: 1rem;
     margin-left: auto;
-    background-color: $wroom-dark-blue;
-    color: white;
-    border: none;
+    background-color: $wroom-primary;
+    border: 1px solid $wroom-primary;
+    color: $wroom-dark-gray;
     outline: none;
     padding: 0.5rem;
     font-weight: 700;
@@ -107,7 +107,7 @@ div#sidebar {
 
     &:hover {
       cursor: pointer;
-      background-color: $wroom-blue;
+      border: 1px solid $wroom-blue;
     }
   }
 

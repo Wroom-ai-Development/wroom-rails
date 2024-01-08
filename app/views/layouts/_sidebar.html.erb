@@ -63,7 +63,7 @@
     <%= render 'conversations/gpt_cost_limit', user: current_user %>
     <%= render 'documents/storage_limit', user: current_user %>
     <% unless current_user.subscription.plan == 'pro' %>
-      <%= link_to 'Upgrade your plan', billing_path, data: { turbo_action: 'replace' }, id: 'upgrade-plan' %>
+      <%= link_to 'Upgrade Account', billing_path, data: { turbo_action: 'replace' }, id: 'upgrade-plan' %>
     <% end %>
 
     <% if can? :manage, User %>

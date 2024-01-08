@@ -10,7 +10,7 @@ div.new {
   div.button {
     height: 1.5rem;
     color: white;
-    background-color: $wroom-dark-gray;
+    background-color: $wroom-darker-gray;
     border-radius: 5px;
     text-align: center;
     font-size: $font-size-90;
@@ -22,7 +22,7 @@ div.new {
     }
     &:hover {
       cursor: pointer;
-      background-color: $wroom-primary-dark;
+      background-color: $wroom-dark-gray;
     }
   }
   
