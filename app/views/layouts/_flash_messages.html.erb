@@ -1,0 +1,17 @@
+<script>
+  function closeFlashMessage() {
+    document.getElementById('flash-message').style.display = 'none';
+  }
+</script>
+
+<% if flash[:notice] %>
+  <div class='flash-message notice' id='flash-message'>
+    <span class='close-icon' onclick='closeFlashMessage()'>❌</span>
+    <%= flash[:notice] %>
+  </div>
+<% elsif flash[:alert] %>
+  <div class='flash-message alert' id='flash-message'>
+    <span class='close-icon' onclick='closeFlashMessage()'>❌</span>
+    <%= flash[:alert] %>
+  </div>
+<% end %>
