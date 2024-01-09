@@ -226,6 +226,23 @@ div#cancel-account {
 }
 
 div.referral-codes {
+  div.referral-flash {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    color: white;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    
+    &.notice {
+      background-color: $wroom-green;
+      
+    }
+    &.alert {
+      background-color: $wroom-red;
+    }
+  }
   form {
     display: flex;
     flex-direction: row;

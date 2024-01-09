@@ -1,4 +1,14 @@
 <div class='referral-codes'>
+  <% if flash[:notice].present? %>
+    <div class='referral-flash notice'>
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+  <% if flash[:alert].present? %>
+    <div class='referral-flash alert'>
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
   <h4>The Wroom Referral Program</h4>
   <p>
     We would love for our users to spread the word about Wroom. And so, dear user,
@@ -21,8 +31,5 @@
   <%= form_tag redeem_referral_code_path, method: :post do %>
     <%= text_field_tag :referral_code %>
     <%= submit_tag "Redeem" %>
-  <% end %>
-  <% if flash[:alert].present? %>
-    <%= flash[:alert] %>
   <% end %>
 </div>
