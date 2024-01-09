@@ -17,14 +17,18 @@ class SubscriptionsController < ApplicationController # rubocop:disable Metrics/
     elsif referring_user.nil?
       redirect_to billing_path, alert: 'Invalid referral code.'
     else
-      current_user.update(
-        referred_by: User.find_by(referral_code: params[:referral_code]).id,
-        bonus_gpt_budget: current_user.bonus_gpt_budget + 2
-      )
-      referring_user.update(
-        bonus_gpt_budget: referring_user.bonus_gpt_budget + 2
-      )
-      redirect_to billing_path, alert: 'Referral code redeemed.'
+      if current_user.bonus_gpt_budget + 2 <= 45
+        current_user.update(
+          referred_by: User.find_by(referral_code: params[:referral_code]).id,
+          bonus_gpt_budget: current_user.bonus_gpt_budget + 2
+        )
+      end
+      if referring_user.bonus_gpt_budget + 2 <= 45
+        referring_user.update(
+          bonus_gpt_budget: referring_user.bonus_gpt_budget + 2
+        )
+      end
+      redirect_to billing_path, notice: 'Referral code redeemed.'
     end
   end
 
