@@ -39,7 +39,7 @@ div#source {
       background-color: $wroom-darker-gray;
       font-weight: 800;
       font-size: 0.7rem;
-      margin-right: 0.5rem;
+      margin-left: 0.5rem;
       border-radius: 5px;
       border: 1px solid white;
       white-space: nowrap;
@@ -56,6 +56,7 @@ div#source {
     border: none;
     margin: 0;
     padding: 0;
+    border-radius: 5px;
   }
 
   div.chunks {
