@@ -18,9 +18,7 @@ class SourcesController < ApplicationController
   end
 
   # GET /sources/1/edit
-  def edit
-    @is_new_source = params[:is_new_source]
-  end
+  def edit; end
 
   # POST /sources or /sources.json
   def create # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
@@ -38,7 +36,7 @@ class SourcesController < ApplicationController
         # elsif @source.source_url.present?
         # @source.parse_source_chunks_from_source_url
       end
-      redirect_to edit_source_path(@source, is_new_source: true), notice: 'Source file uploaded successfully.'
+      redirect_to wroom_path(document_id: @source.document_id), notice: 'Source file uploaded successfully.'
     elsif current_user.storage_available <= 0
       redirect_to root_path, alert: 'You have exceeded your storage limit. Please upgrade your plan.'
     else
@@ -52,7 +50,7 @@ class SourcesController < ApplicationController
 
   # PATCH/PUT /sources/1 or /sources/1.json
   def update # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
-    respond_to do |format| # rubocop:disable Metrics/BlockLength
+    respond_to do |format|
       if @source.update(source_params)
         old_headers = @source.section_headers
         @source.file_size = source_params[:file].size if source_params[:file].present?
@@ -72,11 +70,7 @@ class SourcesController < ApplicationController
         @source.document.update!(title: @source.name) if params[:source][:name].present?
         @source.rechunk if @source.section_headers != old_headers
         current_user.update!(current_document_id: @source.document_id)
-        if params[:is_new_source] == 'true'
-          format.html { redirect_to folder_path(@source.document.folder) }
-        else
-          format.html { redirect_to wroom_path(@source.document) }
-        end
+        format.html { redirect_to wroom_path(document_id: @source.document) }
       else
         format.html { render :edit, status: :unprocessable_entity, layout: 'dashboard' }
       end
