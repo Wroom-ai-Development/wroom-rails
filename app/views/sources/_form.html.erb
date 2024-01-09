@@ -5,7 +5,7 @@
       controller: 'form-redirect',
       action: 'turbo:submit-end->form-redirect#next'
     },
-    url: { action: 'update', is_new_source: @is_new_source } 
+    url: { action: 'update' } 
   ) do |form| %>
     <% if source.errors.any? %>
       <div class='validation'>
