@@ -9,8 +9,8 @@
       ) do |form| %>
         <% if @conversation.user.voices.kept.present? %>
           <div class='label-wrapper' onClick="openSelect();">
-            <i class="fa-solid fa-robot fa-fw" style='margin-right: 0.5rem;'></i>
-            <%= form.label 'Persona', style: "display: block" %>
+            <i class="fa-solid fa-robot fa-fw" style='margin-right: 0.3rem; margin-top: -0.1rem;'></i>
+            <%= form.label 'Persona:', style: "display: block" %>
           </div>
           <%= form.collection_select :voice_id, @conversation.user.voices.kept.order(:name), :id, :name, { include_blank: "Default", selected: @conversation.voice.try(:id) }, onchange: "this.form.submit();" do |voice| %>
             <option value="<%= voice.id %>">
