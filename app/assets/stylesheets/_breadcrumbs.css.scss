@@ -12,6 +12,9 @@ nav#breadcrumbs {
   position: absolute;
   top: 0rem;
   left: 12rem;
+  width: 100%;
+  background: white;
+  z-index: 1000;
   
   ol.breadcrumbs {
     display: flex;
