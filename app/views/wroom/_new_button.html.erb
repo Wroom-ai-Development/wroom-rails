@@ -52,7 +52,7 @@
     }
   ) do |form| %>
     <%= form.label :file %>
-    <%= form.file_field :file, id: 'source-file-field' %>
+    <%= form.file_field :file, id: 'source-file-field', multiple: true %>
     <%= form.text_field :user_id, value: current_user.id, readonly: cannot?(:manage, User) %>
   <% end %>
 </div>
