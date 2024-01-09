@@ -22,29 +22,30 @@ class SourcesController < ApplicationController
 
   # POST /sources or /sources.json
   def create # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-    @source = Source.new(source_params)
-    @source.file_size = source_params[:file].size if source_params[:file].present?
-    @source.source_url = nil
-    if @source.file.present?
-      @source.name = @source.file.filename.to_s
-      @source.file_extension = @source.file.filename.extension.to_s
-    end
-    save_section_headers
-    if @source.save
-      if @source.file.attached?
-        @source.parse_source_chunks_from_file
-        # elsif @source.source_url.present?
-        # @source.parse_source_chunks_from_source_url
+    # binding.pry
+    files = params[:source][:file]
+    files.shift
+    files.each do |file|
+      source = Source.new(user_id: current_user.id, file:, folder_id: current_user.current_folder)
+      source.file_size = file.size
+      source.source_url = nil
+      source.name = source.file.filename.to_s
+      source.file_extension = source.file.filename.extension.to_s
+      save_section_headers(source)
+      if source.save
+        source.parse_source_chunks_from_file
+        if files.length == 1
+          redirect_to wroom_path(document_id: source.document_id), notice: 'Source file uploaded successfully.'
+        elsif file == files.last
+          # binding.pry
+          redirect_to folder_path(id: current_user.current_folder_id), notice: 'File upload successful.'
+        end
+      elsif current_user.storage_available <= 0
+        redirect_to folder_path(id: current_user.current_folder_id),
+                    alert: 'You have exceeded your storage limit. Please upgrade your plan.'
+      else
+        redirect_to folder_path(id: current_user.current_folder_id), alert: 'Failure uploading source.'
       end
-      redirect_to wroom_path(document_id: @source.document_id), notice: 'Source file uploaded successfully.'
-    elsif current_user.storage_available <= 0
-      redirect_to root_path, alert: 'You have exceeded your storage limit. Please upgrade your plan.'
-    else
-      redirect_to root_path, alert: 'Failure uploading source.'
-      # respond_to do |format|
-      #   @folder_id = @source.folder_id
-      #   format.html { render :new, status: :unprocessable_entity }
-      # end
     end
   end
 
@@ -57,7 +58,7 @@ class SourcesController < ApplicationController
         if params[:source][:section_headers].blank?
           @source.update(section_headers: [])
         else
-          save_section_headers
+          save_section_headers(@source)
         end
         if params[:source][:file].present?
           @source.clear_chunks
@@ -99,11 +100,11 @@ class SourcesController < ApplicationController
                                    :source_url, :section_headers, :folder_id)
   end
 
-  def save_section_headers
+  def save_section_headers(source)
     return if params[:source][:section_headers].blank?
 
-    @source.section_headers = []
-    params[:source][:section_headers].split(',').map { |header| @source.section_headers << header.strip.singularize }
-    @source.save!
+    source.section_headers = []
+    params[:source][:section_headers].split(',').map { |header| source.section_headers << header.strip.singularize }
+    source.save!
   end
 end
