@@ -10,9 +10,11 @@ module Sources
 
     def parse_text # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       paragraphs = @doc.paragraphs.map do |paragraph|
-        paragraph.each_text_run.map do |text|
-          text
-        end.join(' ')
+        paragraph_text = ''
+        paragraph.each_text_run do |text_run|
+          paragraph_text = "#{paragraph_text} #{text_run.text}"
+        end
+        paragraph_text
       end.join(' ')
       tables = @doc.tables.map do |table|
         table.rows.map do |row|
