@@ -17,7 +17,7 @@ gem 'activesupport', '>= 7.0.7.1'
 gem 'pg', '~> 1.1'
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem 'puma', '>= 6.3.1'
+gem 'puma', '>= 6.4.2'
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem 'importmap-rails'
