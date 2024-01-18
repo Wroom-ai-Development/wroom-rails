@@ -136,3 +136,7 @@ gem 'stripe', '~> 9.2'
 gem 'mail_view', git: 'https://github.com/basecamp/mail_view.git'
 
 gem 'activeadmin'
+
+gem 'thin', '1.8.0'
+
+gem 'rubyzip', '~> 2.3', '>= 2.3.2'

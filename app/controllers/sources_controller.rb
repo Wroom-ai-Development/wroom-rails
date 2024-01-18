@@ -33,6 +33,20 @@ class SourcesController < ApplicationController
       source.file_extension = source.file.filename.extension.to_s
       save_section_headers(source)
       if source.save
+        if source.file_extension == 'docx'
+          temp_file = Tempfile.new(['document', '.docx'])
+          temp_file.binmode
+          temp_file.write(source.file)
+          temp_file.rewind
+          binding.pry
+          doc = Docx::Document.open(temp_file.path)
+          temp_file.close
+          temp_file.unlink
+          # @doc_html = doc.
+          # upload_io = ConvertApi::UploadIO.new(source.file.blob.download.delete("\x00"), 'filename')
+          # pdf = ConvertApi.convert('pdf', {File: upload_io, from_format: 'docx'})
+          # source.update!(converted_pdf: pdf.file.save)
+        end
         source.parse_source_chunks_from_file
         if files.length == 1
           redirect_to wroom_path(document_id: source.document_id), notice: 'Source file uploaded successfully.'
