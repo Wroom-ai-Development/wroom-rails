@@ -145,17 +145,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_05_110439) do
     t.integer "event_type"
   end
 
-  create_table "projects", force: :cascade do |t|
-    t.string "title"
-    t.bigint "user_id", null: false
-    t.bigint "conversation_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "source_based", default: false, null: false
-    t.index ["conversation_id"], name: "index_projects_on_conversation_id"
-    t.index ["user_id"], name: "index_projects_on_user_id"
-  end
-
   create_table "source_chunks", force: :cascade do |t|
     t.text "section_header"
     t.text "content", null: false
