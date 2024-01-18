@@ -17,7 +17,7 @@ class DocumentsController < ApplicationController
     end
     # binding.pry
     breadcrumbs << Breadcrumb.new(@document.folder.name, folder_path(@document.folder))
-    breadcrumbs << Breadcrumb.new(@document.title, editor_document_path(@document))
+    breadcrumbs << Breadcrumb.new(@document.truncated_title(40), editor_document_path(@document))
   end
 
   def index
