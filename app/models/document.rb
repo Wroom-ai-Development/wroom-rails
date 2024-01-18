@@ -31,6 +31,14 @@ class Document < ApplicationRecord
     )
   end
 
+  def truncated_title(length)
+    if title.length <= length
+      title
+    else
+      title.truncate(length, separator: ' ')
+    end
+  end
+
   def refresh_source
     return if content.body.blank?
 
