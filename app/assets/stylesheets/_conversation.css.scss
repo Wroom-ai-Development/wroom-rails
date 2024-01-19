@@ -367,46 +367,45 @@ div#chat {
   }
 }
 
-form#new-message-form {
-
-  div#conversation_status.present {
+div#conversation_status.present {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: $font-size-70;
+  color: rgb(79, 61, 61);
+  position: relative;
+  z-index: 999;
+  width: 100%;
+  user-select: none;
+  padding-right: 5rem;
+  padding-left: 5rem;
+  box-sizing: border-box;
+  div.conversation-loading-label {
+    width: 100%;
+    font-size: $font-size-70;
+    text-align: center;
     display: flex;
     flex-direction: row;
     align-items: center;
-    font-size: $font-size-70;
+    justify-content: center;
     color: rgb(79, 61, 61);
-    position: absolute;
-    z-index: 999;
-    width: 34vw;
-    user-select: none;
-    div.conversation-loading-label {
-      width: 100%;
-      font-size: $font-size-70;
+    font-weight: 500;
+    form.button_to {
       text-align: center;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      color: rgb(79, 61, 61);
-      font-weight: 500;
-      form.button_to {
-        text-align: center;
-      }
-      a {
-        margin-left: auto;
-        font-size: $font-size-60;
-        text-align: center;
-        color: $wroom-red;
-        font-family: $body-font;
-        background-color: white;
-        padding: 0.2rem 0.5rem;
-        border-radius: 10px;
-        border: 1px solid white;
-        &:hover {
-          cursor: pointer;
-          border: 1px solid $wroom-red;
-        }
-      }
     }
-  }    
-}
+  }
+  a {
+    font-size: $font-size-60;
+    text-align: center;
+    color: $wroom-red;
+    font-family: $body-font;
+    background-color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 10px;
+    border: 1px solid white;
+    &:hover {
+      cursor: pointer;
+      border: 1px solid $wroom-red;
+    }
+  }
+}    
