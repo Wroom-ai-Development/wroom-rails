@@ -45,6 +45,7 @@
       <% end %>
     <% end %>
   </div>
+  <%= render 'conversation_status', conversation: conversation %>
   <script>
     const textarea = document.getElementById('new-message-text-area');
 
@@ -58,7 +59,6 @@
     }
   </script>
   <%= form_with url: new_message_conversation_path(id: conversation.id), id: 'new-message-form' do |f| %>
-    <%= render 'conversation_status', conversation: conversation %>
     <%= f.text_area :content, required: 'required', id: 'new-message-text-area' %>
     <i class="fa-solid fa-paper-plane" onclick="submitMessage();"></i>
     <%= f.submit '➳', style: 'display: none;', id: 'new-message-submit' %>
