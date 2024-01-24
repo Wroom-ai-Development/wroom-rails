@@ -7,8 +7,8 @@ class DocumentsController < ApplicationController
 
   def editor # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     binding.pry
-    client = EtherpadLite.client(ENV['ETHERPAD_URL'], ENV['ETHERPAD_API_KEY'])
-    
+    ether = EtherpadLite.connect(1337, ENV['ETHERPAD_API_KEY'], '1.8.15')
+
 
     @document = if params[:id].present?
                   Document.find(params[:id])
