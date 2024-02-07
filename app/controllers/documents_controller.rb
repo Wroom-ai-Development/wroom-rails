@@ -7,8 +7,12 @@ class DocumentsController < ApplicationController
 
   def editor # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     ether = EtherpadLite.connect(9001, File.new('/Users/marcelwojdylo/wroom/etherpad-lite/APIKEY.txt'))
+    if current_user.personal_etherpad_group_id.blank?
+      group_id = ether.create_group.id
+      current_user.update!(personal_etherpad_group_id: group_id)
+    end
+    group = ether.get_group(current_user.personal_etherpad_group_id)
     binding.pry
-
     @document = if params[:id].present?
                   Document.find(params[:id])
                 else

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_05_110439) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_07_100546) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -145,6 +145,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_05_110439) do
     t.integer "event_type"
   end
 
+  create_table "projects", force: :cascade do |t|
+    t.string "title"
+    t.bigint "user_id", null: false
+    t.bigint "conversation_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "source_based", default: false, null: false
+    t.index ["conversation_id"], name: "index_projects_on_conversation_id"
+    t.index ["user_id"], name: "index_projects_on_user_id"
+  end
+
   create_table "source_chunks", force: :cascade do |t|
     t.text "section_header"
     t.text "content", null: false
@@ -234,6 +245,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_05_110439) do
     t.integer "bonus_gpt_budget", default: 0
     t.string "referral_code"
     t.integer "referred_by"
+    t.string "personal_etherpad_group_id"
+    t.string "shared_etherpad_group_ids", default: [], array: true
     t.index ["current_document_id"], name: "index_users_on_current_document_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
