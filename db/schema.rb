@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_07_100546) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_07_102853) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -105,9 +105,20 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_07_100546) do
     t.bigint "folder_id"
     t.datetime "discarded_at"
     t.integer "cloned_from"
+    t.bigint "collaborating_users_id", default: [], array: true
+    t.string "etherpad_pad_id"
+    t.index ["collaborating_users_id"], name: "index_documents_on_collaborating_users_id"
     t.index ["discarded_at"], name: "index_documents_on_discarded_at"
     t.index ["folder_id"], name: "index_documents_on_folder_id"
     t.index ["user_id"], name: "index_documents_on_user_id"
+  end
+
+  create_table "etherpad_groups", force: :cascade do |t|
+    t.string "group_id", null: false
+    t.bigint "document_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["document_id"], name: "index_etherpad_groups_on_document_id"
   end
 
   create_table "folders", force: :cascade do |t|
@@ -245,8 +256,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_07_100546) do
     t.integer "bonus_gpt_budget", default: 0
     t.string "referral_code"
     t.integer "referred_by"
-    t.string "personal_etherpad_group_id"
-    t.string "shared_etherpad_group_ids", default: [], array: true
+    t.string "etherpad_author_id"
     t.index ["current_document_id"], name: "index_users_on_current_document_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -272,6 +282,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_07_100546) do
   add_foreign_key "conversation_voices", "voices"
   add_foreign_key "documents", "folders", on_delete: :cascade
   add_foreign_key "documents", "users", on_delete: :cascade
+  add_foreign_key "etherpad_groups", "documents"
   add_foreign_key "folders", "folders", column: "parent_id", on_delete: :cascade
   add_foreign_key "folders", "users", on_delete: :cascade
   add_foreign_key "messages", "conversations"

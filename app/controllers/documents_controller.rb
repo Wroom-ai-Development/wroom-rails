@@ -6,13 +6,6 @@ class DocumentsController < ApplicationController
   load_and_authorize_resource
 
   def editor # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    ether = EtherpadLite.connect(9001, File.new('/Users/marcelwojdylo/wroom/etherpad-lite/APIKEY.txt'))
-    if current_user.personal_etherpad_group_id.blank?
-      group_id = ether.create_group.id
-      current_user.update!(personal_etherpad_group_id: group_id)
-    end
-    group = ether.get_group(current_user.personal_etherpad_group_id)
-    binding.pry
     @document = if params[:id].present?
                   Document.find(params[:id])
                 else
@@ -25,6 +18,52 @@ class DocumentsController < ApplicationController
     # binding.pry
     breadcrumbs << Breadcrumb.new(@document.folder.name, folder_path(@document.folder))
     breadcrumbs << Breadcrumb.new(@document.truncated_title(40), editor_document_path(@document))
+
+    ether = EtherpadLite.connect(9001, File.new('/Users/marcelwojdylo/wroom/etherpad-lite/APIKEY.txt'))
+
+    if current_user.etherpad_author_id.nil?
+      author = ether.create_author
+      current_user.update!(etherpad_author_id: author.id)
+    end
+    author = ether.author(current_user.etherpad_author_id)
+
+    if @document.etherpad_group.nil?
+      group = ether.create_group
+      EtherpadGroup.create!(group_id: group.id, document_id: @document.id)
+    end
+    group = ether.group(@document.etherpad_group.group_id)
+
+    if @document.etherpad_pad_id.nil?
+      pad = ether.client.createGroupPad(
+        groupID: @document.etherpad_group.group_id,
+        # TODO: Obscure document id in pad name
+        padName: "wroom_document_#{@document.id}",
+        text: [''],
+        authorId: [current_user.etherpad_author_id]
+      )
+      @document.update!(etherpad_pad_id: pad[:padID])
+    end
+    pad = ether.pad(@document.etherpad_pad_id)
+
+    session[:ep_sessions] = {} if session[:ep_sessions].nil?
+    sess = if session[:ep_sessions][group.id]
+             ether.get_session(session[:ep_sessions][group.id])
+           else
+             group.create_session(
+               author, 60
+             )
+           end
+    if sess.expired?
+      sess.delete
+      sess = group.create_session(author, 60)
+    end
+    session[:ep_sessions][group.id] = sess.id
+
+    @etherpad_url = 'http://localhost:9001'
+    @etherpad_url += '/p/'
+    @etherpad_url += @document.etherpad_pad_id
+
+    binding.pry
   end
 
   def index

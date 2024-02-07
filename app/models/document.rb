@@ -8,6 +8,7 @@ class Document < ApplicationRecord
   has_one :conversation, dependent: :destroy
   has_many :context_references, dependent: :destroy
   has_many :documents, through: :context_references
+  has_one :etherpad_group, dependent: :destroy
 
   validates :title, presence: true
   has_rich_text :content
