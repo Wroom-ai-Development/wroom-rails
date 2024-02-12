@@ -6,6 +6,10 @@ class DocumentsController < ApplicationController
   load_and_authorize_resource
 
   def editor # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    binding.pry
+    client = EtherpadLite.client(ENV['ETHERPAD_URL'], ENV['ETHERPAD_API_KEY'])
+    
+
     @document = if params[:id].present?
                   Document.find(params[:id])
                 else

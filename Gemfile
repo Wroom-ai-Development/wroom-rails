@@ -138,3 +138,5 @@ gem 'mail_view', git: 'https://github.com/basecamp/mail_view.git'
 gem 'activeadmin'
 
 gem 'nokogiri', '>= 1.16.2'
+
+gem 'etherpad-lite', '~> 0.3.1'
