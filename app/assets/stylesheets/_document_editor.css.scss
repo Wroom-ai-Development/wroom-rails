@@ -6,6 +6,12 @@ turbo-frame#document_editor {
   flex-grow: 1;
 }
 
+iframe#etherpad-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
 div#edit-document {
   padding: 0;
   max-width: 60vw;

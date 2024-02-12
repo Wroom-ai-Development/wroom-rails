@@ -26,12 +26,20 @@ class DocumentsController < ApplicationController
       current_user.update!(etherpad_author_id: author.id)
     end
     author = ether.author(current_user.etherpad_author_id)
+    # @document.etherpad_group.destroy! unless @document.etherpad_group.nil?
+    # @document.update(
+    #   etherpad_pad_id: nil
+    # )
 
     if @document.etherpad_group.nil?
       group = ether.create_group
-      EtherpadGroup.create!(group_id: group.id, document_id: @document.id)
+      @document.create_etherpad_group(group_id: group.id)
+      # @document.update!(etherpad_pad_id: nil)
+      # binding.pry
     end
-    group = ether.group(@document.etherpad_group.group_id)
+    group = ether.get_group(@document.etherpad_group.group_id)
+    # binding.pry
+    # ether.client.deletePad(padID: "wroom_document_#{@document.id}")
 
     if @document.etherpad_pad_id.nil?
       pad = ether.client.createGroupPad(
@@ -43,7 +51,7 @@ class DocumentsController < ApplicationController
       )
       @document.update!(etherpad_pad_id: pad[:padID])
     end
-    pad = ether.pad(@document.etherpad_pad_id)
+    ether.get_pad(@document.etherpad_pad_id)
 
     session[:ep_sessions] = {} if session[:ep_sessions].nil?
     sess = if session[:ep_sessions][group.id]
@@ -58,12 +66,13 @@ class DocumentsController < ApplicationController
       sess = group.create_session(author, 60)
     end
     session[:ep_sessions][group.id] = sess.id
+    cookies['sessionID'] = sess.id
 
-    @etherpad_url = 'http://localhost:9001'
+    @etherpad_url = ENV['ETHERPAD_URL']
     @etherpad_url += '/p/'
     @etherpad_url += @document.etherpad_pad_id
 
-    binding.pry
+    # binding.pry
   end
 
   def index

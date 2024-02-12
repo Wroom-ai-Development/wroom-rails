@@ -15,8 +15,8 @@
                 <div class='top-pane'>
                   <%= form.text_field :title, data: { action: "keyup->document#save blur->document#save" } %>
                 </div>
-                <%= form.rich_text_area :content, placeholder: 'Use this space to make notes and save useful fragments of your conversation.', data: { action: "keyup->document#save blur->document#save" } %>
             <% end %>
+            <iframe src="<%= @etherpad_url %>" id="etherpad-frame"></iframe>
           <% end %>
         </div>
       </div>

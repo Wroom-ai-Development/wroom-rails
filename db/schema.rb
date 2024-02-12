@@ -118,7 +118,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_07_102853) do
     t.bigint "document_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["document_id"], name: "index_etherpad_groups_on_document_id"
+    t.index ["document_id"], name: "index_etherpad_groups_on_document_id", unique: true
   end
 
   create_table "folders", force: :cascade do |t|
