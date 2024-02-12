@@ -6,9 +6,8 @@ class DocumentsController < ApplicationController
   load_and_authorize_resource
 
   def editor # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    ether = EtherpadLite.connect(9001, File.new('/Users/marcelwojdylo/wroom/etherpad-lite/APIKEY.txt'))
     binding.pry
-    ether = EtherpadLite.connect(1337, ENV['ETHERPAD_API_KEY'], '1.8.15')
-
 
     @document = if params[:id].present?
                   Document.find(params[:id])
