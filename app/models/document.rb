@@ -11,7 +11,6 @@ class Document < ApplicationRecord
   has_one :etherpad_group, dependent: :destroy
 
   validates :title, presence: true
-  has_rich_text :content
   has_many :monitoring_events, as: :trackable, dependent: :nullify
 
   after_create_commit :log_event
