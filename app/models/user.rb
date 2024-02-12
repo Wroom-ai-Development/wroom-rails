@@ -27,6 +27,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   after_initialize :set_referral_code, if: :new_record?
   after_create :create_subscription
   after_create :make_security_updated
+  after_create :initialize_etherpad_author
 
   def full_name
     if first_name.blank? && last_name.blank?
@@ -101,6 +102,14 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     charset = ('A'..'Z').to_a + (0..9).to_a
     code = Array.new(8) { charset.sample }.join + id.to_s
     update(referral_code: code)
+  end
+
+  def initialize_etherpad_author
+    return unless etherpad_author_id.nil?
+
+    ether = EtherpadService.new.ether
+    author = ether.create_author
+    update!(etherpad_author_id: author.id)
   end
 
   def anything_in_recycle_bin?

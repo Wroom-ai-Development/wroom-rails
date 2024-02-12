@@ -18,11 +18,39 @@ class Document < ApplicationRecord
   after_create_commit :create_conversation
   after_create_commit :broadcast_create
   after_create_commit :update_storage_bar
+  after_create :initialize_etherpad
   after_discard :remove_document_row
   before_destroy :remove_document_row
   before_destroy :update_storage_bar
   after_discard :remove_from_sidebar
   after_save :remove_document_row, if: :saved_change_to_folder_id?
+
+  def initialize_etherpad
+    initialize_etherpad_group
+    initialize_etherpad_pad
+  end
+
+  def initialize_etherpad_group
+    return unless etherpad_group.nil?
+
+    ether = EtherpadService.new.ether
+    group = ether.create_group
+    create_etherpad_group(group_id: group.id)
+  end
+
+  def initialize_etherpad_pad
+    return unless etherpad_pad_id.nil?
+
+    ether = EtherpadService.new.ether
+    pad = ether.client.createGroupPad(
+      groupID: etherpad_group.group_id,
+      # TODO: Obscure document id in pad name
+      padName: "wroom_document_#{id}",
+      text: [''],
+      authorId: [user.etherpad_author_id]
+    )
+    update!(etherpad_pad_id: pad[:padID])
+  end
 
   def remove_from_sidebar
     broadcast_remove_to(

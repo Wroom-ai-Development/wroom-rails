@@ -15,50 +15,19 @@ class DocumentsController < ApplicationController
     @document.folder.parents.reverse.each do |parent|
       breadcrumbs << Breadcrumb.new(parent.name, folder_path(parent))
     end
-    # binding.pry
     breadcrumbs << Breadcrumb.new(@document.folder.name, folder_path(@document.folder))
     breadcrumbs << Breadcrumb.new(@document.truncated_title(40), editor_document_path(@document))
 
-    ether = EtherpadLite.connect(9001, File.new('/Users/marcelwojdylo/wroom/etherpad-lite/APIKEY.txt'))
-
-    if current_user.etherpad_author_id.nil?
-      author = ether.create_author
-      current_user.update!(etherpad_author_id: author.id)
-    end
-    author = ether.author(current_user.etherpad_author_id)
-    # @document.etherpad_group.destroy! unless @document.etherpad_group.nil?
-    # @document.update(
-    #   etherpad_pad_id: nil
-    # )
-
-    if @document.etherpad_group.nil?
-      group = ether.create_group
-      @document.create_etherpad_group(group_id: group.id)
-      # @document.update!(etherpad_pad_id: nil)
-      # binding.pry
-    end
+    ether = EtherpadService.new.ether
+    author = ether.get_author(current_user.etherpad_author_id)
     group = ether.get_group(@document.etherpad_group.group_id)
-    # binding.pry
-    # ether.client.deletePad(padID: "wroom_document_#{@document.id}")
-
-    if @document.etherpad_pad_id.nil?
-      pad = ether.client.createGroupPad(
-        groupID: @document.etherpad_group.group_id,
-        # TODO: Obscure document id in pad name
-        padName: "wroom_document_#{@document.id}",
-        text: [''],
-        authorId: [current_user.etherpad_author_id]
-      )
-      @document.update!(etherpad_pad_id: pad[:padID])
-    end
-    ether.get_pad(@document.etherpad_pad_id)
 
     session[:ep_sessions] = {} if session[:ep_sessions].nil?
     sess = if session[:ep_sessions][group.id]
              ether.get_session(session[:ep_sessions][group.id])
            else
              group.create_session(
-               author, 60
+               author, 60 * 24
              )
            end
     if sess.expired?
@@ -71,8 +40,6 @@ class DocumentsController < ApplicationController
     @etherpad_url = ENV['ETHERPAD_URL']
     @etherpad_url += '/p/'
     @etherpad_url += @document.etherpad_pad_id
-
-    # binding.pry
   end
 
   def index
