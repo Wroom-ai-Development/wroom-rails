@@ -1,4 +1,4 @@
-<%= link_to wroom_path(document_id: document.id), data: { turbo_frame: '_top' } do %>
+<%= link_to wroom_path(document_id: document.id), target: "_blank" do %>
   <div class='tree-document folder document' id="tree-document-<%= document.id %>">
       <% if document.source_based %>
         <i class="fa fa-book fa-fw" aria-hidden="true"></i>

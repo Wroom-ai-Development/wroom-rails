@@ -7,7 +7,7 @@
   url: drag_document_path
 } do %>
   <td onclick='document.getElementById("<%= "document-#{document.id}" %>").click();'>
-    <%= link_to wroom_path(document_id: document.id), id: "document-#{document.id}", draggable: false, data: { turbo_frame: '_top' } do %>
+    <%= link_to wroom_path(document_id: document.id), id: "document-#{document.id}", draggable: false, target: "_blank" do %>
       <% if document.source_based %>
         <i class="fa fa-book fa-fw" aria-hidden="true"></i>
       <% else %>
