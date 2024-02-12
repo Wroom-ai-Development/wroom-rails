@@ -52,6 +52,13 @@ class Document < ApplicationRecord
     update!(etherpad_pad_id: pad[:padID])
   end
 
+  def etherpad_pad_text_content
+    return nil if etherpad_pad_id.nil?
+
+    ether = EtherpadService.new.ether
+    ether.get_pad(etherpad_pad_id).text.gsub(/[\t\n]+/, ' ')
+  end
+
   def remove_from_sidebar
     broadcast_remove_to(
       user.id,
@@ -69,11 +76,9 @@ class Document < ApplicationRecord
   end
 
   def refresh_source
-    return if content.body.blank?
-
     Source.where(document_id: id).destroy_all
     source = Source.create!(name: title, user_id:, document_id: id, fileless: true)
-    source.parse_source_chunks_from_text(content.body.to_plain_text)
+    source.parse_source_chunks_from_text(etherpad_pad_text_content)
   end
 
   def broadcast_create # rubocop:disable Metrics/MethodLength
