@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_07_102853) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_17_125904) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -96,6 +96,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_07_102853) do
     t.string "sidekiq_job_id"
   end
 
+  create_table "document_collaborations", force: :cascade do |t|
+    t.bigint "document_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["document_id", "user_id"], name: "index_document_collaborations_on_document_id_and_user_id", unique: true
+    t.index ["document_id"], name: "index_document_collaborations_on_document_id"
+    t.index ["user_id"], name: "index_document_collaborations_on_user_id"
+  end
+
   create_table "documents", force: :cascade do |t|
     t.string "title"
     t.bigint "user_id", null: false
@@ -105,9 +115,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_07_102853) do
     t.bigint "folder_id"
     t.datetime "discarded_at"
     t.integer "cloned_from"
-    t.bigint "collaborating_users_id", default: [], array: true
     t.string "etherpad_pad_id"
-    t.index ["collaborating_users_id"], name: "index_documents_on_collaborating_users_id"
     t.index ["discarded_at"], name: "index_documents_on_discarded_at"
     t.index ["folder_id"], name: "index_documents_on_folder_id"
     t.index ["user_id"], name: "index_documents_on_user_id"
@@ -280,6 +288,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_07_102853) do
   add_foreign_key "context_references", "documents", on_delete: :cascade
   add_foreign_key "conversation_voices", "conversations", on_delete: :cascade
   add_foreign_key "conversation_voices", "voices"
+  add_foreign_key "document_collaborations", "documents"
+  add_foreign_key "document_collaborations", "users"
   add_foreign_key "documents", "folders", on_delete: :cascade
   add_foreign_key "documents", "users", on_delete: :cascade
   add_foreign_key "etherpad_groups", "documents"

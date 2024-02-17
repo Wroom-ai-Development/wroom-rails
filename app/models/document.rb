@@ -9,6 +9,8 @@ class Document < ApplicationRecord
   has_many :context_references, dependent: :destroy
   has_many :documents, through: :context_references
   has_one :etherpad_group, dependent: :destroy
+  has_many :document_collaborations, dependent: :destroy
+  has_many :collaborators, through: :document_collaborations, source: :user
 
   validates :title, presence: true
   has_many :monitoring_events, as: :trackable, dependent: :nullify

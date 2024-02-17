@@ -8,6 +8,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   VALID_PASSWORD_REGEX = %r{\A(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()-_+=\[\]{}|;:',.<>?/~`]{11,}\z}
   validate :password_complexity
+  validates :email, uniqueness: true, presence: true
 
   has_many :sources, dependent: :destroy
   has_many :voices, dependent: :destroy
@@ -17,10 +18,11 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :usage_records, dependent: :nullify
   has_one :current_document, class_name: 'Document', dependent: :nullify
   has_one :current_folder, class_name: 'Folder', dependent: :nullify
-  validates :email, uniqueness: true, presence: true
   has_many :folders, dependent: :destroy
   has_one :root_folder, class_name: 'RootFolder', dependent: :destroy
   has_one :subscription, dependent: :destroy
+  has_many :document_collaborations, dependent: :destroy
+  has_many :collaborated_documents, through: :document_collaborations, source: :document
 
   enum role: { 'admin': 0, 'user': 1, 'supplicant': 2 }
   after_initialize :set_default_role, if: :new_record?
