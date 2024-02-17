@@ -1,0 +1,6 @@
+<%= turbo_frame_tag "view_content" do %>
+  <div class='header'>
+    <span>Shared with me</span>
+  </div>
+  <%= render "folders/records_table", folder: @shared_folder, documents: @documents, folders: nil %>
+<% end %>

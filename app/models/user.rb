@@ -30,6 +30,15 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   after_create :create_subscription
   after_create :make_security_updated
   after_create :initialize_etherpad_author
+  after_create :create_shared_folder
+
+  def create_shared_folder
+    SharedFolder.create!(user: self)
+  end
+
+  def shared_folder
+    SharedFolder.find_by(user: self)
+  end
 
   def full_name
     if first_name.blank? && last_name.blank?
