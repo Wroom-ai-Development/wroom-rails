@@ -14,8 +14,15 @@
             ) do |form| %>
                 <div class='top-pane'>
                   <%= form.text_field :title, data: { action: "keyup->document#save blur->document#save" } %>
+                  <div class='right-buttons'>
+                    <a id='share-modal-button'>
+                      <i class="fa-solid fa-share-nodes fa-fw"></i>Share
+                    </a>
+                  </div>
                 </div>
             <% end %>
+            <%= render partial: 'layouts/flash_messages' %>
+            <%= render partial: 'document_share_modal', locals: { document: @document } %>
             <iframe src="<%= @etherpad_url %>" id="etherpad-frame"></iframe>
           <% end %>
         </div>

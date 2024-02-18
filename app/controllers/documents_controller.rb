@@ -2,8 +2,12 @@
 
 class DocumentsController < ApplicationController
   before_action :set_document,
-                only: %i[editor destroy autosave undiscard discard]
+                only: %i[editor destroy autosave undiscard discard share]
   load_and_authorize_resource
+
+  def share
+    redirect_to editor_document_path(@document), notice: 'Document shared successfully'
+  end
 
   def editor # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     @document = if params[:id].present?

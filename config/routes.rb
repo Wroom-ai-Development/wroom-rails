@@ -8,6 +8,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       get 'undiscard'
       get 'duplicate'
       get 'discard'
+      post 'share'
     end
   end
   resources :folders do
