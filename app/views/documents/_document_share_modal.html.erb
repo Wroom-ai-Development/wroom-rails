@@ -1,23 +1,25 @@
 <script>
-  let modalButton = document.getElementById('share-modal-button');
-  let modalOverlay = document.getElementById('modal-overlay');
+  if (document.getElementById('share-modal-button')) {
+    let modalButton = document.getElementById('share-modal-button');
+    let modalOverlay = document.getElementById('modal-overlay');
 
-  modalButton.addEventListener('click', function() {
-    modalOverlay.style.display = 'block';
-    console.log('clicked');
-  });
+    modalButton.addEventListener('click', function() {
+      modalOverlay.style.display = 'block';
+    });
 
-  let closeModal = document.getElementById('close-modal');
-  closeModal.addEventListener('click', function() {
-    modalOverlay.style.display = 'none';
-  });
-
-  // Close modal if user clicks outside of it
-  modalOverlay.addEventListener('click', function(event) {
-    if (event.target === modalOverlay) {
+    let closeModal = document.getElementById('close-modal');
+    closeModal.addEventListener('click', function() {
       modalOverlay.style.display = 'none';
-    }
-  });
+    });
+
+    // Close modal if user clicks outside of it
+    modalOverlay.addEventListener('click', function(event) {
+      if (event.target === modalOverlay) {
+        modalOverlay.style.display = 'none';
+      }
+    });
+  }
+
 </script>
 <div id="modal-overlay">
   <div id="modal">
