@@ -33,6 +33,7 @@ class DocumentsController < ApplicationController
     ether = EtherpadService.new.ether
     author = ether.get_author(current_user.etherpad_author_id)
     group = ether.get_group(@document.etherpad_group.group_id)
+    # binding.pry
 
     session[:ep_sessions] = {} if session[:ep_sessions].nil?
     sess = if session[:ep_sessions][group.id]
@@ -48,6 +49,7 @@ class DocumentsController < ApplicationController
     end
     session[:ep_sessions][group.id] = sess.id
     cookies['sessionID'] = sess.id
+    cookies['prefsHttp'] = '{}'
 
     @etherpad_url = ENV['ETHERPAD_URL']
     @etherpad_url += '/p/'

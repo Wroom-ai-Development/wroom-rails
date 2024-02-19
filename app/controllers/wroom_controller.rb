@@ -8,7 +8,7 @@ class WroomController < ApplicationController
 
   def shared
     @shared_folder = current_user.shared_folder
-    @documents = @shared_folder.documents.kept
+    @documents = current_user.collaborated_documents.kept
     render layout: 'dashboard'
   end
 

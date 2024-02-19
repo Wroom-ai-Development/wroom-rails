@@ -13,6 +13,10 @@ class Ability
 
     can(:manage, Document, user:)
 
+    can(:manage, Document) do |document|
+      document.collaborators.include?(user)
+    end
+
     can(:manage, Voice, user:)
     can :manage, Conversation, document: { user: }
     can(:manage, Folder, user:)
