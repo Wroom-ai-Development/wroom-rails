@@ -26,6 +26,10 @@ class Document < ApplicationRecord
   after_discard :remove_from_sidebar
   after_save :remove_document_row, if: :saved_change_to_folder_id?
 
+  def share_with(user)
+    document_collaborations.create!(user_id: user.id)
+  end
+
   def initialize_etherpad
     initialize_etherpad_group
     initialize_etherpad_pad

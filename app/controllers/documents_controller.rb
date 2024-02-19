@@ -6,7 +6,15 @@ class DocumentsController < ApplicationController
   load_and_authorize_resource
 
   def share
-    redirect_to editor_document_path(@document), notice: 'Document shared successfully'
+    # binding.pry
+    email = params[:email]
+    user = User.find_by(email:)
+    if user.nil?
+      redirect_to editor_document_path(@document), alert: 'User not found'
+    else
+      @document.share_with(user)
+      redirect_to editor_document_path(@document), notice: 'Document shared successfully'
+    end
   end
 
   def editor # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
