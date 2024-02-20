@@ -1,7 +1,16 @@
 <div id='mini-sidebar'>
-  <div class='wroom-logo'>
-    <%= link_to dashboard_path do %>
-      <%= show_svg('logo.svg') %>
-    <% end %>
+  <%= link_to dashboard_path, class: 'logo-link' do %>
+    <%= show_svg('logo.svg') %>
+  <% end %>
+  <div class='mana-counter'>
+    <div class='mana-limit-bar'>
+      <% if current_user.gpt_budget_available > 0 %>
+        <div class='mana-filled' style="width: <%= current_user.percentage_gpt_fees_available %>%;"></div>
+      <% end %>
+    </div>
+    <i class="fa-solid fa-fire fa-fw"></i>
+  </div>
+  <div>
+  sraka
   </div>
 </div>

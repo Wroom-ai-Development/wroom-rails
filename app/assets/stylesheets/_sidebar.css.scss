@@ -210,6 +210,33 @@ div#sidebar {
   border-right: 1px solid $wroom-gray;
   z-index: 500;
   display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  
+
+  div.mana-counter {
+    display: flex;
+    flex-direction: column;
+    width: 3rem;
+    height: 23rem;
+    align-items: center;
+
+    i {
+      transform: translate(0, 18rem);
+      color: $wroom-blue;
+    }
+
+    div.mana-limit-bar {
+      transform: rotate(-90deg) translate(-12rem, 0);
+      width: 12rem;
+    }
+  }
+
+
+  a.logo-link {
+    height: 11rem;
+  }
 
   svg {
     transform: rotate(-90deg);
