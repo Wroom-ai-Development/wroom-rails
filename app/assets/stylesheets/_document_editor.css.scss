@@ -2,6 +2,10 @@
 @import 'scrollbars';
 @import 'fonts';
 
+turbo-frame#document_editor {
+  flex-grow: 1;
+}
+
 div#edit-document {
   padding: 0;
   width: 100%;

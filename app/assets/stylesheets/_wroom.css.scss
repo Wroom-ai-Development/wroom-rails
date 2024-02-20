@@ -61,14 +61,14 @@ body#wroom {
       flex-direction: column;
       height: 90vh;
       &#document-panel {
-        width: 55vw;
+        flex-grow: 1;
         box-sizing: border-box;
         border-right: 1px solid $wroom-gray;
 
       }
       &#conversation-panel {
         // height: 100%;
-        width: 30.5vw;
+        width: 25vw;
         padding: 1rem 1rem 1rem 0;
       }
     }

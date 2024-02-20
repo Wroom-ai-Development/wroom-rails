@@ -1,0 +1,24 @@
+<script>
+  function toggleSidebar() {
+    const sidebarBackground = document.getElementById('sidebar-background');
+    const toggleIcon = document.getElementById('toggle-icon');
+    const sidebarHideButton = document.getElementById('sidebar-hide-button');
+    const miniSidebar = document.getElementById('mini-sidebar');
+    const breadCrumbs = document.getElementById('breadcrumbs');
+    if (sidebarBackground.style.display === 'none') {
+      sidebarBackground.style.display = 'block';
+      toggleIcon.style.display = 'block';
+      miniSidebar.style.display = 'none';
+      sidebarHideButton.style.display = 'flex';
+      breadCrumbs.classList.remove('sidebar-minified');
+    } else {
+      sidebarBackground.style.display = 'none';
+      sidebarHideButton.style.display = 'none';
+      miniSidebar.style.display = 'flex';
+      breadCrumbs.classList.add('sidebar-minified');
+    }
+  }
+</script>
+<div id="sidebar-hide-button" onclick="toggleSidebar()">
+  <i id="toggle-icon" class="fa-solid fa-chevron-left fa-fw"></i>
+</div>

@@ -182,3 +182,95 @@ div#sidebar {
     }
   }
 }
+
+#sidebar-hide-button {
+  position: fixed;
+  bottom: 1rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background-color: $wroom-dark-gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  left: 12rem;
+  z-index: 500;
+}
+
+#toggle-icon {
+  color: white; /* White color for the chevron */
+  font-size: 16px;
+}
+
+#mini-sidebar {
+  width: 3rem;
+  height: 100%;
+  background-color: white;
+  border-right: 1px solid $wroom-gray;
+  z-index: 500;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  
+
+  div.mana-counter {
+    display: flex;
+    flex-direction: column;
+    width: 3rem;
+    height: 23rem;
+    align-items: center;
+
+    i {
+      transform: translate(0, 18.5rem);
+      color: $wroom-blue;
+    }
+
+    div.mana-limit-bar {
+      transform: rotate(-90deg) translate(-12rem, 0);
+      width: 12rem;
+    }
+  }
+
+
+  a.logo-link {
+    height: 11rem;
+  }
+
+  svg {
+    transform: rotate(-90deg);
+    position: fixed;
+    height: 2rem;
+    top: 4rem;
+    left: -4.2rem;
+  }
+
+  .bottom-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    flex-grow: 1;
+
+    i {
+      width: 2rem;
+      height: 2rem;
+      color: $wroom-dark-gray;
+      margin-bottom: 0.5rem;
+    }
+    
+    i#toggle-icon {
+      margin-bottom: 1rem;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      color: white;
+      background-color: $wroom-dark-gray;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+  }
+}
