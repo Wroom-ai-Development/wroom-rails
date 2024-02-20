@@ -11,6 +11,10 @@ class DocumentsController < ApplicationController
     user = User.find_by(email:)
     if user.nil?
       redirect_to editor_document_path(@document), alert: 'User not found'
+    elsif user == current_user
+      redirect_to editor_document_path(@document), alert: 'You cannot share a document with yourself'
+    elsif @document.collaborators.include?(user)
+      redirect_to editor_document_path(@document), notice: 'This user already has access to this document'
     else
       @document.share_with(user)
       redirect_to editor_document_path(@document), notice: 'Document shared successfully'
