@@ -9,7 +9,7 @@ class DocumentsController < ApplicationController
     email = params[:email]
     user = User.find_by(email:)
     if user.nil?
-      PendingCollaboration.create!(document_id: @document.id, email:)
+      PendingCollaboration.create!(document_id: @document.id, invited_by: current_user.email, email:)
       redirect_to editor_document_path(@document),
                   notice: 'This user does not have an account yet. We have sent them an invitation to join Wroom.'
     elsif user == current_user

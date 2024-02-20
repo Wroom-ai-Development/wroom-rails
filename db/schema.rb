@@ -167,6 +167,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_20_082716) do
   create_table "pending_collaborations", force: :cascade do |t|
     t.bigint "document_id"
     t.string "email"
+    t.string "invited_by"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["document_id"], name: "index_pending_collaborations_on_document_id"
