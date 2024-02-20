@@ -185,11 +185,11 @@ div#sidebar {
 
 #sidebar-hide-button {
   position: fixed;
-  bottom: 0;
+  bottom: 1rem;
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
-  background-color: #444;
+  background-color: $wroom-dark-gray;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -223,7 +223,7 @@ div#sidebar {
     align-items: center;
 
     i {
-      transform: translate(0, 18rem);
+      transform: translate(0, 18.5rem);
       color: $wroom-blue;
     }
 
@@ -244,5 +244,33 @@ div#sidebar {
     height: 2rem;
     top: 4rem;
     left: -4.2rem;
+  }
+
+  .bottom-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    flex-grow: 1;
+
+    i {
+      width: 2rem;
+      height: 2rem;
+      color: $wroom-dark-gray;
+      margin-bottom: 0.5rem;
+    }
+    
+    i#toggle-icon {
+      margin-bottom: 1rem;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      color: white;
+      background-color: $wroom-dark-gray;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
   }
 }
