@@ -35,6 +35,12 @@ div.top-pane {
     &.has-collaborators {
       color: $wroom-green;
     }
+
+    &.unclickable {
+      &:hover {
+        cursor: default;
+      }
+    }
   }
 
 }

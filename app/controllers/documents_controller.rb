@@ -6,11 +6,12 @@ class DocumentsController < ApplicationController
   load_and_authorize_resource
 
   def share
-    # binding.pry
     email = params[:email]
     user = User.find_by(email:)
     if user.nil?
-      redirect_to editor_document_path(@document), alert: 'User not found'
+      PendingCollaboration.create!(document_id: @document.id, email:)
+      redirect_to editor_document_path(@document),
+                  notice: 'This user does not have an account yet. We have sent them an invitation to join Wroom.'
     elsif user == current_user
       redirect_to editor_document_path(@document), alert: 'You cannot share a document with yourself'
     elsif @document.collaborators.include?(user)

@@ -31,6 +31,14 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   after_create :make_security_updated
   after_create :initialize_etherpad_author
   after_create :create_shared_folder
+  after_create :check_pending_collaborations
+
+  def check_pending_collaborations
+    PendingCollaboration.where(email:).find_each do |pc|
+      pc.document.share_with(self)
+      pc.destroy
+    end
+  end
 
   def create_shared_folder
     SharedFolder.create!(user: self)

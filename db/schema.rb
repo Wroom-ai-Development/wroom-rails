@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_17_125904) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_20_082716) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -164,6 +164,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_17_125904) do
     t.integer "event_type"
   end
 
+  create_table "pending_collaborations", force: :cascade do |t|
+    t.bigint "document_id"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["document_id"], name: "index_pending_collaborations_on_document_id"
+  end
+
   create_table "projects", force: :cascade do |t|
     t.string "title"
     t.bigint "user_id", null: false
@@ -296,6 +304,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_17_125904) do
   add_foreign_key "folders", "folders", column: "parent_id", on_delete: :cascade
   add_foreign_key "folders", "users", on_delete: :cascade
   add_foreign_key "messages", "conversations"
+  add_foreign_key "pending_collaborations", "documents"
   add_foreign_key "source_chunks", "sources"
   add_foreign_key "sources", "documents", on_delete: :cascade
   add_foreign_key "sources", "folders", on_delete: :cascade
