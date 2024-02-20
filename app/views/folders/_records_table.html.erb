@@ -44,10 +44,10 @@
           <td></td>
         <% end %>
       <% end %>
-      <% folders.order(:name).each do |folder| %>
+      <% folders.order(:created_at).reverse.each do |folder| %>
         <%= render 'folders/folder_row', folder: folder, in_query: in_query %>
       <% end %>
-      <% documents.order(:title).each do |document| %>
+      <% documents.order(:created_at).reverse.each do |document| %>
         <%= render 'folders/document_row', document: document, in_query: in_query %>
       <% end %>
     </table>
