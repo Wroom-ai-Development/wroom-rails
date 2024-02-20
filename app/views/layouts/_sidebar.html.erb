@@ -19,6 +19,8 @@
     children.style.display = 'flex';
   }
 </script>
+<%= render partial: 'layouts/sidebar_hide_button' %>
+<%= render partial: 'layouts/mini_sidebar' %>
 <%= turbo_stream_from current_user.id, "sidebar_explorer" %>
 <div id='sidebar-background'>
   <div id='sidebar'>
