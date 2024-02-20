@@ -31,6 +31,10 @@ div.top-pane {
     &:hover {
       cursor: pointer;
     }
+
+    &.has-collaborators {
+      color: $wroom-green;
+    }
   }
 
 }

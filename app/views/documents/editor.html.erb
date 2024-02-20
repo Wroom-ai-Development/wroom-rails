@@ -15,7 +15,7 @@
                 <div class='top-pane'>
                   <%= form.text_field :title, data: { action: "keyup->document#save blur->document#save" } %>
                   <div class='right-buttons'>
-                    <a id='share-modal-button'>
+                    <a id='share-modal-button' <%= @document.collaborators.any? ? "class=has-collaborators" : ""  %>>
                       <i class="fa-solid fa-share-nodes fa-fw"></i>Share
                     </a>
                   </div>

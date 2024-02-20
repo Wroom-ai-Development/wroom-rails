@@ -26,7 +26,16 @@
     <span id="close-modal"><i class="fa-solid fa-circle-xmark"></i></span>
     <h2><i class="fa-solid fa-share-nodes fa-fw"></i><%= document.title %></h2>
     <p>
-      This document is not yet shared with anyone.
+      <% if document.collaborators.empty? %>
+        This document is not yet shared with anyone.
+      <% else %>
+        This document is currently shared with:
+        <ul>
+          <% document.collaborators.each do |collaborator| %>
+            <li><%= collaborator.email %></li>
+          <% end %>
+        </ul>
+      <% end %>
     </p>
     <h2>Share this document</h2>
     <p>
