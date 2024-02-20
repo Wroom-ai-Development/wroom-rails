@@ -115,8 +115,9 @@ class SubscriptionsController < ApplicationController # rubocop:disable Metrics/
       stripe_subscription = event.data.object
       user_email = Stripe::Customer.retrieve(stripe_subscription.customer).email
       plan = Stripe::Product.retrieve(stripe_subscription.plan.product)
-
-      subscription = User.find_by(email: user_email).subscription
+      user = User.find_by(email: user_email)
+      subscription = user.subscription
+      user.usage_records.kept.each(&:discard)
       subscription.update(
         paid_until: Time.zone.at(stripe_subscription.current_period_end),
         stripe_subscription_id: stripe_subscription.id,
