@@ -141,6 +141,9 @@ div#devise {
     span#wroom {
       font-size: $font-size-200;
     }
+    svg { 
+      width: 20rem;
+    }
   }
 
   &.reset-password {
