@@ -119,7 +119,7 @@ div#sidebar {
     margin-bottom: 1rem;
     
     svg {
-      width: 8rem;
+      width: 8.8rem;
     }
   }
 
@@ -235,15 +235,13 @@ div#sidebar {
 
 
   a.logo-link {
-    height: 11rem;
+    // height: 11rem;
   }
 
   svg {
     transform: rotate(-90deg);
-    position: fixed;
     height: 2rem;
-    top: 4rem;
-    left: -4.2rem;
+    margin-top: 4rem;
   }
 
   .bottom-buttons {
