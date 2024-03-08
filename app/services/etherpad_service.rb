@@ -4,6 +4,6 @@ class EtherpadService
   attr_accessor :ether
 
   def initialize
-    @ether = EtherpadLite.connect(ENV['ETHERPAD_URL'], File.new('/Users/marcelwojdylo/wroom/etherpad-lite/APIKEY.txt'))
+    @ether = EtherpadLite.connect(ENV['ETHERPAD_URL'], StringIO.new(ENV['ETHERPAD_API_KEY']).read)
   end
 end
