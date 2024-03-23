@@ -46,15 +46,20 @@ class Document < ApplicationRecord
   def initialize_etherpad_pad
     return unless etherpad_pad_id.nil?
 
-    ether = EtherpadService.new.ether
-    pad = ether.client.createGroupPad(
-      groupID: etherpad_group.group_id,
-      # TODO: Obscure document id in pad name
-      padName: "wroom_document_#{id}",
-      text: [''],
-      authorId: [user.etherpad_author_id]
-    )
-    update!(etherpad_pad_id: pad[:padID])
+    srv = EtherpadService.new
+    pad_id = etherpad_group.group_id + "$" + "wroom_document_#{id}"
+    unless srv.pad_ids.include? pad_id
+      pad = srv.ether.client.createGroupPad(
+        groupID: etherpad_group.group_id,
+        # TODO: Obscure document id in pad name
+        padName: "wroom_document_#{id}",
+        text: [''],
+        authorId: [user.etherpad_author_id]
+      )
+      pad_id = pad[:padId]
+    end
+
+    update!(etherpad_pad_id: pad_id)
   end
 
   def etherpad_pad_text_content
