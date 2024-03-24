@@ -6,7 +6,7 @@ task etherpad_init: :environment do
   User.all.each(&:initialize_etherpad_author)
   puts 'Initializing Etherpad document groups and pads'
   Document.all.each do |document|
-    next if document.source_based
+    next if document.source_based == true
 
     document.initialize_etherpad
   end
