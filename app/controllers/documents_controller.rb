@@ -53,8 +53,15 @@ class DocumentsController < ApplicationController
       sess = group.create_session(author, 60)
     end
     session[:ep_sessions][group.id] = sess.id
-    cookies['sessionID'] = sess.id
-    cookies['prefsHttp'] = '{}'
+    # cookies['sessionID'] = sess.id
+    cookies['sessionID'] = {
+      :value => sess.id,
+      :domain => ENV['COOKIES_DOMAIN']
+    }
+    cookies['prefsHttp'] = {
+      :value => {},
+      :domain => ENV['COOKIES_DOMAIN']
+    }
 
     @etherpad_url = ENV['ETHERPAD_URL']
     @etherpad_url += '/p/'
