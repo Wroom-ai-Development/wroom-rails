@@ -55,12 +55,12 @@ class DocumentsController < ApplicationController
     session[:ep_sessions][group.id] = sess.id
     # cookies['sessionID'] = sess.id
     cookies['sessionID'] = {
-      :value => sess.id,
-      :domain => ENV['COOKIES_DOMAIN']
+      value: sess.id,
+      domain: ENV['COOKIES_DOMAIN']
     }
     cookies['prefsHttp'] = {
-      :value => {},
-      :domain => ENV['COOKIES_DOMAIN']
+      value: {},
+      domain: ENV['COOKIES_DOMAIN']
     }
 
     @etherpad_url = ENV['ETHERPAD_URL']
@@ -82,7 +82,6 @@ class DocumentsController < ApplicationController
   def new
     @document = Document.create!(
       title: 'Untitled',
-      content: '',
       user_id: current_user.id,
       folder_id: current_user.current_folder_id || current_user.root_folder.id
     )

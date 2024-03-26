@@ -19,7 +19,7 @@ class Document < ApplicationRecord
   after_create_commit :create_conversation
   after_create_commit :broadcast_create
   after_create_commit :update_storage_bar
-  after_create :initialize_etherpad
+  after_save :initialize_etherpad
   after_discard :remove_document_row
   before_destroy :remove_document_row
   before_destroy :update_storage_bar
@@ -47,7 +47,7 @@ class Document < ApplicationRecord
     return unless etherpad_pad_id.nil?
 
     srv = EtherpadService.new
-    pad_id = etherpad_group.group_id + "$" + "wroom_document_#{id}"
+    pad_id = "#{etherpad_group.group_id}$wroom_document_#{id}"
     unless srv.pad_ids.include? pad_id
       pad = srv.ether.client.createGroupPad(
         groupID: etherpad_group.group_id,

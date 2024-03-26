@@ -12,7 +12,7 @@ task etherpad_reinit: :environment do
   Document.all.each do |document|
     next if document.source_based
 
-    document.etherpad_group.destroy! if document.etherpad_group
+    document.etherpad_group&.destroy!
     document.update!(etherpad_pad_id: nil) if document.etherpad_pad_id
     document.initialize_etherpad
   end
