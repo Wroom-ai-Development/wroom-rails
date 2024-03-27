@@ -11,6 +11,7 @@ class Document < ApplicationRecord
   has_one :etherpad_group, dependent: :destroy
   has_many :document_collaborations, dependent: :destroy
   has_many :collaborators, through: :document_collaborations, source: :user
+  has_rich_text :content
 
   validates :title, presence: true
   has_many :monitoring_events, as: :trackable, dependent: :nullify
