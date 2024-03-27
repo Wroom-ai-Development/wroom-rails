@@ -1,7 +1,8 @@
 - Access to DNS for wroom.ai
 
 TODO:
-- test sharing docs on staging
+- ensure migration without doc content loss
+- test duplicating docs
 - adjust default text
 - start installing plugins
 

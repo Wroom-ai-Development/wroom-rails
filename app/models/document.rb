@@ -20,7 +20,6 @@ class Document < ApplicationRecord
   after_create_commit :create_conversation
   after_create_commit :broadcast_create
   after_create_commit :update_storage_bar
-  after_save :initialize_etherpad
   after_discard :remove_document_row
   before_destroy :remove_document_row
   before_destroy :update_storage_bar
@@ -49,8 +48,13 @@ class Document < ApplicationRecord
 
     srv = EtherpadService.new
     pad_id = "#{etherpad_group.group_id}$wroom_document_#{id}"
-    text = content.present? ? [content] : ['']
-    unless srv.pad_ids.include? pad_id
+    text = content.present? ? [content.body.to_plain_text] : ['']
+    if srv.pad_ids.include? pad_id
+      srv.ether.client.setText(
+        padID: pad_id,
+        text: text[0]
+      )
+    else
       pad = srv.ether.client.createGroupPad(
         groupID: etherpad_group.group_id,
         # TODO: Obscure document id in pad name

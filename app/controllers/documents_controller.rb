@@ -23,11 +23,16 @@ class DocumentsController < ApplicationController
   end
 
   def editor # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    # TODO: Refactor this method
     @document = if params[:id].present?
                   Document.find(params[:id])
                 else
                   current_user.documents.first
                 end
+    # init etherpad if not already done
+    if @document.etherpad_group.nil? || @document.etherpad_pad_id.nil?
+      @document.initialize_etherpad
+    end
     @conversation = @document.conversation
     @document.folder.parents.reverse.each do |parent|
       breadcrumbs << Breadcrumb.new(parent.name, folder_path(parent))
@@ -38,7 +43,6 @@ class DocumentsController < ApplicationController
     ether = EtherpadService.new.ether
     author = ether.get_author(current_user.etherpad_author_id)
     group = ether.get_group(@document.etherpad_group.group_id)
-    # binding.pry
 
     session[:ep_sessions] = {} if session[:ep_sessions].nil?
     sess = if session[:ep_sessions][group.id]
@@ -53,7 +57,6 @@ class DocumentsController < ApplicationController
       sess = group.create_session(author, 60)
     end
     session[:ep_sessions][group.id] = sess.id
-    # cookies['sessionID'] = sess.id
     cookies['sessionID'] = {
       value: sess.id,
       domain: ENV['COOKIES_DOMAIN']
