@@ -48,12 +48,13 @@ class Document < ApplicationRecord
 
     srv = EtherpadService.new
     pad_id = "#{etherpad_group.group_id}$wroom_document_#{id}"
+    text = content.present? ? [content] : ['']
     unless srv.pad_ids.include? pad_id
       pad = srv.ether.client.createGroupPad(
         groupID: etherpad_group.group_id,
         # TODO: Obscure document id in pad name
         padName: "wroom_document_#{id}",
-        text: [''],
+        text: text,
         authorId: [user.etherpad_author_id]
       )
       pad_id = pad[:padId]
