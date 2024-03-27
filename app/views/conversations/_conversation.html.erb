@@ -17,7 +17,7 @@
   <script>
     function copyContent(id) {
       const text = document.getElementById(id).innerHTML.replace(/<br>/g, "\n").replace("<p>", "").replace("</p>", "")
-      navigator.clipboard.writeText(text)
+      navigator.clipboard.writeText(text);
     }
   </script>
   <div id='messages'>

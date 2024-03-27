@@ -2,5 +2,11 @@
   <div class='header'>
     <span>Shared with me</span>
   </div>
-  <%= render "folders/records_table", folder: @shared_folder, documents: @documents, folders: nil %>
+  <% if @documents.empty? %>
+    <div class='empty'>
+      <span>No documents have been shared with you.</span>
+    </div>
+  <% else %>
+    <%= render "folders/records_table", folder: @shared_folder, documents: @documents, folders: nil %>
+  <% end %>
 <% end %>

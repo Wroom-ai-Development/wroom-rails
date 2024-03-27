@@ -1,3 +1,9 @@
 - Access to DNS for wroom.ai
-- What should be the default text and title of a document?
-- 
+
+TODO:
+- test sharing docs on staging
+- adjust default text
+- start installing plugins
+
+k@rl
+1234!@#$qwerQWER
