@@ -15,17 +15,16 @@
   </div>
   <% if source.file_extension == 'pdf' %>
     <iframe id='pdf-preview' width='300' height='200' src=<%= rails_blob_url(source.file) %>></iframe>
-  <% end %>
-  <% if false %>
+  <% else %>
     <div class='chunks'>
         <% if source.truncated? %>
           <div class='truncation-notice'>
             This source exceeded our text volume limits, and has been truncated.
           </div>
         <% end %>
-        <% source.source_chunks.each do |chunk| %>
+        <% source.source_chunks.each_with_index do |chunk, index| %>
           <div class='chunk'>
-            <details>
+            <details <%= index == 0 ? 'open' : '' %>>
               <summary>
                 <%= "Chunk #{chunk.ordinal_number + 1}: #{chunk.section_header.strip}" %>
               </summary>

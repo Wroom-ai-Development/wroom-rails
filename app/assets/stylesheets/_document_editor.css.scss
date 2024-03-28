@@ -8,7 +8,7 @@ turbo-frame#document_editor {
 
 div#edit-document {
   padding: 0;
-  width: 100%;
+  max-width: 60vw;
   height: 90vh;
   flex-flow: column;
   display: flex;
