@@ -6,7 +6,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :confirmable, :validatable, password_length: 11..128
 
-  VALID_PASSWORD_REGEX = /\A(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{11,}\z/
+  VALID_PASSWORD_REGEX = /\A(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()-_+=\[\]{}|;:',.<>?\/~`]{11,}\z/
   validate :password_complexity
 
   has_many :sources, dependent: :destroy
