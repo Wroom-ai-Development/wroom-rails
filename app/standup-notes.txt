@@ -1,10 +1,12 @@
 - Access to DNS for wroom.ai
 
 TODO:
-- ensure migration without doc content loss
 - test duplicating docs
 - adjust default text
 - start installing plugins
+- use env variables in settings.json on ep  https://github.com/ether/etherpad-lite/blob/develop/settings.json.template
+- enable SSL on wroom.top
+- 
 
 k@rl
 1234!@#$qwerQWER

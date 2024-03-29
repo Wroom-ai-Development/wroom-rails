@@ -68,6 +68,21 @@ class Document < ApplicationRecord
     update!(etherpad_pad_id: pad_id)
   end
 
+  def clone_pad(document)
+    return if document.etherpad_pad_id.nil?
+
+    initialize_etherpad_group
+
+    srv = EtherpadService.new
+    pad_id = "#{etherpad_group.group_id}$wroom_document_#{id}"
+
+    srv.ether.client.copyPad(
+      sourceID: document.etherpad_pad_id,
+      destinationID: pad_id
+    )
+    update!(etherpad_pad_id: pad_id)
+  end
+
   def etherpad_pad_text_content
     return nil if etherpad_pad_id.nil?
 

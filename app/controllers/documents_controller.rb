@@ -88,6 +88,7 @@ class DocumentsController < ApplicationController
       user_id: current_user.id,
       folder_id: current_user.current_folder_id || current_user.root_folder.id
     )
+    @document.initialize_etherpad
     redirect_to wroom_path(document_id: @document.id)
   end
 
@@ -101,8 +102,15 @@ class DocumentsController < ApplicationController
     @document = Document.find(params[:id])
     duplicate = @document.dup
     duplicate.cloned_from = @document.id
+    duplicate.title = "#{@document.title} Copy"
     duplicate.content = @document.content
+    duplicate.etherpad_pad_id = nil
     duplicate.save!
+    if @document.etherpad_pad_id.nil?
+      duplicate.initialize_etherpad
+    else
+      duplicate.clone_pad(@document)
+    end
     conversation = @document.conversation.dup
     if @document.conversation.messages.present?
       @document.conversation.messages.each do |message|
