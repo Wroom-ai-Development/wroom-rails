@@ -5,7 +5,7 @@ task renew_free_users_mana: :environment do
   if Time.zone.today.day == 1
     puts "Renewing Free-tier users' mana supply"
 
-    User.all.each do |user|
+    User.all.find_each do |user|
       next unless user.subscription && user.subscription.plan == 'free'
 
       user.usage_records.discard_all!

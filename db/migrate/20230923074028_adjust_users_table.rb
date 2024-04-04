@@ -6,7 +6,7 @@ class AdjustUsersTable < ActiveRecord::Migration[7.0]
     remove_column :subscriptions, :user_id, :bigint
     add_reference :subscriptions, :user, foreign_key: false
     add_reference :users, :subscription, foreign_key: true
-    User.all.each do |user|
+    User.all.find_each do |user|
       user.create_subscription!(plan: 'free', status: 'active')
     end
   end
