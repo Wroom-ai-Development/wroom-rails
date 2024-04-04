@@ -200,7 +200,8 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def create_welcome_document
-    documents.create!(title: 'Welcome to Wroom', folder: root_folder)
+    welcome_doc = documents.create!(title: 'Welcome to Wroom', folder: root_folder)
+    welcome_doc.initialize_etherpad
   end
 
   def create_welcome_source # rubocop:disable Metrics/MethodLength
