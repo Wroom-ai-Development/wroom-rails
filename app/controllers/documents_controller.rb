@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class DocumentsController < ApplicationController
+class DocumentsController < ApplicationController # rubocop:disable Metrics/ClassLength
   before_action :set_document,
                 only: %i[editor destroy autosave undiscard discard share]
   load_and_authorize_resource
 
-  def share
+  def share # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     email = params[:email]
     user = User.find_by(email:)
     if user.nil?
@@ -22,7 +22,7 @@ class DocumentsController < ApplicationController
     end
   end
 
-  def editor # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def editor # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     # TODO: Refactor this method
     @document = if params[:id].present?
                   Document.find(params[:id])
@@ -30,9 +30,7 @@ class DocumentsController < ApplicationController
                   current_user.documents.first
                 end
     # init etherpad if not already done
-    if @document.etherpad_group.nil? || @document.etherpad_pad_id.nil?
-      @document.initialize_etherpad
-    end
+    @document.initialize_etherpad if @document.etherpad_group.nil? || @document.etherpad_pad_id.nil?
     @conversation = @document.conversation
     @document.folder.parents.reverse.each do |parent|
       breadcrumbs << Breadcrumb.new(parent.name, folder_path(parent))
@@ -98,7 +96,7 @@ class DocumentsController < ApplicationController
     head :ok
   end
 
-  def duplicate # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
+  def duplicate # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     @document = Document.find(params[:id])
     duplicate = @document.dup
     duplicate.cloned_from = @document.id

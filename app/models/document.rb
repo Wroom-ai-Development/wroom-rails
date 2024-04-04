@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Document < ApplicationRecord
+class Document < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Discard::Model
   belongs_to :user
   belongs_to :folder
@@ -43,7 +43,7 @@ class Document < ApplicationRecord
     create_etherpad_group(group_id: group.id)
   end
 
-  def initialize_etherpad_pad
+  def initialize_etherpad_pad # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     return unless etherpad_pad_id.nil?
 
     srv = EtherpadService.new
@@ -59,7 +59,7 @@ class Document < ApplicationRecord
         groupID: etherpad_group.group_id,
         # TODO: Obscure document id in pad name
         padName: "wroom_document_#{id}",
-        text: text,
+        text:,
         authorId: [user.etherpad_author_id]
       )
       pad_id = pad[:padId]
