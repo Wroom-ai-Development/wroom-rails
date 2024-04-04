@@ -6,6 +6,12 @@ class WroomController < ApplicationController
     render layout: 'dashboard'
   end
 
+  def shared
+    @shared_folder = current_user.shared_folder
+    @documents = current_user.collaborated_documents.kept
+    render layout: 'dashboard'
+  end
+
   def app # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     @document = if params[:document_id].present?
                   Document.find(params[:document_id])

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_05_110439) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_20_082716) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -96,6 +96,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_05_110439) do
     t.string "sidekiq_job_id"
   end
 
+  create_table "document_collaborations", force: :cascade do |t|
+    t.bigint "document_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["document_id", "user_id"], name: "index_document_collaborations_on_document_id_and_user_id", unique: true
+    t.index ["document_id"], name: "index_document_collaborations_on_document_id"
+    t.index ["user_id"], name: "index_document_collaborations_on_user_id"
+  end
+
   create_table "documents", force: :cascade do |t|
     t.string "title"
     t.bigint "user_id", null: false
@@ -105,9 +115,18 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_05_110439) do
     t.bigint "folder_id"
     t.datetime "discarded_at"
     t.integer "cloned_from"
+    t.string "etherpad_pad_id"
     t.index ["discarded_at"], name: "index_documents_on_discarded_at"
     t.index ["folder_id"], name: "index_documents_on_folder_id"
     t.index ["user_id"], name: "index_documents_on_user_id"
+  end
+
+  create_table "etherpad_groups", force: :cascade do |t|
+    t.string "group_id", null: false
+    t.bigint "document_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["document_id"], name: "index_etherpad_groups_on_document_id", unique: true
   end
 
   create_table "folders", force: :cascade do |t|
@@ -143,6 +162,26 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_05_110439) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "event_type"
+  end
+
+  create_table "pending_collaborations", force: :cascade do |t|
+    t.bigint "document_id"
+    t.string "email"
+    t.string "invited_by"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["document_id"], name: "index_pending_collaborations_on_document_id"
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string "title"
+    t.bigint "user_id", null: false
+    t.bigint "conversation_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "source_based", default: false, null: false
+    t.index ["conversation_id"], name: "index_projects_on_conversation_id"
+    t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
   create_table "source_chunks", force: :cascade do |t|
@@ -234,6 +273,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_05_110439) do
     t.integer "bonus_gpt_budget", default: 0
     t.string "referral_code"
     t.integer "referred_by"
+    t.string "etherpad_author_id"
     t.index ["current_document_id"], name: "index_users_on_current_document_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -257,11 +297,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_05_110439) do
   add_foreign_key "context_references", "documents", on_delete: :cascade
   add_foreign_key "conversation_voices", "conversations", on_delete: :cascade
   add_foreign_key "conversation_voices", "voices"
+  add_foreign_key "document_collaborations", "documents"
+  add_foreign_key "document_collaborations", "users"
   add_foreign_key "documents", "folders", on_delete: :cascade
   add_foreign_key "documents", "users", on_delete: :cascade
+  add_foreign_key "etherpad_groups", "documents"
   add_foreign_key "folders", "folders", column: "parent_id", on_delete: :cascade
   add_foreign_key "folders", "users", on_delete: :cascade
   add_foreign_key "messages", "conversations"
+  add_foreign_key "pending_collaborations", "documents"
   add_foreign_key "source_chunks", "sources"
   add_foreign_key "sources", "documents", on_delete: :cascade
   add_foreign_key "sources", "folders", on_delete: :cascade

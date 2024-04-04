@@ -18,7 +18,7 @@
       </tr>
     </thead>
     <tbody id='draggables'>
-      <% if folder && folder.type != 'RootFolder' && !@in_query %>
+      <% if folder && folder.type != 'RootFolder' && folder.type != 'SharedFolder' && !@in_query %>
         <%= content_tag :tr, id: "folder-row-parent",
           class: 'draggable',
           onclick: 'document.getElementById("parent_link").click();',
@@ -44,11 +44,15 @@
           <td></td>
         <% end %>
       <% end %>
-      <% folders.order(:created_at).reverse.each do |folder| %>
-        <%= render 'folders/folder_row', folder: folder, in_query: in_query %>
+      <% unless folders.nil? %>
+        <% folders.order(:created_at).reverse.each do |folder| %>
+          <%= render 'folders/folder_row', folder: folder, in_query: in_query %>
+        <% end %>
       <% end %>
-      <% documents.order(:created_at).reverse.each do |document| %>
-        <%= render 'folders/document_row', document: document, in_query: in_query %>
+      <% unless documents.nil? %>
+        <% documents.order(:created_at).reverse.each do |document| %>
+          <%= render 'folders/document_row', document: document, in_query: in_query %>
+        <% end %>
       <% end %>
     </table>
   <% end %>

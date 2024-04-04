@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Document < ApplicationRecord
+class Document < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Discard::Model
   belongs_to :user
   belongs_to :folder
@@ -8,9 +8,12 @@ class Document < ApplicationRecord
   has_one :conversation, dependent: :destroy
   has_many :context_references, dependent: :destroy
   has_many :documents, through: :context_references
+  has_one :etherpad_group, dependent: :destroy
+  has_many :document_collaborations, dependent: :destroy
+  has_many :collaborators, through: :document_collaborations, source: :user
+  has_rich_text :content
 
   validates :title, presence: true
-  has_rich_text :content
   has_many :monitoring_events, as: :trackable, dependent: :nullify
 
   after_create_commit :log_event
@@ -22,6 +25,70 @@ class Document < ApplicationRecord
   before_destroy :update_storage_bar
   after_discard :remove_from_sidebar
   after_save :remove_document_row, if: :saved_change_to_folder_id?
+
+  def share_with(user)
+    document_collaborations.create!(user_id: user.id)
+  end
+
+  def initialize_etherpad
+    initialize_etherpad_group
+    initialize_etherpad_pad
+  end
+
+  def initialize_etherpad_group
+    return unless etherpad_group.nil?
+
+    ether = EtherpadService.new.ether
+    group = ether.create_group
+    create_etherpad_group(group_id: group.id)
+  end
+
+  def initialize_etherpad_pad # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    return unless etherpad_pad_id.nil?
+
+    srv = EtherpadService.new
+    pad_id = "#{etherpad_group.group_id}$wroom_document_#{id}"
+    text = content.present? ? [content.body.to_plain_text] : ['']
+    if srv.pad_ids.include? pad_id
+      srv.ether.client.setText(
+        padID: pad_id,
+        text: text[0]
+      )
+    else
+      pad = srv.ether.client.createGroupPad(
+        groupID: etherpad_group.group_id,
+        # TODO: Obscure document id in pad name
+        padName: "wroom_document_#{id}",
+        text:,
+        authorId: [user.etherpad_author_id]
+      )
+      pad_id = pad[:padId]
+    end
+
+    update!(etherpad_pad_id: pad_id)
+  end
+
+  def clone_pad(document)
+    return if document.etherpad_pad_id.nil?
+
+    initialize_etherpad_group
+
+    srv = EtherpadService.new
+    pad_id = "#{etherpad_group.group_id}$wroom_document_#{id}"
+
+    srv.ether.client.copyPad(
+      sourceID: document.etherpad_pad_id,
+      destinationID: pad_id
+    )
+    update!(etherpad_pad_id: pad_id)
+  end
+
+  def etherpad_pad_text_content
+    return nil if etherpad_pad_id.nil?
+
+    ether = EtherpadService.new.ether
+    ether.get_pad(etherpad_pad_id).text.gsub(/[\t\n]+/, ' ')
+  end
 
   def remove_from_sidebar
     broadcast_remove_to(
@@ -40,11 +107,9 @@ class Document < ApplicationRecord
   end
 
   def refresh_source
-    return if content.body.blank?
-
     Source.where(document_id: id).destroy_all
     source = Source.create!(name: title, user_id:, document_id: id, fileless: true)
-    source.parse_source_chunks_from_text(content.body.to_plain_text)
+    source.parse_source_chunks_from_text(etherpad_pad_text_content)
   end
 
   def broadcast_create # rubocop:disable Metrics/MethodLength

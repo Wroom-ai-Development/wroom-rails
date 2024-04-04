@@ -1,23 +1,72 @@
 # frozen_string_literal: true
 
-class DocumentsController < ApplicationController
+class DocumentsController < ApplicationController # rubocop:disable Metrics/ClassLength
   before_action :set_document,
-                only: %i[editor destroy autosave undiscard discard]
+                only: %i[editor destroy autosave undiscard discard share]
   load_and_authorize_resource
 
-  def editor # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def share # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    email = params[:email]
+    user = User.find_by(email:)
+    if user.nil?
+      PendingCollaboration.create!(document_id: @document.id, invited_by: current_user.email, email:)
+      redirect_to editor_document_path(@document),
+                  notice: 'This user does not have an account yet. We have sent them an invitation to join Wroom.'
+    elsif user == current_user
+      redirect_to editor_document_path(@document), alert: 'You cannot share a document with yourself'
+    elsif @document.collaborators.include?(user)
+      redirect_to editor_document_path(@document), notice: 'This user already has access to this document'
+    else
+      @document.share_with(user)
+      redirect_to editor_document_path(@document), notice: 'Document shared successfully'
+    end
+  end
+
+  def editor # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    # TODO: Refactor this method
     @document = if params[:id].present?
                   Document.find(params[:id])
                 else
                   current_user.documents.first
                 end
+    # init etherpad if not already done
+    @document.initialize_etherpad if @document.etherpad_group.nil? || @document.etherpad_pad_id.nil?
     @conversation = @document.conversation
     @document.folder.parents.reverse.each do |parent|
       breadcrumbs << Breadcrumb.new(parent.name, folder_path(parent))
     end
-    # binding.pry
     breadcrumbs << Breadcrumb.new(@document.folder.name, folder_path(@document.folder))
     breadcrumbs << Breadcrumb.new(@document.truncated_title(40), editor_document_path(@document))
+
+    ether = EtherpadService.new.ether
+    author = ether.get_author(current_user.etherpad_author_id)
+    group = ether.get_group(@document.etherpad_group.group_id)
+
+    session[:ep_sessions] = {} if session[:ep_sessions].nil?
+    sess = if session[:ep_sessions][group.id]
+             ether.get_session(session[:ep_sessions][group.id])
+           else
+             group.create_session(
+               author, 60 * 24
+             )
+           end
+    if sess.expired?
+      sess.delete
+      sess = group.create_session(author, 60)
+    end
+    session[:ep_sessions][group.id] = sess.id
+    cookies['sessionID'] = {
+      value: sess.id,
+      domain: ENV['COOKIES_DOMAIN']
+    }
+    cookies['prefsHttp'] = {
+      value: {},
+      domain: ENV['COOKIES_DOMAIN']
+    }
+
+    @etherpad_url = ENV['ETHERPAD_URL']
+    @etherpad_url += '/p/'
+    @etherpad_url += @document.etherpad_pad_id
   end
 
   def index
@@ -34,10 +83,10 @@ class DocumentsController < ApplicationController
   def new
     @document = Document.create!(
       title: 'Untitled',
-      content: '',
       user_id: current_user.id,
       folder_id: current_user.current_folder_id || current_user.root_folder.id
     )
+    @document.initialize_etherpad
     redirect_to wroom_path(document_id: @document.id)
   end
 
@@ -47,12 +96,19 @@ class DocumentsController < ApplicationController
     head :ok
   end
 
-  def duplicate # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
+  def duplicate # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     @document = Document.find(params[:id])
     duplicate = @document.dup
     duplicate.cloned_from = @document.id
+    duplicate.title = "#{@document.title} Copy"
     duplicate.content = @document.content
+    duplicate.etherpad_pad_id = nil
     duplicate.save!
+    if @document.etherpad_pad_id.nil?
+      duplicate.initialize_etherpad
+    else
+      duplicate.clone_pad(@document)
+    end
     conversation = @document.conversation.dup
     if @document.conversation.messages.present?
       @document.conversation.messages.each do |message|

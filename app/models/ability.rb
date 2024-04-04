@@ -3,7 +3,7 @@
 class Ability
   include CanCan::Ability
 
-  def initialize(user)
+  def initialize(user) # rubocop:disable Metrics/MethodLength
     return if user.blank?
 
     can :manage, :all if user.admin?
@@ -12,6 +12,10 @@ class Ability
     can(:manage, Source, user:)
 
     can(:manage, Document, user:)
+
+    can(:manage, Document) do |document|
+      document.collaborators.include?(user)
+    end
 
     can(:manage, Voice, user:)
     can :manage, Conversation, document: { user: }

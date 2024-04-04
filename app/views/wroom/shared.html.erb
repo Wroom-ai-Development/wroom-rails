@@ -1,0 +1,12 @@
+<%= turbo_frame_tag "view_content" do %>
+  <div class='header'>
+    <span>Shared with me</span>
+  </div>
+  <% if @documents.empty? %>
+    <div class='empty'>
+      <span>No documents have been shared with you.</span>
+    </div>
+  <% else %>
+    <%= render "folders/records_table", folder: @shared_folder, documents: @documents, folders: nil %>
+  <% end %>
+<% end %>

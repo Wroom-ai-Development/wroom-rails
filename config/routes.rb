@@ -8,6 +8,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       get 'undiscard'
       get 'duplicate'
       get 'discard'
+      post 'share'
     end
   end
   resources :folders do
@@ -73,5 +74,6 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   post '/stripe_webhook', to: 'subscriptions#stripe_webhook'
   get '/purchase_success', to: 'subscriptions#purchase_success'
   get '/dashboard', to: 'wroom#dashboard'
+  get '/shared', to: 'wroom#shared'
   root 'wroom#dashboard'
 end

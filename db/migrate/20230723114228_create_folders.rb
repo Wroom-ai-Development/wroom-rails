@@ -10,7 +10,7 @@ class CreateFolders < ActiveRecord::Migration[7.0]
       t.timestamps
     end
     add_reference :documents, :folder, foreign_key: true
-    User.all.each do |user|
+    User.all.find_each do |user|
       root_folder = user.folders.create(name: 'Root', type: 'RootFolder')
       user.documents.update_all(folder_id: root_folder.id) # rubocop:disable Rails/SkipsModelValidations
     end

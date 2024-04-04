@@ -30,7 +30,7 @@
       <% end %>
       <div class="header">
         <span><%= @folder.type == 'RootFolder' ? 'My Files' : @folder.name %></span>
-        <% unless @folder.type == 'RootFolder' %>
+        <% unless @folder.type == 'RootFolder' || @folder.type == 'SharedFolder' %>
           <div class="controls">
             <%= link_to "Rename", edit_folder_path(@folder), data: { turbo_frame: '_top' } %>
             <%= button_to "❌", @folder, method: :delete, id: 'delete-button',

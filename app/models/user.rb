@@ -8,6 +8,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   VALID_PASSWORD_REGEX = %r{\A(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()-_+=\[\]{}|;:',.<>?/~`]{11,}\z}
   validate :password_complexity
+  validates :email, uniqueness: true, presence: true
 
   has_many :sources, dependent: :destroy
   has_many :voices, dependent: :destroy
@@ -17,16 +18,35 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :usage_records, dependent: :nullify
   has_one :current_document, class_name: 'Document', dependent: :nullify
   has_one :current_folder, class_name: 'Folder', dependent: :nullify
-  validates :email, uniqueness: true, presence: true
   has_many :folders, dependent: :destroy
   has_one :root_folder, class_name: 'RootFolder', dependent: :destroy
   has_one :subscription, dependent: :destroy
+  has_many :document_collaborations, dependent: :destroy
+  has_many :collaborated_documents, through: :document_collaborations, source: :document
 
   enum role: { 'admin': 0, 'user': 1, 'supplicant': 2 }
   after_initialize :set_default_role, if: :new_record?
   after_initialize :set_referral_code, if: :new_record?
   after_create :create_subscription
   after_create :make_security_updated
+  after_create :initialize_etherpad_author
+  after_create :create_shared_folder
+  after_create :check_pending_collaborations
+
+  def check_pending_collaborations
+    PendingCollaboration.where(email:).find_each do |pc|
+      pc.document.share_with(self)
+      pc.destroy
+    end
+  end
+
+  def create_shared_folder
+    SharedFolder.create!(user: self)
+  end
+
+  def shared_folder
+    SharedFolder.find_by(user: self)
+  end
 
   def full_name
     if first_name.blank? && last_name.blank?
@@ -101,6 +121,14 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     charset = ('A'..'Z').to_a + (0..9).to_a
     code = Array.new(8) { charset.sample }.join + id.to_s
     update(referral_code: code)
+  end
+
+  def initialize_etherpad_author
+    return unless etherpad_author_id.nil?
+
+    ether = EtherpadService.new.ether
+    author = ether.create_author
+    update!(etherpad_author_id: author.id)
   end
 
   def anything_in_recycle_bin?

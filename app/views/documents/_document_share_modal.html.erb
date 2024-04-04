@@ -1,0 +1,55 @@
+<script>
+  if (document.getElementById('share-modal-button')) {
+    let modalButton = document.getElementById('share-modal-button');
+    let modalOverlay = document.getElementById('modal-overlay');
+
+    modalButton.addEventListener('click', function() {
+      modalOverlay.style.display = 'block';
+    });
+
+    let closeModal = document.getElementById('close-modal');
+    closeModal.addEventListener('click', function() {
+      modalOverlay.style.display = 'none';
+    });
+
+    // Close modal if user clicks outside of it
+    modalOverlay.addEventListener('click', function(event) {
+      if (event.target === modalOverlay) {
+        modalOverlay.style.display = 'none';
+      }
+    });
+  }
+
+</script>
+<div id="modal-overlay">
+  <div id="modal">
+    <span id="close-modal"><i class="fa-solid fa-circle-xmark"></i></span>
+    <h2><i class="fa-solid fa-share-nodes fa-fw"></i><%= document.title %></h2>
+    <p>
+      <% if document.collaborators.empty? %>
+        This document is not yet shared with anyone.
+      <% else %>
+        This document is currently shared with:
+        <ul>
+          <% document.collaborators.each do |collaborator| %>
+            <li><%= collaborator.email %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </p>
+    <h2>Share this document</h2>
+    <p>
+      You will be able to see each other's changes in real-time, and
+      chat with each other using the chat feature.
+    </p>
+    <p>
+      If the user does not have a Wroom account, they will be sent an
+      email inviting them to create one.
+    </p>
+    <form action="/documents/<%= document.id %>/share" method="post" id='document-share-form'>
+      <input type="email" name="email" placeholder="Email address" required>
+      <input type="hidden" name="id" value="<%= document.id %>">
+      <button type="submit">Share</button>
+    </form>
+  </div>
+</div>

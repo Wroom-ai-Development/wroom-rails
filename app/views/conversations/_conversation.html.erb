@@ -17,7 +17,7 @@
   <script>
     function copyContent(id) {
       const text = document.getElementById(id).innerHTML.replace(/<br>/g, "\n").replace("<p>", "").replace("</p>", "")
-      navigator.clipboard.writeText(text)
+      navigator.clipboard.writeText(text);
     }
   </script>
   <div id='messages'>
@@ -47,12 +47,14 @@
   </div>
   <%= render 'conversation_status', conversation: conversation %>
   <script>
+  if (document.getElementById('new-message-text-area')) {
     const textarea = document.getElementById('new-message-text-area');
 
     textarea.addEventListener('input', () => {
         textarea.style.height = '1rem';
         textarea.style.height = `${textarea.scrollHeight}px`;
     });
+  }
     function submitMessage() {
       document.getElementById('new-message-form').submit();
       document.getElementById('new-message-text-area').value = '';

@@ -2,6 +2,6 @@
 
 class RechunkSources < ActiveRecord::Migration[7.0]
   def change
-    Source.all.each(&:rechunk)
+    Source.all.find_each(&:rechunk)
   end
 end

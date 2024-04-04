@@ -1,0 +1,86 @@
+<style>
+  /* Gmail-specific styles */
+  u + #body a {
+    color: inherit;
+    text-decoration: none;
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+  }
+  
+  div#all {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 100px;
+    box-sizing: border-box;
+  }
+
+  p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: justify;
+    color: #000000
+  }
+
+  a {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    background-color: rgb(0, 132, 62);
+    padding: 10px 20px;
+    border-radius: 10px;
+    align-self: center;
+    line-height: 24px;
+    color: white;
+    text-decoration: none;
+    margin: 20px 0;
+  }
+
+  svg {
+    margin: 20px 0;
+    align-self: center;
+  }
+  
+  a:hover {
+    background-color: rgb(1, 90, 43);
+    cursor: pointer;
+  }
+
+</style>
+
+<div id="all">
+  <svg width="184" height="44" viewBox="0 0 184 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4.75 2.15234V19.4476C4.75 28.2095 11.6016 30.2666 14.538 30.2666C20.2602 30.2666 24.4012 25.5428 24.4012 19.4476M24.4012 19.4476V2.15234M24.4012 19.4476C24.4012 25.5428 28.3164 30.2666 34.1892 30.2666C37.4268 30.2666 43.9772 28.2095 43.9772 19.4476V2.15234" stroke="black" stroke-width="7.5"/>
+    <path d="M178.75 33.9219V16.6266C178.75 7.86473 171.898 5.80759 168.962 5.80759C163.24 5.80759 159.099 10.5314 159.099 16.6266M159.099 16.6266V33.9219M159.099 16.6266C159.099 10.5314 155.184 5.80759 149.311 5.80759C146.073 5.80759 139.523 7.86473 139.523 16.6266V33.9219" stroke="black" stroke-width="7.5"/>
+    <path d="M56.0234 34.001V17.2391C56.0234 11.2963 60.0892 5.73438 67.3172 5.73438" stroke="black" stroke-width="7.5"/>
+    <path d="M96.4703 18C96.4703 24.8075 91.0285 30.25 84.409 30.25C77.7895 30.25 72.3477 24.8075 72.3477 18C72.3477 11.1925 77.7895 5.75 84.409 5.75C91.0285 5.75 96.4703 11.1925 96.4703 18Z" stroke="black" stroke-width="7.5"/>
+    <path d="M129.75 18C129.75 24.8075 124.308 30.25 117.688 30.25C111.069 30.25 105.627 24.8075 105.627 18C105.627 11.1925 111.069 5.75 117.688 5.75C124.308 5.75 129.75 11.1925 129.75 18Z" stroke="black" stroke-width="7.5"/>
+    <path d="M39.7012 40.0078H74.5012" stroke="#FFAA01" stroke-width="7.5"/>
+    <path d="M4 36.2617C1.92893 36.2617 0.25 37.9407 0.25 40.0117C0.25 42.0828 1.92893 43.7617 4 43.7617V36.2617ZM4 43.7617H39.8V36.2617H4V43.7617Z" fill="#FF4B4B"/>
+    <path d="M74.5 40.0078H109.3" stroke="#FC83FF" stroke-width="7.5"/>
+    <path d="M109.297 40H144.097" stroke="#5787FF" stroke-width="7.5"/>
+    <path d="M179.5 43.75C181.571 43.75 183.25 42.0711 183.25 40C183.25 37.9289 181.571 36.25 179.5 36.25V43.75ZM144.098 43.75H179.5V36.25H144.098V43.75Z" fill="#00843E"/>
+  </svg>
+  <p>Dear <%= @pending_collaboration.email %>,</p>
+  
+  <p><%= @pending_collaboration.invited_by %> has shared a Wroom document with you.</p>
+  
+  <p>
+    To open it, you need a Wroom account. Once you create one using the link below,
+    you will be able to access the document and start collaborating right away.
+  </p>
+  <%= link_to 'Sign up to Wroom', new_user_registration_url %>
+  
+  <p>Happy writing!</p>
+  
+  <p>Best regards,</br>
+    The Wroom Team
+  </p>
+  
+</div>
