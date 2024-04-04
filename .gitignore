@@ -1,5 +1,5 @@
 coverage/*
-
+standup-notes.md
 *.rbc
 capybara-*.html
 .rspec
