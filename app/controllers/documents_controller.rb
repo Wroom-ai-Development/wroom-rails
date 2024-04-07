@@ -30,13 +30,17 @@ class DocumentsController < ApplicationController # rubocop:disable Metrics/Clas
                   current_user.documents.first
                 end
     # init etherpad if not already done
-    @document.initialize_etherpad if @document.etherpad_group.nil? || @document.etherpad_pad_id.nil?
+    if !@document.source_based && (@document.etherpad_group.nil? || @document.etherpad_pad_id.nil?)
+      @document.initialize_etherpad
+    end
     @conversation = @document.conversation
     @document.folder.parents.reverse.each do |parent|
       breadcrumbs << Breadcrumb.new(parent.name, folder_path(parent))
     end
     breadcrumbs << Breadcrumb.new(@document.folder.name, folder_path(@document.folder))
     breadcrumbs << Breadcrumb.new(@document.truncated_title(40), editor_document_path(@document))
+
+    return if @document.source_based
 
     ether = EtherpadService.new.ether
     author = ether.get_author(current_user.etherpad_author_id)
