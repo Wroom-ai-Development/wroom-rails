@@ -45,9 +45,9 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
 
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
-  config.action_cable.url = 'wss://wroom-rails-043ae6af063d.herokuapp.com/cable'
-  config.action_cable.allowed_request_origins = ['http://wroom-rails-043ae6af063d.herokuapp.com',
-                                                 %r{http://wroom-rails-043ae6af063d.herokuapp.com.*}]
+  config.action_cable.url = 'wss://beta.wroom.ai/cable'
+  config.action_cable.allowed_request_origins = ['http://beta.wroom.ai',
+                                                 %r{http://beta.wroom.ai.*}]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
@@ -70,13 +70,13 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
 
   config.action_mailer.perform_caching = false
 
-  config.action_mailer.default_url_options = { host: 'wroom-rails-043ae6af063d.herokuapp.com' }
+  config.action_mailer.default_url_options = { host: 'beta.wroom.ai' }
 
   ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
     address: 'smtp.sendgrid.net',
     port: '25',
-    domain: 'wroom-rails-043ae6af063d.herokuapp.com',
+    domain: 'beta.wroom.ai',
     user_name: ENV['SENDGRID_USERNAME'],
     password: ENV['SENDGRID_API_KEY'],
     authentication: :plain,
@@ -84,10 +84,10 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
   }
 
   # config.action_mailer.default_url_options = {
-  #   host: 'wroom-rails-043ae6af063d.herokuapp.com'
+  #   host: 'beta.wroom.ai'
   # }
   # config.action_mailer.delivery_method = :smtp
-  # config.action_mailer.smtp_settings = { address: 'wroom-rails-043ae6af063d.herokuapp.com' }
+  # config.action_mailer.smtp_settings = { address: 'beta.wroom.ai' }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
