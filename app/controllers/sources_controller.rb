@@ -8,7 +8,6 @@ class SourcesController < ApplicationController
 
   include ActionView::Helpers::NumberHelper
 
-  # GET /sources/1 or /sources/1.json
   def show; end
 
   # GET /sources/new
@@ -17,14 +16,12 @@ class SourcesController < ApplicationController
     @folder_id = current_user.current_folder_id || current_user.root_folder.id
   end
 
-  # GET /sources/1/edit
   def edit; end
 
-  # POST /sources or /sources.json
   def create # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-    # binding.pry
     files = params[:source][:file]
     files.shift
+    # TODO: Move creating sources from files to a new SourcesService object
     files.each do |file|
       source = Source.new(user_id: current_user.id, file:, folder_id: current_user.current_folder)
       source.file_size = file.size
@@ -37,7 +34,6 @@ class SourcesController < ApplicationController
         if files.length == 1
           redirect_to wroom_path(document_id: source.document_id), notice: 'Source file uploaded successfully.'
         elsif file == files.last
-          # binding.pry
           redirect_to folder_path(id: current_user.current_folder_id), notice: 'File upload successful.'
         end
       elsif current_user.storage_available <= 0
@@ -49,10 +45,10 @@ class SourcesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /sources/1 or /sources/1.json
   def update # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
     respond_to do |format|
       if @source.update(source_params)
+        # TODO: Move updating a source to a new SourcesService object
         old_headers = @source.section_headers
         @source.file_size = source_params[:file].size if source_params[:file].present?
         if params[:source][:section_headers].blank?
@@ -78,7 +74,6 @@ class SourcesController < ApplicationController
     end
   end
 
-  # DELETE /sources/1 or /sources/1.json
   def destroy
     @source.destroy
 
@@ -89,17 +84,16 @@ class SourcesController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_source
     @source = Source.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def source_params
     params.require(:source).permit(:name, :title, :author, :year_published, :user_id, :file, :text_category,
                                    :source_url, :section_headers, :folder_id)
   end
 
+  # TODO: Move this logic into SourcesService too
   def save_section_headers(source)
     return if params[:source][:section_headers].blank?
 

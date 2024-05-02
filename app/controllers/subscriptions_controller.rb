@@ -9,6 +9,7 @@ class SubscriptionsController < ApplicationController # rubocop:disable Metrics/
   end
 
   def redeem_referral_code # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    # TODO: Move referral code logic to a separate service object
     referring_user = User.find_by(referral_code: params[:referral_code])
     if current_user.referred_by.present?
       redirect_to billing_path, alert: 'You have already redeemed a referral code.'
@@ -84,7 +85,6 @@ class SubscriptionsController < ApplicationController # rubocop:disable Metrics/
       ]
     )
 
-    # binding.pry
     render 'subscriptions/subscription_upgraded'
   end
 

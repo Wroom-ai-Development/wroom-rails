@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# TODO: Refactor this class
+# TODO: Get this class to use new OpenAI features
 module Conversations
   class ConversationService # rubocop:disable Metrics/ClassLength
     class OpenAIApiError < StandardError; end
@@ -40,6 +42,7 @@ module Conversations
 
     def respond
       if @user.gpt_budget_available.positive?
+        # TODO: Try to find a better name than `handle_business`
         answer = handle_business
         @conversation.messages.create!(role: 'assistant', content: answer, partial_answers: @partial_answers || [])
       else

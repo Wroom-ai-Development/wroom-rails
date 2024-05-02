@@ -8,6 +8,7 @@ class DocumentsController < ApplicationController # rubocop:disable Metrics/Clas
   def share # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     email = params[:email]
     user = User.find_by(email:)
+    # TODO: Refactor this logic into a service object, e.g. CollaborationService
     if user.nil?
       PendingCollaboration.create!(document_id: @document.id, invited_by: current_user.email, email:)
       redirect_to editor_document_path(@document),
@@ -29,11 +30,13 @@ class DocumentsController < ApplicationController # rubocop:disable Metrics/Clas
                 else
                   current_user.documents.first
                 end
-    # init etherpad if not already done
+    # Initializes etherpad if not already done
+    # TODO: Move this into a Document model callback
     if !@document.source_based && (@document.etherpad_group.nil? || @document.etherpad_pad_id.nil?)
       @document.initialize_etherpad
     end
     @conversation = @document.conversation
+    # TODO: Move breadcrumb logic out of this method
     @document.folder.parents.reverse.each do |parent|
       breadcrumbs << Breadcrumb.new(parent.name, folder_path(parent))
     end
@@ -42,10 +45,12 @@ class DocumentsController < ApplicationController # rubocop:disable Metrics/Clas
 
     return if @document.source_based
 
+    # TODO: Move the logic below into EtherpadService for better separation of concerns
     ether = EtherpadService.new.ether
     author = ether.get_author(current_user.etherpad_author_id)
     group = ether.get_group(@document.etherpad_group.group_id)
 
+    # TODO: Handle session logic in a separate method in this controller
     session[:ep_sessions] = {} if session[:ep_sessions].nil?
     sess = if session[:ep_sessions][group.id]
              ether.get_session(session[:ep_sessions][group.id])
@@ -83,7 +88,6 @@ class DocumentsController < ApplicationController # rubocop:disable Metrics/Clas
     redirect_to wroom_path(document_id: @document.id)
   end
 
-  # GET /documents/new
   def new
     @document = Document.create!(
       title: 'Untitled',
@@ -101,6 +105,7 @@ class DocumentsController < ApplicationController # rubocop:disable Metrics/Clas
   end
 
   def duplicate # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    # TODO: Move this into Document model
     @document = Document.find(params[:id])
     duplicate = @document.dup
     duplicate.cloned_from = @document.id
@@ -108,19 +113,25 @@ class DocumentsController < ApplicationController # rubocop:disable Metrics/Clas
     duplicate.content = @document.content
     duplicate.etherpad_pad_id = nil
     duplicate.save!
+
+    # Initializes etherpad for cloned document if for some reason the original is missing its etherpad_pad_id
+    # Otherwise clones the original's pad
     if @document.etherpad_pad_id.nil?
       duplicate.initialize_etherpad
     else
       duplicate.clone_pad(@document)
     end
+    # Copies the chat to the new document
     conversation = @document.conversation.dup
     if @document.conversation.messages.present?
       @document.conversation.messages.each do |message|
         conversation.messages << message.dup
       end
     end
+    # Copies the voice to the new document
     conversation.voice = @document.conversation.voice if @document.conversation.voice.present?
     conversation.save!
+    # Copies over context references
     if @document.conversation.context_references.present?
       @document.conversation.context_references.each do |reference|
         ContextReference.create!(document_id: reference.document_id, conversation_id: conversation.id)
@@ -128,6 +139,7 @@ class DocumentsController < ApplicationController # rubocop:disable Metrics/Clas
     end
     duplicate.conversation = conversation
     duplicate.save!
+    # Copies over the source if the original document has one
     if @document.source.present?
       source = @document.source.dup
       @document.source.source_chunks.each do |chunk|
@@ -148,7 +160,6 @@ class DocumentsController < ApplicationController # rubocop:disable Metrics/Clas
     head :no_content
   end
 
-  # DELETE /documents/1 or /documents/1.json
   def destroy
     @document.destroy
     head :no_content
@@ -156,12 +167,10 @@ class DocumentsController < ApplicationController # rubocop:disable Metrics/Clas
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_document
     @document = Document.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def document_params
     params.require(:document).permit(:title, :content, :user_id, :folder_id)
   end

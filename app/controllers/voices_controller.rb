@@ -11,10 +11,8 @@ class VoicesController < ApplicationController
     head :ok
   end
 
-  # GET /voices or /voices.json
   def index; end
 
-  # GET /voices/new
   def new
     @voice = Voice.new
   end
@@ -29,10 +27,8 @@ class VoicesController < ApplicationController
     render layout: 'dashboard'
   end
 
-  # GET /voices/1/edit
   def edit; end
 
-  # POST /voices or /voices.json
   def create
     @voice = Voice.new(voice_params)
 
@@ -56,7 +52,6 @@ class VoicesController < ApplicationController
     end
   end
 
-  # DELETE /voices/1 or /voices/1.json
   def destroy
     @voice.discard
 
@@ -65,12 +60,10 @@ class VoicesController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_voice
     @voice = Voice.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def voice_params
     params.require(:voice).permit(:name, :user_id, :meta_prompt, conversation_ids: [])
   end

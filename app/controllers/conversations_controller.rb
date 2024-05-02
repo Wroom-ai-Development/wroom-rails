@@ -6,11 +6,15 @@ class ConversationsController < ApplicationController
                          new_message clear_chat cancel_processing clear_context]
 
   def chat
+    # TODO: This cancels the processing of a user's conversations, except the current one
+    # See if this hack is still necessary
+    # If it is, move it to a service object or otherwise find a better way to handle it
     @conversation.user.conversations.where.not(id: @conversation.id).map(&:cancel_processing)
   end
 
   def context; end
 
+  # TODO: Move this logic into the Conversation model
   def toggle_context # rubocop:disable Metrics/MethodLength
     @document = Document.find(params[:document_id])
     if @conversation.documents.include?(@document)
@@ -28,7 +32,7 @@ class ConversationsController < ApplicationController
   end
 
   def clear_context
-    @conversation.context_references.destroy_all
+    @conversation.context_references.destroy_all # TODO: Make this a method on the Conversation model
     head :no_content
   end
 
@@ -75,12 +79,10 @@ class ConversationsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_conversation
     @conversation = Conversation.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def conversation_params
     params.require(:conversation).permit(:title, document_ids: [])
   end
