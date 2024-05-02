@@ -8,6 +8,7 @@ class Folder < ApplicationRecord
   has_many :documents, dependent: :destroy
   after_discard :remove_folder_row
   after_discard :remove_from_sidebar
+  # TODO: Remove reference from folders to sources from db
   after_create :add_to_sidebar
   after_save :remove_folder_row, if: :saved_change_to_parent_id?
 

@@ -6,9 +6,8 @@ module Conversations
       @conversation = conversation
     end
 
-    def notify_of_progress(message)
-      # clear_progress_messages
-      @conversation.messages.create!(role: 'progress', content: message)
+    def notify_of_progress(notification_content)
+      @conversation.messages.create!(role: 'progress', content: notification_content)
     end
 
     def clear_progress_messages

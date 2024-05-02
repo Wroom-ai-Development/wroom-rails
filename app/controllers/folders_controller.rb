@@ -4,7 +4,6 @@ class FoldersController < ApplicationController
   before_action :set_folder, only: %i[show edit update destroy undiscard]
   load_and_authorize_resource
   layout 'dashboard'
-  # GET /folders/1 or /folders/1.json
 
   def explorer
     @root_folder = current_user.root_folder
@@ -29,6 +28,7 @@ class FoldersController < ApplicationController
 
   def show # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     current_user.update!(current_folder_id: @folder.id)
+    # TODO: Put query logic in a service object
     @in_query = params[:query].present?
     if @in_query
       @folders = @folder.all_child_folders.where('lower(name) LIKE ?', "%#{params[:query].downcase}%")
@@ -40,6 +40,7 @@ class FoldersController < ApplicationController
       @folders = @folder.children.kept
       @documents = @folder.documents.kept
     end
+    # Move breadcrumb logic to a private method in this controller
     clear_breadcrumbs
     @folder.parents.reverse.each do |parent|
       add_breadcrumb(parent.name, folder_path(parent))
@@ -51,18 +52,14 @@ class FoldersController < ApplicationController
     @haiku = OpenaiService.new.haiku_about_new_venture
   end
 
-  # GET /folders/new
   def new
     @folder = Folder.new
     @parent_id = current_user.current_folder_id || current_user.root_folder.id
   end
 
-  # GET /folders/1/edit
   def edit; end
 
-  # POST /folders or /folders.json
   def create
-    # binding.pry
     @folder = Folder.new(folder_params)
     @folder.type = 'Folder'
     if @folder.save
@@ -73,7 +70,6 @@ class FoldersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /folders/1 or /folders/1.json
   def update
     if @folder.update(folder_params)
       redirect_to @folder
@@ -82,7 +78,6 @@ class FoldersController < ApplicationController
     end
   end
 
-  # DELETE /folders/1 or /folders/1.json
   def destroy
     @folder.discard
     @folder = @folder.parent
@@ -96,12 +91,10 @@ class FoldersController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_folder
     @folder = Folder.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def folder_params
     params.require(:folder).permit(:name, :user_id, :parent_id)
   end

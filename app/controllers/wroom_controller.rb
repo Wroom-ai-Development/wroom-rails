@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 class WroomController < ApplicationController
+  # TODO: Create a separate DashboardController and move this logic there
   def dashboard
     @current_folder = params[:current_folder_id].present? ? Folder.find(params[:current_folder_id]) : @root_folder
     render layout: 'dashboard'
   end
 
+  # TODO: Create a separate DashboardController and move this logic there
   def shared
     @shared_folder = current_user.shared_folder
     @documents = current_user.collaborated_documents.kept
