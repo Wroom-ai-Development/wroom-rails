@@ -1,7 +1,0 @@
-<%= turbo_frame_tag "documents" do %>
-  <div id='documents-panel'>
-    <% @documents.kept.each do |document|%>
-      <%= link_to document.title, editor_document_path(document), data: { turbo_frame: 'wroom_editor' } %>
-    <% end %>
-  </div>
-<% end %>

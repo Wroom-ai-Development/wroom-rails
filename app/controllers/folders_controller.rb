@@ -33,14 +33,11 @@ class FoldersController < ApplicationController
     if @in_query
       @folders = @folder.all_child_folders.where('lower(name) LIKE ?', "%#{params[:query].downcase}%")
       @documents = @folder.all_documents.where('lower(title) LIKE ?', "%#{params[:query].downcase}%")
-      if turbo_frame_request?
-        render partial: 'folders/records_table', locals: { folder: @folder, folders: @folders, documents: @documents }
-      end
     else
       @folders = @folder.children.kept
       @documents = @folder.documents.kept
     end
-    # Move breadcrumb logic to a private method in this controller
+    # TODO: Move breadcrumb logic to a private method in this controller
     clear_breadcrumbs
     @folder.parents.reverse.each do |parent|
       add_breadcrumb(parent.name, folder_path(parent))

@@ -1,4 +1,6 @@
 <%= turbo_frame_tag "view_content" do %>
+  <%#= TODO: Some of this view is repeated in app/views/devise/registrations/edit.html.erb %>
+  <%#= TODO: Create a separate settings view to refactor this %>
   <div id='account-control'>
     <%= render 'settings/settings_links' %>
     <div id='account-control-content'>
