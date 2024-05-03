@@ -1,3 +1,4 @@
+<%#= TODO: Find a better name for this partial and try to improve its usage %>
 <%= turbo_frame_tag "records_table" do %>
   <% drag_actions = "dragstart->drag#drag_start dragover->drag#drag_over dragenter->drag_enter drop->drag#drop dragend->drag#drag_end" %>
   <% in_query = @in_query || in_query %>

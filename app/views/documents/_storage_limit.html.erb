@@ -1,3 +1,5 @@
+<%#= TODO: Move this partial to app/views/storage/storage_limit %>
+<%#= TODO: Remember to adjust app/models/document.rb to match%>
 <%= turbo_stream_from user.id, "storage-bar" %>
 <div id='storage_bar'>
   <div class='storage-header'><i class="fa-solid fa-cloud fa-fw"></i>Storage</div>

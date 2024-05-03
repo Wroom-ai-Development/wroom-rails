@@ -1,3 +1,5 @@
+<%#= TODO: Find a way to decouple the usage of this partial in the sidebar from its usage in the context view %>
+<%#= TODO: (app/views/conversations/context.html.erb & app/views/layouts/_sidebar.html.erb) %>
 <div class='tree-folder' id="<%= "tree-folder-#{folder.id}" %>">
   <div class="folder">
     <i class="fa-solid fa-caret-down fa-sm fa-fw <%= folder.empty? ? 'invisible' : '' %>" onClick=<%= "displayChildren('tree-folder-#{folder.id}')" %>></i>
