@@ -41,6 +41,7 @@ class OpenaiService
 
   private
 
+  # TODO: Improve error handling between this service, ConversationService and AnswerFetchingWorker
   def handle_response(response) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     if response['error'].present?
       case response['error']['code']

@@ -9,6 +9,7 @@ class AnswerFetchingWorker
     @expiration ||= 60 * 60 * 24 * 30 # 30 days
   end
 
+  # TODO: Improve error handling between this worker, ConversationService and OpenaiService
   def perform(conversation_id) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     conversation = Conversation.find(conversation_id)
     begin

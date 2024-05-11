@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# TODO: Remove this class once chunking is no longer needed
 module Sources
   class SemanticChunker # rubocop:disable Metrics/ClassLength
     CHUNK_MAX_TOKEN_SIZE = 5_000

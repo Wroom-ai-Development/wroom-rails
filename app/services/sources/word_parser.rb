@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# TODO : Implement better pdf parser
 module Sources
   class WordParser
     def initialize(file)

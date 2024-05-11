@@ -4,6 +4,7 @@
 # TODO: Get this class to use new OpenAI features
 module Conversations
   class ConversationService # rubocop:disable Metrics/ClassLength
+    # TODO: Improve error handling between this service, ConversationService and AnswerFetchingWorker
     class OpenAIApiError < StandardError; end
     class ContextExceeded < StandardError; end
     class InterruptSignal < StandardError; end
