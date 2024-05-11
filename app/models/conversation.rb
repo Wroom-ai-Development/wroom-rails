@@ -11,6 +11,7 @@ class Conversation < ApplicationRecord
   has_one :conversation_voice, dependent: :destroy
   has_one :voice, through: :conversation_voice
   validates :title, presence: true
+  # TODO: Inherit Turbo-related methods from a module
   after_update :broadcast_status_message
 
   enum role: { 'ready': 0, 'working': 1, 'idle': 2, 'error': 3, 'cancelled': 4 }

@@ -19,9 +19,11 @@ class Source < ApplicationRecord
   validate :file_or_source_url, if: -> { fileless == false }
   validate :file_size_within_limit, if: -> { file.attached? && user.present? && file.changed? }
 
+  # TODO: Remove event logging
   after_create_commit :log_event
   after_create_commit :create_document
 
+  # TODO: Inherit Turbo-related methods from a module
   after_create_commit :add_size_to_user_storage_used
   before_destroy :subtract_size_from_user_storage_used
 

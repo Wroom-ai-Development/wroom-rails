@@ -30,6 +30,7 @@ class Document < ApplicationRecord # rubocop:disable Metrics/ClassLength
     document_collaborations.create!(user_id: user.id)
   end
 
+  # TODO: Handle Etherpad errors
   def initialize_etherpad
     initialize_etherpad_group
     initialize_etherpad_pad

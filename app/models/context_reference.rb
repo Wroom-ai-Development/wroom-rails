@@ -9,6 +9,7 @@ class ContextReference < ApplicationRecord
 
   private
 
+  # TODO: Inherit Turbo-related methods from a module
   def announce_create # rubocop:disable Metrics/MethodLength
     broadcast_replace_to(
       conversation.id,

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# TODO: Remove this class once chunking is no longer needed
 class SourceChunkingWorker
   include Sidekiq::Worker
   sidekiq_options retry: false

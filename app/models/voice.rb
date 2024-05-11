@@ -8,6 +8,7 @@ class Voice < ApplicationRecord
   has_many :monitoring_events, as: :trackable, dependent: :nullify
   validates :name, presence: true
 
+  # TODO: Inherit Turbo-related methods from a module
   after_create_commit :announce_create
   after_update_commit :announce_update
   after_discard :announce_destroy

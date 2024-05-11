@@ -10,6 +10,7 @@ class MonitoringEvent < ApplicationRecord
     'confirmation': 4
   }
 
+  # TODO: Inherit Turbo-related methods from a module
   after_create_commit :broadcast_status
 
   def self.ransackable_attributes(_auth_object = nil)

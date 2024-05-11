@@ -9,6 +9,7 @@ class Message < ApplicationRecord
   enum role: { 'user': 0, 'assistant': 1, 'system': 2, 'error': 3 }
   has_many :monitoring_events, as: :trackable, dependent: :nullify
 
+  # TODO: Inherit Turbo-related methods from a module
   after_create_commit :force_conversation_refresh
   after_create_commit :announce_create
   after_discard :announce_discard

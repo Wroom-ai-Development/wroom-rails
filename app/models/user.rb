@@ -29,6 +29,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   after_initialize :set_referral_code, if: :new_record?
   after_create :create_subscription
   after_create :make_security_updated
+  # TODO: Handle etherpad errors
   after_create :initialize_etherpad_author
   after_create :create_shared_folder
   after_create :check_pending_collaborations
