@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Webpage</title>
+</head>
+<body>
+<form method="post" action="/ImportScreenplay" enctype="multipart/form-data" id="upload-form">
+<%= hidden_field_tag :authenticity_token, form_authenticity_token %>  
+    <!-- upload of a single file -->
+    <p>
+        <label>Add sceenplay file (plain text): </label><br/>
+        <input type="file" name="screenplay_file"/>
+    </p>
+
+    <p>
+        <input type="submit"/>
+    </p>
+</form>
+
+<script>
+  document.getElementById('upload-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    document.getElementById('upload-status').innerHTML = "Processing..."
+
+    const formData = new FormData(this);
+    fetch('/ImportScreenplay', {
+      method: 'post',
+      body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('upload-status').innerHTML = data; 
+    })
+    .catch(error => console.error(error));
+  });
+</script>
+<pre>
+<code>
+<textarea id="upload-status">JSON response</textarea>
+</code>
+</pre>
+</body>
+</html>
+
+

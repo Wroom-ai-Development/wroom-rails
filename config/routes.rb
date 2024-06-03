@@ -75,5 +75,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get '/purchase_success', to: 'subscriptions#purchase_success'
   get '/dashboard', to: 'wroom#dashboard'
   get '/shared', to: 'wroom#shared'
+  post '/ImportScreenplay', to: 'screenplayimporter#import_screenplay'
+  get '/ImportScreenplayTest', to: 'screenplayimporter#test_form'
   root 'wroom#dashboard'
 end
