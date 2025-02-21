@@ -1,5 +1,6 @@
 
-# Wroom Rails Application
+# Wroom.ai
+### _Prototype / MVP_
 
 ## Overview
 
