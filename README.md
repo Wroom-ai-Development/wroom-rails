@@ -1,6 +1,6 @@
 ![Wroom logo](app/assets/images/logo-non-beta.svg)
 # Wroom.ai
-### _Prototype / MVP_
+### Made in 2022
 ![scrn1](app/assets/images/3.png)
 
 ## Overview
