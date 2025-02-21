@@ -1,6 +1,6 @@
 ![Wroom logo](app/assets/images/logo-non-beta.svg)
 # Wroom.ai
-### Made in 2022
+### Retrieval Augmented Generation app made in 2023
 ![scrn1](app/assets/images/3.png)
 
 ## Overview
