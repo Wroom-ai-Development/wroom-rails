@@ -1,6 +1,7 @@
 
 # Wroom.ai
 ### _Prototype / MVP_
+For more information, visit our [website](https://wroom.ai).
 
 ## Overview
 
@@ -104,36 +105,3 @@ STRIPE_PUBLIC_KEY=your_public_key
 STRIPE_SECRET_KEY=your_secret_key
 ```
 
-## Usage
-
-Wroom enables filmmakers and storytellers to enhance their projects with AI-powered features. Through this backend, users can:
-
-- **Create and manage accounts** using Devise.
-- **Upload and manipulate media files** with ActiveStorage and ImageProcessing.
-- **Process payments** for premium features using Stripe.
-- **Monitor and debug errors** using Sentry.
-- **Interact with AI-powered tools** for script generation, character design, and scene creation.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Contributing
-
-We welcome contributions! To contribute to this project:
-
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature-xyz`).
-3. Commit your changes (`git commit -am 'Add new feature'`).
-4. Push to the branch (`git push origin feature-xyz`).
-5. Create a new Pull Request.
-
-## Acknowledgments
-
-- **Ruby on Rails**: The backbone of the application.
-- **PostgreSQL**: The database that ensures data integrity.
-- **Stripe**: The payment provider that allows us to handle transactions seamlessly.
-- **Redis & Sidekiq**: The tools that enable background job processing and real-time functionality.
-- **Sentry**: For monitoring and tracking errors in production.
-
-For more information, visit our [website](https://wroom.ai).
