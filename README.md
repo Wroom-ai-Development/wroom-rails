@@ -1,7 +1,6 @@
-
+![Wroom logo](app/assets/images/logo-non-beta.svg)
 # Wroom.ai
 ### _Prototype / MVP_
-For more information, visit our [website](https://wroom.ai).
 
 ## Overview
 
@@ -35,6 +34,13 @@ This repository contains the Rails application for Wroom, which serves as the ba
 - **Devise** for user authentication
 - **ActiveAdmin** for administrative dashboard
 - **Sentry** for error monitoring
+
+## Screenshots
+![scrn1](app/assets/images/scr/1.png)
+![scrn1](app/assets/images/scr/2.png)
+![scrn1](app/assets/images/scr/3.png)
+![scrn1](app/assets/images/scr/4.png)
+![scrn1](app/assets/images/scr/5.png)
 
 ## Installation
 
