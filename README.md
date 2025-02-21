@@ -1,6 +1,7 @@
 ![Wroom logo](app/assets/images/logo-non-beta.svg)
 # Wroom.ai
 ### _Prototype / MVP_
+![scrn1](app/assets/images/3.png)
 
 ## Overview
 
@@ -36,11 +37,11 @@ This repository contains the Rails application for Wroom, which serves as the ba
 - **Sentry** for error monitoring
 
 ## Screenshots
-![scrn1](app/assets/images/scr/1.png)
-![scrn1](app/assets/images/scr/2.png)
-![scrn1](app/assets/images/scr/3.png)
-![scrn1](app/assets/images/scr/4.png)
-![scrn1](app/assets/images/scr/5.png)
+![scrn1](app/assets/images/1.png)
+![scrn2](app/assets/images/2.png)
+![scrn3](app/assets/images/3.png)
+![scrn4](app/assets/images/4.png)
+![scrn5](app/assets/images/5.png)
 
 ## Installation
 
